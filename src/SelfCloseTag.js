@@ -1,4 +1,4 @@
-
+const parseAttrs=require('./parseAttrs')
 
 class SelfCloseTag {
   constructor(str,tagName){
@@ -21,7 +21,13 @@ class SelfCloseTag {
     if(attrs[0]!==this.tagName){
       throw new Error("tag is not match tagName")
     }
-    this.attrs=attrs.slice(1)
+    this.attrs=parseAttrs(openTagAttrs)
+    // let attrsObj={}
+    // for(let j=1;j<attrs.length;j++){
+    //   let [key,value]=attrs[j].split('=')
+    //   attrsObj[key]=value.replace(/["'`]/g,'')
+    // }
+    // this.attrs=attrsObj
   }
 
   // 处理tag 属性
@@ -37,8 +43,8 @@ class SelfCloseTag {
     return ''
   }
 
-  handleContent(content){
-    return content
+  handleContent(){
+    return ''
   }
 
   execMerge(gapBefore,gapAfter){

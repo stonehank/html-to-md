@@ -16,7 +16,7 @@ class Ul extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName!=='li'){
-        throw new Error('should not have tags except <li> inside ul')
+        throw new Error('should not have tags except <li> inside ul, current tag is '+tagName)
       }
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)

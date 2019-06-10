@@ -2,26 +2,24 @@ const Tag =require('../Tag')
 const findValidTag=require('../findValidTag')
 const findTagClass=require('../findTagClass')
 
-class Strong extends Tag{
-  constructor(str,tagName='strong',{parentTag}={}){
+
+
+class Th extends Tag{
+  constructor(str,tagName='th'){
     super(str,tagName)
-    this.parentTag=parentTag
   }
 
-  beforeMerge(){
-    return "**"
-  }
 
   afterMerge(){
-    return '**'
+    return '|'
   }
 
-
   handleContent(){
+    let res=''
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
-    let res=''
     let [tagName,tagStr]=getNxtValidTag()
+
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
@@ -37,20 +35,12 @@ class Strong extends Tag{
     return res
   }
 
-  execMerge(gapBefore=' ',gapAfter=''){
-    // if(this.parentTag==='i' || this.parentTag==='em'){
-    //   gapBefore=''
-    // }
+  execMerge(gapBefore='',gapAfter=''){
     return super.execMerge(gapBefore,gapAfter)
   }
 
 }
-
-
-module.exports=Strong
+module.exports=Th
 
 
 
-let strong=new Strong('<strong><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></strong>')
-//
-console.log(strong.execMerge())

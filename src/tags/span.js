@@ -1,19 +1,12 @@
 const Tag =require('../Tag')
 const findValidTag=require('../findValidTag')
 const findTagClass=require('../findTagClass')
+const {unescape}=require( '../escape')
 
-class Strong extends Tag{
-  constructor(str,tagName='strong',{parentTag}={}){
+
+class Span extends Tag{
+  constructor(str,tagName='span'){
     super(str,tagName)
-    this.parentTag=parentTag
-  }
-
-  beforeMerge(){
-    return "**"
-  }
-
-  afterMerge(){
-    return '**'
   }
 
 
@@ -23,12 +16,12 @@ class Strong extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName!=null){
+      if(tagName==="span"){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge('','')
       }else{
-        res+=tagStr
+        res+=unescape(tagStr)
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
@@ -37,20 +30,11 @@ class Strong extends Tag{
     return res
   }
 
-  execMerge(gapBefore=' ',gapAfter=''){
-    // if(this.parentTag==='i' || this.parentTag==='em'){
-    //   gapBefore=''
-    // }
+  execMerge(gapBefore='',gapAfter=''){
     return super.execMerge(gapBefore,gapAfter)
   }
 
 }
 
 
-module.exports=Strong
-
-
-
-let strong=new Strong('<strong><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></strong>')
-//
-console.log(strong.execMerge())
+module.exports=Span

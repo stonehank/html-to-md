@@ -1,4 +1,5 @@
 const {escape,unescape}=require('./escape')
+const parseAttrs=require('./parseAttrs')
 
 class Tag {
   constructor(str,tagName){
@@ -6,7 +7,8 @@ class Tag {
     this.attrs=[]
     this.content=''
     this.resolveStr(str)
-    // this.beforeOpen=this.beforeOpen.bind(this,this.attrs)
+
+    this.getAttrs=this.getAttrs.bind(this,this.attrs)
     this.getContent=this.getContent.bind(this,this.content)
   }
 
@@ -19,18 +21,23 @@ class Tag {
       if(str[i]===">")break
       openTagAttrs+=str[i]
     }
-    let attrs=openTagAttrs.split(' ')
-    if(attrs[0]!==this.tagName){
+    if(openTagAttrs.split(' ')[0]!==this.tagName){
       throw new Error("tag is not match tagName")
     }
-    this.attrs=attrs.slice(1)
+    // let attrs=openTagAttrs.match((/[^\s]*?=".*?"/g))
+    // console.log(attrs,openTagAttrs)
+    this.attrs=parseAttrs(openTagAttrs)
+    // for(let j=1;j<attrs.length;j++){
+    //   let [key,value]=attrs[j].split('=')
+    //   attrsObj[key]=value ? value.replace(/["'`]/g,'') : value
+    // }
+    // this.attrs=attrsObj
     let restStr=str.slice(i+1)
 
     let count=1
 
     let m='',endId=-1
 
-    // console.log(this.tagName+'\n\n'+restStr+'\n\n'+str+'\n\n------------')
     for(let j=0;j<restStr.length;j++){
       m+=restStr[j]
       if(m.endsWith('<'+this.tagName)){
@@ -58,6 +65,9 @@ class Tag {
 
   getContent(content){
     return content
+  }
+  getAttrs(attrs){
+    return attrs
   }
 
 

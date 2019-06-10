@@ -5,8 +5,9 @@ const findTagClass=require('../findTagClass')
 class Ol extends Tag{
   constructor(str,tagName='ol',{layer=1}={}){
     super(str,tagName)
+    let attrs=this.getAttrs()
     this.layer=layer
-    this.count=1
+    this.count=attrs.start
   }
 
 
@@ -15,9 +16,10 @@ class Ol extends Tag{
     let getNxtValidTag=findValidTag(content)
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
+    // console.log(tagName,tagStr)
     while(tagStr!==''){
       if(tagName!=='li'){
-        throw new Error('should not have tags except <li> inside ol')
+        throw new Error('should not have tags except <li> inside ol, current tag is '+tagName)
       }
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
@@ -42,35 +44,9 @@ class Ol extends Tag{
 module.exports=Ol
 
 
-let ol=new Ol('<ol>' +
-  '<li>123</li>' +
-  '<li>234</li>' +
-  '<li>345' +
-  '<ol>' +
-  '<li>123</li>' +
-  '<li>234</li>' +
-  '<li>345' +
-  '<ol>' +
-  '<li>123</li>' +
-  '<li>234</li>' +
-  '<li>345' +
-  '<ol>' +
-  '<li>123</li>' +
-  '<li>234</li>' +
-  '<li>345' +
-  '<ol>' +
-  '<li>123</li>' +
-  '<li>234</li>' +
-  '<li>345</li>' +
-  '</ol>' +
-  '</li>' +
-  '</ol>' +
-  '</li>' +
-  '</ol>' +
-  '</li>' +
-  '</ol>' +
-  '</li>' +
-  '<li>456</li>' +
-  '</ol>')
+let ol=new Ol("<ol start=\"57\">" +
+  "<li>foo</li>" +
+  "<li>bar</li>" +
+  "</ol>")
 
 console.log(ol.execMerge())

@@ -2,18 +2,18 @@ const Tag =require('../Tag')
 const findValidTag=require('../findValidTag')
 const findTagClass=require('../findTagClass')
 
-class Strong extends Tag{
-  constructor(str,tagName='strong',{parentTag}={}){
+class Del extends Tag{
+  constructor(str,tagName='del',{parentTag}={}){
     super(str,tagName)
     this.parentTag=parentTag
   }
 
   beforeMerge(){
-    return "**"
+    return "~~"
   }
 
   afterMerge(){
-    return '**'
+    return '~~'
   }
 
 
@@ -38,19 +38,16 @@ class Strong extends Tag{
   }
 
   execMerge(gapBefore=' ',gapAfter=''){
-    // if(this.parentTag==='i' || this.parentTag==='em'){
-    //   gapBefore=''
-    // }
     return super.execMerge(gapBefore,gapAfter)
   }
 
 }
 
 
-module.exports=Strong
+module.exports=Del
 
 
 
-let strong=new Strong('<strong><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></strong>')
+let del=new Del('<del><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></del>')
 //
-console.log(strong.execMerge())
+console.log(del.execMerge())
