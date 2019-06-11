@@ -1,6 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 function countTdNum(str){
   let trStr=''
@@ -21,7 +20,7 @@ function getTdAlign(str,tdNum){
     start:':---|',
     end:"---:|"
   }
-  let res=Array(tdNum).fill(':---:|')
+  let res=Array(tdNum).fill(':---|')
   let match=str.match(/text-align:(center|left|right|start|end)/g)
   if(!match)return res
   // console.log(str,match)
@@ -29,9 +28,9 @@ function getTdAlign(str,tdNum){
   res=res.map(s=>{
     let id=s.indexOf('text-align:')
     if(id===-1){
-      return alignObj['center']
+      return alignObj['left']
     }
-    return alignObj[s.slice(id+11)] || alignObj['center']
+    return alignObj[s.slice(id+11)] || alignObj['left']
   })
   return res
 }

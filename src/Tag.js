@@ -1,5 +1,4 @@
-const {escape,unescape}=require('./escape')
-const parseAttrs=require('./parseAttrs')
+const {parseAttrs}=require('./utils')
 
 class Tag {
   constructor(str,tagName){
@@ -24,20 +23,11 @@ class Tag {
     if(openTagAttrs.split(' ')[0]!==this.tagName){
       throw new Error("tag is not match tagName")
     }
-    // let attrs=openTagAttrs.match((/[^\s]*?=".*?"/g))
-    // console.log(attrs,openTagAttrs)
+
     this.attrs=parseAttrs(openTagAttrs)
-    // for(let j=1;j<attrs.length;j++){
-    //   let [key,value]=attrs[j].split('=')
-    //   attrsObj[key]=value ? value.replace(/["'`]/g,'') : value
-    // }
-    // this.attrs=attrsObj
     let restStr=str.slice(i+1)
-
     let count=1
-
     let m='',endId=-1
-
     for(let j=0;j<restStr.length;j++){
       m+=restStr[j]
       if(m.endsWith('<'+this.tagName)){
@@ -45,7 +35,6 @@ class Tag {
       }else if(m.endsWith('</'+this.tagName)){
         count--
       }
-      // console.log(m,count)
       if(count===0){
         endId=j-this.tagName.length-1
         break
@@ -55,10 +44,8 @@ class Tag {
       throw new Error("tag has no close,is self-close? use class SelfCloseTag")
     }
     this.content=restStr.slice(0,endId)
-    // console.log('\n'+this.content)
   }
 
-  // 处理tag 属性
   beforeMerge(){
     return ''
   }
@@ -74,6 +61,13 @@ class Tag {
   afterMerge(){
     return ''
   }
+  beforeReturn(str){
+    str=str.replace(/\n{3,}/g,"\n\n")
+    if(str.endsWith("\n\n")){
+      str=str.substring(0,str.length-1)
+    }
+    return str
+  }
 
   handleContent(content){
     return content
@@ -85,7 +79,7 @@ class Tag {
     str+=this.handleContent()
     str+=this.afterMerge()
     str+=gapAfter
-    return str
+    return this.beforeReturn(str)
   }
 }
 

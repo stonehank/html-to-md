@@ -13,6 +13,8 @@ class Img extends SelfCloseTag{
 
   afterMerge(){
     let {src,alt}=this.getAttrs()
+    if(!alt)alt=''
+    if(!src)src=''
     return `${alt}](${src})`
   }
 
@@ -24,8 +26,3 @@ class Img extends SelfCloseTag{
 }
 module.exports=Img
 
-
-
-let img=new Img("<img src=\"https://octodex.github.com/images/minion.png\" alt=\"Minion\">")
-
-console.log(img.execMerge())

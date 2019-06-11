@@ -1,27 +1,34 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
-const {unescape}=require( '../escape')
-
+const {findValidTag,findTagClass,unescape}=require('../utils')
 
 
 class Code extends Tag{
-  constructor(str,tagName='code',{match='`',language=''}={}){
+  constructor(str,tagName='code',{match='`',language='',layer=1}={}){
     super(str,tagName)
     this.match=match
     this.language=language
+    this.layer=layer
+    this.res=null
   }
 
+
   beforeMerge(){
-    if(this.match==='```')return this.match+this.language+'\n'
-    return this.match
+    let preLayer=' '.repeat((this.layer-1)*4)
+    if(this.match==='```')return preLayer+this.match+this.language+'\n'
+    return preLayer+this.match
   }
 
   afterMerge(){
-    if(this.match==='```')return '\n'+this.match
-    return this.match
+    let preLayer=' '.repeat((this.layer-1)*4)
+    let gap=''
+    if(this.match==='```' && !this.res.endsWith('\n'))gap='\n'
+    return gap+preLayer+this.match
   }
 
+  fillPerLine(lineStr){
+    let preLayer=' '.repeat((this.layer-1)*4)
+    return preLayer+lineStr
+  }
 
   handleContent(){
     let content=this.getContent()
@@ -29,7 +36,7 @@ class Code extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName==="span"){
+      if(tagName==="span" && this.language!==''){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge('','')
@@ -40,7 +47,13 @@ class Code extends Tag{
       tagName=nxt[0]
       tagStr=nxt[1]
     }
-    return res
+    this.res=res
+    let split=res.split('\n')
+    split=split.map(n=>{
+      if(n==='')return ''
+      return this.fillPerLine(n)
+    })
+    return split.join('\n')
   }
 
   execMerge(gapBefore='',gapAfter=''){
@@ -51,9 +64,3 @@ class Code extends Tag{
 
 
 module.exports=Code
-
-
-
-let code=new Code('<code><span>dfaf</span><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></code>')
-//
-console.log(code.execMerge())

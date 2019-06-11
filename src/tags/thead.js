@@ -1,6 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 
 

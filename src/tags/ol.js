@@ -1,13 +1,12 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class Ol extends Tag{
   constructor(str,tagName='ol',{layer=1}={}){
     super(str,tagName)
     let attrs=this.getAttrs()
     this.layer=layer
-    this.count=attrs.start
+    this.count=attrs.start || 1
   }
 
 
@@ -16,25 +15,29 @@ class Ol extends Tag{
     let getNxtValidTag=findValidTag(content)
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
-    // console.log(tagName,tagStr)
     while(tagStr!==''){
-      if(tagName!=='li'){
-        throw new Error('should not have tags except <li> inside ol, current tag is '+tagName)
-      }
-      if(tagName!=null){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})
-        res+=subTag.execMerge('','\n')
+      if(tagStr!=='\n'){
+        if(tagName!=='li'){
+          throw new Error('should not have tags except <li> inside ol, current tag is '+tagName)
+        }
+        if(tagName!=null){
+          let SubTagClass=findTagClass(tagName)
+          let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})
+          res+=subTag.execMerge('','\n')
+        }
+        this.count++
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]
-      this.count++
     }
     return res
   }
 
-  execMerge(gapBefore='',gapAfter=''){
+  execMerge(gapBefore='\n',gapAfter=''){
+    if(this.layer>1){
+      gapBefore=''
+    }
     return super.execMerge(gapBefore,gapAfter)
   }
 
@@ -43,10 +46,3 @@ class Ol extends Tag{
 
 module.exports=Ol
 
-
-let ol=new Ol("<ol start=\"57\">" +
-  "<li>foo</li>" +
-  "<li>bar</li>" +
-  "</ol>")
-
-console.log(ol.execMerge())

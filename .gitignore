@@ -1,2 +1,5 @@
 .idea
 test.md
+draft
+node_modules
+coverage

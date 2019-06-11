@@ -2,7 +2,7 @@ const isSelfCloseTag=require("./isSelfCloseTag")
 
 function getTagName(str,id){
   let name=''
-  while(/[a-z]/.test(str[id])){
+  while(/[a-z0-9]/.test(str[id])){
     name+=str[id++]
   }
   return name

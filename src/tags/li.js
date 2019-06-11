@@ -1,6 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class Li extends Tag{
   constructor(str,tagName='li',{match='*',layer=1}={}){
@@ -20,12 +19,16 @@ class Li extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName!=null){
-        let isSubList=tagName==='ul' || tagName==='ol'
+        // 在li内部 需要另起一行，并且内部可以嵌套
+        let isSubList=tagName==='ul' || tagName==='ol' || tagName==='blockquote' || tagName==='pre'
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{layer:this.layer + (isSubList ? 1 : 0)})
-        res+=subTag.execMerge('\n','')
+        if(isSubList && !res.endsWith('\n')){
+          res+='\n'
+        }
+        res+=subTag.execMerge('','')
       }else{
-        res+=tagStr
+        if(tagStr!=="\n")res+=tagStr
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]

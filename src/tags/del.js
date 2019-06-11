@@ -1,11 +1,9 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class Del extends Tag{
-  constructor(str,tagName='del',{parentTag}={}){
+  constructor(str,tagName='del'){
     super(str,tagName)
-    this.parentTag=parentTag
   }
 
   beforeMerge(){
@@ -13,7 +11,7 @@ class Del extends Tag{
   }
 
   afterMerge(){
-    return '~~'
+    return "~~"
   }
 
 
@@ -46,8 +44,3 @@ class Del extends Tag{
 
 module.exports=Del
 
-
-
-let del=new Del('<del><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></del>')
-//
-console.log(del.execMerge())

@@ -15,8 +15,3 @@ class B extends Strong{
 
 module.exports=B
 
-//
-//
-// let b=new B('<b>dsafsf<button>sfds</button>123</b>')
-//
-// console.log(b.execMerge())

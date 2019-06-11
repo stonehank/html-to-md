@@ -21,9 +21,3 @@ class Hr extends SelfCloseTag{
 
 
 module.exports=Hr
-
-
-
-let hr=new Hr('<hr /><h1>dsafsf<button>sfds</button>123</h1>')
-
-console.log(hr.execMerge())

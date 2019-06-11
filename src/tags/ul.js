@@ -1,6 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class Ul extends Tag{
   constructor(str,tagName='ul',{layer=1}={}){
@@ -15,13 +14,15 @@ class Ul extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName!=='li'){
-        throw new Error('should not have tags except <li> inside ul, current tag is '+tagName)
-      }
-      if(tagName!=null){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{match:'*',layer:this.layer})
-        res+=subTag.execMerge('','\n')
+      if(tagStr!=='\n'){
+        if(tagName!=='li'){
+          throw new Error('should not have tags except <li> inside ul, current tag is '+tagName)
+        }
+        if(tagName!=null){
+          let SubTagClass=findTagClass(tagName)
+          let subTag=new SubTagClass(tagStr,tagName,{match:'*',layer:this.layer})
+          res+=subTag.execMerge('','\n')
+        }
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
@@ -30,7 +31,10 @@ class Ul extends Tag{
     return res
   }
 
-  execMerge(gapBefore='',gapAfter=''){
+  execMerge(gapBefore='\n',gapAfter=''){
+    if(this.layer>1){
+      gapBefore=''
+    }
     return super.execMerge(gapBefore,gapAfter)
   }
 
@@ -38,36 +42,3 @@ class Ul extends Tag{
 
 
 module.exports=Ul
-
-//
-// let ul=new Ul('<ul>' +
-//   '<li>123</li>' +
-//   '<li>234</li>' +
-//   '<li>345' +
-//       '<ul>' +
-//       '<li>123</li>' +
-//       '<li>234</li>' +
-//       '<li>345' +
-//           '<ul>' +
-//           '<li>123</li>' +
-//           '<li>234</li>' +
-//           '<li>345' +
-//               '<ul>' +
-//               '<li>123</li>' +
-//               '<li>234</li>' +
-//               '<li>345' +
-//               '<ul>' +
-//               '<li>123</li>' +
-//               '<li>234</li>' +
-//               '<li>345</li>' +
-//               '</ul>' +
-//               '</li>' +
-//               '</ul>' +
-//           '</li>' +
-//           '</ul>' +
-//       '</li>' +
-//       '</ul>' +
-//   '</li>' +
-//   '</ul>')
-//
-// console.log(ul.execMerge())

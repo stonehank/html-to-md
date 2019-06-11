@@ -1,11 +1,9 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class Em extends Tag{
-  constructor(str,tagName='em',{parentTag}={}){
+  constructor(str,tagName='em'){
     super(str,tagName)
-    this.parentTag=parentTag
   }
 
   beforeMerge(){
@@ -37,10 +35,7 @@ class Em extends Tag{
     return res
   }
 
-  execMerge(gapBefore=' ',gapAfter=''){
-    // if(this.parentTag==='b' || this.parentTag==='strong'){
-    //   gapBefore=''
-    // }
+  execMerge(gapBefore='',gapAfter=''){
     return super.execMerge(gapBefore,gapAfter)
   }
 
@@ -48,9 +43,3 @@ class Em extends Tag{
 
 
 module.exports=Em
-
-
-
-let em=new Em('<em><strong>sfds</strong></em>')
-
-console.log(em.execMerge())

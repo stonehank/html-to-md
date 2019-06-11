@@ -1,13 +1,10 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 class A extends Tag{
   constructor(str,tagName='a'){
     super(str,tagName)
   }
-
-
 
   beforeMerge(){
     return `[`
@@ -15,6 +12,7 @@ class A extends Tag{
 
   afterMerge(){
     let {href}=this.getAttrs()
+    if(!href)href=''
     return `](${href})`
   }
 
@@ -43,10 +41,5 @@ class A extends Tag{
   }
 
 }
+
 module.exports=A
-
-
-
-let a=new A("<a href=\"https://nodeca.github.io/pica/demo/\"><strong>pica</strong></a>")
-
-console.log(a.execMerge())

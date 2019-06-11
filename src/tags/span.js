@@ -1,7 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
-const {unescape}=require( '../escape')
+const {findValidTag,findTagClass,unescape}=require('../utils')
 
 
 class Span extends Tag{

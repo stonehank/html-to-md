@@ -1,6 +1,5 @@
 const Tag =require('../Tag')
-const findValidTag=require('../findValidTag')
-const findTagClass=require('../findTagClass')
+const {findValidTag,findTagClass}=require('../utils')
 
 
 
@@ -20,12 +19,14 @@ class Tr extends Tag{
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName!=='td' && tagName!=='th'){
-        throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
+      if(tagStr!=='\n'){
+        if(tagName!=='td' && tagName!=='th'){
+          throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
+        }
+        let SubTagClass=findTagClass(tagName)
+        let subTag=new SubTagClass(tagStr,tagName)
+        res+=subTag.execMerge('','')
       }
-      let SubTagClass=findTagClass(tagName)
-      let subTag=new SubTagClass(tagStr,tagName)
-      res+=subTag.execMerge('','')
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]

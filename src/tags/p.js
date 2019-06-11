@@ -1,5 +1,6 @@
 const Tag =require('../Tag')
-const {unescape}=require( '../escape')
+const {findValidTag,findTagClass,unescape}=require('../utils')
+
 
  class P extends Tag{
   constructor(str,tagName='p'){
@@ -9,8 +10,22 @@ const {unescape}=require( '../escape')
 
   handleContent(){
     let content=this.getContent()
-    content=unescape(content)
-    return content
+    let getNxtValidTag=findValidTag(content)
+    let res=''
+    let [tagName,tagStr]=getNxtValidTag()
+    while(tagStr!==''){
+      if(tagName!=null){
+        let SubTagClass=findTagClass(tagName)
+        let subTag=new SubTagClass(tagStr,tagName)
+        res+=subTag.execMerge()
+      }else{
+        res+=unescape(tagStr)
+      }
+      let nxt=getNxtValidTag()
+      tagName=nxt[0]
+      tagStr=nxt[1]
+    }
+    return res
   }
 
   execMerge(gapBefore='\n',gapAfter='\n'){
@@ -21,8 +36,3 @@ const {unescape}=require( '../escape')
 
 
 module.exports=P
-
-//
-// let p=new P('<p>dsafsf<button>sfds</button>123</p>')
-//
-// console.log(p.execMerge())

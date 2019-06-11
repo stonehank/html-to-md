@@ -1,4 +1,4 @@
-const parseAttrs=require('./parseAttrs')
+const {parseAttrs}=require('./utils')
 
 class SelfCloseTag {
   constructor(str,tagName){
@@ -22,15 +22,8 @@ class SelfCloseTag {
       throw new Error("tag is not match tagName")
     }
     this.attrs=parseAttrs(openTagAttrs)
-    // let attrsObj={}
-    // for(let j=1;j<attrs.length;j++){
-    //   let [key,value]=attrs[j].split('=')
-    //   attrsObj[key]=value.replace(/["'`]/g,'')
-    // }
-    // this.attrs=attrsObj
   }
 
-  // 处理tag 属性
   beforeMerge(){
     return ''
   }
