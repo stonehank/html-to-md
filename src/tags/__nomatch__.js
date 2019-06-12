@@ -1,8 +1,8 @@
 const Tag =require('../Tag')
 const {findValidTag,findTagClass}=require('../utils')
 
-class Empty extends Tag{
-  constructor(str,tagName='empty'){
+class __NoMatch__ extends Tag{
+  constructor(str,tagName='__nomatch__'){
     super(str,tagName)
     this.tagName=tagName
   }
@@ -42,6 +42,6 @@ class Empty extends Tag{
 }
 
 
-module.exports=Empty
+module.exports=__NoMatch__
 
 

@@ -3,32 +3,21 @@ const {findValidTag,findTagClass,unescape}=require('../utils')
 
 
 class Code extends Tag{
-  constructor(str,tagName='code',{match='`',language='',layer=1}={}){
+  constructor(str,tagName='code',{match='`',language=''}={}){
     super(str,tagName)
     this.match=match
     this.language=language
-    this.layer=layer
-    this.res=null
   }
 
 
   beforeMerge(){
-    let preLayer=' '.repeat((this.layer-1)*4)
-    if(this.match==='```')return preLayer+this.match+this.language+'\n'
-    return preLayer+this.match
+    return this.match
   }
 
   afterMerge(){
-    let preLayer=' '.repeat((this.layer-1)*4)
-    let gap=''
-    if(this.match==='```' && !this.res.endsWith('\n'))gap='\n'
-    return gap+preLayer+this.match
+    return this.match
   }
 
-  fillPerLine(lineStr){
-    let preLayer=' '.repeat((this.layer-1)*4)
-    return preLayer+lineStr
-  }
 
   handleContent(){
     let content=this.getContent()
@@ -47,13 +36,7 @@ class Code extends Tag{
       tagName=nxt[0]
       tagStr=nxt[1]
     }
-    this.res=res
-    let split=res.split('\n')
-    split=split.map(n=>{
-      if(n==='')return ''
-      return this.fillPerLine(n)
-    })
-    return split.join('\n')
+    return res
   }
 
   execMerge(gapBefore='',gapAfter=''){

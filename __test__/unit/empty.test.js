@@ -1,4 +1,4 @@
-import Empty from '../../src/tags/empty'
+import Empty from '../../src/tags/__nomatch__'
 
 
 describe('test empty(not match) tag',()=>{

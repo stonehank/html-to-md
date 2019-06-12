@@ -1,7 +1,8 @@
 let selfTags=[
   'img',
   'hr',
-  'input'
+  'input',
+  'br'
 ]
 
 function isSelfCloseTag(tag){

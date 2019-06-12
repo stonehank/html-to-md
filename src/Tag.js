@@ -13,15 +13,16 @@ class Tag {
 
   resolveStr(str){
     if(str[0]!=="<"){
-      throw new Error("parameter is not a valid tag" )
+      throw new Error("parameter is not a valid tag, str is "+str )
     }
     let openTagAttrs='',i=1
     for(;i<str.length;i++){
       if(str[i]===">")break
       openTagAttrs+=str[i]
     }
-    if(openTagAttrs.split(' ')[0]!==this.tagName){
-      throw new Error("tag is not match tagName")
+    let name=openTagAttrs.split(' ')[0]
+    if(name!==this.tagName){
+      throw new Error("tag is not match tagName, tagName in str is "+name+', this.tagName is '+this.tagName)
     }
 
     this.attrs=parseAttrs(openTagAttrs)
@@ -41,7 +42,7 @@ class Tag {
       }
     }
     if(endId===-1){
-      throw new Error("tag has no close,is self-close? use class SelfCloseTag")
+      throw new Error("tag "+ this.tagName +" has no close,is self-close? use class SelfCloseTag")
     }
     this.content=restStr.slice(0,endId)
   }
@@ -62,7 +63,6 @@ class Tag {
     return ''
   }
   beforeReturn(str){
-    str=str.replace(/\n{3,}/g,"\n\n")
     if(str.endsWith("\n\n")){
       str=str.substring(0,str.length-1)
     }

@@ -1,16 +1,6 @@
 const Tag =require('../Tag')
 const {findValidTag,findTagClass}=require('../utils')
 
-function countTdNum(str){
-  let trStr=''
-  for(let i=0;i<str.length;i++){
-    if(trStr.endsWith("</tr>")){
-      break
-    }
-    trStr+=str[i]
-  }
-  return Math.max(trStr.split('</td>').length-1,trStr.split('</th>').length-1)
-}
 
 function getTdAlign(str,tdNum){
   let alignObj={
@@ -23,7 +13,6 @@ function getTdAlign(str,tdNum){
   let res=Array(tdNum).fill(':---|')
   let match=str.match(/text-align:(center|left|right|start|end)/g)
   if(!match)return res
-  // console.log(str,match)
   res=match.slice(0,tdNum)
   res=res.map(s=>{
     let id=s.indexOf('text-align:')
@@ -36,15 +25,14 @@ function getTdAlign(str,tdNum){
 }
 
 class Tbody extends Tag{
-  constructor(str,tagName='tbody'){
+  constructor(str,tagName='tbody',{tdNum=0}={}){
     super(str,tagName)
     this.content=this.getContent()
-
+    this.tdNum=tdNum
   }
 
   beforeMerge(){
-    let tdNum=countTdNum(this.content)
-    let alignArr=getTdAlign(this.content,tdNum)
+    let alignArr=getTdAlign(this.content,this.tdNum)
     let tableHr='|'
     for(let i=0;i<alignArr.length;i++){
       tableHr+=alignArr[i]

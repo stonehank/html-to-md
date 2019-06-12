@@ -19,7 +19,7 @@ class Tr extends Tag{
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagStr!=='\n'){
+      if(tagName!==null){
         if(tagName!=='td' && tagName!=='th'){
           throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
         }

@@ -5,8 +5,9 @@ var escapeMap = {
   '>': '&gt;',
   '"': '&quot;',
   "'": '&#39;',
-  '`': '&#x60;'
+  '`': '&#x60;',
 };
+
 for (var key in escapeMap) {
   unescapeMap[escapeMap[key]] = key;
 }

@@ -14,11 +14,11 @@ class Ul extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagStr!=='\n'){
-        if(tagName!=='li'){
-          throw new Error('should not have tags except <li> inside ul, current tag is '+tagName)
-        }
+      if(tagStr.trim()!==''){
         if(tagName!=null){
+          if(tagName!=='li'){
+            throw new Error('should not have tags except <li> inside ul, current tag is '+tagName+', current tagStr is'+tagStr )
+          }
           let SubTagClass=findTagClass(tagName)
           let subTag=new SubTagClass(tagStr,tagName,{match:'*',layer:this.layer})
           res+=subTag.execMerge('','\n')

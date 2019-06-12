@@ -1,6 +1,13 @@
-const {findTagClass,findValidTag}=require('../src/utils')
+const {findTagClass,findValidTag,unescape}=require('../src/utils')
+
+function clearComment(str){
+  return str.replace(/<!--(.|\n|\r|\t|\s)*?-->/g,'')
+}
+
 
 function html2Md(str){
+  str=clearComment(str)
+  str=str.replace(/\s?\r\n/g,'')
   let getNxtValidTag=findValidTag(str)
   let res=''
   let [tagName,tagStr]=getNxtValidTag()
@@ -16,7 +23,15 @@ function html2Md(str){
     tagName=nxt[0]
     tagStr=nxt[1]
   }
-  return res
+  return beforeReturn(unescape(res))
+}
+
+function beforeReturn(str){
+  str=str.replace(/&nbsp;/g,"").replace(/\n{3,}/g,"\n\n")
+  if(str.endsWith("\n\n")){
+    str=str.substring(0,str.length-1)
+  }
+  return str
 }
 
 module.exports=html2Md
