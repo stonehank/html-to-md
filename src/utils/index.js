@@ -4,6 +4,7 @@ const findValidTag=require('./findValidTag')
 const findTagClass=require('./findTagClass')
 const isSelfCloseTag=require('./isSelfCloseTag')
 const parseAttrs=require('./parseAttrs')
+const getLanguage=require('./getLanguage')
 
 
 module.exports={
@@ -13,5 +14,6 @@ module.exports={
   findTagClass,
   findValidTag,
   isSelfCloseTag,
-  parseAttrs
+  parseAttrs,
+  getLanguage
 }
