@@ -1,12 +1,13 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass}=require('../utils')
+const SelfCloseTag =require('../SelfCloseTag')
+
+const {findValidTag}=require('../utils')
 
 class __Empty__ extends Tag{
   constructor(str,tagName='__empty__'){
     super(str,tagName)
     this.tagName=tagName
   }
-
 
   handleContent(){
     let content=this.getContent()
@@ -33,7 +34,19 @@ class __Empty__ extends Tag{
 
 }
 
+class __EmptySelfClose__ extends SelfCloseTag{
+  constructor(str,tagName='__emptyselfclose__'){
+    super(str,tagName)
+    this.tagName=tagName
+  }
 
-module.exports=__Empty__
+
+  execMerge(){
+    return super.execMerge('','')
+  }
+
+}
+
+module.exports={__Empty__,__EmptySelfClose__}
 
 

@@ -20,10 +20,10 @@ class Tr extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName!==null){
-        if(tagName!=='td' && tagName!=='th'){
+        let SubTagClass=findTagClass(tagName)
+        if(tagName!=='td' && tagName!=='th' && SubTagClass.name!=='__Ignore__' ){
           throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
         }
-        let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge('','')
       }

@@ -18,8 +18,8 @@ class Ol extends Tag{
     while(tagStr!==''){
       if(tagStr.trim()!==''){
         if(tagName!=null){
-          if(tagName!=='li'){
-            throw new Error('should not have tags except <li> inside ol, current tag is '+tagName+', current tagStr is '+tagStr )
+          if(tagName!=='li' && SubTagClass.name!=='__Ignore__' ){
+            throw new Error('should not have tags except <li> inside ol, current tag is '+tagName+', current tagStr is'+tagStr )
           }
           let SubTagClass=findTagClass(tagName)
           let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})

@@ -117,7 +117,6 @@ describe('test modules',()=>{
       '**示例 1:**\n' +
       '\n' +
       '```\n' +
-      '\n' +
       '输入: \n' +
       '[[1,1,0],\n' +
       ' [1,1,0],\n' +
@@ -130,7 +129,6 @@ describe('test modules',()=>{
       '**示例 2:**\n' +
       '\n' +
       '```\n' +
-      '\n' +
       '输入: \n' +
       '[[1,1,0],\n' +
       ' [1,1,1],\n' +
@@ -162,6 +160,64 @@ describe('test modules',()=>{
       '\n' +
       '1. `1 <= stones.length <= 30`\n' +
       '2. `1 <= stones[i] <= 1000`\n')
+  })
+
+  it('test-6',()=>{
+    let str="<p>返回与给定先序遍历&nbsp;<code>preorder</code> 相匹配的二叉搜索树（binary <strong>search</strong> tree）的根结点。</p>\n\n<p><em>(回想一下，二叉搜索树是二叉树的一种，其每个节点都满足以下规则，对于&nbsp;<code>node.left</code>&nbsp;的任何后代，值总 <code>&lt;</code> <code>node.val</code>，而 <code>node.right</code> 的任何后代，值总 <code>&gt;</code> <code>node.val</code>。此外，先序遍历首先显示节点的值，然后遍历 <code>node.left</code>，接着遍历 <code>node.right</code>。）</em></p>\n\n<p>&nbsp;</p>\n\n<p><strong>示例：</strong></p>\n\n<pre><strong>输入：</strong>[8,5,1,7,10,12]\n<strong>输出：</strong>[8,5,10,1,7,null,12]\n<img alt=\"\" src=\"https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2019/03/08/1266.png\" style=\"height: 200px; width: 306px;\">\n</pre>\n\n<p>&nbsp;</p>\n\n<p><strong>提示：</strong></p>\n\n<ol>\n\t<li><code>1 &lt;= preorder.length &lt;= 100</code></li>\n\t<li>先序&nbsp;<code>preorder</code>&nbsp;中的值是不同的。</li>\n</ol>\n"
+    expect(html2Md(str)).toBe('\n' +
+      '返回与给定先序遍历`preorder` 相匹配的二叉搜索树（binary **search** tree）的根结点。\n' +
+      '\n' +
+      '*(回想一下，二叉搜索树是二叉树的一种，其每个节点都满足以下规则，对于`node.left`的任何后代，值总 `<` `node.val`，而 `node.right` 的任何后代，值总 `>` `node.val`。此外，先序遍历首先显示节点的值，然后遍历 `node.left`，接着遍历 `node.right`。）*\n' +
+      '\n' +
+      '**示例：**\n' +
+      '\n' +
+      '```\n' +
+      '输入：[8,5,1,7,10,12]\n' +
+      '输出：[8,5,10,1,7,null,12]\n' +
+      '```\n' +
+      '\n' +
+      '**提示：**\n' +
+      '\n' +
+      '1. `1 <= preorder.length <= 100`\n' +
+      '2. 先序`preorder`中的值是不同的。\n')
+  })
+
+  it('test-7',()=>{
+    let str="<p>给定一个由空格分割单词的句子&nbsp;<code>S</code>。每个单词只包含大写或小写字母。</p>\n\n<p>我们要将句子转换为&nbsp;<em>&ldquo;Goat Latin&rdquo;</em>（一种类似于 猪拉丁文&nbsp;- Pig Latin 的虚构语言）。</p>\n\n<p>山羊拉丁文的规则如下：</p>\n\n<ul>\n\t<li>如果单词以元音开头（a, e, i, o, u），在单词后添加<code>&quot;ma&quot;</code>。<br />\n\t例如，单词<code>&quot;apple&quot;</code>变为<code>&quot;applema&quot;</code>。</li>\n\t<br />\n\t<li>如果单词以辅音字母开头（即非元音字母），移除第一个字符并将它放到末尾，之后再添加<code>&quot;ma&quot;</code>。<br />\n\t例如，单词<code>&quot;goat&quot;</code>变为<code>&quot;oatgma&quot;</code>。</li>\n\t<br />\n\t<li>根据单词在句子中的索引，在单词最后添加与索引相同数量的字母<code>&#39;a&#39;</code>，索引从1开始。<br />\n\t例如，在第一个单词后添加<code>&quot;a&quot;</code>，在第二个单词后添加<code>&quot;aa&quot;</code>，以此类推。</li>\n</ul>\n\n<p>返回将&nbsp;<code>S</code>&nbsp;转换为山羊拉丁文后的句子。</p>\n\n<p><strong>示例 1:</strong></p>\n\n<pre>\n<strong>输入: </strong>&quot;I speak Goat Latin&quot;\n<strong>输出: </strong>&quot;Imaa peaksmaaa oatGmaaaa atinLmaaaaa&quot;\n</pre>\n\n<p><strong>示例 2:</strong></p>\n\n<pre>\n<strong>输入: </strong>&quot;The quick brown fox jumped over the lazy dog&quot;\n<strong>输出: </strong>&quot;heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa&quot;\n</pre>\n\n<p><strong>说明:</strong></p>\n\n<ul>\n\t<li><code>S</code>&nbsp;中仅包含大小写字母和空格。单词间有且仅有一个空格。</li>\n\t<li><code>1 &lt;= S.length &lt;= 150</code>。</li>\n</ul>\n"
+    expect(html2Md(str)).toBe('\n' +
+      '给定一个由空格分割单词的句子`S`。每个单词只包含大写或小写字母。\n' +
+      '\n' +
+      '我们要将句子转换为*&ldquo;Goat Latin&rdquo;*（一种类似于 猪拉丁文- Pig Latin 的虚构语言）。\n' +
+      '\n' +
+      '山羊拉丁文的规则如下：\n' +
+      '\n' +
+      '* 如果单词以元音开头（a, e, i, o, u），在单词后添加`"ma"`。\n' +
+      '\t例如，单词`"apple"`变为`"applema"`。\n' +
+      '* 如果单词以辅音字母开头（即非元音字母），移除第一个字符并将它放到末尾，之后再添加`"ma"`。\n' +
+      '\t例如，单词`"goat"`变为`"oatgma"`。\n' +
+      '* 根据单词在句子中的索引，在单词最后添加与索引相同数量的字母`\'a\'`，索引从1开始。\n' +
+      '\t例如，在第一个单词后添加`"a"`，在第二个单词后添加`"aa"`，以此类推。\n' +
+      '\n' +
+      '返回将`S`转换为山羊拉丁文后的句子。\n' +
+      '\n' +
+      '**示例 1:**\n' +
+      '\n' +
+      '```\n' +
+      '输入: "I speak Goat Latin"\n' +
+      '输出: "Imaa peaksmaaa oatGmaaaa atinLmaaaaa"\n' +
+      '```\n' +
+      '\n' +
+      '**示例 2:**\n' +
+      '\n' +
+      '```\n' +
+      '输入: "The quick brown fox jumped over the lazy dog"\n' +
+      '输出: "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"\n' +
+      '```\n' +
+      '\n' +
+      '**说明:**\n' +
+      '\n' +
+      '* `S`中仅包含大小写字母和空格。单词间有且仅有一个空格。\n' +
+      '* `1 <= S.length <= 150`。\n')
   })
 
 })

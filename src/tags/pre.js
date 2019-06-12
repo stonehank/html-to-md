@@ -1,6 +1,6 @@
 const Tag =require('../Tag')
-const __Empty__ =require('./__Empty__')
-const {findValidTag,findTagClass,unescape,escape,checkLang}=require('../utils')
+const {__Empty__ ,__EmptySelfClose__}=require('./__Empty__')
+const {findValidTag,findTagClass,unescape,isSelfCloseTag,checkLang}=require('../utils')
 
 class Pre extends Tag{
   constructor(str,tagName='pre',{layer=1}={}){
@@ -60,10 +60,12 @@ class Pre extends Tag{
         let subTag=new SubTagClass(tagStr,tagName,{match:'',language:this.language})
         res+=subTag.execMerge('','')
       }else if(tagName!=null){
-        let emptyTag=new __Empty__(tagStr,tagName)
+        let emptyTag
+        if(isSelfCloseTag(tagName))emptyTag=new __EmptySelfClose__(tagStr,tagName)
+        else emptyTag=new __Empty__(tagStr,tagName)
         res+=emptyTag.execMerge()
       }else{
-        res+=unescape(tagStr)
+        if(tagStr!=='\n') res+=unescape(tagStr)
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]

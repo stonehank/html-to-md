@@ -16,10 +16,10 @@ class Ul extends Tag{
     while(tagStr!==''){
       if(tagStr.trim()!==''){
         if(tagName!=null){
-          if(tagName!=='li'){
+          let SubTagClass=findTagClass(tagName)
+          if(tagName!=='li' && SubTagClass.name!=='__Ignore__' ){
             throw new Error('should not have tags except <li> inside ul, current tag is '+tagName+', current tagStr is'+tagStr )
           }
-          let SubTagClass=findTagClass(tagName)
           let subTag=new SubTagClass(tagStr,tagName,{match:'*',layer:this.layer})
           res+=subTag.execMerge('','\n')
         }

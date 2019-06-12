@@ -1,4 +1,5 @@
 const Tag =require('../Tag')
+const SelfCloseTag =require('../SelfCloseTag')
 const {findValidTag,findTagClass}=require('../utils')
 
 class __NoMatch__ extends Tag{
@@ -41,7 +42,19 @@ class __NoMatch__ extends Tag{
 
 }
 
+class __NoMatchSelfClose__ extends SelfCloseTag{
+  constructor(str,tagName='__nomatchselfclose__'){
+    super(str,tagName)
+    this.tagName=tagName
+    this.str=str
+  }
 
-module.exports=__NoMatch__
+  execMerge(){
+    return this.str
+  }
+
+}
+
+module.exports={__NoMatch__,__NoMatchSelfClose__}
 
 

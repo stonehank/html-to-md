@@ -1,4 +1,4 @@
-const {findTagClass,findValidTag,unescape}=require('../src/utils')
+const {findTagClass,findValidTag,unescape}=require('./utils')
 
 function clearComment(str){
   return str.replace(/<!--(.|\n|\r|\t|\s)*?-->/g,'')
@@ -14,6 +14,7 @@ function html2Md(str){
   while(tagStr!==''){
     if(tagName!=null){
       let SubTagClass=findTagClass(tagName)
+      console.log(SubTagClass)
       let subTag=new SubTagClass(tagStr,tagName)
       res+=subTag.execMerge()
     }else{
