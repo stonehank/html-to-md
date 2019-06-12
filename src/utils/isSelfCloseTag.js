@@ -2,7 +2,10 @@ let selfTags=[
   'img',
   'hr',
   'input',
-  'br'
+  'br',
+  'html',
+  'meta',
+  'link',
 ]
 
 function isSelfCloseTag(tag){

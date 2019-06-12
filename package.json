@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "build": "webpack",
+    "build:demo": "webpack --config webpack.demo.config.js"
   },
   "keywords": [],
   "author": "",
@@ -14,17 +16,16 @@
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "highlight": "^0.2.4",
+    "highlight.js": "^9.15.8",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "jest": "^24.8.0",
     "markdown-it": "^8.4.2",
+    "marked": "^0.6.2",
     "terser-webpack-plugin": "^1.3.0",
     "webpack": "^4.33.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-cli": "^3.3.3",
     "webpack-dev-server": "^3.7.1"
-  },
-  "dependencies": {
-    "highlight.js": "^9.15.8"
   }
 }

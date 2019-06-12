@@ -2,7 +2,15 @@ let ignoreTag={
   'style':true,
   'br':true,
 }
-
+let selfTags=[
+  'img',
+  'hr',
+  'input',
+  'br',
+  'html',
+  'meta',
+  'link',
+]
 
 function findTagClass(tagName){
   let clazz
@@ -12,8 +20,7 @@ function findTagClass(tagName){
   try{
     clazz=require('../tags/'+tagName)
   }catch(e){
-    // console.log(isSelfCloseTag)
-    if(tagName==='input'){
+    if(selfTags.includes(tagName)){
       clazz=require('../tags/__nomatch__').__NoMatchSelfClose__
     }else{
       clazz=require('../tags/__nomatch__').__NoMatch__

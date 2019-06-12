@@ -1,48 +1,55 @@
 const Tag =require('../Tag')
-const {__Empty__ ,__EmptySelfClose__}=require('./__Empty__')
+const {__Empty__ ,__EmptySelfClose__}=require('./__empty__')
 const {findValidTag,findTagClass,unescape,isSelfCloseTag,checkLang}=require('../utils')
 
 class Pre extends Tag{
-  constructor(str,tagName='pre',{layer=1}={}){
+  constructor(str,tagName='pre',{layer=1,language=null,match='```'}={}){
     super(str,tagName)
     this.layer=layer
+    this.match=match
     this.res=null
     this.content=this.getContent()
-    this.language = this.getLanguage()
+    // this.str=str
+    this.language = language!=null ? language : this.getLanguage(str)
+
   }
 
 
-  getLanguage(){
-    let attrs=this.getAttrs()
-    let className=attrs['class']
-    if(!className)return ''
-    let classArr=className.split(' ')
-    for(let i=classArr.length-1;i>=0;i--){
-      let temp='', name=classArr[i]
-      for(let j=name.length-1;j>=0;j--){
-        if(!/[a-zA-Z0-9+]/.test(name[j])){
-          let standard=checkLang(temp)
-          if(standard){
-            return standard
-          }
-        }
-        temp=name[j]+temp
-      }
-    }
-    let match=this.content.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in).*?<\/span>/)
+  getLanguage(str){
+    // let attrs=this.getAttrs()
+    // let className=attrs['class']
+    // if(className){
+    //   let classArr=className.split(' ')
+    //   for(let i=classArr.length-1;i>=0;i--){
+    //     let temp='', name=classArr[i]
+    //     for(let j=name.length-1;j>=0;j--){
+    //       if(!/[a-zA-Z0-9+]/.test(name[j])){
+    //         let standard=checkLang(temp)
+    //         if(standard){
+    //           return standard
+    //         }
+    //       }
+    //       temp=name[j]+temp
+    //     }
+    //   }
+    // }
+    let matchLang=str.match(/(\bjava\b|\bjs\b|\bjavascript\b|\bpython\b|\bcpp\b|\bc\+\+\b|\bpy\b)/)
+    if(matchLang)return matchLang[1]
+    let match=str.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title).*?<\/span>/)
     return match ? 'javascript' : ''
   }
 
   beforeMerge(){
     let preLayer=' '.repeat((this.layer-1)*4)
-    return preLayer+"```"+this.language+'\n'
+    let matchLang=this.match==='' ? '' : this.match+this.language+'\n'
+    return preLayer+matchLang
   }
 
   afterMerge(){
     let preLayer=' '.repeat((this.layer-1)*4)
     let gap=''
     if(!this.res.endsWith('\n'))gap='\n'
-    return gap+preLayer+"```"
+    return gap+preLayer+this.match
   }
 
   fillPerLine(lineStr){

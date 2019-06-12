@@ -1,4 +1,4 @@
-const Em =require('./Em')
+const Em =require('./em')
 
 class I extends Em{
   constructor(str,tagName='i'){
@@ -12,9 +12,3 @@ class I extends Em{
 }
 
 module.exports=I
-
-
-//
-// let i=new I('<i>dsafsf<button>sfds</button>123</i>')
-//
-// console.log(i.execMerge())

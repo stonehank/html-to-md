@@ -22,7 +22,8 @@ class Tag {
     }
     let name=openTagAttrs.split(' ')[0]
     if(name!==this.tagName){
-      throw new Error("tag is not match tagName, tagName in str is "+name+', this.tagName is '+this.tagName)
+      console.warn("tag is not match tagName, tagName in str is "+name+', this.tagName is '+this.tagName)
+      return
     }
 
     this.attrs=parseAttrs(openTagAttrs)

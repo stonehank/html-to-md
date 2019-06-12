@@ -1,4 +1,4 @@
-const Th =require('./Th')
+const Th =require('./th')
 
 
 

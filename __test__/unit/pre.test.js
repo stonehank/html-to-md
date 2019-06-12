@@ -46,13 +46,37 @@ describe('test <pre></pre> tag',()=>{
       '```\n')
   })
 
-  it('has language, span should be parse, should add language',()=>{
-    let pre=new Pre('<pre class="hljs language-js"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
+  it('default language is javascript',()=>{
+    let pre=new Pre('<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
       '}\n' +
       '</code></pre>')
     expect(pre.execMerge()).toBe('\n' +
       '```javascript\n' +
+      'function abc(){\n' +
+      '  let x=5\n' +
+      '}\n```\n')
+  })
+
+
+  it('has language, span should be parse, should add language:js',()=>{
+    let pre=new Pre('<pre class="hljs language-js"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
+      '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
+      '}\n' +
+      '</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```js\n' +
+      'function abc(){\n' +
+      '  let x=5\n' +
+      '}\n```\n')
+  })
+  it('has language, span should be parse, should add language:java',()=>{
+    let pre=new Pre('<pre class="hljs language-java"><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
+      '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
+      '}\n' +
+      '</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```java\n' +
       'function abc(){\n' +
       '  let x=5\n' +
       '}\n```\n')
@@ -94,6 +118,34 @@ describe('test <pre></pre> tag',()=>{
       '0 0 0 1 1\n' +
       '1 1 1 1 1\n' +
       '在执行第二次查询之前，我们只有 [4, 4] 处的灯亮着。现在，[1, 0] 处的查询返回 0，因为该单元格不再亮着。\n' +
+      '```\n')
+  })
+
+  it('pre nest pre',()=>{
+    let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```js\n' +
+      'var a=5\n' +
+      '```\n')
+  })
+
+  it('pre nest pre 2',()=>{
+    let pre=new Pre('<pre><code class="language-java"><pre class="hljs"><code><span class="hljs-function">def <span class="hljs-title">a</span><span class="hljs-params">()</span>:\n' +
+      '  return 6</span></code></pre></code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```java\n' +
+      'def a():\n' +
+      '  return 6\n' +
+      '```\n')
+  })
+
+  it('multi nest pre',()=>{
+    let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><pre><code class="language-js"><pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```js\n' +
+      'var a=5\n' +
+      'var a=5\n' +
+      'var a=5\n' +
       '```\n')
   })
 })

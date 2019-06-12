@@ -107,7 +107,7 @@ describe("test <ol></ol> tag",()=>{
       '            >>>* bq-nest-3\n' +
       '    * unorder-3\n' +
       '        * code\n' +
-      '            ```javascript\n' +
+      '            ```js\n' +
       '            var a=5\n' +
       '            ```\n' +
       '3. three\n')

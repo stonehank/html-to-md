@@ -1,5 +1,4 @@
-import Hr from '../../src/tags/hr'
-
+const Hr=require( '../../src/tags/hr')
 
 describe('test <hr></hr> tag',()=>{
   it('self-close',()=>{

@@ -1,4 +1,5 @@
 const Tag =require('../Tag')
+const __Ignore__=require('./__ignore__')
 const {findValidTag,findTagClass}=require('../utils')
 
 
@@ -21,7 +22,7 @@ class Tr extends Tag{
     while(tagStr!==''){
       if(tagName!==null){
         let SubTagClass=findTagClass(tagName)
-        if(tagName!=='td' && tagName!=='th' && SubTagClass.name!=='__Ignore__' ){
+        if(tagName!=='td' && tagName!=='th' && SubTagClass !== __Ignore__ ){
           throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
         }
         let subTag=new SubTagClass(tagStr,tagName)

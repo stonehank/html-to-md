@@ -1,4 +1,4 @@
-const Strong =require('./Strong')
+const Strong =require('./strong')
 
 
 class B extends Strong{

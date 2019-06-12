@@ -25,9 +25,13 @@ class Code extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName==="span" && this.language!==''){
+      if(tagName==="span"  && this.language!==''){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName)
+        res+=subTag.execMerge('','')
+      }else if(tagName==="pre"){
+        let SubTagClass=findTagClass(tagName)
+        let subTag=new SubTagClass(tagStr,tagName,{language:this.language,match:''})
         res+=subTag.execMerge('','')
       }else{
         res+=unescape(tagStr)

@@ -1,4 +1,5 @@
 const Tag =require('../Tag')
+const __Ignore__=require('./__ignore__')
 const {findValidTag,findTagClass}=require('../utils')
 
 class Ol extends Tag{
@@ -18,10 +19,10 @@ class Ol extends Tag{
     while(tagStr!==''){
       if(tagStr.trim()!==''){
         if(tagName!=null){
-          if(tagName!=='li' && SubTagClass.name!=='__Ignore__' ){
+          let SubTagClass=findTagClass(tagName)
+          if(tagName!=='li' && SubTagClass !== __Ignore__){
             throw new Error('should not have tags except <li> inside ol, current tag is '+tagName+', current tagStr is'+tagStr )
           }
-          let SubTagClass=findTagClass(tagName)
           let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})
           res+=subTag.execMerge('','\n')
         }

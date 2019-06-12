@@ -14,7 +14,6 @@ function html2Md(str){
   while(tagStr!==''){
     if(tagName!=null){
       let SubTagClass=findTagClass(tagName)
-      console.log(SubTagClass)
       let subTag=new SubTagClass(tagStr,tagName)
       res+=subTag.execMerge()
     }else{

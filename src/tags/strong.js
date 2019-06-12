@@ -43,9 +43,3 @@ class Strong extends Tag{
 
 
 module.exports=Strong
-
-
-
-// let strong=new Strong('<strong><a href="https://github.com/nodeca/babelfish/"><i>babelfish</i></a></strong>')
-// //
-// console.log(strong.execMerge())

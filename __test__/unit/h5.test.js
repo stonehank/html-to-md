@@ -1,4 +1,4 @@
-import H5 from '../../src/tags/h5'
+const H5=require( '../../src/tags/h5')
 
 
 describe('test <h5></h5> tag',()=>{
