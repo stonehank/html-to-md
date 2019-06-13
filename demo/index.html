@@ -52,7 +52,7 @@
 <div class="infoWrap">
     <span class="info">markdown</span>
     <span class="info">
-        <span>👉</span>
+        <span style="font-size:0.8rem">转换工具选择👉</span>
         <select id="chooseM2H">
             <option value="markdown-it">markdown-it</option>
             <option value="marked">marked</option>
@@ -62,7 +62,7 @@
     <span class="info">
         <span>👉</span>
         <select disabled>
-            <option value="markdown-it">html2md</option>
+            <option value="html-to-md">html-to-md</option>
         </select>
     </span>
     <span class="info">markdown</span>
@@ -70,7 +70,7 @@
 <div id="wrap" class="markdown-body ">
     <textarea id="inputMD" class="io"></textarea>
     <div id="outputHTML" class="io" ></div>
-    <textarea id="outputMD" class="io"></textarea>
+    <textarea id="outputMD" readonly class="io"></textarea>
 </div>
 <script>
   window.onload=()=>{

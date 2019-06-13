@@ -10,7 +10,7 @@
 
 ### 效果
 
-[live-demo](https://stonehank.github.io/html-to-md/)(updating)
+[live-demo](https://stonehank.github.io/html-to-md/)
 
 
 ### 为什么要做个
