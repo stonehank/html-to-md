@@ -1,5 +1,5 @@
-var unescapeMap = {};
-var escapeMap = {
+let unescapeMap = {};
+let escapeMap = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -8,14 +8,14 @@ var escapeMap = {
   '`': '&#x60;',
 };
 
-for (var key in escapeMap) {
+for (let key in escapeMap) {
   unescapeMap[escapeMap[key]] = key;
 }
 
-var reUnescapedHtml = /[&<>"'`]/g
-var reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
-var reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60);/g
-var reHasEscapedHtml = RegExp(reEscapedHtml.source)
+let reUnescapedHtml = /[&<>"'`]/g
+let reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+let reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60);/g
+let reHasEscapedHtml = RegExp(reEscapedHtml.source)
 
 function escape(s) {
   return (s && reHasUnescapedHtml.test(s)) ?

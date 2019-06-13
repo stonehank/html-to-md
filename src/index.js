@@ -5,13 +5,14 @@ function clearComment(str){
 }
 
 
-function html2Md(str){
+function html2md(str){
   str=clearComment(str)
   str=str.replace(/\s?\r\n/g,'')
   let getNxtValidTag=findValidTag(str)
   let res=''
   let [tagName,tagStr]=getNxtValidTag()
   while(tagStr!==''){
+    // console.log(tagStr,tagName)
     if(tagName!=null){
       let SubTagClass=findTagClass(tagName)
       let subTag=new SubTagClass(tagStr,tagName)
@@ -34,4 +35,4 @@ function beforeReturn(str){
   return str
 }
 
-module.exports=html2Md
+module.exports=html2md

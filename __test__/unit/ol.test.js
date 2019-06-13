@@ -133,12 +133,16 @@ describe("test <ol></ol> tag",()=>{
       "</li>\n" +
       "</ol>")
 
-    expect(ol.execMerge()).toBe("\n" +
-      "1. Lorem ipsum dolor sit amet\n" +
-      "2. Consectetur adipiscing elit\n" +
-      "3. Integer molestie lorem at massa\n" +
-      "4. You can use sequential numbers…\n" +
-      "5. …or keep all the numbers as `1.`\n")
+    expect(ol.execMerge()).toBe('\n' +
+      '1. Lorem ipsum dolor sit amet\n' +
+      '\n' +
+      '2. Consectetur adipiscing elit\n' +
+      '\n' +
+      '3. Integer molestie lorem at massa\n' +
+      '\n' +
+      '4. You can use sequential numbers…\n' +
+      '\n' +
+      '5. …or keep all the numbers as `1.`\n')
   })
 })
 

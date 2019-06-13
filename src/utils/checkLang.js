@@ -4,7 +4,6 @@ let lang={
   'java':'java',
   'python':'python',
   'py':'python',
-  'c++':'cpp',
   'cpp':'cpp',
 }
 

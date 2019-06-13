@@ -46,6 +46,31 @@ describe('test <pre></pre> tag',()=>{
       '```\n')
   })
 
+
+  it('no language, keyword inside <code /> should be ignore (1)',()=>{
+    let pre=new Pre('<pre class="hljs"><code>js\n' +
+      'var a=5\n' +
+      '</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```\n' +
+      'js\n' +
+      'var a=5\n' +
+      '```\n')
+  })
+
+  it('no language, keyword inside <code /> should be ignore(2)',()=>{
+    let pre=new Pre('<pre class="hljs"><code>language-js\n' +
+      '&lt;code class="language-js"&gt;&lt;/code&gt;\n' +
+      'var a=5\n' +
+      '</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```\n' +
+      'language-js\n' +
+      '<code class="language-js"></code>\n' +
+      'var a=5\n' +
+      '```\n')
+  })
+
   it('default language is javascript',()=>{
     let pre=new Pre('<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +

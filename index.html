@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>html2Md live demo</title>
+    <title>html2md live demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -32,6 +32,7 @@
             overflow:auto;
         }
         #outputMD{
+            resize: none;
             flex: 1
         }
         textarea{
@@ -61,7 +62,7 @@
     <span class="info">
         <span>👉</span>
         <select disabled>
-            <option value="markdown-it">html2Md</option>
+            <option value="markdown-it">html2md</option>
         </select>
     </span>
     <span class="info">markdown</span>
@@ -78,20 +79,21 @@
     let mdItObj=window.markdownit({
         html:true,
         highlight: function (str, lang) {
+          let langClass='"hljs language-'+lang+'"'
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return '<pre class="hljs"><code>' +
+              return '<pre class='+langClass+'><code>' +
                 hljs.highlight(lang, str, true).value +
                 '</code></pre>';
             } catch (__) {}
           }
 
-          return '<pre class="hljs"><code>' + window.markdownit.utils.escapeHtml(str) + '</code></pre>';
+          return '<pre class="hljs"><code>' + mdItObj.utils.escapeHtml(str) + '</code></pre>';
         }
       }),
       mdIt=mdItObj.render.bind(mdItObj),
       marked=window.marked,
-      html2Md=window.html2Md,
+      html2md=window.html2md,
       inputMd=document.getElementById("inputMD"),
       outputMD=document.getElementById("outputMD"),
       outputHTML=document.getElementById("outputHTML"),
@@ -107,7 +109,7 @@
           } catch (__) {}
         }
 
-        return '<pre class="hljs"><code>' + window.markdownit.utils.escapeHtml(str) + '</code></pre>';
+        return '<pre class="hljs"><code>' + mdItObj.utils.escapeHtml(str) + '</code></pre>';
       }
     });
 
@@ -151,8 +153,12 @@
 
     function render(){
       let val=inputMd.value
-      let htmlOutput=md2Html(val),
-        mdOutput=html2Md(htmlOutput)
+      console.time('md->html')
+      let htmlOutput=md2Html(val)
+      console.timeEnd('md->html')
+      console.time('html->md')
+      let mdOutput=html2md(htmlOutput)
+      console.timeEnd('html->md')
       outputHTML.innerHTML=htmlOutput
       outputMD.innerHTML=mdOutput
     }

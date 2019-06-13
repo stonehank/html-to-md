@@ -20,13 +20,15 @@ class Tag {
       if(str[i]===">")break
       openTagAttrs+=str[i]
     }
-    let name=openTagAttrs.split(' ')[0]
+    let name=openTagAttrs.split(' ')[0].toLowerCase()
+    if(name[name.length-1]==="/")name=name.slice(0,name.length-1)
     if(name!==this.tagName){
       console.warn("tag is not match tagName, tagName in str is "+name+', this.tagName is '+this.tagName)
       return
     }
 
     this.attrs=parseAttrs(openTagAttrs)
+    // console.log(i,openTagAttrs,str)
     let restStr=str.slice(i+1)
     let count=1
     let m='',endId=-1
@@ -43,7 +45,9 @@ class Tag {
       }
     }
     if(endId===-1){
-      throw new Error("tag "+ this.tagName +" has no close,is self-close? use class SelfCloseTag")
+      // console.log(restStr,this.tagName)
+      console.warn("tag "+ this.tagName +" has no close,is self-close? use class SelfCloseTag")
+      return
     }
     this.content=restStr.slice(0,endId)
   }

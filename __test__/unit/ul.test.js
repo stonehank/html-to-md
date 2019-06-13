@@ -130,14 +130,10 @@ describe("test <ul></ul> tag",()=>{
   it("li nest p",()=>{
     let ul=new Ul("<ul>\n" +
       "<li>\n" +
-      "<p>Lorem ipsum dolor sit amet</p>\n" +
+      "<p>Lorem ipsum dolor sit amet</p></li>\n" +
+      "<li><p>Consectetur adipiscing elit</p>\n" +
       "</li>\n" +
-      "<li>\n" +
-      "<p>Consectetur adipiscing elit</p>\n" +
-      "</li>\n" +
-      "<li>\n" +
-      "<p>Integer molestie lorem at massa</p>\n" +
-      "</li>\n" +
+      "<li><p>Integer molestie lorem at massa</p></li>\n" +
       "<li>\n" +
       "<p>You can use sequential numbers…</p>\n" +
       "</li>\n" +
@@ -146,12 +142,39 @@ describe("test <ul></ul> tag",()=>{
       "</li>\n" +
       "</ul>")
 
-    expect(ul.execMerge()).toBe("\n" +
-      "* Lorem ipsum dolor sit amet\n" +
-      "* Consectetur adipiscing elit\n" +
-      "* Integer molestie lorem at massa\n" +
-      "* You can use sequential numbers…\n" +
-      "* …or keep all the numbers as `1.`\n")
+    expect(ul.execMerge()).toBe('\n' +
+      '* Lorem ipsum dolor sit amet\n' +
+      '\n' +
+      '* Consectetur adipiscing elit\n' +
+      '\n' +
+      '* Integer molestie lorem at massa\n' +
+      '\n' +
+      '* You can use sequential numbers…\n' +
+      '\n' +
+      '* …or keep all the numbers as `1.`\n')
+  })
+
+  it("text in li",()=>{
+    let ul=new Ul("<ul>\n" +
+      "<li>Lorem ipsum dolor sit amet\n" +
+      "</li>\n" +
+      "<li>\n" +
+      "Consectetur adipiscing elit</li>\n" +
+      "<li>Integer molestie lorem at massa</li>\n" +
+      "<li>\n" +
+      "You can use sequential numbers…\n" +
+      "</li>\n" +
+      "<li>\n" +
+      "…or keep all the numbers as <code>1.</code>\n" +
+      "</li>\n" +
+      "</ul>")
+
+    expect(ul.execMerge()).toBe('\n' +
+      '* Lorem ipsum dolor sit amet\n' +
+      '* Consectetur adipiscing elit\n' +
+      '* Integer molestie lorem at massa\n' +
+      '* You can use sequential numbers…\n' +
+      '* …or keep all the numbers as `1.`\n')
   })
 })
 

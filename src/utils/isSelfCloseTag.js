@@ -3,13 +3,13 @@ let selfTags=[
   'hr',
   'input',
   'br',
-  'html',
   'meta',
   'link',
+  '!doctype'
 ]
 
 function isSelfCloseTag(tag){
-  return selfTags.includes(tag)
+  return selfTags.includes(tag.toLowerCase())
 }
 
 

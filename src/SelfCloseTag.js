@@ -17,9 +17,9 @@ class SelfCloseTag {
       if(str[i]===">")break
       openTagAttrs+=str[i]
     }
-    let attrs=openTagAttrs.split(' ')
-    if(attrs[0]!==this.tagName){
-      throw new Error("tag is not match tagName")
+    let name=openTagAttrs.split(' ')[0].toLowerCase()
+    if(name!==this.tagName){
+      console.warn("tag is not match tagName, tagName in str is "+name+', this.tagName is '+this.tagName)
     }
     this.attrs=parseAttrs(openTagAttrs)
   }

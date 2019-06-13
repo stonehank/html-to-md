@@ -1,5 +1,14 @@
-.idea
 test.md
 draft
-node_modules
+.idea
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/
+dist
+lib
+demo
+devInfo.md
 coverage
+codecov.yml
