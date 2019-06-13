@@ -15,7 +15,7 @@ module.exports= env=>{
     entry: path.join( src, 'index.js'),
     output: {
       path: path.join(__dirname, 'demo'),
-      filename:'./html-2-md.js',
+      filename:'./html-to-md.js',
       library:'html2md',
       libraryTarget:'window',
     },
