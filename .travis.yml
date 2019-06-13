@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - "8.11.2"
+
+# S: Build Lifecycle
+install:
+  - npm install
+
+
+script:
+  - npm run build:demo
+
+after_script:
+  - cd ./demo
+  - git init
+  - git config user.name "stonehank"
+  - git config user.email "stonehank310@gmail.com"
+  - git add .
+  - git commit -m "Update"
+  - git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:${P_BRANCH} >/dev/null 2>&1
+
+# E: Build LifeCycle
+
+branches:
+  only:
+    - master
+env:
+ global:
+   - GH_REF: github.com/stonehank/react-valine
+   - P_BRANCH: gh-pages

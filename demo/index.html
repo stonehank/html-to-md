@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>html2md live demo</title>
+    <title>html-to-md live demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -74,6 +74,173 @@
 </div>
 <script>
   window.onload=()=>{
+
+    const PLACEHOLDER='---\n' +
+      '\n' +
+      '# h1 Heading\n' +
+      '## h2 Heading\n' +
+      '### h3 Heading\n' +
+      '#### h4 Heading\n' +
+      '##### h5 Heading\n' +
+      '###### h6 Heading\n' +
+      '\n' +
+      '***\n' +
+      '\n' +
+      '\n' +
+      '## Emphasis\n' +
+      '\n' +
+      '***Bold and italic***\n' +
+      '\n' +
+      '**This is bold text**\n' +
+      '\n' +
+      '__This is bold text__\n' +
+      '\n' +
+      '*This is italic text*\n' +
+      '\n' +
+      '_This is italic text_\n' +
+      '\n' +
+      '~~Strikethrough~~\n' +
+      '\n' +
+      '\n' +
+      '## Blockquotes\n' +
+      '\n' +
+      '\n' +
+      '> Blockquotes can also be nested...\n' +
+      '>> ...by using additional greater-than signs right next to each other...\n' +
+      '> > > ...or with spaces between arrows.\n' +
+      '\n' +
+      '\n' +
+      '### Blockquote list\n' +
+      '\n' +
+      '> * list1\n' +
+      '> * list2\n' +
+      '> * list3\n' +
+      '\n' +
+      '\n' +
+      '## Lists\n' +
+      '\n' +
+      'Unordered\n' +
+      '\n' +
+      '+ Create a list by starting a line with `+`, `-`, or `*`\n' +
+      '+ Sub-lists are made by indenting 2 spaces:\n' +
+      '  - Marker character change forces new list start:\n' +
+      '    * Ac tristique libero volutpat at\n' +
+      '    + Facilisis in pretium nisl aliquet\n' +
+      '    - Nulla volutpat aliquam velit\n' +
+      '+ Very easy!\n' +
+      '\n' +
+      'Ordered-1\n' +
+      '\n' +
+      '1. Lorem ipsum dolor sit amet\n' +
+      '2. Consectetur adipiscing elit\n' +
+      '3. Integer molestie lorem at massa\n' +
+      '1. You can use sequential numbers...\n' +
+      '1. ...or keep all the numbers as `1.`\n' +
+      '\n' +
+      'Ordered-2\n' +
+      '\n' +
+      '1. Lorem ipsum dolor sit amet\n' +
+      '\n' +
+      '2. Consectetur adipiscing elit\n' +
+      '3. Integer molestie lorem at massa\n' +
+      '1. You can use sequential numbers...\n' +
+      '1. ...or keep all the numbers as `1.`\n' +
+      '\n' +
+      'Start numbering with offset:\n' +
+      '\n' +
+      '57. foo\n' +
+      '1. bar\n' +
+      '\n' +
+      '\n' +
+      '## Code\n' +
+      '\n' +
+      'Block code "fences"\n' +
+      '\n' +
+      '```\n' +
+      'Sample text here...\n' +
+      '```\n' +
+      '\n' +
+      'Syntax highlighting\n' +
+      '\n' +
+      '``` js\n' +
+      'var foo = function (bar) {\n' +
+      '  return bar++;\n' +
+      '};\n' +
+      '\n' +
+      'console.log(foo(5));\n' +
+      '```\n' +
+      '\n' +
+      '\n' +
+      '## Tables\n' +
+      '\n' +
+      '| Option | Description |\n' +
+      '| ------ | ----------- |\n' +
+      '| data   | path to data files to supply the data that will be passed into templates. |\n' +
+      '| engine | engine to be used for processing templates. Handlebars is the default. |\n' +
+      '| ext    | extension to be used for dest files. |\n' +
+      '\n' +
+      'Right aligned columns\n' +
+      '\n' +
+      '| Option | Description |\n' +
+      '| ------:| -----------:|\n' +
+      '| data   | path to data files to supply the data that will be passed into templates. |\n' +
+      '| engine | engine to be used for processing templates. Handlebars is the default. |\n' +
+      '| ext    | extension to be used for dest files. |\n' +
+      '\n' +
+      '\n' +
+      '## Links\n' +
+      '\n' +
+      '[link text](http://dev.nodeca.com)\n' +
+      '\n' +
+      '[link with title](http://nodeca.github.io/pica/demo/ "title text!")\n' +
+      '\n' +
+      'Autoconverted link https://github.com/nodeca/pica (enable linkify to see)\n' +
+      '\n' +
+      '\n' +
+      '## Images\n' +
+      '\n' +
+      '![Minion](https://octodex.github.com/images/minion.png)\n' +
+      '![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")\n' +
+      '\n' +
+      'Like links, Images also have a footnote style syntax\n' +
+      '\n' +
+      '![Alt text][id]\n' +
+      '\n' +
+      'With a reference later in the document defining the URL location:\n' +
+      '\n' +
+      '[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"\n' +
+      '\n' +
+      '#### Complicate list\n' +
+      '\n' +
+      '\n' +
+      '* **STRONG**\n' +
+      '* [ATag](https://github.com/-it/markdown-it-sub)\n' +
+      '    1. order-1\n' +
+      '    2. order-2\n' +
+      '        * one\n' +
+      '        * two\n' +
+      '            >1. bq-nest-1\n' +
+      '            >>1. bq-nest-2\n' +
+      '            >>>1. bq-nest-3\n' +
+      '    3. order-3\n' +
+      '        1. code\n' +
+      '            ```javascript\n' +
+      '            function a(){\n' +
+      '                let b=5\n' +
+      '                let obj={\n' +
+      '                        x:100\n' +
+      '                    }\n' +
+      '                return obj.x+b\n' +
+      '            }\n' +
+      '            ```\n' +
+      '        2. [html-to-md-demo](https://stonehank.github.io/html-to-md/)\n' +
+      '            * ![avatar](https://avatars1.githubusercontent.com/u/26397640?s=40&v=4)\n' +
+      '    4. order-4\n' +
+      '\n' +
+      '\n' +
+      '\n' +
+      '\n'
+
     let hljs=window.hljs
     let io=document.getElementsByClassName("io")
     let mdItObj=window.markdownit({
@@ -98,7 +265,7 @@
       outputMD=document.getElementById("outputMD"),
       outputHTML=document.getElementById("outputHTML"),
       chooseM2H=document.getElementById("chooseM2H")
-
+    /* init */
     marked.setOptions({
       highlight: function(str, lang) {
         if (lang && hljs.getLanguage(lang)) {
@@ -115,6 +282,9 @@
 
     let delay=false,timer=null
     let md2Html=mdIt
+
+
+
 
     chooseM2H.addEventListener("change",(ev)=>{
       md2Html=ev.target.value==="marked" ? marked : mdIt
@@ -162,7 +332,10 @@
       outputHTML.innerHTML=htmlOutput
       outputMD.innerHTML=mdOutput
     }
+
+    inputMd.value=PLACEHOLDER
+    render()
   }
 </script>
-<script type="text/javascript" src="html2md.js"></script></body>
+<script type="text/javascript" src="./html-2-md.js"></script></body>
 </html>
