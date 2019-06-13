@@ -8,6 +8,7 @@ install:
 
 
 script:
+  - npm run test
   - npm run build:demo
 
 after_script:
@@ -26,5 +27,5 @@ branches:
     - master
 env:
  global:
-   - GH_REF: github.com/stonehank/react-valine
+   - GH_REF: github.com/stonehank/html-to-md
    - P_BRANCH: gh-pages
