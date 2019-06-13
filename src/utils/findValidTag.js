@@ -1,4 +1,4 @@
-const isSelfCloseTag=require("./isSelfCloseTag")
+const isSelfClosing=require("./isSelfClosing")
 
 function getTagName(str,id){
   let name=''
@@ -11,7 +11,6 @@ function getTagName(str,id){
 function findValidTag(str){
   let startId=0
   return ()=>{
-    // console.log(startId)
     let res=''
     let tagName=null,count=0,tempName='',open=false,canBeBreak=false
     for(let i=startId;i<str.length;i++){
@@ -27,7 +26,7 @@ function findValidTag(str){
         }
         if(tagName===tempName)count++
 
-        if(isSelfCloseTag(tagName)){
+        if(isSelfClosing(tagName)){
           count--
           if(count===0)canBeBreak=true
           if(count<0)console.warn(`tag ${tagName} is abnormal`)

@@ -8,7 +8,7 @@ describe('test special',()=>{
   })
   it('test-2',()=>{
     let str="<!DOCTYPE><html><body><i>abc<b>xxx</b></i></body></html>"
-    expect(html2Md(str)).toBe("<!DOCTYPE><html><body>*abc**xxx***</body></html>")
+    expect(html2Md(str)).toBe("<html><body>*abc**xxx***</body></html>")
   })
 
 

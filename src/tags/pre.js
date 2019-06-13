@@ -1,6 +1,6 @@
 const Tag =require('../Tag')
 const {__Empty__ ,__EmptySelfClose__}=require('./__empty__')
-const {findValidTag,findTagClass,unescape,isSelfCloseTag,getLanguage}=require('../utils')
+const {findValidTag,findTagClass,unescape,isSelfClosing,getLanguage}=require('../utils')
 
 class Pre extends Tag{
   constructor(str,tagName='pre',{layer=1,language=null,match='```'}={}){
@@ -43,7 +43,7 @@ class Pre extends Tag{
         res+=subTag.execMerge('','')
       }else if(tagName!=null){
         let emptyTag
-        if(isSelfCloseTag(tagName))emptyTag=new __EmptySelfClose__(tagStr,tagName)
+        if(isSelfClosing(tagName))emptyTag=new __EmptySelfClose__(tagStr,tagName)
         else emptyTag=new __Empty__(tagStr,tagName)
         res+=emptyTag.execMerge()
       }else{

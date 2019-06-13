@@ -2,6 +2,8 @@
 let ignoreTag={
   'style':true,
   'br':true,
+  'head':true,
+  '!doctype':true
 }
 
 function findTagClass(tagName){
@@ -12,7 +14,7 @@ function findTagClass(tagName){
   try{
     clazz=require('../tags/'+tagName)
   }catch(e){
-    if(require('./isSelfCloseTag')(tagName)){
+    if(require('./isSelfClosing')(tagName)){
       clazz=require('../tags/__nomatch__').__NoMatchSelfClose__
     }else{
       clazz=require('../tags/__nomatch__').__NoMatch__

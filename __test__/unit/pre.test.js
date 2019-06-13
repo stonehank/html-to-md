@@ -90,7 +90,7 @@ describe('test <pre></pre> tag',()=>{
       '}\n' +
       '</code></pre>')
     expect(pre.execMerge()).toBe('\n' +
-      '```js\n' +
+      '```javascript\n' +
       'function abc(){\n' +
       '  let x=5\n' +
       '}\n```\n')
@@ -149,7 +149,7 @@ describe('test <pre></pre> tag',()=>{
   it('pre nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
     expect(pre.execMerge()).toBe('\n' +
-      '```js\n' +
+      '```javascript\n' +
       'var a=5\n' +
       '```\n')
   })
@@ -167,7 +167,7 @@ describe('test <pre></pre> tag',()=>{
   it('multi nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><pre><code class="language-js"><pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
     expect(pre.execMerge()).toBe('\n' +
-      '```js\n' +
+      '```javascript\n' +
       'var a=5\n' +
       'var a=5\n' +
       'var a=5\n' +

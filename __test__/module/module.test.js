@@ -314,7 +314,7 @@ describe('module test1',()=>{
       '\n' +
       'Syntax highlighting\n' +
       '\n' +
-      '```js\n' +
+      '```javascript\n' +
       'var foo = function (bar) {\n' +
       '  return bar++;\n' +
       '};\n' +
