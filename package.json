@@ -1,7 +1,7 @@
 {
   "name": "html-to-md",
   "version": "0.1.0",
-  "description": "A javascript library for convert HTML<string> to markdown<string>, gzip 6kb",
+  "description": "A JS library for convert HTML<String> to markdown<String>, gzip 6kb",
   "main": "dist/index.js",
   "keywords": [
     "html2md",
