@@ -6,9 +6,7 @@ Thumbs.db
 db.json
 *.log
 node_modules/
-dist
 lib
-demo
 devInfo.md
 coverage
 codecov.yml
