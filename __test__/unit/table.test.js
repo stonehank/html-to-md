@@ -31,7 +31,7 @@ describe("test <table></table> tag",()=>{
       "</table>")
     expect(table.execMerge()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
-      "|:---|:---|:---|\n" +
+      "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
       "|data-2-left|**data-2-center**|data-2-right|\n" +
       "|*data-3-left*|data-3-center|data-3-right|\n")
@@ -76,7 +76,7 @@ describe("test <table></table> tag",()=>{
     let table=new Table(`<table><thead><tr><th><s>col-1</s></th><th>col-2</th><th>col-3</th></tr></thead><tbody><tr><td>data-1-left</td><td>data-1-center</td><td><code>data-1-right</code></td></tr><tr><td>data-2-left</td><td><b>data-2-center</b></td><td>data-2-right</td></tr><tr><td><i>data-3-left</i></td><td>data-3-center</td><td>data-3-right</td></tr></tbody></table>`)
     expect(table.execMerge()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
-      "|:---|:---|:---|\n" +
+      "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
       "|data-2-left|**data-2-center**|data-2-right|\n" +
       "|*data-3-left*|data-3-center|data-3-right|\n")
@@ -121,7 +121,7 @@ describe("test <table></table> tag",()=>{
       "</table>")
     expect(table.execMerge()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
-      "|:---|:---|:---|\n" +
+      "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
       "|data-2-left|**data-2-center**|data-2-right|\n" +
       "|*data-3-left*|data-3-center|data-3-right|\n")

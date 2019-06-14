@@ -194,7 +194,21 @@ describe('module test1',()=>{
       "<p>Footnote 2 link<sup><a href=\"#fn2\">[2]</a></sup>.</p>\n" +
       "<p>Inline footnote<sup><a href=\"#fn3\">[3]</a></sup> definition.</p>\n" +
       "<p>Duplicated footnote reference<sup><a href=\"#fn2\">[2:1]</a></sup>.</p>\n" +
-      "<p><em>here be dragons</em></p>\n"
+      "<p><em>here be dragons</em></p>\n"+
+      "<h2 id=\"todo-list\">Todo list</h2>\n" +
+      "<ul>\n" +
+      "<li><input disabled=\"\" type=\"checkbox\"> not finish-1</li>\n" +
+      "<li><input disabled=\"\" type=\"checkbox\"> not finish-2</li>\n" +
+      "<li><input disabled=\"\" type=\"checkbox\"> not finish-3</li>\n" +
+      "<li><input disabled=\"\" type=\"checkbox\"> not finish-4</li>\n" +
+      "</ul>\n" +
+      "<h2 id=\"done-list\">Done list</h2>\n" +
+      "<ul>\n" +
+      "<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> finish-1</li>\n" +
+      "<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> finish-2</li>\n" +
+      "<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> finish-3</li>\n" +
+      "<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> finish-4</li>\n" +
+      "</ul>"
 
     expect(html2Md(str)).toBe('\n' +
       '**Advertisement 😃**\n' +
@@ -325,7 +339,7 @@ describe('module test1',()=>{
       '## Tables\n' +
       '\n' +
       '|Option|Description|\n' +
-      '|:---|:---|\n' +
+      '|---|---|\n' +
       '|data|path to data files to supply the data that will be passed into templates.|\n' +
       '|engine|engine to be used for processing templates. Handlebars is the default.|\n' +
       '|ext|extension to be used for dest files.|\n' +
@@ -381,7 +395,21 @@ describe('module test1',()=>{
       '\n' +
       'Duplicated footnote reference<sup>[[2:1]](#fn2)</sup>.\n' +
       '\n' +
-      '*here be dragons*\n')
+      '*here be dragons*\n' +
+      '\n' +
+      '## Todo list\n' +
+      '\n' +
+      '* [ ]  not finish-1\n' +
+      '* [ ]  not finish-2\n' +
+      '* [ ]  not finish-3\n' +
+      '* [ ]  not finish-4\n' +
+      '\n' +
+      '## Done list\n' +
+      '\n' +
+      '* [x]  finish-1\n' +
+      '* [x]  finish-2\n' +
+      '* [x]  finish-3\n' +
+      '* [x]  finish-4\n')
   })
 
   it('test-2',()=>{

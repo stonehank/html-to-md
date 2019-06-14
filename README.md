@@ -78,6 +78,9 @@ console.log(html2md('<strong><em>strong and italic</em></strong>'))
 
 ### 待完成事项
 
-- [ ] 添加`input`的支持
+- [x] 添加`input`的支持
 - [ ] 添加参数，以便适应更多自定义需求
 - [ ] 增加测试
+
+
+### ChangLog

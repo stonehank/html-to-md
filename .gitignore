@@ -9,4 +9,6 @@ node_modules/
 lib
 devInfo.md
 coverage
+demo
+dist
 codecov.yml

@@ -173,4 +173,12 @@ describe('test <pre></pre> tag',()=>{
       'var a=5\n' +
       '```\n')
   })
+
+  it('tag inside pre should be empty',()=>{
+    let pre=new Pre('<pre><strong><i>this is normal text</i></strong></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```\n' +
+      'this is normal text\n' +
+      '```\n')
+  })
 })

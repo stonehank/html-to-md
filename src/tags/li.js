@@ -24,7 +24,7 @@ class Li extends Tag{
         // 在li内部 需要另起一行，并且内部可以嵌套
         let isSubList=tagName==='ul' || tagName==='ol' || tagName==='blockquote' || tagName==='pre'
         let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{layer:this.layer + (isSubList ? 1 : 0)})
+        let subTag=new SubTagClass(tagStr,tagName,{layer:this.layer + (isSubList ? 1 : 0),parentTag:'li'})
         if(isSubList && !res.endsWith('\n')){
           res+='\n'
         }

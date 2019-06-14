@@ -176,5 +176,35 @@ describe("test <ul></ul> tag",()=>{
       '* You can use sequential numbers…\n' +
       '* …or keep all the numbers as `1.`\n')
   })
+
+  it("todo list",()=>{
+    let ul=new Ul('<ul>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-1</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-2</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-3</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-4</li>\n' +
+      '</ul>')
+
+    expect(ul.execMerge()).toBe('\n' +
+      '* [ ]  not finish-1\n' +
+      '* [ ]  not finish-2\n' +
+      '* [ ]  not finish-3\n' +
+      '* [ ]  not finish-4\n')
+  })
+
+  it("done list",()=>{
+    let ul=new Ul('<ul>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-1</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-2</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-3</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-4</li>\n' +
+      '</ul>')
+
+    expect(ul.execMerge()).toBe('\n' +
+      '* [x]  finish-1\n' +
+      '* [x]  finish-2\n' +
+      '* [x]  finish-3\n' +
+      '* [x]  finish-4\n')
+  })
 })
 
