@@ -8,6 +8,7 @@ function clearComment(str){
 function html2md(str){
   str=clearComment(str)
   str=str.replace(/\s?\r\n/g,'')
+  // console.log(str)
   let getNxtValidTag=findValidTag(str)
   let res=''
   let [tagName,tagStr]=getNxtValidTag()

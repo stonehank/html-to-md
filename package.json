@@ -14,6 +14,7 @@
   "author": "stonehank <stonehank310@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "test:part":"jest",
     "test": "jest --coverage && codecov",
     "build": "npm run test && npm run build:demo && npm run build:main",
     "build:main": "webpack --env=production",

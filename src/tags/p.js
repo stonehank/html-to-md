@@ -3,13 +3,14 @@ const {findValidTag,findTagClass,unescape}=require('../utils')
 
 
  class P extends Tag{
-  constructor(str,tagName='p',{layer=1}={}){
+  constructor(str,tagName='p',{layer=1,extraSpace=''}={}){
     super(str,tagName)
     this.layer=layer
+    this.extraSpace=extraSpace
   }
 
   beforeMerge(){
-    return ' '.repeat((this.layer-1)*4)
+    return this.extraSpace.repeat((this.layer-1)*4)
   }
 
   handleContent(){
