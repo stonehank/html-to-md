@@ -301,30 +301,32 @@
       render()
     })
 
+    function syncScroll(ev){
+      let ele=ev.target
+      if(!delay){
+        clearTimeout(timer)
+        delay=true
+        if(ele.className==='io'){
+          let scrRatio=ele.scrollTop/ ele.scrollHeight
+          for(let j=0;j<io.length;j++){
+            if(io[j]===ele)continue
+            io[j].scrollTo({
+              top:io[j].scrollHeight*scrRatio
+            })
+          }
+        }
+        timer=setTimeout(()=>{
+          delay=false
+        },30)
+      }
+
+    }
 
 
 
     for(let i=0;i<io.length;i++){
       let ele=io[i]
-      ele.addEventListener("scroll",()=>{
-        if(!delay){
-          clearTimeout(timer)
-          delay=true
-          if(ele.className==='io'){
-            let scrRatio=ele.scrollTop/ ele.scrollHeight
-            for(let j=0;j<io.length;j++){
-              if(io[j]===ele)continue
-              io[j].scrollTo({
-                top:io[j].scrollHeight*scrRatio
-              })
-            }
-          }
-          timer=setTimeout(()=>{
-            delay=false
-          },30)
-        }
-
-      })
+      // ele.addEventListener("scroll",syncScroll)
     }
 
     inputMd.addEventListener("input",()=>{

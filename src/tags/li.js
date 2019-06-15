@@ -6,7 +6,7 @@ class Li extends Tag{
     super(str,tagName)
     this.match=match
     this.layer=layer
-    this.lastTag=null
+    this.hasPTag=false
   }
 
   beforeMerge(){
@@ -20,15 +20,16 @@ class Li extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName!=null){
-        this.lastTag=tagName
+        if(tagName==='p')this.hasPTag=true
         // 在li内部 需要另起一行，并且内部可以嵌套
         let isSubList=tagName==='ul' || tagName==='ol' || tagName==='blockquote' || tagName==='pre'
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{layer:this.layer + (isSubList ? 1 : 0),parentTag:'li'})
+        let endGap=isSubList ? "\n" : ''
         if(isSubList && !res.endsWith('\n')){
           res+='\n'
         }
-        res+=subTag.execMerge('','')
+        res+=subTag.execMerge('',endGap)
       }else{
         if(tagStr.startsWith("\n"))tagStr=tagStr.slice(1,tagStr.length)
         if(tagStr.endsWith("\n"))tagStr=tagStr.slice(0,tagStr.length-1)
@@ -39,7 +40,7 @@ class Li extends Tag{
       tagStr=nxt[1]
     }
     // 由于Tag中最后会统一删除结尾的\n\n，因此这里需要增加\n\n
-    if(this.lastTag==='p')res+='\n\n'
+    if(this.hasPTag)res+='\n\n'
     // console.log(this.lastTag==='p')
     return res
   }
