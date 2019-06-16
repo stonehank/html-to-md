@@ -1,5 +1,4 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass}=require('../utils')
 
 
 function getTdAlign(str,tdNum){
@@ -27,6 +26,7 @@ class Tbody extends Tag{
     super(str,tagName)
     this.content=this.getContent()
     this.tdNum=tdNum
+    this.handleContent=this.handleContent.bind(this,'','\n',true)
   }
 
   beforeMerge(){
@@ -38,24 +38,6 @@ class Tbody extends Tag{
     return tableHr+'\n'
   }
 
-  handleContent(){
-    let res=''
-
-    let getNxtValidTag=findValidTag(this.content)
-    let [tagName,tagStr]=getNxtValidTag()
-
-    while(tagStr!==''){
-      if(tagName!=null){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName)
-        res+=subTag.execMerge('','\n')
-      }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
-    }
-    return res
-  }
 
   execMerge(gapBefore='',gapAfter=''){
     return super.execMerge(gapBefore,gapAfter)

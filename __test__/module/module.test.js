@@ -264,7 +264,7 @@ describe('module test1',()=>{
       '\n' +
       '*This is italic text*\n' +
       '\n' +
-      ' ~~Strikethrough~~\n' +
+      '~~Strikethrough~~\n' +
       '\n' +
       '## Blockquotes\n' +
       '\n' +

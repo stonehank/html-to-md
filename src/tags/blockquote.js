@@ -32,7 +32,6 @@ class Blockquote extends Tag{
         let isSubblockq=tagName==='blockquote'
         let subTag=new SubTagClass(tagStr,tagName,isSubblockq ? {matchCounts:this.matchCounts+1} : {})
         if(!isFirstTag){
-          // console.log('match!!!!!!',tagName,this.leadingSpace+this.match)
           res+=(res.endsWith("\n") ? '' : '\n')+this.match+'\n'
         }
         res+=subTag.execMerge('','\n')

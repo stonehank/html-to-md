@@ -1,4 +1,5 @@
-const {parseAttrs}=require('./utils')
+const {findValidTag,findTagClass,parseAttrs}=require('./utils')
+
 
 class Tag {
   constructor(str,tagName,{tabSpace='   '}={}){
@@ -7,7 +8,6 @@ class Tag {
     this.content=''
     this.tabSpace=tabSpace
     this.resolveStr(str)
-
     this.getAttrs=this.getAttrs.bind(this,this.attrs)
     this.getContent=this.getContent.bind(this,this.content)
   }
@@ -29,7 +29,6 @@ class Tag {
     }
 
     this.attrs=parseAttrs(openTagAttrs)
-    // console.log(i,openTagAttrs,str)
     let restStr=str.slice(i+1)
     let count=1
     let m='',endId=-1
@@ -71,8 +70,24 @@ class Tag {
     return str.replace(/(\n\s*)+$/,'\n')
   }
 
-  handleContent(content){
-    return content
+  handleContent(subBeforeGap,subAfterGap,ignoreNoTags=false){
+    let res=''
+    let content=this.getContent()
+    let getNxtValidTag=findValidTag(content)
+    let [tagName,tagStr]=getNxtValidTag()
+    while(tagStr!==''){
+      if(tagName!=null){
+        let SubTagClass=findTagClass(tagName)
+        let subTag=new SubTagClass(tagStr,tagName)
+        res+=subTag.execMerge(subBeforeGap,subAfterGap)
+      }else if(!ignoreNoTags){
+        res+=unescape(tagStr)
+      }
+      let nxt=getNxtValidTag()
+      tagName=nxt[0]
+      tagStr=nxt[1]
+    }
+    return res
   }
 
   afterSlim(str){
