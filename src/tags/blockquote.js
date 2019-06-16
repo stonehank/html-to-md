@@ -6,14 +6,17 @@ class Blockquote extends Tag{
     super(str,tagName)
     this.matchCounts=matchCounts
     this.layer=layer
+    this.leadingSpace=this.tabSpace.repeat(this.layer-1)
+    this.match='>'.repeat(this.matchCounts)
     this.fillPerLine=this.fillPerLine.bind(this)
   }
 
 
   fillPerLine(lineStr){
-    let preLayer=' '.repeat((this.layer-1)*4)
-    if(!lineStr.startsWith('>') &&  this.matchCounts)return preLayer+'>'.repeat(this.matchCounts)+lineStr
-    return preLayer+lineStr
+    // let preLayer=' '.repeat((this.layer-1)*4)
+    if(!lineStr.startsWith('>') &&  this.matchCounts)
+      return this.leadingSpace+this.match+lineStr
+    return this.leadingSpace+lineStr
   }
 
 
@@ -22,13 +25,19 @@ class Blockquote extends Tag{
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
+    let isFirstTag=true
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
         let isSubblockq=tagName==='blockquote'
         let subTag=new SubTagClass(tagStr,tagName,isSubblockq ? {matchCounts:this.matchCounts+1} : {})
+        if(!isFirstTag){
+          // console.log('match!!!!!!',tagName,this.leadingSpace+this.match)
+          res+=(res.endsWith("\n") ? '' : '\n')+this.match+'\n'
+        }
         res+=subTag.execMerge('','\n')
       }
+      if(tagStr.trim()!=='')isFirstTag=false
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]

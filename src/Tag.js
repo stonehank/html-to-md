@@ -1,10 +1,11 @@
 const {parseAttrs}=require('./utils')
 
 class Tag {
-  constructor(str,tagName){
+  constructor(str,tagName,{tabSpace='   '}={}){
     this.tagName=tagName
     this.attrs=[]
     this.content=''
+    this.tabSpace=tabSpace
     this.resolveStr(str)
 
     this.getAttrs=this.getAttrs.bind(this,this.attrs)
@@ -45,7 +46,6 @@ class Tag {
       }
     }
     if(endId===-1){
-      // console.log(restStr,this.tagName)
       console.warn("tag "+ this.tagName +" has no close,is self-close? use class SelfCloseTag")
       return
     }
@@ -68,14 +68,15 @@ class Tag {
     return ''
   }
   beforeReturn(str){
-    if(str.endsWith("\n\n")){
-      str=str.substring(0,str.length-1)
-    }
-    return str
+    return str.replace(/(\n\s*)+$/,'\n')
   }
 
   handleContent(content){
     return content
+  }
+
+  afterSlim(str){
+    return str
   }
 
   execMerge(gapBefore,gapAfter){
@@ -84,7 +85,8 @@ class Tag {
     str+=this.handleContent()
     str+=this.afterMerge()
     str+=gapAfter
-    return this.beforeReturn(str)
+    str=this.beforeReturn(str)
+    return this.afterSlim(str)
   }
 }
 

@@ -1,4 +1,5 @@
 import Ol from '../../src/tags/ol'
+const {tagSpaceNum}=require('../options')
 
 describe("test <ol></ol> tag",()=>{
 
@@ -26,12 +27,12 @@ describe("test <ol></ol> tag",()=>{
       '<li>three</li>\n' +
       '</ol>')
     expect(ol.execMerge()).toBe('\n' +
-      '1. one\n' +
-      '2. two\n' +
-      '    1. one\n' +
-      '    2. two\n' +
-      '    3. three\n' +
-      '3. three\n')
+      '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
+      '2.'+ ' '.repeat(tagSpaceNum-2)+'two\n' +
+      ' '.repeat(tagSpaceNum)+ '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
+      ' '.repeat(tagSpaceNum)+ '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
+      ' '.repeat(tagSpaceNum)+ '3.'+' '.repeat(tagSpaceNum-2)+'three\n' +
+      '3.'+ ' '.repeat(tagSpaceNum-2)+ 'three\n')
   })
 
 
@@ -48,12 +49,12 @@ describe("test <ol></ol> tag",()=>{
       '<li>three</li>\n' +
       '</ol>')
     expect(ol.execMerge()).toBe('\n' +
-      '1. one\n' +
-      '2. two\n' +
-      '    * unorder-1\n' +
-      '    * unorder-2\n' +
-      '    * unorder-3\n' +
-      '3. three\n')
+      '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
+      '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
+      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-1\n' +
+      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-2\n' +
+      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-3\n' +
+      '3.'+' '.repeat(tagSpaceNum-2)+'three\n')
   })
 
   it('complicate nest',()=>{
@@ -98,18 +99,20 @@ describe("test <ol></ol> tag",()=>{
     expect(ol.execMerge()).toBe('\n' +
       '1. **STRONG**\n' +
       '2. [ATag](https://github.com/-it/markdown-it-sub)\n' +
-      '    * unorder-1\n' +
-      '    * unorder-2\n' +
-      '        1. one\n' +
-      '        2. two\n' +
-      '            >* bq-nest-1\n' +
-      '            >>* bq-nest-2\n' +
-      '            >>>* bq-nest-3\n' +
-      '    * unorder-3\n' +
-      '        * code\n' +
-      '            ```javascript\n' +
-      '            var a=5\n' +
-      '            ```\n' +
+      '   *  unorder-1\n' +
+      '   *  unorder-2\n' +
+      '      1. one\n' +
+      '      2. two\n' +
+      '         >*  bq-nest-1\n' +
+      '         >\n' +
+      '         >>*  bq-nest-2\n' +
+      '         >>\n' +
+      '         >>>*  bq-nest-3\n' +
+      '   *  unorder-3\n' +
+      '      *  code\n' +
+      '         ```javascript\n' +
+      '         var a=5\n' +
+      '         ```\n' +
       '3. three\n')
   })
 

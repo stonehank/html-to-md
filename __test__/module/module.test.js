@@ -213,9 +213,9 @@ describe('module test1',()=>{
     expect(html2Md(str)).toBe('\n' +
       '**Advertisement 😃**\n' +
       '\n' +
-      '* **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image\n' +
+      '*  **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image\n' +
       'resize in browser.\n' +
-      '* **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly\n' +
+      '*  **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly\n' +
       'i18n with plurals support and easy syntax.\n' +
       '\n' +
       'You will like those projects!\n' +
@@ -269,20 +269,24 @@ describe('module test1',()=>{
       '## Blockquotes\n' +
       '\n' +
       '>Blockquotes can also be nested…\n' +
+      '>\n' +
       '>>…by using additional greater-than signs right next to each other…\n' +
+      '>>\n' +
       '>>>…or with spaces between arrows.\n' +
       '\n' +
       '## Lists\n' +
       '\n' +
       'Unordered\n' +
       '\n' +
-      '* Create a list by starting a line with `+`, `-`, or `*`\n' +
-      '* Sub-lists are made by indenting 2 spaces:\n' +
-      '    * Marker character change forces new list start:\n' +
-      '        * Ac tristique libero volutpat at\n' +
-      '        * Facilisis in pretium nisl aliquet\n' +
-      '        * Nulla volutpat aliquam velit\n' +
-      '* Very easy!\n' +
+      '*  Create a list by starting a line with `+`, `-`, or `*`\n' +
+      '*  Sub-lists are made by indenting 2 spaces:\n' +
+      '   *  Marker character change forces new list start:\n' +
+      '      *  Ac tristique libero volutpat at\n' +
+      '      \n' +
+      '      *  Facilisis in pretium nisl aliquet\n' +
+      '      \n' +
+      '      *  Nulla volutpat aliquam velit\n' +
+      '*  Very easy!\n' +
       '\n' +
       'Ordered\n' +
       '\n' +
@@ -382,8 +386,8 @@ describe('module test1',()=>{
       '\n' +
       '### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\n' +
       '\n' +
-      '* 19<sup>th</sup>\n' +
-      '* H<sub>2</sub>O\n' +
+      '*  19<sup>th</sup>\n' +
+      '*  H<sub>2</sub>O\n' +
       '\n' +
       '### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\n' +
       '\n' +
@@ -399,22 +403,21 @@ describe('module test1',()=>{
       '\n' +
       '## Todo list\n' +
       '\n' +
-      '* [ ]  not finish-1\n' +
-      '* [ ]  not finish-2\n' +
-      '* [ ]  not finish-3\n' +
-      '* [ ]  not finish-4\n' +
+      '*  [ ]  not finish-1\n' +
+      '*  [ ]  not finish-2\n' +
+      '*  [ ]  not finish-3\n' +
+      '*  [ ]  not finish-4\n' +
       '\n' +
       '## Done list\n' +
       '\n' +
-      '* [x]  finish-1\n' +
-      '* [x]  finish-2\n' +
-      '* [x]  finish-3\n' +
-      '* [x]  finish-4\n')
+      '*  [x]  finish-1\n' +
+      '*  [x]  finish-2\n' +
+      '*  [x]  finish-3\n' +
+      '*  [x]  finish-4\n')
   })
 
   it('test-2',()=>{
     let str='<input type="checkbox" checked disabled />\n<input type="checkbox" disabled />'
-    expect(html2Md(str)).toBe('<input type="checkbox" checked disabled />\n' +
-      '<input type="checkbox" disabled />')
+    expect(html2Md(str)).toBe('<input type="checkbox" checked disabled />\n<input type="checkbox" disabled />')
   })
 })

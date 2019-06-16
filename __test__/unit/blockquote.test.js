@@ -1,4 +1,5 @@
 import Blockquote from '../../src/tags/blockquote'
+const {tagSpaceNum}=require('../options')
 
 describe("test <blockquote></blockquote> tag",()=>{
 
@@ -20,9 +21,9 @@ describe("test <blockquote></blockquote> tag",()=>{
       "</ul>\n" +
       "</blockquote>")
     expect(blockquote.execMerge()).toBe("\n" +
-      ">* sdfs\n" +
-      ">* sdfsdf\n" +
-      ">* sdfsaf\n")
+      ">* "+' '.repeat(tagSpaceNum-2)+"sdfs\n" +
+      ">* "+' '.repeat(tagSpaceNum-2)+"sdfsdf\n" +
+      ">* "+' '.repeat(tagSpaceNum-2)+"sdfsaf\n")
   })
 
   it('nest blockquote',()=>{
@@ -38,7 +39,9 @@ describe("test <blockquote></blockquote> tag",()=>{
 
     expect(blockquote.execMerge()).toBe("\n" +
       ">Blockquotes can also be nested…\n" +
+      ">\n" +
       ">>…by using additional greater-than signs right next to each other…\n" +
+      ">>\n" +
       ">>>…or with spaces between arrows.\n")
   })
 })

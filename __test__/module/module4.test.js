@@ -1,19 +1,19 @@
-const html2Md=require('../../src/index')
+const html2Md = require('../../src/index')
 
-describe('test special',()=>{
+describe('test special', () => {
 
-  it('test-1',()=>{
-    let str="<body"
+  it('test-1', () => {
+    let str = "<body"
     expect(html2Md(str)).toBe("<body></body>")
   })
 
-  it('test-2',()=>{
-    let str="<!DOCTYPE><html><body><i>abc<b>xxx</b></i></body></html>"
+  it('test-2', () => {
+    let str = "<!DOCTYPE><html><body><i>abc<b>xxx</b></i></body></html>"
     expect(html2Md(str)).toBe("<html><body>*abc**xxx***</body></html>")
   })
 
-  it('test-3',()=>{
-    let str="<pre class=\"hljs language-md\"><code><span class=\"hljs-bullet\"> - </span>foo\n" +
+  it('test-3', () => {
+    let str = "<pre class=\"hljs language-md\"><code><span class=\"hljs-bullet\"> - </span>foo\n" +
       "<span class=\"hljs-bullet\">\n" +
       " - </span>bar\n" +
       "<span class=\"hljs-bullet\"> - </span>baz\n" +
@@ -27,9 +27,9 @@ describe('test special',()=>{
       '```\n')
   })
 
-  
-  it('pre code and p',()=>{
-    let str='<ul>\n' +
+
+  it('pre code and p', () => {
+    let str = '<ul>\n' +
       '<li>\n' +
       '<p><strong>Since version 1.4.0, showdown supports the markdown="1" attribute</strong>, but for older versions, this attribute is ignored. This means:</p>\n' +
       '<pre><code>  &lt;div markdown="1"&gt;\n' +
@@ -60,47 +60,47 @@ describe('test special',()=>{
       '</code></pre>\n' +
       '</li>\n' +
       '</ul>'
-    expect(html2Md(str)).toBe('\n'+
-      '* **Since version 1.4.0, showdown supports the markdown="1" attribute**, but for older versions, this attribute is ignored. This means:\n'+
+    expect(html2Md(str)).toBe('\n' +
+      '*  **Since version 1.4.0, showdown supports the markdown="1" attribute**, but for older versions, this attribute is ignored. This means:\n' +
+      '   \n' +
+      '   ```\n' +
+      '     <div markdown="1">\n' +
+      '          Markdown does *not* work in here.\n' +
+      '     </div>\n' +
+      '   ```\n' +
       '\n' +
-      '    ```\n'+
-      '      <div markdown="1">\n'+
-      '           Markdown does *not* work in here.\n'+
-      '      </div>\n'+
-      '    ```\n'+
-      '\n'+
-      '* You can only nest square brackets in link titles to a depth of two levels:\n'+
-      '\n'+
-      '    ```\n'+
-      '      [[fine]](http://www.github.com/)\n'+
-      '      [[[broken]]](http://www.github.com/)\n'+
-      '    ```\n'+
-      '\n'+
-      '    If you need more, you can escape them with backslashes.\n'+
-      '\n'+
-      '* A list is **single paragraph** if it has only **1 line-break separating items** and it becomes **multi paragraph if ANY of its items is separated by 2 line-breaks**:\n'+
-      '\n'+
-      '    ```markdown\n'+
-      '     - foo\n'+
-      '\n'+
-      '     - bar\n'+
-      '     - baz\n'+
-      '    ```\n'+
-      '\n'+
-      '    becomes\n'+
-      '\n'+
-      '    ```html\n'+
-      '    <ul>\n'+
-      '      <li><p>foo</p></li>\n'+
-      '      <li><p>bar</p></li>\n'+
-      '      <li><p>baz</p></li>\n'+
-      '    </ul>\n'+
-      '    ```\n')
+      '*  You can only nest square brackets in link titles to a depth of two levels:\n' +
+      '   \n' +
+      '   ```\n' +
+      '     [[fine]](http://www.github.com/)\n' +
+      '     [[[broken]]](http://www.github.com/)\n' +
+      '   ```\n' +
+      '   \n' +
+      '   If you need more, you can escape them with backslashes.\n' +
+      '\n' +
+      '*  A list is **single paragraph** if it has only **1 line-break separating items** and it becomes **multi paragraph if ANY of its items is separated by 2 line-breaks**:\n' +
+      '   \n' +
+      '   ```markdown\n' +
+      '    - foo\n' +
+      '\n' +
+      '    - bar\n' +
+      '    - baz\n' +
+      '   ```\n' +
+      '   \n' +
+      '   becomes\n' +
+      '   \n' +
+      '   ```html\n' +
+      '   <ul>\n' +
+      '     <li><p>foo</p></li>\n' +
+      '     <li><p>bar</p></li>\n' +
+      '     <li><p>baz</p></li>\n' +
+      '   </ul>\n' +
+      '   ```\n')
   })
 
 
-  it('li child has p',()=>{
-    let str="<ul>\n" +
+  it('li child has p', () => {
+    let str = "<ul>\n" +
       "<li>\n" +
       "<p>rawgit CDN</p>\n" +
       "<pre><code>  https://cdn.rawgit.com/showdownjs/showdown/&lt;version tag&gt;/dist/showdown.min.js\n" +
@@ -113,138 +113,209 @@ describe('test special',()=>{
       "</li>\n" +
       "</ul>"
     expect(html2Md(str)).toBe('\n' +
-      '* rawgit CDN\n' +
-      '\n'+
-      '  ```\n' +
-      '    https://cdn.rawgit.com/showdownjs/showdown/<version tag>/dist/showdown.min.js\n' +
-      '  ```\n' +
+      '*  rawgit CDN\n' +
+      '   \n' +
+      '   ```\n' +
+      '     https://cdn.rawgit.com/showdownjs/showdown/<version tag>/dist/showdown.min.js\n' +
+      '   ```\n' +
       '\n' +
-      '* cdnjs\n' +
-      '\n'+
-      '  ```\n' +
-      '    https://cdnjs.cloudflare.com/ajax/libs/showdown/<version tag>/showdown.min.js\n' +
-      '  ```\n')
+      '*  cdnjs\n' +
+      '   \n' +
+      '   ```\n' +
+      '     https://cdnjs.cloudflare.com/ajax/libs/showdown/<version tag>/showdown.min.js\n' +
+      '   ```\n')
   })
 
-  it(" ``` inside <code>, should be nest",()=>{
-    let str='<h3>Multiple lines</h3>\n'+
-'<p>To create blocks of code you should indent it by four spaces.</p>\n'+
-'<pre class="hljs language-md"><code><span class="hljs-code">    this is a piece</span>\n'+
-'<span class="hljs-code">    of</span>\n'+
-'<span class="hljs-code">    code</span>\n'+
-'</code></pre>\n'+
-'<p>If the options <strong><code>ghCodeBlocks</code></strong> is activated (which is by default), you can use triple backticks (```) to format text as its own distinct block.</p>\n'+
-'<pre><code>Check out this neat program I wrote:\n'+
-'\n'+
-'```\n'+
-'x = 0\n'+
-'x = 2 + 2\n'+
-'what is x\n'+
-'```\n'+
-'</code></pre>\n'
-    expect(html2Md(str)).toBe('\n### Multiple lines\n'+
-'\n'+
-'To create blocks of code you should indent it by four spaces.\n'+
-'\n'+
-'```markdown\n'+
-'    this is a piece\n'+
-'    of\n'+
-'    code\n'+
-'```\n'+
-'\n'+
-'If the options **`ghCodeBlocks`** is activated (which is by default), you can use triple backticks (```) to format text as its own distinct block.\n'+
-'\n'+
-'    Check out this neat program I wrote:\n'+
-'\n'+
-'    ```\n'+
-'    x = 0\n'+
-'    x = 2 + 2\n'+
-'    what is x\n'+
-'    ```\n')
+  it(" ``` inside <code></code>, should be nest", () => {
+    let str = '<h3>Multiple lines</h3>\n' +
+      '<p>To create blocks of code you should indent it by four spaces.</p>\n' +
+      '<pre class="hljs language-md"><code><span class="hljs-code">    this is a piece</span>\n' +
+      '<span class="hljs-code">    of</span>\n' +
+      '<span class="hljs-code">    code</span>\n' +
+      '</code></pre>\n' +
+      '<p>If the options <strong><code>ghCodeBlocks</code></strong> is activated (which is by default), you can use triple backticks (```) to format text as its own distinct block.</p>\n' +
+      '<pre><code>Check out this neat program I wrote:\n' +
+      '\n' +
+      '```\n' +
+      'x = 0\n' +
+      'x = 2 + 2\n' +
+      'what is x\n' +
+      '```\n' +
+      '</code></pre>\n'
+    expect(html2Md(str)).toBe('\n' +
+      '### Multiple lines\n' +
+      '\n' +
+      'To create blocks of code you should indent it by four spaces.\n' +
+      '\n' +
+      '```markdown\n' +
+      '    this is a piece\n' +
+      '    of\n' +
+      '    code\n' +
+      '```\n' +
+      '\n' +
+      'If the options **`ghCodeBlocks`** is activated (which is by default), you can use triple backticks (```) to format text as its own distinct block.\n' +
+      '\n' +
+      '    Check out this neat program I wrote:\n' +
+      '\n' +
+      '    ```\n' +
+      '    x = 0\n' +
+      '    x = 2 + 2\n' +
+      '    what is x\n' +
+      '    ```\n')
   })
 
- it('multi nest p',()=>{
-  expect(html2Md(`<ul>
-<li>
-<p>p-1</p>
-<p>p-2</p>
-</li>
-<li>
-<p>p-3</p>
-<p>p-4</p>
-</li>
-</ul>`)).toBe(`
-* p-1
+  it('multi nest p', () => {
+    expect(html2Md('<ul>\n<li>\n<p>p-1</p>\n<p>p-2</p>\n</li>\n<li>\n<p>p-3</p>\n<p>p-4</p>\n</li>\n</ul>')).toBe('\n' +
+      '*  p-1\n' +
+      '   \n' +
+      '   p-2\n' +
+      '\n' +
+      '*  p-3\n' +
+      '   \n' +
+      '   p-4\n')
+  })
 
-  p-2
+  it(" ``` in complicate list", () => {
+    expect(html2Md('<ul>\n' +
+      '<li>a</li>\n' +
+      '<li>b\n' +
+      '<ul>\n' +
+      '<li>\n' +
+      '<p>code</p>\n' +
+      '<pre><code>```javascript\n' +
+      'function\n' +
+      '```\n' +
+      '</code></pre>\n' +
+      '</li>\n' +
+      '</ul>\n' +
+      '</li>\n' +
+      '<li>c</li>\n' +
+      '</ul>'))
+      .toBe('\n' +
+        '*  a\n' +
+        '*  b\n' +
+        '   *  code\n' +
+        '      \n' +
+        '          ```javascript\n' +
+        '          function\n' +
+        '          ```\n' +
+        '*  c\n')
+  })
 
-* p-3
+  it(" ``` in blockquote", () => {
+    expect(html2Md('<blockquote>\n' +
+      '<p>sdfsdfsf</p>\n' +
+      '<blockquote>\n' +
+      '<p>sdfsf</p>\n' +
+      '<blockquote>\n' +
+      '<p><code>fsdf</code></p>\n' +
+      '<pre><code>```sdfsdfsdf```\n' +
+      'this is function</code></pre>\n' +
+      '</blockquote>\n' +
+      '</blockquote>\n' +
+      '</blockquote>'))
+      .toBe('\n' +
+        '>sdfsdfsf\n' +
+        '>\n' +
+        '>>sdfsf\n' +
+        '>>\n' +
+        '>>>`fsdf`\n' +
+        '>>>\n' +
+        '>>>    ```sdfsdfsdf```\n' +
+        '>>>    this is function\n')
+  })
 
-  p-4
-`)
- })
+  it(" ``` in list without <p>", () => {
+    expect(html2Md('<ul>\n' +
+      '<li>\n' +
+      '<pre><code>```\n' +
+      'var a=5\n' +
+      '```</code></pre>\n' +
+      '</li>\n' +
+      '</ul>\n'))
+      .toBe('\n' +
+        '*      ```\n' +
+        '       var a=5\n' +
+        '       ```\n')
+  })
 
-it(" ``` in complicate list",()=>{
-  expect(html2Md('<ul>\n'+
-'<li>a</li>\n'+
-'<li>b\n'+
-'<ul>\n'+
-'<li>\n'+
-'<p>code</p>\n'+
-'<pre><code>```javascript\n'+
-'function\n'+
-'```\n'+
-'</code></pre>\n'+
-'</li>\n'+
-'</ul>\n'+
-'</li>\n'+
-'<li>c</li>\n'+
-'</ul>'))
-  .toBe('\n'+
-  '* a\n'+
-  '* b\n'+
-  '    * code\n'+
-'\n'+
-  '            ```javascript\n'+
-  '            function\n'+
-  '            ```\n'+
-  '* c\n')
-})
+  it(" multi nest code", () => {
+    expect(html2Md('<ul>\n' +
+      '<li>c\n' +
+      '<ul>\n' +
+      '<li>d\n' +
+      '<ul>\n' +
+      '<li>\n' +
+      '<pre class="hljs"><code>abc\n' +
+      '</code></pre>\n' +
+      '</li>\n' +
+      '</ul>\n' +
+      '</li>\n' +
+      '</ul>\n' +
+      '</li>\n' +
+      '</ul>'))
+      .toBe('\n' +
+        '*  c\n' +
+        '   *  d\n' +
+        '      *  ```\n' +
+        '         abc\n' +
+        '         ```\n')
+  })
 
- it(" ``` in blockquote",()=>{
-  expect(html2Md('<blockquote>\n'+
-'<p>sdfsdfsf</p>\n'+
-'<blockquote>\n'+
-'<p>sdfsf</p>\n'+
-'<blockquote>\n'+
-'<p><code>fsdf</code></p>\n'+
-'<pre><code>```sdfsdfsdf```\n'+
-'this is function</code></pre>\n'+
-'</blockquote>\n'+
-'</blockquote>\n'+
-'</blockquote>'))
-  .toBe('\n'+
-'>sdfsdfsf\n'+
-'>>sdfsf\n'+
-'>>>`fsdf`\n'+
-'>>>\n'+
-'>>>    ```sdfsdfsdf```\n'+
-'>>>    this is function\n')
-})
-
-  it(" ``` in list without <p>",()=>{
-    expect(html2Md('<ul>\n'+
-'<li>\n'+
-'<pre><code>```\n'+
-'var a=5\n'+
-'```</code></pre>\n'+
-'</li>\n'+
-'</ul>\n'))
-    .toBe()
+  it(" multi nest code2", () => {
+    expect(html2Md('<ul>\n' +
+      '<li>c\n' +
+      '<ul>\n' +
+      '<li>d\n' +
+      '<ul>\n' +
+      '<li>\n' +
+      '<pre><code>```\n' +
+      '</code></pre>\n' +
+      'abc<pre class="hljs"><code></code></pre>\n' +
+      '</li>\n' +
+      '</ul>\n' +
+      '</li>\n' +
+      '</ul>\n' +
+      '</li>\n' +
+      '</ul>'))
+      .toBe('\n' +
+        '*  c\n' +
+        '   *  d\n' +
+        '      *      ```\n' +
+        '\n' +
+        '         abc\n' +
+        '         ```\n' +
+        '         ```\n')
   })
 
 
-
+  it('nest hr',()=>{
+    expect(html2Md("<ol>\n" +
+      "<li>sdff\n" +
+      "<ol>\n" +
+      "<li>sdfsf</li>\n" +
+      "<li>\n" +
+      "<hr>\n" +
+      "<hr>\n" +
+      "</li>\n" +
+      "</ol>\n" +
+      "</li>\n" +
+      "</ol>\n")).toBe('\n' +
+      '1. sdff\n' +
+      '   1. sdfsf\n' +
+      '   2. ---\n' +
+      '      ---\n')
+  })
+  it('slim hr',()=>{
+    expect(html2Md('<hr>\n\n\n\n\n\n\n' +
+      '<hr>\n\n\n\n\n\n\n' +
+      '<hr>\n\n\n\n\n\n\n')).toBe('\n' +
+      '---\n' +
+      '\n' +
+      '---\n' +
+      '\n' +
+      '---\n')
+  })
 })
 
 

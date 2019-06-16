@@ -1,10 +1,11 @@
 const {parseAttrs}=require('./utils')
 
 class SelfCloseTag {
-  constructor(str,tagName){
+  constructor(str,tagName,{tagSpace='   '}={}){
     this.tagName=tagName
     this.attrs=[]
     this.resolveStr(str)
+    this.tagSpace=tagSpace
     this.getAttrs=this.getAttrs.bind(this,this.attrs)
   }
 

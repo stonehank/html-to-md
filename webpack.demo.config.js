@@ -19,35 +19,37 @@ module.exports= env=>{
       library:'html2md',
       libraryTarget:'window',
     },
-    devtool: isDev?'cheap-module-source-map':false,
-    optimization: {
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          terserOptions: {
-            parse: {
-              ecma: 8,
-            },
-            compress: {
-              ecma: 5,
-              warnings: false,
-              comparisons: false,
-              inline: 2,
-            },
-            mangle: {
-              safari10: true,
-            },
-            output: {
-              ecma: 5,
-              comments: false,
-              ascii_only: true,
-            },
-          },
-          parallel: !isWsl,
-          cache: true,
-        }),
-      ],
-    },
+    devtool: 'cheap-module-source-map',
+    optimization: isDev
+      ? {}
+      : {
+          minimize: true,
+          minimizer: [
+            new TerserPlugin({
+              terserOptions: {
+                parse: {
+                  ecma: 8,
+                },
+                compress: {
+                  ecma: 5,
+                  warnings: false,
+                  comparisons: false,
+                  inline: 2,
+                },
+                mangle: {
+                  safari10: true,
+                },
+                output: {
+                  ecma: 5,
+                  comments: false,
+                  ascii_only: true,
+                },
+              },
+              parallel: !isWsl,
+              cache: true,
+            }),
+          ],
+      },
 
     resolve: {
       extensions: [ '.js', '.json'],
@@ -59,11 +61,13 @@ module.exports= env=>{
           test: /\.(js)$/,
           include:path.resolve(__dirname, 'src'),
           loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            cacheCompression: true,
-            compact: true
-          },
+          options: isDev
+            ? {
+                cacheDirectory: true,
+                cacheCompression: true,
+                compact: true
+              }
+            : {},
         },
         {
           test: /\.css$/,
@@ -97,17 +101,14 @@ module.exports= env=>{
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebPackPlugin({
-        template: "./index.html",
+        template: isDev ? "./debugDev.html" : "./index.html",
         filename: "./index.html"
       })
     ],
     devServer:isDev ?
       {
         clientLogLevel: 'none',
-        overlay:true,
-        // useLocalIp:true,
-        // host:"0.0.0.0"
-        // port:5050
+        overlay:true
       } :
       {}
   }

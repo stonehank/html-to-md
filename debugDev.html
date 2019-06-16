@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fast-diff@1.2.0/diff.min.js"></script>
     <style>
         html{
             font-size:16px;
@@ -83,6 +84,7 @@
 </div>
 <div>
     <label for="syncScrBtn" id="syncScrBtnRender">sync scroll</label><input type="checkbox" id="syncScrBtn" checked style="font-size:1rem" />
+    <button id="verifyBtn">verify</button>
 </div>
 
 
@@ -290,6 +292,7 @@
       outputHTML=document.getElementById("outputHTML"),
       chooseM2H=document.getElementById("chooseM2H"),
       syncScrBtn=document.getElementById("syncScrBtn")
+    let verifyBtn=document.getElementById("verifyBtn")
     let md2Html=mdIt
     let delay=false,timer=null
 
@@ -304,7 +307,6 @@
         return mdItObj.utils.escapeHtml(str)
       }
     });
-
 
     function syncScroll(ev){
       let ele=ev.target
@@ -325,14 +327,6 @@
         },30)
       }
     }
-
-    chooseM2H.addEventListener("change",(ev)=>{
-      md2Html=ev.target.value==="marked" ? marked : mdIt
-      show()
-    })
-
-    syncScrBtn.addEventListener('change',toggleEvent)
-
     function bindScr(io){
       for(let i=0;i<io.length;i++){
         let ele=io[i]
@@ -345,26 +339,56 @@
         ele.removeEventListener("scroll",syncScroll)
       }
     }
+    chooseM2H.addEventListener("change",(ev)=>{
+      md2Html=ev.target.value==="marked" ? marked : mdIt
+      show()
+    })
+
+    syncScrBtn.addEventListener('change',toggleEvent)
+
+    inputMd.addEventListener("input",()=>{
+      show()
+    })
+
     function toggleEvent(ev){
       if(ev.target.checked){
         bindScr(io)
       }else{
         unbindScr(io)
       }
-
     }
 
-    inputMd.addEventListener("input",()=>{
-      show()
-    })
+    verifyBtn.onclick=function () {
+      verify(5)
+    }
 
     inputMd.value=PLACEHOLDER
     show()
     bindScr(io)
+
     function show(){
       render(inputMd,md2Html,html2md,outputHTML,outputMD)
     }
 
+
+    function verify(times){
+      if(times===0)return
+      inputMd.value=unescape(outputMD.innerHTML)
+      show()
+      if(times===1){
+        let diff=window.diff(inputMd.value,unescape(outputMD.innerHTML))
+        let eq=true
+        for(let i=0;i<diff.length;i++){
+          if(diff[i][0]!==0){
+            alert('not equal')
+            eq=false
+            break
+          }
+        }
+        if(eq)console.log('Equal!!')
+      }
+      verify(times-1)
+    }
   }
 </script>
 <script>
@@ -372,8 +396,12 @@
 
   function render(inputMd,md2Html,html2md,outputHTML,outputMD){
     let val=inputMd.value
+    console.time('md->html')
     let htmlOutput=md2Html(val)
+    console.timeEnd('md->html')
+    console.time('html->md')
     let mdOutput=html2md(htmlOutput)
+    console.timeEnd('html->md')
     outputHTML.innerHTML=htmlOutput
     outputMD.innerHTML=mdOutput
   }

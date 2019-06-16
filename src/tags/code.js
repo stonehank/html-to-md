@@ -9,6 +9,9 @@ class Code extends Tag{
     this.language=language
   }
 
+  beforeReturn(str){
+    return str
+  }
 
   beforeMerge(){
     return this.match
@@ -40,6 +43,7 @@ class Code extends Tag{
       tagName=nxt[0]
       tagStr=nxt[1]
     }
+
     return res
   }
 

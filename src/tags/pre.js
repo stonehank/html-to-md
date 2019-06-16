@@ -3,39 +3,44 @@ const {__Empty__ ,__EmptySelfClose__}=require('./__empty__')
 const {findValidTag,findTagClass,unescape,isSelfClosing,getLanguage}=require('../utils')
 
 class Pre extends Tag{
-  constructor(str,tagName='pre',{layer=1,language=null,match='```',extraSpace=''}={}){
+  constructor(str,tagName='pre',{layer=1,language=null,match='```',isFirstTag=false}={}){
     super(str,tagName)
     this.content=this.getContent()
     let hasCodeSymbol=this.content.includes('```')
-    this.layer=hasCodeSymbol ? layer+1 : layer
+    this.layer=layer
     this.match=hasCodeSymbol ? '' : match
-    this.preLayer=extraSpace.repeat(layer-1)+' '.repeat((this.layer-1)*4)
-    // console.log(this.layer)
+    this.isFirstTag=isFirstTag
+    this.leadingSpace=this.tabSpace.repeat(this.layer-1)
+    this.indentSpace=hasCodeSymbol ? '    ' : ''
     this.res=null
     this.language = language!=null ? language : getLanguage(str)
   }
 
 
   beforeMerge(){
-    // let preLayer=' '.repeat((this.layer-1)*4)
     let matchLang=this.match==='' ? '' : (this.match+this.language+'\n')
-    let before=matchLang==='' ? '' : this.preLayer+matchLang
+    let before=matchLang==='' ? '' : this.isFirstTag ? matchLang : this.leadingSpace+matchLang
+    this.res+=before
     return before
   }
 
   afterMerge(){
-    // let preLayer=' '.repeat((this.layer-1)*4)
     let gap=''
     if(!this.res.endsWith('\n'))gap='\n'
-    let after=this.match==='' ? gap : gap+this.preLayer+this.match
+    let after=this.match==='' ? gap : gap+this.leadingSpace+this.indentSpace+this.match
     return after
   }
 
-  fillPerLine(lineStr){
-    // let preLayer=' '.repeat((this.layer-1)*4)
-    return this.preLayer+lineStr
+  fillPerLine(lineStr,id){
+    // match==='' 说明是用间隔形成code标签
+    if(this.isFirstTag && this.match==='' && id===0){
+      return this.indentSpace+lineStr
+    }
+    return this.leadingSpace+this.indentSpace+lineStr
   }
-
+  beforeReturn(str){
+    return str
+  }
   handleContent(){
     let getNxtValidTag=findValidTag(this.content)
     let res=''
@@ -57,13 +62,17 @@ class Pre extends Tag{
       tagName=nxt[0]
       tagStr=nxt[1]
     }
-    this.res=res
+    if(res===''){
+      return res
+    }
     let split=res.split('\n')
-    split=split.map(n=>{
+    split=split.map((n,i)=>{
       if(n==='')return ''
-      return this.fillPerLine(n)
+      return this.fillPerLine(n,i)
     })
-    return split.join('\n')
+    let ans=split.join('\n')
+    this.res+=res
+    return ans
   }
 
   execMerge(gapBefore='\n',gapAfter='\n'){
