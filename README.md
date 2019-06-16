@@ -5,7 +5,8 @@
 [![Build Status](https://travis-ci.org/stonehank/html-to-md.svg?branch=master)](https://travis-ci.org/stonehank/html-to-md)
 [![npm](https://img.shields.io/npm/v/html-to-md.svg)](https://www.npmjs.com/package/html-to-md)
 [![codecov](https://codecov.io/gh/stonehank/html-to-md/branch/master/graph/badge.svg)](https://codecov.io/gh/stonehank/html-to-md)
-
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/html-to-md.svg)
+![David](https://img.shields.io/david/stonehank/html-to-md.svg)
 
 
 ### 效果
@@ -42,7 +43,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>'))
 
 ### 特点
 
-* 快速，小巧，无任何依赖，`gzip` 6kb
+* 快速，小巧，无任何依赖，`gzip` 7kb
 
 * 支持`nodeJS`，参数(html文本)为字符串
 
@@ -62,6 +63,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>'))
 * `hr`
 * `i`
 * `img`
+* `input`
 * `li`
 * `ol`
 * `p`
@@ -80,7 +82,15 @@ console.log(html2md('<strong><em>strong and italic</em></strong>'))
 
 - [x] 添加`input`的支持
 - [ ] 添加参数，以便适应更多自定义需求
-- [ ] 增加测试
+- [x] 增加测试
 
 
 ### ChangLog
+
+##### 0.3.0
+
+* 添加对`input checkbox`的支持
+* 修复`<code>`为`md`时错误显示的bug
+* 修复`<li>`内部存在`<p>`标签无空行的bug
+* 修复嵌套模式下`<li><pre>`等错误格式
+* 合并部分通用代码g

@@ -20,6 +20,7 @@ demo
 docs
 draft
 index.html
+debugDev.html
 postcss.config.js
 webpack.config.js
 webpack.demo.config.js
