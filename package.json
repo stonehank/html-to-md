@@ -12,6 +12,11 @@
     "html"
   ],
   "author": "stonehank <stonehank310@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stonehank/html-to-md.git"
+  },
+  "homepage": "https://github.com/stonehank/html-to-md#README",
   "license": "MIT",
   "scripts": {
     "test:part":"jest",

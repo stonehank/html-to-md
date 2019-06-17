@@ -1,4 +1,4 @@
-> 一个用于转换`HTML`为`Markdown`的工具。
+> 一个用于转换`HTML`为`Markdown`的工具。[English](./README-EN.md)
 
 ---
 
@@ -14,7 +14,7 @@
 [live-demo](https://stonehank.github.io/html-to-md/)
 
 
-### 为什么要做个
+### 为什么做这个工具
 
 最初的动机是希望将`leetcode-cn`上的题目和自己的解答[搬到`github`](https://github.com/stonehank/leetcode-solution-js)，
 但是获取的介绍都是`html`格式文本，因此有了将`html`转换为`markdown`的需求。
@@ -39,6 +39,7 @@
 const html2md=require('html-to-md')
 
 console.log(html2md('<strong><em>strong and italic</em></strong>'))
+// ***strong and italic***
 ```
 
 ### 特点
@@ -83,14 +84,3 @@ console.log(html2md('<strong><em>strong and italic</em></strong>'))
 - [x] 添加`input`的支持
 - [ ] 添加参数，以便适应更多自定义需求
 - [x] 增加测试
-
-
-### ChangLog
-
-##### 0.3.0
-
-* 添加对`input checkbox`的支持
-* 修复`<code>`为`md`时错误显示的bug
-* 修复`<li>`内部存在`<p>`标签无空行的bug
-* 修复嵌套模式下`<li><pre>`等错误格式
-* 合并部分通用代码g
