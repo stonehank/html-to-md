@@ -1,4 +1,4 @@
-> A JS library for convert HTML to Markdown.[中文](./README-EN.md)
+> A JS library for convert HTML to Markdown.[中文](./README.md)
 
 ---
 
