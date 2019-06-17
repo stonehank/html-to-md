@@ -1,6 +1,6 @@
-const Tag =require('./Tag')
+const Tag =require('../Tag')
 
-class HEAD extends Tag{
+class __Heading__ extends Tag{
   constructor(str,tagName='1'){
     super(str,tagName)
     this.handleContent=this.handleContent.bind(this,'','')
@@ -18,4 +18,4 @@ class HEAD extends Tag{
 }
 
 
-module.exports=HEAD
+module.exports=__Heading__

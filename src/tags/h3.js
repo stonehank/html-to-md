@@ -1,8 +1,8 @@
-const HEAD =require('../HEAD')
+const __Heading__ =require('./__Heading__')
 
 
 
-class H3 extends HEAD{
+class H3 extends __Heading__{
   constructor(str,tagName='h3'){
     super(str,tagName)
   }
