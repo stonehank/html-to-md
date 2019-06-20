@@ -1,6 +1,11 @@
 const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
-
+/*
+*
+* <div><b>abc</b></div>
+* ==> <div>**abc**</div>
+*
+* */
 
 class __NoMatch__ extends Tag{
   constructor(str,tagName='__nomatch__'){
@@ -31,7 +36,7 @@ class __NoMatchSelfClose__ extends SelfCloseTag{
   }
 
   execMerge(){
-    return this.str
+    return `<${this.tagName} />`
   }
 
 }

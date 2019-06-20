@@ -32,9 +32,10 @@ class Tag {
     let restStr=str.slice(i+1)
     let count=1
     let m='',endId=-1
+    // console.log(str,restStr)
     for(let j=0;j<restStr.length;j++){
       m+=restStr[j]
-      if(m.endsWith('<'+this.tagName)){
+      if(m.endsWith('<'+this.tagName) && restStr[j+1]!=='/'){
         count++
       }else if(m.endsWith('</'+this.tagName)){
         count--

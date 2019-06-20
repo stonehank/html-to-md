@@ -14,7 +14,7 @@ describe('test empty(not match) tag',()=>{
 
   it('no match self-close tag',()=>{
     let empty=new __NoMatchSelfClose__("<embed att1='someAttr'/>","embed")
-    expect(empty.execMerge()).toBe("<embed att1='someAttr'/>")
+    expect(empty.execMerge()).toBe("<embed />")
   })
 
 

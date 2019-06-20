@@ -537,17 +537,17 @@
       '</ul>\n' +
       '<h2>Todo list(Can be parsed by marked. )</h2>\n' +
       '<ul>\n' +
-      '<li>[ ] not finish-1</li>\n' +
-      '<li>[ ] not finish-2</li>\n' +
-      '<li>[ ] not finish-3</li>\n' +
-      '<li>[ ] not finish-4</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-1</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-2</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-3</li>\n' +
+      '<li><input disabled="" type="checkbox"> not finish-4</li>\n' +
       '</ul>\n' +
       '<h2>Done list(Can be parsed by marked. )</h2>\n' +
       '<ul>\n' +
-      '<li>[x] finish-1</li>\n' +
-      '<li>[x] finish-2</li>\n' +
-      '<li>[x] finish-3</li>\n' +
-      '<li>[x] finish-4</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-1</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-2</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-3</li>\n' +
+      '<li><input checked="" disabled="" type="checkbox"> finish-4</li>\n' +
       '</ul>'
 </script>
 <script>
@@ -627,7 +627,6 @@
         outputMD=document.querySelector("#page-selected-2 #outputMD")
       inputHTML.value=PLACEHOLDER2
       inputHTML.addEventListener("input",()=>show(null,inputHTML,outputMD))
-      console.log(inputHTML,outputMD)
       show(null,inputHTML,outputMD)
       checkIfBindScr()
     }

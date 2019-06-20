@@ -38,9 +38,34 @@
 ```js
 const html2md=require('html-to-md')
 
-console.log(html2md('<strong><em>strong and italic</em></strong>'))
+console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 // ***strong and italic***
 ```
+
+### 配置(可选)：
+
+options:
+
+|名称|数据类型|默认值|说明|
+|:---:|:---:|:---:|:---:|
+|skipTags|Array|[]|需要忽略的标签名|
+|emptyTags|Array|[]|不仅忽略它本身，它内部所有标签名全部忽略|
+|ignoreTags|Array|`['','style','br','head','!doctype']`|忽视标签及其内部所有内容|
+
+> 优先权：skipTags > emptyTags > ignoreTags
+
+例：
+```javascript
+html2md('<><b><i>abc</i></b></>')
+// ''
+
+html2md('<><b><i>abc</i></b></>',{skipTags:['']})
+// ***abc***
+
+html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
+// abc
+```
+
 
 ### 特点
 

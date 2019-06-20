@@ -13,6 +13,7 @@ function findValidTag(str){
   return ()=>{
     let res=''
     let tagName=null,count=0,tempName='',open=false,canBeBreak=false
+    // console.log(str)
     for(let i=startId;i<str.length;i++){
       if(str[i]==="<" && str[i+1]!=="/"){
         if(res!=='' && tagName==null){
@@ -44,6 +45,7 @@ function findValidTag(str){
           // return [null,'']
         }
         tempName=getTagName(str,i+2)
+        // console.log(tempName,str)
         if(tagName===tempName){
           count--
         }

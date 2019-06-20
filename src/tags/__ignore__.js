@@ -1,4 +1,9 @@
-
+/*
+*
+* <div><b>abc</b></div>
+* ==> ''
+*
+* */
 
 class __Ignore__{
   constructor(str,tagName='__ignore__'){

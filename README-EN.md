@@ -25,8 +25,32 @@
 ```js
 const html2md=require('html-to-md')
 
-console.log(html2md('<strong><em>strong and italic</em></strong>'))
+console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 // ***strong and italic***
+```
+
+### Config(Not require)：
+
+options:
+
+|name|data type|default|explain|
+|:---:|:---:|:---:|:---:|
+|skipTags|Array|[]|Declare which tags need to skip|
+|emptyTags|Array|[]|Not only skip itself,but also skip all the tas inside it|
+|ignoreTags|Array|`['','style','br','head','!doctype']`|Ignore all content inside the tag|
+
+> Priority：skipTags > emptyTags > ignoreTags
+
+Example
+```javascript
+html2md('<><b><i>abc</i></b></>',{ignoreTags:['']})
+// ''
+
+html2md('<><b><i>abc</i></b></>',{skipTags:['']})
+// ***abc***
+
+html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
+// abc
 ```
 
 ### Feature

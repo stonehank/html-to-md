@@ -2,7 +2,12 @@ const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
 
 const {findValidTag}=require('../utils')
-
+/*
+*
+* <div><b>abc</b></div>
+* ==> abc
+*
+* */
 class __Empty__ extends Tag{
   constructor(str,tagName='__empty__'){
     super(str,tagName)
