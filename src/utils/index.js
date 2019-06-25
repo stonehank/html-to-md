@@ -5,6 +5,7 @@ const isSelfClosing=require('./isSelfClosing')
 const parseAttrs=require('./parseAttrs')
 const getLanguage=require('./getLanguage')
 const clearComment=require('./clearComment')
+const needIndependentLine=require('./needIndependentLine')
 
 
 module.exports={
@@ -15,5 +16,6 @@ module.exports={
   isSelfClosing,
   parseAttrs,
   getLanguage,
-  clearComment
+  clearComment,
+  needIndependentLine
 }

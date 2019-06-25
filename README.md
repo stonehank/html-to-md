@@ -48,9 +48,9 @@ options:
 
 |名称|数据类型|默认值|说明|
 |:---:|:---:|:---:|:---:|
-|skipTags|Array|[]|需要忽略的标签名|
-|emptyTags|Array|[]|不仅忽略它本身，它内部所有标签名全部忽略|
-|ignoreTags|Array|`['','style','br','head','!doctype']`|忽视标签及其内部所有内容|
+|skipTags|Array|`['div']`|需要忽略的标签名|
+|emptyTags|Array|`[]`|不仅忽略它本身，它内部所有标签名全部忽略|
+|ignoreTags|Array|`['','style','br','head','!doctype','form']`|忽视标签及其内部所有内容|
 
 > 优先权：skipTags > emptyTags > ignoreTags
 

@@ -49,6 +49,6 @@ function assign(obj,newObj,key){
 }
 
 
-let config=new Config({ignoreTags:['','style','br','head','!doctype']})
+let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div']})
 
 module.exports=config

@@ -1,5 +1,6 @@
 const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
+const {needIndependentLine} =require('../utils')
 /*
 *
 * <div><b>abc</b></div>
@@ -11,10 +12,12 @@ class __Skip__ extends Tag{
   constructor(str,tagName='__skip__'){
     super(str,tagName)
     this.tagName=tagName
-    this.handleContent=this.handleContent.bind(this,'','')
+    this.handleContent=this.handleContent.bind(this)
   }
   execMerge(){
-    return super.execMerge('','')
+    let need=needIndependentLine(this.tagName)
+    let pre=need ? '\n' : '', aft=need ? '\n' : ''
+    return super.execMerge(pre,aft)
   }
 }
 
