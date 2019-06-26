@@ -8,10 +8,8 @@ function html2md(str,options){
   let getNxtValidTag=findValidTag(str)
   let res=''
   let [tagName,tagStr]=getNxtValidTag()
-  let lastTagName=null
   while(tagStr!==''){
     if(tagName!=null){
-      lastTagName=tagName
       let SubTagClass=findTagClass(tagName)
       let subTag=new SubTagClass(tagStr,tagName)
       res+=subTag.execMerge()

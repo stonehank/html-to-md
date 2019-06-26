@@ -1,4 +1,4 @@
-const {findValidTag,findTagClass,parseAttrs}=require('./utils')
+const {findValidTag,findTagClass,parseAttrs,unescape}=require('./utils')
 
 
 class Tag {
@@ -91,6 +91,10 @@ class Tag {
     return res
   }
 
+  slimContent(str){
+    return str
+  }
+
   afterSlim(str){
     return str
   }
@@ -98,7 +102,7 @@ class Tag {
   execMerge(gapBefore,gapAfter){
     let str=''+gapBefore
     str+=this.beforeMerge()
-    str+=this.handleContent()
+    str+=this.slimContent(this.handleContent())
     str+=this.afterMerge()
     str+=gapAfter
     str=this.beforeReturn(str)

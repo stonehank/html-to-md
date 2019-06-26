@@ -15,6 +15,10 @@ class Strong extends Tag{
   }
 
 
+  slimContent(str){
+    return str.replace(/^(\n\s*)+/,'').replace(/(\n\s*)+$/,'')
+  }
+
   execMerge(gapBefore='',gapAfter=''){
     return super.execMerge(gapBefore,gapAfter)
   }

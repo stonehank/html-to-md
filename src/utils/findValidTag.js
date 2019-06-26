@@ -12,15 +12,13 @@ function findValidTag(str){
   let startId=0
   return ()=>{
     let res=''
-    let tagName=null,count=0,tempName='',open=false,canBeBreak=false
-    // console.log(str)
+    let tagName=null,count=0,tempName='',canBeBreak=false
     for(let i=startId;i<str.length;i++){
       if(str[i]==="<" && str[i+1]!=="/"){
         if(res!=='' && tagName==null){
           startId=i
           return [tagName,res]
         }
-        open=true
         tempName=getTagName(str,i+1)
         if(tagName==null){
           tagName=tempName
@@ -42,10 +40,8 @@ function findValidTag(str){
           }
           i=id
           continue
-          // return [null,'']
         }
         tempName=getTagName(str,i+2)
-        // console.log(tempName,str)
         if(tagName===tempName){
           count--
         }

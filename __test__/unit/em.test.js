@@ -11,4 +11,11 @@ describe('test <em></em> tag',()=>{
     let em=new Em("<em><strong>strong and italic</strong></em>")
     expect(em.execMerge()).toBe("***strong and italic***")
   })
+
+  it('换行需要省略',()=>{
+    let em=new Em("<em>\n" +
+      "<strong>strong and italic</strong>\n" +
+      "</em>")
+    expect(em.execMerge()).toBe("***strong and italic***")
+  })
 })

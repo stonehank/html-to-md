@@ -14,6 +14,6 @@ describe('test <p></p> tag',()=>{
   it('nest2',()=>{
     let p=new P("<p><s><f>SD<f>S<f>SDF&lt;&gt;S<f>SDF&lt;&gt;</f></f></f></f></s></p>")
     expect(p.execMerge()).toBe('\n' +
-      '~~<f>SD<f>S<f>SDF&lt;&gt;S<f>SDF&lt;&gt;</f></f></f></f>~~\n')
+      '~~<f>SD<f>S<f>SDF<>S<f>SDF<></f></f></f></f>~~\n')
   })
 })

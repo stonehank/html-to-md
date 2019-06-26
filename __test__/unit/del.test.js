@@ -11,4 +11,11 @@ describe('test <del></del> tag',()=>{
     let del=new Del("<del><a href=\"https://github.com/nodeca/babelfish/\"><i>babelfish</i></a></del>")
     expect(del.execMerge()).toBe("~~[*babelfish*](https://github.com/nodeca/babelfish/)~~")
   })
+
+  it('换行需省略',()=>{
+    let del=new Del("<del>\n" +
+      "<a href=\"https://github.com/nodeca/babelfish/\"><i>babelfish</i></a>\n" +
+      "</del>")
+    expect(del.execMerge()).toBe("~~[*babelfish*](https://github.com/nodeca/babelfish/)~~")
+  })
 })
