@@ -1,3 +1,7 @@
+##### 0.3.2
+
+* Fixed bugs that cause text after heading tags will not line feed.
+
 ##### 0.3.1
 
 * created `CHANGELOG.md`, support `english` readme 

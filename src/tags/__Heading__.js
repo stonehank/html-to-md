@@ -12,6 +12,7 @@ class __Heading__ extends Tag{
 
 
   execMerge(gapBefore='\n',gapAfter='\n'){
+    if(!gapAfter)gapAfter='\n'
     return super.execMerge(gapBefore,gapAfter)
   }
 
