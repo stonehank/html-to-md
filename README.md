@@ -38,17 +38,17 @@
 ```js
 const html2md=require('html-to-md')
 
-console.log(html2md('<strong><em>strong and italic</em></strong>',options))
+console.log(html2md('<strong><em>strong and italic</em></strong>',options,force))
 // ***strong and italic***
 ```
 
-### 配置(可选)：
+### 参数(可选)：
 
 options:
 
 |名称|数据类型|默认值|说明|
 |:---:|:---:|:---:|:---:|
-|skipTags|Array|`['div']`|需要忽略的标签名|
+|skipTags|Array|`['div','html','body']`|需要忽略的标签名|
 |emptyTags|Array|`[]`|不仅忽略它本身，它内部所有标签名全部忽略|
 |ignoreTags|Array|`['','style','br','head','!doctype','form']`|忽视标签及其内部所有内容|
 
@@ -56,16 +56,36 @@ options:
 
 例：
 ```javascript
-html2md('<><b><i>abc</i></b></>')
+html2md('<><b><i>abc</i></b></>',{ignoreTags:['']},true)
 // ''
 
-html2md('<><b><i>abc</i></b></>',{skipTags:['']})
+html2md('<><b><i>abc</i></b></>',{skipTags:['']},true)
 // ***abc***
 
-html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
+html2md('<><b><i>abc</i></b></>',{emptyTags:['']},true)
 // abc
 ```
 
+force(Boolean)(默认false)
+
+|值|说明|
+|:---:|:---:|
+|true|表示强制使用自定义配置|
+|false|对自定义配置使用`Object.assign`操作|
+
+例：
+```javascript
+// 默认 skipTags 为 ['div','html','body']
+
+// 配置一：
+html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']})
+// skipTags 为 ['div','html','body','b']
+
+// 配置二：
+html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
+// 经过配置后 skipTags 为 ['b']
+
+```
 
 ### 特点
 
@@ -107,5 +127,6 @@ html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
 ### 待完成事项
 
 - [x] 添加`input`的支持
-- [ ] 添加参数，以便适应更多自定义需求
 - [x] 增加测试
+- [x] 添加参数，以便适应更多自定义需求
+

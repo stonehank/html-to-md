@@ -4,7 +4,7 @@ let config=require('../../src/config')
 describe('清空指定的tag以及内部的标签',()=>{
 
   beforeEach(()=>{
-    config.set('emptyTags',[],true)
+    config.reset()
   })
 
   it('消除tag',()=>{
@@ -26,8 +26,6 @@ describe('清空指定的tag以及内部的标签',()=>{
 
 
   it('强制修改config为当前提供的值，只消除i',()=>{
-    expect(html2Md("<b><i>abc</i></b>",{emptyTags:['b']})).toBe('abc')
-    config.set('emptyTags',['i'],true)
-    expect(html2Md("<b><i>abc</i></b>")).toBe('**abc**')
+    expect(html2Md("<b><i>abc</i></b>",{emptyTags:['i']},true)).toBe('**abc**')
   })
 })

@@ -13,42 +13,41 @@ class Config {
   clear(){
     this.options={}
   }
-  set(k,v,force){
-    if(Object.prototype.toString.call(k)==="[object Object]"){
-      for(let key in k){
-        if(k.hasOwnProperty(key)){
-          if(v){
-            this.options[key]=k[key]
+  set(obj,force){
+    if(Object.prototype.toString.call(obj)==="[object Object]"){
+      for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+          if(force){
+            this.options[key]=obj[key]
           }else{
-            assign(this.options,k,key)
+            assign(this.options,obj,key)
           }
         }
       }
-    }else{
-      if(force){
-        this.options[k]=v
-      }else{
-        assign(this.options,{[k]:v},k)
-      }
     }
+  }
+
+  reset(){
+    this.options={ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body'],emptyTags:[]}
   }
 }
 
 function assign(obj,newObj,key){
+  // console.log(obj,newObj,key)
   if(obj[key]==null){
     obj[key]=newObj[key]
     return
   }
   let isArray=Array.isArray(obj[key]),
     isObj=Object.prototype.toString.call(obj[key])==="[object Object]"
-  obj[key]=isArray
-    ? obj[key].concat(newObj[key])
+  isArray
+    ? obj[key]=obj[key].concat(newObj[key])
     : isObj
-      ? Object.assign(obj[key],newObj[key])
+      ? obj[key]=Object.assign(obj[key],newObj[key])
       : obj[key]=newObj[key]
 }
 
 
-let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div']})
+let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body']})
 
 module.exports=config

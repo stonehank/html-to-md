@@ -3,6 +3,7 @@ let html2Md=require('../../src/index')
 
 describe('直接忽视整个tag',()=>{
 
+
   it('忽视 所有 ',()=>{
     expect(html2Md("<><b><i>abc</i></b></>",{ignoreTags:['']})).toBe('')
   })

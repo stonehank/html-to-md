@@ -1,8 +1,8 @@
 const {findTagClass,findValidTag,unescape,clearComment}=require('./utils')
 const config =require('./config')
 
-function html2md(str,options){
-  config.set({...options})
+function html2md(str,options,force=false){
+  config.set(options,force)
   str=clearComment(str)
   str=str.replace(/(\s*\r\n\s*)/g,'').replace(/&nbsp;/g,"")
   let getNxtValidTag=findValidTag(str)
