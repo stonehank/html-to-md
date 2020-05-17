@@ -28,7 +28,7 @@ class Config {
   }
 
   reset(){
-    this.options={ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body'],emptyTags:[]}
+    this.options={ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body','dl','dd','dt'],emptyTags:[]}
   }
 }
 
@@ -48,6 +48,6 @@ function assign(obj,newObj,key){
 }
 
 
-let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body']})
+let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body','dl','dd','dt']})
 
 module.exports=config

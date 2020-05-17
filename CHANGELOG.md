@@ -1,3 +1,7 @@
+#### 0.3.4
+* Add 'dl,dd,dt' inside default skipTags.
+* Fixed some no used space.
+
 #### 0.3.3
 
 * Add 'html' and 'body' inside default skipTags.

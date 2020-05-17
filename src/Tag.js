@@ -82,7 +82,7 @@ class Tag {
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge(subBeforeGap,subAfterGap)
       }else if(!ignoreNoTags){
-        res+=unescape(tagStr)
+        res+=unescape(tagStr).replace(/^(\n*) +/,'$1 ')
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
@@ -106,6 +106,7 @@ class Tag {
     str+=this.afterMerge()
     str+=gapAfter
     str=this.beforeReturn(str)
+    // console.log(str)
     return this.afterSlim(str)
   }
 }

@@ -13,10 +13,15 @@ class __Skip__ extends Tag{
     super(str,tagName)
     this.tagName=tagName
     this.handleContent=this.handleContent.bind(this)
+    console.log(str)
+  }
+  afterSlim(str){
+    return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
   }
   execMerge(){
     let need=needIndependentLine(this.tagName)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
+    console.log(this.tagName,pre,aft)
     return super.execMerge(pre,aft)
   }
 }
