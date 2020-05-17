@@ -1,4 +1,6 @@
 let independentLineTags=[
+  'html',
+  'body',
   'p',
   'div',
   'form',

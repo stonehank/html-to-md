@@ -25,7 +25,8 @@ function html2md(str,options,force=false){
 }
 
 function beforeReturn(str){
-  str=str.replace(/(\n\s*)+$/,'\n')
+  str=str.replace(/^(\n+\s*)+/,'\n')
+  str=str.replace(/(\n+\s*)+$/,'\n')
   return str
 }
 
