@@ -1,3 +1,9 @@
+#### 0.3.3
+
+* Add 'html' and 'body' inside default skipTags.
+* Add `force` options, it can totally overwrite the customize options object.
+* Fix some redundant empty line.
+
 ##### 0.3.2
 
 * Fixed bugs that cause text after heading tags will not line feed.
