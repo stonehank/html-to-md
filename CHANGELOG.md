@@ -1,3 +1,6 @@
+#### 0.3.5
+* Remove console.
+
 #### 0.3.4
 * Add 'dl,dd,dt' inside default skipTags.
 * Fixed some no used space.
