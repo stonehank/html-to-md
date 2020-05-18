@@ -1,6 +1,6 @@
 {
   "name": "html-to-md",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A JS library for convert HTML<String> to markdown<String>, gzip 6kb",
   "main": "dist/index.js",
   "keywords": [
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/stonehank/html-to-md#README",
   "license": "MIT",
   "scripts": {
-    "test:part":"jest",
+    "test:part": "jest",
     "test": "jest --coverage && codecov",
     "build": "npm run test && npm run build:demo && npm run build:main",
     "build:main": "webpack --env=production",
@@ -45,7 +45,7 @@
     "terser-webpack-plugin": "^1.3.0",
     "webpack": "^4.33.0",
     "webpack-bundle-analyzer": "^3.3.2",
-    "webpack-cli": "^3.3.3",
+    "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.7.1"
   }
 }
