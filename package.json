@@ -1,6 +1,6 @@
 {
   "name": "html-to-md",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "A JS library for convert HTML<String> to markdown<String>, gzip 6kb",
   "main": "dist/index.js",
   "keywords": [
@@ -22,15 +22,17 @@
     "test:part": "jest",
     "test": "jest --coverage && codecov",
     "build": "npm run test && npm run build:demo && npm run build:main",
-    "build:main": "webpack --env=production",
-    "build:demo": "webpack --config webpack.demo.config.js --env=production",
-    "start": "webpack-dev-server --open --env=development --config webpack.demo.config.js"
+    "build:main": "cross-env NODE_ENV=production webpack",
+    "build:demo": "cross-env NODE_ENV=production webpack --config webpack.demo.config.js",
+    "start": "cross-env NODE_ENV=development  webpack-dev-server --open --config webpack.demo.config.js"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
+    "babel-plugin-transform-remove-console": "^6.9.4",
     "clean-webpack-plugin": "^3.0.0",
+    "cross-env": "^7.0.3",
     "css-loader": "^3.0.0",
     "highlight.js": "^9.15.8",
     "html-loader": "^0.5.5",

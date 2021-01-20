@@ -33,13 +33,26 @@ describe('跳过指定的tag标签，内部不影响',()=>{
   })
 
   it('跳过 html 和 div',()=>{
-    expect(html2Md("<html><div><i>abc</i></div></html>")).toBe("\n" +
-      "*abc*\n")
+    expect(html2Md("<html><div><i>abc</i></div></html>")).toBe("\n*abc*\n")
   })
 
   it('只跳过 html',()=>{
     expect(html2Md("<html><div><i>abc</i></div></html>",{skipTags:['html']},true)).toBe(`
 <div>*abc*</div>
 `)
+  })
+
+  it('跳过dt,dd,dl，保持space',()=> {
+    expect(html2Md("<dl>\n\n\n\n" +
+      "<dt>\n" +
+      "<code>title</code>" +
+      "</dt>\n\n\n" +
+      "<dd>" +
+      "<code>content</code>" +
+      "</dd>\n\n\n" +
+      "</dl>")).toBe("\n" +
+      "`title`\n" +
+      "\n" +
+      "`content`\n")
   })
 })

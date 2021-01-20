@@ -1,10 +1,12 @@
 class Config {
-  constructor({skipTags=[],emptyTags=[],ignoreTags=[]}={}){
+  constructor({skipTags=[],emptyTags=[],ignoreTags=[],aliasTags={}}={}){
     this.options={
       skipTags,
       emptyTags,
-      ignoreTags
+      ignoreTags,
+      aliasTags
     }
+    console.log(this.options)
   }
   get(){
     return this.options
@@ -14,6 +16,7 @@ class Config {
     this.options={}
   }
   set(obj,force){
+    console.log(obj)
     if(Object.prototype.toString.call(obj)==="[object Object]"){
       for(let key in obj){
         if(obj.hasOwnProperty(key)){
@@ -28,7 +31,15 @@ class Config {
   }
 
   reset(){
-    this.options={ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body','dl','dd','dt'],emptyTags:[]}
+    this.options={
+      ignoreTags:['style','br','head','!doctype','form'],
+      skipTags:['div','html','body','dl','dd','dt'],
+      emptyTags:[],
+      aliasTags:{
+        figure:'div',
+        figcaption:'div'
+      }
+    }
   }
 }
 
@@ -48,6 +59,13 @@ function assign(obj,newObj,key){
 }
 
 
-let config=new Config({ignoreTags:['','style','br','head','!doctype','form'],skipTags:['div','html','body','dl','dd','dt']})
+let config=new Config({
+  ignoreTags:['','style','br','head','!doctype','form'],
+  skipTags:['div','html','body','dl','dd','dt'],
+  aliasTags:{
+    figure:'div',
+    figcaption:'p'
+  }
+})
 
 module.exports=config

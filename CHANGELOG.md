@@ -1,3 +1,7 @@
+#### 0.3.6
+* Add `aliasTags`.
+* Remove console in production.
+
 #### 0.3.5
 * Remove console.
 

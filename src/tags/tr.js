@@ -1,7 +1,7 @@
 const Tag =require('../Tag')
 const __Ignore__=require('./__ignore__')
 const {findValidTag,findTagClass}=require('../utils')
-
+const {aliasTags}=require('../config').get()
 
 
 class Tr extends Tag{
@@ -22,8 +22,8 @@ class Tr extends Tag{
     while(tagStr!==''){
       if(tagName!==null){
         let SubTagClass=findTagClass(tagName)
-        if(tagName!=='td' && tagName!=='th' && SubTagClass !== __Ignore__ ){
-          throw new Error('should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
+        if(tagName!=='td' && tagName!=='th' && aliasTags[tagName]!=='td' && aliasTags[tagName]!=='th' && SubTagClass !== __Ignore__ ){
+          throw new Error('Should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
         }
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge('','')

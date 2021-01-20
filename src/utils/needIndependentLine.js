@@ -11,6 +11,9 @@ let independentLineTags=[
   'h4',
   'h5',
   'h6',
+  'dl',
+  'dd',
+  'dt'
 ]
 
 function needIndependentLine(tagName){

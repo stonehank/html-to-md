@@ -20,6 +20,10 @@ class __Skip__ extends Tag{
   }
   execMerge(){
     let need=needIndependentLine(this.tagName)
+    // let pre='',aft=''
+    // if(need){
+    //   aft='\n'
+    // }
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
     // console.log(this.tagName,pre,aft)
     return super.execMerge(pre,aft)

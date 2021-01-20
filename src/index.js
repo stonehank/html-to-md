@@ -2,6 +2,7 @@ const {findTagClass,findValidTag,unescape,clearComment}=require('./utils')
 const config =require('./config')
 
 function html2md(str,options,force=false){
+  console.log(options)
   config.set(options,force)
   str=clearComment(str)
   str=str.replace(/(\s*\r\n\s*)/g,'').replace(/&nbsp;/g,"")

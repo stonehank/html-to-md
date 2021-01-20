@@ -33,7 +33,7 @@ function findValidTag(str){
 
       }else if(str[i]==='<' && str[i+1]==="/"){
         if(tagName==null){
-          console.warn("tag is not integrity, current tagStr is "+str.slice(startId))
+          console.warn("Tag is not integrity, current tagStr is "+str.slice(startId))
           let id=i
           while(str[id]!=='>'){
             id++

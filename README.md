@@ -51,19 +51,24 @@ options:
 |skipTags|Array|`['div','html','body','dl','dd','dt']`|需要忽略的标签名|
 |emptyTags|Array|`[]`|不仅忽略它本身，它内部所有标签名全部忽略|
 |ignoreTags|Array|`['','style','br','head','!doctype','form']`|忽视标签及其内部所有内容|
+|aliasTags|Object|`{figure :'div', figcaption:'div'}`|为标签定义一个别名(通常作用于一些不常用标签)|
 
-> 优先权：skipTags > emptyTags > ignoreTags
+
+> 优先权：skipTags > emptyTags > ignoreTags > aliasTags
 
 例：
 ```javascript
-html2md('<><b><i>abc</i></b></>',{ignoreTags:['']},true)
+html2md('<><b><i>abc</i></b></>',{ignoreTags:['']})
 // ''
 
-html2md('<><b><i>abc</i></b></>',{skipTags:['']},true)
+html2md('<><b><i>abc</i></b></>',{skipTags:['']})
 // ***abc***
 
-html2md('<><b><i>abc</i></b></>',{emptyTags:['']},true)
+html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
 // abc
+
+html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
+// *  abc
 ```
 
 force(Boolean)(默认false)

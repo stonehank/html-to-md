@@ -38,8 +38,9 @@ options:
 |skipTags|Array|[]|Declare which tags need to skip|
 |emptyTags|Array|[]|Not only skip itself,but also skip all the tas inside it|
 |ignoreTags|Array|`['','style','br','head','!doctype']`|Ignore all content inside the tag|
+|aliasTags|Object|`{figure :'div', figcaption:'div'}`|Define another tag name for some tags|
 
-> Priority：skipTags > emptyTags > ignoreTags
+> Priority：skipTags > emptyTags > ignoreTags > aliasTags
 
 Example
 ```javascript
@@ -51,6 +52,9 @@ html2md('<><b><i>abc</i></b></>',{skipTags:['']})
 
 html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
 // abc
+
+html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
+// *  abc
 ```
 
 ### Feature

@@ -1,18 +1,22 @@
 const config =require('../config')
 
 
-function findTagClass(tagName,forecRender=false){
+function findTagClass(tagName,forceRender=false){
   let clazz
-  let {skipTags,emptyTags,ignoreTags}=config.get()
+  let {skipTags,emptyTags,ignoreTags,aliasTags}=config.get()
   let isSelfClosing=require('./isSelfClosing')(tagName)
-  if(!forecRender && skipTags.includes(tagName)){
+  // console.log(tagName)
+  if(!forceRender && skipTags.includes(tagName)){
     let skip=require('../tags/__skip__')
     return isSelfClosing ? skip.__SkipSelfClose__: skip.__Skip__
-  }else if(!forecRender && emptyTags.includes(tagName)){
+  }else if(!forceRender && emptyTags.includes(tagName)){
     let empty=require('../tags/__empty__')
     return isSelfClosing ? empty.__EmptySelfClose__: empty.__Empty__
-  }else if(!forecRender && ignoreTags.includes(tagName)){
+  }else if(!forceRender && ignoreTags.includes(tagName)){
     return require('../tags/__ignore__')
+  }else if(!forceRender && aliasTags[tagName]!=null){
+    let newTagName=aliasTags[tagName]
+    return findTagClass(newTagName,forceRender)
   }
   try{
     clazz=require('../tags/'+tagName)

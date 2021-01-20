@@ -82,7 +82,14 @@ class Tag {
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge(subBeforeGap,subAfterGap)
       }else if(!ignoreNoTags){
+        tagStr=tagStr.replace(/^(\n)+/,'\n').replace(/\n+$/,'\n')
         res+=unescape(tagStr).replace(/^(\n*) +/,'$1 ')
+        if(res.startsWith('\n')){
+          res='\n'+res.trimLeft()
+        }
+        if(res.endsWith('\n')){
+          res=res.trimRight()+'\n'
+        }
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
