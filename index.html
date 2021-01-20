@@ -696,7 +696,7 @@
     }else{
       htmlTxt=ele2.value
     }
-    output=html2md(htmlTxt,{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
+    output=html2md(htmlTxt)
     if(ele1)ele2.innerHTML=htmlTxt
     ele3.innerHTML=output
   }
