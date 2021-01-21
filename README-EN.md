@@ -31,7 +31,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 
 ### Config(Not require)：
 
-options:
+* options:
 
 |name|data type|default|explain|
 |:---:|:---:|:---:|:---:|
@@ -55,6 +55,27 @@ html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
 
 html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
 // *  abc
+```
+
+* force(Boolean)(Default value is false)
+
+|value|description|
+|:---:|:---:|
+|true|Exactly use your custom options|
+|false|Use `Object.assign` to combine custom options and default options|
+
+Example：
+```javascript
+// The default skipTags value is ['div','html','body']
+
+// ex1：
+html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},false)
+// skipTags value become ['div','html','body','b']
+
+// ex2：
+html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
+// skipTags value become ['b']
+
 ```
 
 ### Feature
@@ -96,4 +117,4 @@ html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
 
 ### TODO
 
-- [ ] support `options`.
+- [x] support `options`.

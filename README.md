@@ -83,7 +83,7 @@ force(Boolean)(默认false)
 // 默认 skipTags 为 ['div','html','body']
 
 // 配置一：
-html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']})
+html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},false)
 // skipTags 为 ['div','html','body','b']
 
 // 配置二：
