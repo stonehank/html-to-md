@@ -78,7 +78,7 @@ class Pre extends Tag{
 
   execMerge(gapBefore='\n',gapAfter='\n'){
     if(shouldRenderRawInside.includes(this.parentTag)){
-      return this.rawStr.replace(/\n/g,'')
+      return this.rawStr.replace(/[\n\r]/g,'')
     }
     if(this.layer>1){
       gapBefore=''

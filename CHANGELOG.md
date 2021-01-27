@@ -1,3 +1,6 @@
+#### 0.3.8
+* Fix when render as raw HTML, remove all the wrap. 
+
 #### 0.3.7
 * Fixed some tags inside `th`, `td` will cause wrap.Consider `<td><div>ABC</div></td>`
 * Add some tags should render as raw HTML inside a table.Consider `<td><ul><li>1</li></ul></td>`

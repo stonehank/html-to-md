@@ -39,7 +39,7 @@ class Ol extends Tag{
 
   execMerge(gapBefore='\n',gapAfter=''){
     if(shouldRenderRawInside.includes(this.parentTag)){
-      return this.rawStr
+      return this.rawStr.replace(/[\n\r]/g,'')
     }
     if(this.layer>1){
       gapBefore=''

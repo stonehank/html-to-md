@@ -17,15 +17,16 @@ class Th extends Tag{
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{parentTag:this.curTagName})
+        console.log(res,'|||',subTag.execMerge('',''))
         res+=subTag.execMerge('','')
       }else{
-        tagStr=tagStr.replace(/^(\n)+/,'\n').replace(/\n+$/,'\n')
+        tagStr=tagStr.replace(/^(\n)+/,'').replace(/\n+$/,'')
         res+=unescape(tagStr).replace(/^(\n*) +/,'$1 ')
         if(res.startsWith('\n')){
-          res='\n'+res.trimLeft()
+          res=res.trimLeft()
         }
         if(res.endsWith('\n')){
-          res=res.trimRight()+'\n'
+          res=res.trimRight()
         }
       }
       let nxt=getNxtValidTag()

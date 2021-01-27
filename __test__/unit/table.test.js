@@ -214,7 +214,10 @@ describe("test <table></table> tag",()=>{
       "<td style=\"text-align:right\">$1600</td>\n" +
       "</tr>\n" +
       "<tr>\n" +
-      "<td><ul style='height:102px'><li style='height:50px'>item1</li><li>item2</li></ul></td>\n" +
+      "<td><ul style='height:102px'>\n" +
+      "          <li style='height:50px'>item1</li>\n" +
+      "          <li>item2</li>\n" +
+      "        </ul></td>\n" +
       "<td style=\"text-align:center\">See the list</td>\n" +
       "<td style=\"text-align:right\">from the first column</td>\n" +
       "</tr>\n" +
@@ -224,7 +227,52 @@ describe("test <table></table> tag",()=>{
       "|Tables|Are|Cool|\n" +
       "|:---:|---:|:---:|\n" +
       "|col 3 is|right-aligned|$1600|\n" +
-      "|<ul style='height:102px'><li style='height:50px'>item1</li><li>item2</li></ul>|See the list|from the first column|\n")
+      "|<ul style='height:102px'>          <li style='height:50px'>item1</li>          <li>item2</li>        </ul>|See the list|from the first column|\n")
+  })
+
+  it('UL inside table(with css style and wrap)',()=>{
+    let table=new Table("<table>\n" +
+      "  <tbody>\n" +
+      "    <tr>\n" +
+      "      <th>Tables</th>\n" +
+      "      <th align=\"center\">Are</th>\n" +
+      "      <th align=\"right\">Cool</th>\n" +
+      "    </tr>\n" +
+      "    <tr>\n" +
+      "      <td>col 3 is</td>\n" +
+      "      <td align=\"center\">right-aligned</td>\n" +
+      "      <td align=\"right\">$1600</td>\n" +
+      "    </tr>\n" +
+      "    <tr>\n" +
+      "      <td>col 2 is</td>\n" +
+      "      <td align=\"center\">centered</td>\n" +
+      "      <td align=\"right\">$12</td>\n" +
+      "    </tr>\n" +
+      "    <tr>\n" +
+      "      <td>zebra stripes</td>\n" +
+      "      <td align=\"center\">are neat</td>\n" +
+      "      <td align=\"right\">$1</td>\n" +
+      "    </tr>\n" +
+      "    <tr>\n" +
+      "      <td>\n" +
+      "        <ul>\n" +
+      "          <li>item1</li>\n" +
+      "          <li>item2</li>\n" +
+      "        </ul>\n" +
+      "      </td>\n" +
+      "      <td align=\"center\">See the list</td>\n" +
+      "      <td align=\"right\">from the first column</td>\n" +
+      "    </tr>\n" +
+      "  </tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "||||\n" +
+      "|---|---|---|\n" +
+      "|Tables|Are|Cool|\n" +
+      "|col 3 is|right-aligned|$1600|\n" +
+      "|col 2 is|centered|$12|\n" +
+      "|zebra stripes|are neat|$1|\n" +
+      "| <ul>          <li>item1</li>          <li>item2</li>        </ul> |See the list|from the first column|\n")
   })
 
   it('OL inside table',()=>{
