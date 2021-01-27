@@ -1,9 +1,9 @@
 const Tag =require('../Tag')
 const {__Empty__ ,__EmptySelfClose__}=require('./__empty__')
-const {findValidTag,findTagClass,unescape,isSelfClosing,getLanguage}=require('../utils')
+const {findValidTag,findTagClass,unescape,isSelfClosing,getLanguage,shouldRenderRawInside}=require('../utils')
 
 class Pre extends Tag{
-  constructor(str,tagName='pre',{layer=1,language=null,match='```',isFirstTag=false}={}){
+  constructor(str,tagName='pre',{layer=1,language=null,match='```',isFirstTag=false,parentTag=''}={}){
     super(str,tagName)
     this.content=this.getContent()
     let hasCodeSymbol=this.content.includes('```')
@@ -13,6 +13,7 @@ class Pre extends Tag{
     this.leadingSpace=this.tabSpace.repeat(this.layer-1)
     this.indentSpace=hasCodeSymbol ? '    ' : ''
     this.res=null
+    this.parentTag=parentTag
     this.language = language!=null ? language : getLanguage(str)
   }
 
@@ -76,6 +77,9 @@ class Pre extends Tag{
   }
 
   execMerge(gapBefore='\n',gapAfter='\n'){
+    if(shouldRenderRawInside.includes(this.parentTag)){
+      return this.rawStr.replace(/\n/g,'')
+    }
     if(this.layer>1){
       gapBefore=''
     }

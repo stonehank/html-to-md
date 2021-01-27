@@ -1,12 +1,13 @@
 const Tag =require('../Tag')
 const __Ignore__=require('./__ignore__')
-const {findValidTag,findTagClass}=require('../utils')
+const {findValidTag,findTagClass,shouldRenderRawInside}=require('../utils')
 const {aliasTags}=require('../config').get()
 
 class Ul extends Tag{
-  constructor(str,tagName='ul',{layer=1}={}){
+  constructor(str,tagName='ul',{layer=1,parentTag=''}={}){
     super(str,tagName)
     this.layer=layer
+    this.parentTag=parentTag
   }
 
 
@@ -34,6 +35,9 @@ class Ul extends Tag{
   }
 
   execMerge(gapBefore='\n',gapAfter=''){
+    if(shouldRenderRawInside.includes(this.parentTag)){
+      return this.rawStr
+    }
     if(this.layer>1){
       gapBefore=''
     }

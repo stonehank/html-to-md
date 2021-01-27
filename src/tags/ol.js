@@ -1,13 +1,14 @@
 const Tag =require('../Tag')
 const __Ignore__=require('./__ignore__')
-const {findValidTag,findTagClass}=require('../utils')
+const {findValidTag,findTagClass,shouldRenderRawInside}=require('../utils')
 const {aliasTags}=require('../config').get()
 
 class Ol extends Tag{
-  constructor(str,tagName='ol',{layer=1}={}){
+  constructor(str,tagName='ol',{layer=1,parentTag=''}={}){
     super(str,tagName)
     let attrs=this.getAttrs()
     this.layer=layer
+    this.parentTag=parentTag
     this.count=attrs.start || 1
   }
 
@@ -37,6 +38,9 @@ class Ol extends Tag{
   }
 
   execMerge(gapBefore='\n',gapAfter=''){
+    if(shouldRenderRawInside.includes(this.parentTag)){
+      return this.rawStr
+    }
     if(this.layer>1){
       gapBefore=''
     }

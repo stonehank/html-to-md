@@ -127,4 +127,190 @@ describe("test <table></table> tag",()=>{
       "|*data-3-left*|data-3-center|data-3-right|\n")
   })
 
+  it('table has ignore tags, like <td><div>abc</div></td>',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th><div>col-1</div></th>\n" +
+      "<th>col-2</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>data-1-left</td>\n" +
+      "<td>data-1-center</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td>data-2-left</td>\n" +
+      "<td><div>data-2-center</div></td>\n" +
+      "</tr>\n"+
+      "<tr>\n" +
+      "<td><div>data-3-left</div></td>\n" +
+      "<td>data-3-center</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|col-1|col-2|\n" +
+      "|---|---|\n" +
+      "|data-1-left|data-1-center|\n" +
+      "|data-2-left|data-2-center|\n" +
+      "|data-3-left|data-3-center|\n")
+  })
+  it('without thead',()=>{
+    let table=new Table("<table>\n" +
+      "\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>data-1-left</td>\n" +
+      "<td>data-1-center</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td>data-2-left</td>\n" +
+      "<td>data-2-center</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td>data-3-left</td>\n" +
+      "<td>data-3-center</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|||\n" +
+      "|---|---|\n" +
+      "|data-1-left|data-1-center|\n" +
+      "|data-2-left|data-2-center|\n" +
+      "|data-3-left|data-3-center|\n")
+  })
+
+  it('without tbody',()=>{
+    let table=new Table("<table>\n" +
+      "\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th>data-1-left</th>\n" +
+      "<th>data-1-center</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|data-1-left|data-1-center|\n" +
+      "|:---|:---|\n")
+  })
+
+  it('UL inside table(with css style)',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th>Tables</th>\n" +
+      "<th style=\"text-align:center\">Are</th>\n" +
+      "<th style=\"text-align:right\">Cool</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>col 3 is</td>\n" +
+      "<td style=\"text-align:center\">right-aligned</td>\n" +
+      "<td style=\"text-align:right\">$1600</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td><ul style='height:102px'><li style='height:50px'>item1</li><li>item2</li></ul></td>\n" +
+      "<td style=\"text-align:center\">See the list</td>\n" +
+      "<td style=\"text-align:right\">from the first column</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|Tables|Are|Cool|\n" +
+      "|:---:|---:|:---:|\n" +
+      "|col 3 is|right-aligned|$1600|\n" +
+      "|<ul style='height:102px'><li style='height:50px'>item1</li><li>item2</li></ul>|See the list|from the first column|\n")
+  })
+
+  it('OL inside table',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th>Tables</th>\n" +
+      "<th style=\"text-align:center\">Are</th>\n" +
+      "<th style=\"text-align:right\">Cool</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>col 3 is</td>\n" +
+      "<td style=\"text-align:center\">right-aligned</td>\n" +
+      "<td style=\"text-align:right\">$1600</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td><ol><li>item1</li><li>item2</li></ol></td>\n" +
+      "<td style=\"text-align:center\">See the list</td>\n" +
+      "<td style=\"text-align:right\">from the first column</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|Tables|Are|Cool|\n" +
+      "|:---:|---:|:---:|\n" +
+      "|col 3 is|right-aligned|$1600|\n" +
+      "|<ol><li>item1</li><li>item2</li></ol>|See the list|from the first column|\n")
+  })
+
+  it('Table inside table',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th>Tables</th>\n" +
+      "<th style=\"text-align:center\">Are</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>col 3 is</td>\n" +
+      "<td style=\"text-align:center\">right-aligned</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td><table><tbody><tr><td>1</td><td>2</td></tr></tbody></table></td>\n" +
+      "<td style=\"text-align:center\">See the list</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|Tables|Are|\n" +
+      "|:---:|:---:|\n" +
+      "|col 3 is|right-aligned|\n" +
+      "|<table><tbody><tr><td>1</td><td>2</td></tr></tbody></table>|See the list|\n")
+  })
+
+  it('Pre inside table, still can not wrap...',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th>Tables</th>\n" +
+      "<th style=\"text-align:center\">Are</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>col 3 is</td>\n" +
+      "<td style=\"text-align:center\">right-aligned</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td><pre><code>function plus(){\n" +
+      "    var a=5\n" +
+      "    var b=7;\n" +
+      "    return a+b\n" +
+      "    }\n" +
+      "</code></pre></td>\n" +
+      "<td style=\"text-align:right\">from the first column</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|Tables|Are|\n" +
+      "|:---:|---:|\n" +
+      "|col 3 is|right-aligned|\n" +
+      "|<pre><code>function plus(){    var a=5    var b=7;    return a+b    }</code></pre>|from the first column|\n")
+  })
+
 })

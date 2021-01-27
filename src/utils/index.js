@@ -6,6 +6,7 @@ const parseAttrs=require('./parseAttrs')
 const getLanguage=require('./getLanguage')
 const clearComment=require('./clearComment')
 const needIndependentLine=require('./needIndependentLine')
+const shouldRenderRawInside=require('./shouldRenderRawInside')
 
 
 module.exports={
@@ -17,5 +18,6 @@ module.exports={
   parseAttrs,
   getLanguage,
   clearComment,
-  needIndependentLine
+  needIndependentLine,
+  shouldRenderRawInside,
 }

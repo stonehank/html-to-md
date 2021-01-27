@@ -9,23 +9,19 @@ const {needIndependentLine} =require('../utils')
 * */
 
 class __Skip__ extends Tag{
-  constructor(str,tagName='__skip__'){
+  constructor(str,tagName='__skip__',{parentTag=''}={}){
     super(str,tagName)
     this.tagName=tagName
+    this.parentTag=parentTag
+    this.noNeedWrap=['td','th']
     this.handleContent=this.handleContent.bind(this)
-    // console.log(str)
   }
   afterSlim(str){
     return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
   }
   execMerge(){
-    let need=needIndependentLine(this.tagName)
-    // let pre='',aft=''
-    // if(need){
-    //   aft='\n'
-    // }
+    let need=needIndependentLine(this.tagName) && !this.noNeedWrap.includes(this.parentTag)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
-    // console.log(this.tagName,pre,aft)
     return super.execMerge(pre,aft)
   }
 }

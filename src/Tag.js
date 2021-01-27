@@ -6,6 +6,7 @@ class Tag {
     this.tagName=tagName
     this.attrs=[]
     this.content=''
+    this.rawStr=str
     this.tabSpace=tabSpace
     this.resolveStr(str)
     this.getAttrs=this.getAttrs.bind(this,this.attrs)

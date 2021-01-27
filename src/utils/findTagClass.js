@@ -18,16 +18,24 @@ function findTagClass(tagName,forceRender=false){
     let newTagName=aliasTags[tagName]
     return findTagClass(newTagName,forceRender)
   }
-  try{
-    clazz=require('../tags/'+tagName)
-  }catch(e){
+  if(forceRender){
     if(isSelfClosing){
       clazz=require('../tags/__nomatch__').__NoMatchSelfClose__
     }else{
       clazz=require('../tags/__nomatch__').__NoMatch__
     }
-
+  }else{
+    try{
+      clazz=require('../tags/'+tagName)
+    }catch(e){
+      if(isSelfClosing){
+        clazz=require('../tags/__nomatch__').__NoMatchSelfClose__
+      }else{
+        clazz=require('../tags/__nomatch__').__NoMatch__
+      }
+    }
   }
+
   return clazz
 }
 
