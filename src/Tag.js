@@ -2,11 +2,12 @@ const {findValidTag,findTagClass,parseAttrs,unescape}=require('./utils')
 
 
 class Tag {
-  constructor(str,tagName,{tabSpace='   '}={}){
+  constructor(str,tagName,{tabSpace='   ',parentTag=''}={}){
     this.tagName=tagName
     this.attrs=[]
     this.content=''
     this.rawStr=str
+    this.parentTag=parentTag
     this.tabSpace=tabSpace
     this.resolveStr(str)
     this.getAttrs=this.getAttrs.bind(this,this.attrs)
@@ -80,7 +81,7 @@ class Tag {
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName)
+        let subTag=new SubTagClass(tagStr,tagName,{parentTag:this.parentTag})
         res+=subTag.execMerge(subBeforeGap,subAfterGap)
       }else if(!ignoreNoTags){
         tagStr=tagStr.replace(/^(\n)+/,'\n').replace(/\n+$/,'\n')

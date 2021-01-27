@@ -10,7 +10,7 @@ const {needIndependentLine} =require('../utils')
 
 class __Skip__ extends Tag{
   constructor(str,tagName='__skip__',{parentTag=''}={}){
-    super(str,tagName)
+    super(str,tagName,{parentTag:parentTag})
     this.tagName=tagName
     this.parentTag=parentTag
     this.noNeedWrap=['td','th']
@@ -19,6 +19,9 @@ class __Skip__ extends Tag{
   afterSlim(str){
     return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
   }
+
+
+
   execMerge(){
     let need=needIndependentLine(this.tagName) && !this.noNeedWrap.includes(this.parentTag)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''

@@ -157,6 +157,38 @@ describe("test <table></table> tag",()=>{
       "|data-2-left|data-2-center|\n" +
       "|data-3-left|data-3-center|\n")
   })
+
+  it('table has ignore tags-2, like <td><div>abc</div></td>',()=>{
+    let table=new Table("<table>\n" +
+      "<thead>\n" +
+      "<tr>\n" +
+      "<th><div>col-1</div></th>\n" +
+      "<th>col-2</th>\n" +
+      "</tr>\n" +
+      "</thead>\n" +
+      "<tbody>\n" +
+      "<tr>\n" +
+      "<td>data-1-left</td>\n" +
+      "<td>data-1-center</td>\n" +
+      "</tr>\n" +
+      "<tr>\n" +
+      "<td>data-2-left</td>\n" +
+      "<td><div><div>data-2-center</div></div></td>\n" +
+      "</tr>\n"+
+      "<tr>\n" +
+      "<td><div>data-3-left</div></td>\n" +
+      "<td>data-3-center</td>\n" +
+      "</tr>\n" +
+      "</tbody>\n" +
+      "</table>")
+    expect(table.execMerge()).toBe("\n" +
+      "|col-1|col-2|\n" +
+      "|---|---|\n" +
+      "|data-1-left|data-1-center|\n" +
+      "|data-2-left|data-2-center|\n" +
+      "|data-3-left|data-3-center|\n")
+  })
+
   it('without thead',()=>{
     let table=new Table("<table>\n" +
       "\n" +
