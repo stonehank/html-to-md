@@ -36,6 +36,9 @@ class SelfCloseTag {
   afterMerge(){
     return ''
   }
+  beforeReturn(str){
+    return str
+  }
 
   handleContent(){
     return ''
@@ -47,6 +50,7 @@ class SelfCloseTag {
     str+=this.handleContent()
     str+=this.afterMerge()
     str+=gapAfter
+    str=this.beforeReturn(str)
     return str
   }
 }

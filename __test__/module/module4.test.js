@@ -4,7 +4,7 @@ describe('test special', () => {
 
   it('test-1', () => {
     let str = "<body"
-    expect(html2Md(str)).toBe("\n")
+    expect(html2Md(str)).toBe("<body")
   })
 
   it('test-2', () => {

@@ -24,6 +24,22 @@ describe('test special', () => {
 `)
   })
 
+  it('Unvalid tag with valid sub tags',()=>{
+    expect(html2Md('<div><i>italy</i><strong>Strong</strong></b>')).toBe("<i>italy</i><strong>Strong</strong>")
+  })
+
+  it('Unvalid tag in table',()=>{
+    expect(html2Md('<table>\n' +
+      '<tr><td>sdfdfdfdfdf<tdfdfdfdfdfd</td></tr>\n' +
+      '</table>')).toBe("\n" +
+      "||\n" +
+      "|:---|\n" +
+      "|sdfdfdfdfdf<tdfdfdfdfdfd|\n")
+  })
+
+  it('Unvalid tag in normal tag',()=>{
+    expect(html2Md("<b>sdfsdfs</b>dfsdf</b>")).toBe("**sdfsdfs**dfsdf")
+  })
 
 })
 

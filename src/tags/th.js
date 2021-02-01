@@ -13,6 +13,7 @@ class Th extends Tag{
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
+    console.log(tagName,tagStr,'----------')
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
@@ -32,6 +33,7 @@ class Th extends Tag{
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]
+      console.log(tagName,tagStr,'~~~~~~~~~~~~~~~~')
     }
     return res
   }

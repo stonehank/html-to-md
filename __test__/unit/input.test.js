@@ -24,10 +24,16 @@ describe('test <input /> tag',()=>{
       '* <input type="text" disabled />text\n')
   })
 
-  it('parent tag is li, but checkbox is not disabled, do nothing)',()=>{
+  // it('parent tag is li, but checkbox is not disabled, do nothing)',()=>{
+  //   let li=new Li('<li><input type="checkbox" checked >not disabled</li>')
+  //   expect(li.execMerge()).toBe('\n' +
+  //     '* <input type="checkbox" checked >not disabled\n')
+  // })
+
+  it('parent tag is li, but checkbox is not disabled, will auto convert to disable)',()=>{
     let li=new Li('<li><input type="checkbox" checked >not disabled</li>')
-    expect(li.execMerge()).toBe('\n' +
-      '* <input type="checkbox" checked >not disabled\n')
+    expect(li.execMerge()).toBe("\n" +
+      "* [x] not disabled\n")
   })
 
 

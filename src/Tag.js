@@ -41,6 +41,7 @@ class Tag {
         count++
       }else if(m.endsWith('</'+this.tagName)){
         count--
+        endId=j-this.tagName.length-1
       }
       if(count===0){
         endId=j-this.tagName.length-1
@@ -48,8 +49,8 @@ class Tag {
       }
     }
     if(endId===-1){
-      console.warn("tag "+ this.tagName +" has no close,is self-close? use class SelfCloseTag")
-      return
+      console.warn("Tag "+ this.tagName +" has no close.")
+      // return
     }
     this.content=restStr.slice(0,endId)
   }
@@ -78,6 +79,7 @@ class Tag {
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
+    console.log(tagName,tagStr)
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
@@ -94,6 +96,7 @@ class Tag {
         }
       }
       let nxt=getNxtValidTag()
+      console.log(tagName,tagStr)
       tagName=nxt[0]
       tagStr=nxt[1]
     }
