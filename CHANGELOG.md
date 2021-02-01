@@ -1,3 +1,6 @@
+### 0.3.9
+* Output some raw unvalid content, like `<` in the tag contents.
+
 #### 0.3.8
 * Fix when render as raw HTML, remove all the wrap. 
 
