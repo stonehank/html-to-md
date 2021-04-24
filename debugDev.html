@@ -701,7 +701,7 @@
   function verify(times,inputMd,HTML,outputMD){
     if(times===0)return
     inputMd.value=unescape(outputMD.innerHTML)
-    show(inputMd,HTML,outputMD)
+    // console.log(inputMd,HTML,outputMD)
     if(times===1){
       let diff=window.diff(inputMd.value,unescape(outputMD.innerHTML))
       let eq=true
@@ -713,9 +713,9 @@
           break
         }
       }
-      if(eq)console.log('Equal!!')
+      if(eq)alert('Equal!!')
     }
-    verify(times-1,inputMd,outputMD)
+    verify(times-1,inputMd,HTML,outputMD)
   }
   function render(md2Html,html2md,ele1,ele2,ele3){
     let htmlTxt=null,output

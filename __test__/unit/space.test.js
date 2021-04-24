@@ -23,7 +23,7 @@ describe('Remove some space',()=>{
       " <div>\n" +
       "  <h1>APCIterator::__construct</h1>\n" +
       " </div></div></div></div>")
-    expect(spaceHtml).toBe("\n" +
+    expect(spaceHtml).toBe(
       "*  [PHP Manual](index.html)\n" +
       "*  [APCIterator](class.apciterator.html)\n" +
       "*  Constructs an APCIterator iterator object\n" +

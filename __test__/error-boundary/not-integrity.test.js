@@ -19,11 +19,10 @@ describe('not integrity test', () => {
       '</ul>\n' +
       '</li>'
 
-    expect(html2Md(str)).toBe(`
->1. bq-nest-2
->
->>1. bq-nest-3
-`)
+    expect(html2Md(str)).toBe(
+        '>1. bq-nest-2\n' +
+        '>\n' +
+        '>>1. bq-nest-3\n')
   })
 
 })

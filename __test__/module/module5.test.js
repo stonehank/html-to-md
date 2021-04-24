@@ -7,10 +7,9 @@ describe('test special', () => {
 <li>
 <h1>h1</h1>Should Be Next Line</li>
 </ul>`
-    expect(html2Md(str)).toBe(`
-*  # h1
-   Should Be Next Line
-`)
+    expect(html2Md(str)).toBe(
+        '*  # h1\n' +
+        '   Should Be Next Line\n')
   })
 
   it('h3 Text should be next line', () => {
@@ -18,10 +17,9 @@ describe('test special', () => {
 <li>
 <h3>h3</h3>Should Be Next Line</li>
 </ul>`
-    expect(html2Md(str)).toBe(`
-*  ### h3
-   Should Be Next Line
-`)
+    expect(html2Md(str)).toBe(
+        '*  ### h3\n' +
+        '   Should Be Next Line\n')
   })
 
   it('Unvalid tag with valid sub tags',()=>{
@@ -31,7 +29,7 @@ describe('test special', () => {
   it('Unvalid tag in table',()=>{
     expect(html2Md('<table>\n' +
       '<tr><td>sdfdfdfdfdf<tdfdfdfdfdfd</td></tr>\n' +
-      '</table>')).toBe("\n" +
+      '</table>')).toBe(
       "||\n" +
       "|:---|\n" +
       "|sdfdfdfdfdf<tdfdfdfdfdfd|\n")

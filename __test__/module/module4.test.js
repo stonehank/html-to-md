@@ -9,7 +9,7 @@ describe('test special', () => {
 
   it('test-2', () => {
     let str = "<!DOCTYPE><html><body><i>abc<b>xxx</b></i></body></html>"
-    expect(html2Md(str)).toBe("\n*abc**xxx***\n")
+    expect(html2Md(str)).toBe("*abc**xxx***\n")
   })
 
   it('test-3', () => {
@@ -18,8 +18,7 @@ describe('test special', () => {
       " - </span>bar\n" +
       "<span class=\"hljs-bullet\"> - </span>baz\n" +
       "</code></pre>"
-    expect(html2Md(str)).toBe('\n' +
-      '```markdown\n' +
+    expect(html2Md(str)).toBe('```markdown\n' +
       ' - foo\n' +
       '\n' +
       ' - bar\n' +
@@ -60,8 +59,7 @@ describe('test special', () => {
       '</code></pre>\n' +
       '</li>\n' +
       '</ul>'
-    expect(html2Md(str)).toBe('\n' +
-      '*  **Since version 1.4.0, showdown supports the markdown="1" attribute**, but for older versions, this attribute is ignored. This means:\n' +
+    expect(html2Md(str)).toBe('*  **Since version 1.4.0, showdown supports the markdown="1" attribute**, but for older versions, this attribute is ignored. This means:\n' +
       '   \n' +
       '   ```\n' +
       '     <div markdown="1">\n' +
@@ -112,8 +110,7 @@ describe('test special', () => {
       "</code></pre>\n" +
       "</li>\n" +
       "</ul>"
-    expect(html2Md(str)).toBe('\n' +
-      '*  rawgit CDN\n' +
+    expect(html2Md(str)).toBe('*  rawgit CDN\n' +
       '   \n' +
       '   ```\n' +
       '     https://cdn.rawgit.com/showdownjs/showdown/<version tag>/dist/showdown.min.js\n' +
@@ -142,8 +139,7 @@ describe('test special', () => {
       'what is x\n' +
       '```\n' +
       '</code></pre>\n'
-    expect(html2Md(str)).toBe('\n' +
-      '### Multiple lines\n' +
+    expect(html2Md(str)).toBe('### Multiple lines\n' +
       '\n' +
       'To create blocks of code you should indent it by four spaces.\n' +
       '\n' +
@@ -165,7 +161,7 @@ describe('test special', () => {
   })
 
   it('multi nest p', () => {
-    expect(html2Md('<ul>\n<li>\n<p>p-1</p>\n<p>p-2</p>\n</li>\n<li>\n<p>p-3</p>\n<p>p-4</p>\n</li>\n</ul>')).toBe('\n' +
+    expect(html2Md('<ul>\n<li>\n<p>p-1</p>\n<p>p-2</p>\n</li>\n<li>\n<p>p-3</p>\n<p>p-4</p>\n</li>\n</ul>')).toBe(
       '*  p-1\n' +
       '   \n' +
       '   p-2\n' +
@@ -191,7 +187,7 @@ describe('test special', () => {
       '</li>\n' +
       '<li>c</li>\n' +
       '</ul>'))
-      .toBe('\n' +
+      .toBe(
         '*  a\n' +
         '*  b\n' +
         '   *  code\n' +
@@ -214,7 +210,7 @@ describe('test special', () => {
       '</blockquote>\n' +
       '</blockquote>\n' +
       '</blockquote>'))
-      .toBe('\n' +
+      .toBe(
         '>sdfsdfsf\n' +
         '>\n' +
         '>>sdfsf\n' +
@@ -233,7 +229,7 @@ describe('test special', () => {
       '```</code></pre>\n' +
       '</li>\n' +
       '</ul>\n'))
-      .toBe('\n' +
+      .toBe(
         '*      ```\n' +
         '       var a=5\n' +
         '       ```\n')
@@ -254,8 +250,7 @@ describe('test special', () => {
       '</ul>\n' +
       '</li>\n' +
       '</ul>'))
-      .toBe('\n' +
-        '*  c\n' +
+      .toBe('*  c\n' +
         '   *  d\n' +
         '      *  ```\n' +
         '         abc\n' +
@@ -278,8 +273,7 @@ describe('test special', () => {
       '</ul>\n' +
       '</li>\n' +
       '</ul>'))
-      .toBe('\n' +
-        '*  c\n' +
+      .toBe('*  c\n' +
         '   *  d\n' +
         '      *      ```\n' +
         '\n' +
@@ -300,8 +294,7 @@ describe('test special', () => {
       "</li>\n" +
       "</ol>\n" +
       "</li>\n" +
-      "</ol>\n")).toBe('\n' +
-      '1. sdff\n' +
+      "</ol>\n")).toBe('1. sdff\n' +
       '   1. sdfsf\n' +
       '   2. ---\n' +
       '      ---\n')
@@ -309,8 +302,7 @@ describe('test special', () => {
   it('slim hr',()=>{
     expect(html2Md('<hr>\n\n\n\n\n\n\n' +
       '<hr>\n\n\n\n\n\n\n' +
-      '<hr>\n\n\n\n\n\n\n')).toBe('\n' +
-      '---\n' +
+      '<hr>\n\n\n\n\n\n\n')).toBe('---\n' +
       '\n' +
       '---\n' +
       '\n' +

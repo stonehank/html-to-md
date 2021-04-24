@@ -12,8 +12,7 @@ describe('替换标签',()=>{
 `<figure>
   <img src="someimg.jpg" alt="" style="width:100%">
   <figcaption>Fig.1 - Trulli, Puglia, Italy.</figcaption>
-</figure>`)).toBe("\n" +
-      "![](someimg.jpg)\n" +
+</figure>`)).toBe("![](someimg.jpg)\n" +
       " \n" +
       "Fig.1 - Trulli, Puglia, Italy.\n")
   })

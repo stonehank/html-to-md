@@ -7,7 +7,8 @@ function getTagName(str,id){
   }
   return name.toLowerCase()
 }
-
+// 找到下一个有效tag， 可多次调用，返回[tagName, tagContent]
+// 例如: <b>abc</b><i>abc</i>， 返回['b', '<b>abc</b>']
 function findValidTag(str){
   let startId=0
   return ()=>{

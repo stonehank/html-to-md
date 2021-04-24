@@ -210,8 +210,7 @@ describe('module test1',()=>{
       "<li><input checked=\"\" disabled=\"\" type=\"checkbox\"> finish-4</li>\n" +
       "</ul>"
 
-    expect(html2Md(str)).toBe('\n' +
-      '**Advertisement 😃**\n' +
+    expect(html2Md(str)).toBe('**Advertisement 😃**\n' +
       '\n' +
       '*  **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image\n' +
       'resize in browser.\n' +
