@@ -3,6 +3,7 @@ const Tag =require('../Tag')
 class Em extends Tag{
   constructor(str,tagName='em'){
     super(str,tagName)
+    this.needEscape=true
     this.handleContent=this.handleContent.bind(this,'','')
   }
 

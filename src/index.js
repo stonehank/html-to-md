@@ -29,8 +29,9 @@ function html2md(str,options,force=false){
 }
 
 function beforeReturn(str){
-  str=str.replace(/^(\n+\s*)+/,'')
+  str=str.replace(/^(\n+)+/,'')
   str=str.replace(/(\n+\s*)+$/,'\n')
+  console.log('tag--------\n1'+str,str.startsWith('\n'))
   return str
 }
 

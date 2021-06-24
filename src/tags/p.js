@@ -4,6 +4,7 @@ const Tag =require('../Tag')
  class P extends Tag{
   constructor(str,tagName='p',{layer=1,isFirstTag=false}={}){
     super(str,tagName)
+      this.needEscape=true
     this.layer=layer
     this.leadingSpace=isFirstTag ? '' : this.tabSpace.repeat(this.layer-1)
   }

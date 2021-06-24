@@ -8,6 +8,7 @@ class Tag {
     this.content=''
     this.rawStr=str
     this.parentTag=parentTag
+    this.needEscape=false
     this.tabSpace=tabSpace
     this.resolveStr(str)
     this.getAttrs=this.getAttrs.bind(this,this.attrs)
@@ -79,7 +80,6 @@ class Tag {
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
-    console.log(tagName,tagStr)
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
@@ -87,7 +87,7 @@ class Tag {
         res+=subTag.execMerge(subBeforeGap,subAfterGap)
       }else if(!ignoreNoTags){
         tagStr=tagStr.replace(/^(\n)+/,'\n').replace(/\n+$/,'\n')
-        res+=unescape(tagStr).replace(/^(\n*) +/,'$1 ')
+        res+=unescape(tagStr,{needEscape:this.needEscape}).replace(/^(\n*) +/,'$1 ')
         if(res.startsWith('\n')){
           res='\n'+res.trimLeft()
         }

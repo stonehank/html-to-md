@@ -13,6 +13,7 @@ class Pre extends Tag{
     this.leadingSpace=this.tabSpace.repeat(this.layer-1)
     this.indentSpace=hasCodeSymbol ? '    ' : ''
     this.res=null
+    this.existCodeTag=false
     this.parentTag=parentTag
     this.language = language!=null ? language : getLanguage(str)
   }
@@ -48,21 +49,40 @@ class Pre extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName==="code"){
+        this.existCodeTag=true
         let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{match:'',language:this.language})
-        res+=subTag.execMerge('','')
-      }else if(tagName!=null){
-        let emptyTag
-        if(isSelfClosing(tagName))emptyTag=new __EmptySelfClose__(tagStr,tagName)
-        else emptyTag=new __Empty__(tagStr,tagName)
-        res+=emptyTag.execMerge()
+        let subTag=new SubTagClass(tagStr,tagName,{match:'',language:this.language,parentTag:'pre'})
+        let subTagRes=subTag.execMerge('','')
+
+        // if(this.match!==''){
+        //   let count=3
+        //   if(subTagRes.startsWith('```') || subTagRes.endsWith('\n```')){
+        //     count=4
+        //     if(subTagRes.startsWith('````') || subTagRes.endsWith('\n````')){
+        //       count=5
+        //     }
+        //   }
+        //   this.match='`'.repeat(count)
+        // }
+        res+=subTagRes
       }else{
-        if(tagStr!=='\n') res+=unescape(tagStr)
+        if(this.existCodeTag){
+          break
+        }
+        if(tagName!=null){
+          let emptyTag
+          if(isSelfClosing(tagName))emptyTag=new __EmptySelfClose__(tagStr,tagName)
+          else emptyTag=new __Empty__(tagStr,tagName)
+          res+=emptyTag.execMerge()
+        }else{
+          if(tagStr!=='\n') res+=unescape(tagStr)
+        }
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]
     }
+
     if(res===''){
       return res
     }
@@ -71,7 +91,9 @@ class Pre extends Tag{
       if(n==='')return ''
       return this.fillPerLine(n,i)
     })
+
     let ans=split.join('\n')
+    console.log('---------pre----------',res,ans)
     this.res+=res
     return ans
   }

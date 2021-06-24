@@ -37,6 +37,17 @@ class Code extends Tag{
         let subTag=new SubTagClass(tagStr,tagName,{language:this.language,match:''})
         res+=subTag.execMerge('','')
       }else{
+
+        if(this.match!=='' && tagStr!=null){
+          let count=1
+          if(tagStr.startsWith('`') || tagStr.endsWith('`')){
+            count=2
+            if(tagStr.startsWith('``') || tagStr.endsWith('``')){
+              count=3
+            }
+          }
+          this.match='`'.repeat(count)
+        }
         res+=unescape(tagStr)
       }
       let nxt=getNxtValidTag()

@@ -149,7 +149,7 @@ describe('test special', () => {
       '    code\n' +
       '```\n' +
       '\n' +
-      'If the options **`ghCodeBlocks`** is activated (which is by default), you can use triple backticks (```) to format text as its own distinct block.\n' +
+      'If the options **`ghCodeBlocks`** is activated (which is by default), you can use triple backticks (\\`\\`\\`) to format text as its own distinct block.\n' +
       '\n' +
       '    Check out this neat program I wrote:\n' +
       '\n' +

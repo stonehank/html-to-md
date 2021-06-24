@@ -1,5 +1,5 @@
 import Pre from '../../src/tags/pre'
-
+const html2Md=require('../../src/index')
 
 describe('test <pre></pre> tag',()=>{
 
@@ -180,5 +180,30 @@ describe('test <pre></pre> tag',()=>{
       '```\n' +
       'this is normal text\n' +
       '```\n')
+  })
+
+  it('ignore extra tags if exist <code>',()=>{
+    let pre=new Pre('<pre><code>123</code><strong><i>this is normal text</i></strong></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+      '```\n' +
+      '123\n' +
+      '```\n')
+  })
+
+  it('pre intend 1',()=>{
+    let str='<pre><code>``` ` ```sdf</code></pre>'
+    expect(html2Md(str)).toBe('    ``` ` ```sdf\n')
+  })
+  it('pre intend 2',()=>{
+    let str='<pre><code>``` ` ```sdf\n' +
+        '````</code></pre>'
+    expect(html2Md(str)).toBe('    ``` ` ```sdf\n' +
+        '    ````\n')
+  })
+  it('pre intend 3',()=>{
+    let str='<pre><code>```` ` ```sdf\n' +
+        '```</code></pre>'
+    expect(html2Md(str)).toBe('    ```` ` ```sdf\n' +
+        '    ```\n')
   })
 })

@@ -32,7 +32,7 @@ class Config {
 
   reset(){
     this.options={
-      ignoreTags:['style','br','head','!doctype','form'],
+      ignoreTags:['style','br','head','!doctype','form','svg'],
       skipTags:['div','html','body','dl','dd','dt'],
       emptyTags:[],
       aliasTags:{
@@ -60,7 +60,7 @@ function assign(obj,newObj,key){
 
 
 let config=new Config({
-  ignoreTags:['','style','br','head','!doctype','form'],
+  ignoreTags:['','style','br','head','!doctype','form','svg'],
   skipTags:['div','html','body','dl','dd','dt'],
   aliasTags:{
     figure:'div',
