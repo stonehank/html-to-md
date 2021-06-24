@@ -14,6 +14,9 @@ class Code extends Tag{
   }
 
   beforeMerge(){
+    if(this.match!=='' && this.match!=='`'){
+      return this.match+' '
+    }
     return this.match
   }
 
@@ -59,7 +62,13 @@ class Code extends Tag{
   }
 
   execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+    let str=''+gapBefore
+    let content=this.handleContent()
+    str+=this.beforeMerge()
+    str+=this.slimContent(content)
+    str+=this.afterMerge()
+    str+=gapAfter
+    return this.afterSlim(str)
   }
 
 }
