@@ -1,5 +1,4 @@
-// TODO
-svg 删除
+
  
 处理数据时经常需要从数组中随机抽取元素，这时候就需要用到np.random.choice()。然而choice用法的官方解释并不详细，尤其是对replace参数的解释，例子也不是很全面。因此经过反复实验，我较为详细的总结出了他的用法，并给出了较为详细的使用代码例子。
 
@@ -42,8 +41,7 @@ The probabilities associated with each entry in a. If not given the sample assum
 
 ## []()[]()**详解及代码举例**
 
-// TODO 应该对符号进行 \
-**- 产生随机数**
+
 
 ```
 >>>np.random.choice(5)#从[0, 5)中随机输出一个随机数

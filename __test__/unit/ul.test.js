@@ -209,5 +209,22 @@ describe("test <ul></ul> tag",()=>{
       '*  [x]  finish-3\n' +
       '*  [x]  finish-4\n')
   })
+
+  it("test <br>",()=>{
+    let ul=new Ul('<ul>\n' +
+        '<li><strong>参数replace</strong><br>\n' +
+        '用来设置是否可以取相同元素：<br>\n' +
+        'True表示可以取相同数字；<br>\n' +
+        'False表示不可以取相同数字。<br>\n' +
+        '默认是True</li>\n' +
+        '</ul>')
+
+    expect(ul.execMerge()).toBe('\n' +
+        '*  **参数replace**  \n' +
+        '   用来设置是否可以取相同元素：  \n' +
+        '   True表示可以取相同数字；  \n' +
+        '   False表示不可以取相同数字。  \n' +
+        '   默认是True\n')
+  })
 })
 

@@ -36,7 +36,7 @@ class Li extends Tag{
         }
         res+=subTag.execMerge(startGap,endGap)
       }else{
-        tagStr=tagStr.replace(/(^\n|\n$)/g,'')
+        tagStr=tagStr.replace(/(^\n|\n$)/g,'').replace(/^\s+|\s+$/g,' ')
         res+=res.endsWith('\n') ? tabSpace.repeat(this.layer) + tagStr : tagStr
       }
       if(tagStr.trim()!=='')isFirstTag=false

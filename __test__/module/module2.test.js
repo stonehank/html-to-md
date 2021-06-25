@@ -180,36 +180,40 @@ describe('test modules',()=>{
 
   it('test-7',()=>{
     let str="<p>给定一个由空格分割单词的句子&nbsp;<code>S</code>。每个单词只包含大写或小写字母。</p>\n\n<p>我们要将句子转换为&nbsp;<em>&ldquo;Goat Latin&rdquo;</em>（一种类似于 猪拉丁文&nbsp;- Pig Latin 的虚构语言）。</p>\n\n<p>山羊拉丁文的规则如下：</p>\n\n<ul>\n\t<li>如果单词以元音开头（a, e, i, o, u），在单词后添加<code>&quot;ma&quot;</code>。<br />\n\t例如，单词<code>&quot;apple&quot;</code>变为<code>&quot;applema&quot;</code>。</li>\n\t<br />\n\t<li>如果单词以辅音字母开头（即非元音字母），移除第一个字符并将它放到末尾，之后再添加<code>&quot;ma&quot;</code>。<br />\n\t例如，单词<code>&quot;goat&quot;</code>变为<code>&quot;oatgma&quot;</code>。</li>\n\t<br />\n\t<li>根据单词在句子中的索引，在单词最后添加与索引相同数量的字母<code>&#39;a&#39;</code>，索引从1开始。<br />\n\t例如，在第一个单词后添加<code>&quot;a&quot;</code>，在第二个单词后添加<code>&quot;aa&quot;</code>，以此类推。</li>\n</ul>\n\n<p>返回将&nbsp;<code>S</code>&nbsp;转换为山羊拉丁文后的句子。</p>\n\n<p><strong>示例 1:</strong></p>\n\n<pre>\n<strong>输入: </strong>&quot;I speak Goat Latin&quot;\n<strong>输出: </strong>&quot;Imaa peaksmaaa oatGmaaaa atinLmaaaaa&quot;\n</pre>\n\n<p><strong>示例 2:</strong></p>\n\n<pre>\n<strong>输入: </strong>&quot;The quick brown fox jumped over the lazy dog&quot;\n<strong>输出: </strong>&quot;heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa&quot;\n</pre>\n\n<p><strong>说明:</strong></p>\n\n<ul>\n\t<li><code>S</code>&nbsp;中仅包含大小写字母和空格。单词间有且仅有一个空格。</li>\n\t<li><code>1 &lt;= S.length &lt;= 150</code>。</li>\n</ul>\n"
-    expect(html2Md(str)).toBe('给定一个由空格分割单词的句子`S`。每个单词只包含大写或小写字母。\n' +
-      '\n' +
-      '我们要将句子转换为*&ldquo;Goat Latin&rdquo;*（一种类似于 猪拉丁文- Pig Latin 的虚构语言）。\n' +
-      '\n' +
-      '山羊拉丁文的规则如下：\n' +
-      '\n' +
-      '*  如果单词以元音开头（a, e, i, o, u），在单词后添加`"ma"`。\t例如，单词`"apple"`变为`"applema"`。\n' +
-      '*  如果单词以辅音字母开头（即非元音字母），移除第一个字符并将它放到末尾，之后再添加`"ma"`。\t例如，单词`"goat"`变为`"oatgma"`。\n' +
-      '*  根据单词在句子中的索引，在单词最后添加与索引相同数量的字母`\'a\'`，索引从1开始。\t例如，在第一个单词后添加`"a"`，在第二个单词后添加`"aa"`，以此类推。\n' +
-      '\n' +
-      '返回将`S`转换为山羊拉丁文后的句子。\n' +
-      '\n' +
-      '**示例 1:**\n' +
-      '\n' +
-      '```\n' +
-      '输入: "I speak Goat Latin"\n' +
-      '输出: "Imaa peaksmaaa oatGmaaaa atinLmaaaaa"\n' +
-      '```\n' +
-      '\n' +
-      '**示例 2:**\n' +
-      '\n' +
-      '```\n' +
-      '输入: "The quick brown fox jumped over the lazy dog"\n' +
-      '输出: "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"\n' +
-      '```\n' +
-      '\n' +
-      '**说明:**\n' +
-      '\n' +
-      '*  `S`中仅包含大小写字母和空格。单词间有且仅有一个空格。\n' +
-      '*  `1 <= S.length <= 150`。\n')
+    expect(html2Md(str)).toBe(`给定一个由空格分割单词的句子\`S\`。每个单词只包含大写或小写字母。
+
+我们要将句子转换为*&ldquo;Goat Latin&rdquo;*（一种类似于 猪拉丁文- Pig Latin 的虚构语言）。
+
+山羊拉丁文的规则如下：
+
+*  如果单词以元音开头（a, e, i, o, u），在单词后添加\`"ma"\`。  
+    例如，单词\`"apple"\`变为\`"applema"\`。
+*  如果单词以辅音字母开头（即非元音字母），移除第一个字符并将它放到末尾，之后再添加\`"ma"\`。  
+    例如，单词\`"goat"\`变为\`"oatgma"\`。
+*  根据单词在句子中的索引，在单词最后添加与索引相同数量的字母\`'a'\`，索引从1开始。  
+    例如，在第一个单词后添加\`"a"\`，在第二个单词后添加\`"aa"\`，以此类推。
+
+返回将\`S\`转换为山羊拉丁文后的句子。
+
+**示例 1:**
+
+\`\`\`
+输入: "I speak Goat Latin"
+输出: "Imaa peaksmaaa oatGmaaaa atinLmaaaaa"
+\`\`\`
+
+**示例 2:**
+
+\`\`\`
+输入: "The quick brown fox jumped over the lazy dog"
+输出: "heTmaa uickqmaaa rownbmaaaa oxfmaaaaa umpedjmaaaaaa overmaaaaaaa hetmaaaaaaaa azylmaaaaaaaaa ogdmaaaaaaaaaa"
+\`\`\`
+
+**说明:**
+
+*  \`S\`中仅包含大小写字母和空格。单词间有且仅有一个空格。
+*  \`1 <= S.length <= 150\`。
+`)
   })
 
 })
