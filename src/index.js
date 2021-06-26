@@ -35,4 +35,5 @@ function beforeReturn(str){
   return str
 }
 
+window.html2md=html2md
 module.exports=html2md

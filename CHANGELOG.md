@@ -3,6 +3,7 @@
 * Escape some character in some tag, like `<b>* abc</b>`
 * Fix render issues when `<br>` in `<li>`
 * Fix render issues when have `` ` ``(single or multiple) in `<code>` or `<pre>`
+* Ignore extra tags if already have `code` tag inside `pre`
 
 ### 0.3.9
 * Output some raw unvalid content, like `<` in the tag contents.

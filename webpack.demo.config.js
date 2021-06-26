@@ -19,7 +19,7 @@ module.exports= env=>{
       library:'html2md',
       libraryTarget:'window',
     },
-    devtool: 'cheap-module-source-map',
+    devtool: isDev ? 'cheap-module-source-map' : false,
     optimization: isDev
       ? {}
       : {
