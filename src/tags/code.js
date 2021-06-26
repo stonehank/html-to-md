@@ -21,6 +21,9 @@ class Code extends Tag{
   }
 
   afterMerge(){
+    if(this.match!=='' && this.match!=='`'){
+      return ' '+this.match
+    }
     return this.match
   }
 

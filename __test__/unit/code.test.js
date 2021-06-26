@@ -14,6 +14,11 @@ describe('test <code></code> tag',()=>{
 
   it('code match symbol',()=>{
     let str='<code>`123</code>'
-    expect(html2Md(str)).toBe('`` `123``')
+    expect(html2Md(str)).toBe('`` `123 ``')
+  })
+
+  it('code match symbol2',()=>{
+    let str='<code>`123``</code>'
+    expect(html2Md(str)).toBe('``` `123`` ```')
   })
 })

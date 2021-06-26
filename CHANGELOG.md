@@ -1,3 +1,9 @@
+### 0.4.0
+* Remove the first `\n` in some tags 
+* Escape some character in some tag, like `<b>* abc</b>`
+* Fix render issues when `<br>` in `<li>`
+* Fix render issues when have `` ` ``(single or multiple) in `<code>` or `<pre>`
+
 ### 0.3.9
 * Output some raw unvalid content, like `<` in the tag contents.
 
