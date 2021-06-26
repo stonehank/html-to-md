@@ -21,10 +21,11 @@ class Ul extends Tag{
         if(tagName!=null){
           let SubTagClass=findTagClass(tagName)
           if(tagName!=='li' && aliasTags[tagName]!=='li' && SubTagClass !== __Ignore__){
-            throw new Error('Should not have tags except <li> inside ul, current tag is '+tagName+', current tagStr is'+tagStr )
+            console.error('Should not have tags except <li> inside ul, current tag is '+tagName+', current tagStr is'+tagStr )
+          }else{
+            let subTag=new SubTagClass(tagStr,tagName,{match:'* ',layer:this.layer})
+            res+=subTag.execMerge('','\n')
           }
-          let subTag=new SubTagClass(tagStr,tagName,{match:'* ',layer:this.layer})
-          res+=subTag.execMerge('','\n')
         }
       }
       let nxt=getNxtValidTag()

@@ -11,13 +11,14 @@ class Tag {
     this.needEscape=false
     this.tabSpace=tabSpace
     this.resolveStr(str)
-    this.getAttrs=this.getAttrs.bind(this,this.attrs)
-    this.getContent=this.getContent.bind(this,this.content)
+    this.getAttrs=this.getAttrs.bind(this)
+    this.getContent=this.getContent.bind(this)
   }
 
   resolveStr(str){
     if(str[0]!=="<"){
-      throw new Error("parameter is not a valid tag, str is "+str )
+      console.error(`Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}` )
+      return
     }
     let openTagAttrs='',i=1
     for(;i<str.length;i++){
@@ -60,11 +61,11 @@ class Tag {
     return ''
   }
 
-  getContent(content){
-    return content
+  getContent(){
+    return this.content
   }
-  getAttrs(attrs){
-    return attrs
+  getAttrs(){
+    return this.attrs
   }
 
 
@@ -96,7 +97,6 @@ class Tag {
         }
       }
       let nxt=getNxtValidTag()
-      console.log(tagName,tagStr)
       tagName=nxt[0]
       tagStr=nxt[1]
     }
@@ -118,7 +118,6 @@ class Tag {
     str+=this.afterMerge()
     str+=gapAfter
     str=this.beforeReturn(str)
-    // console.log(str)
     return this.afterSlim(str)
   }
 }

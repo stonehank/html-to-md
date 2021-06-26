@@ -6,7 +6,6 @@ class Config {
       ignoreTags,
       aliasTags
     }
-    console.log(this.options)
   }
   get(){
     return this.options
@@ -16,7 +15,6 @@ class Config {
     this.options={}
   }
   set(obj,force){
-    console.log(obj)
     if(Object.prototype.toString.call(obj)==="[object Object]"){
       for(let key in obj){
         if(obj.hasOwnProperty(key)){
@@ -44,7 +42,6 @@ class Config {
 }
 
 function assign(obj,newObj,key){
-  // console.log(obj,newObj,key)
   if(obj[key]==null){
     obj[key]=newObj[key]
     return

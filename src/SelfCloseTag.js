@@ -3,15 +3,16 @@ const {parseAttrs}=require('./utils')
 class SelfCloseTag {
   constructor(str,tagName,{tagSpace='   '}={}){
     this.tagName=tagName
-    this.attrs=[]
+    this.attrs={}
     this.resolveStr(str)
     this.tagSpace=tagSpace
-    this.getAttrs=this.getAttrs.bind(this,this.attrs)
+    this.getAttrs=this.getAttrs.bind(this)
   }
 
   resolveStr(str){
     if(str[0]!=="<"){
-      throw new Error("parameter is not a valid tag" )
+      console.error(`Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}` )
+      return
     }
     let openTagAttrs='',i=1
     for(;i<str.length;i++){
@@ -29,8 +30,8 @@ class SelfCloseTag {
     return ''
   }
 
-  getAttrs(attrs){
-    return attrs
+  getAttrs(){
+    return this.attrs
   }
 
   afterMerge(){

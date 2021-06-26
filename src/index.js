@@ -2,7 +2,6 @@ const {findTagClass,findValidTag,unescape,clearComment}=require('./utils')
 const config =require('./config')
 
 function html2md(str,options,force=false){
-  // console.log(options)
   config.set(options,force)
   str=clearComment(str)
   str=str.replace(/(\s*\r\n\s*)/g,'').replace(/&nbsp;/g,"")
@@ -18,6 +17,7 @@ function html2md(str,options,force=false){
       res+=subTag.execMerge()
     }else{
       // 下一个tag是一个无效的或者是纯文本
+      // console.log(tagStr,tagName,'---------')
       res+=tagStr
       res=res.replace(/(\n\s*)+$/,'\n')
     }
@@ -31,7 +31,6 @@ function html2md(str,options,force=false){
 function beforeReturn(str){
   str=str.replace(/^(\n+)+/,'')
   str=str.replace(/(\n+\s*)+$/,'\n')
-  console.log('tag--------\n1'+str,str.startsWith('\n'))
   return str
 }
 

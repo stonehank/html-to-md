@@ -5,7 +5,6 @@ function findTagClass(tagName,forceRender=false){
   let clazz
   let {skipTags,emptyTags,ignoreTags,aliasTags}=config.get()
   let isSelfClosing=require('./isSelfClosing')(tagName)
-  // console.log(tagName)
   if(!forceRender && skipTags.includes(tagName)){
     let skip=require('../tags/__skip__')
     return isSelfClosing ? skip.__SkipSelfClose__: skip.__Skip__

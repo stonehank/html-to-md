@@ -13,12 +13,10 @@ class Th extends Tag{
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
-    console.log(tagName,tagStr,'----------')
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{parentTag:this.curTagName})
-        console.log(res,'|||',subTag.execMerge('',''))
         res+=subTag.execMerge('','')
       }else{
         tagStr=tagStr.replace(/^(\n)+/,'').replace(/\n+$/,'')
@@ -33,7 +31,6 @@ class Th extends Tag{
       let nxt=getNxtValidTag()
       tagName=nxt[0]
       tagStr=nxt[1]
-      console.log(tagName,tagStr,'~~~~~~~~~~~~~~~~')
     }
     return res
   }

@@ -23,10 +23,12 @@ class Ol extends Tag{
         if(tagName!=null){
           let SubTagClass=findTagClass(tagName)
           if(tagName!=='li' && aliasTags[tagName]!=='li' && SubTagClass !== __Ignore__){
-            throw new Error('Should not have tags except <li> inside ol, current tag is '+tagName+', current tagStr is'+tagStr )
+            console.error('Should not have tags except <li> inside ol, current tag is '+tagName+', current tagStr is'+tagStr )
+            this.count--
+          }else{
+            let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})
+            res+=subTag.execMerge('','\n')
           }
-          let subTag=new SubTagClass(tagStr,tagName,{match:this.count+'.',layer:this.layer})
-          res+=subTag.execMerge('','\n')
         }
         this.count++
       }

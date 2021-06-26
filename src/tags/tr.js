@@ -23,10 +23,11 @@ class Tr extends Tag{
       if(tagName!==null){
         let SubTagClass=findTagClass(tagName)
         if(tagName!=='td' && tagName!=='th' && aliasTags[tagName]!=='td' && aliasTags[tagName]!=='th' && SubTagClass !== __Ignore__ ){
-          throw new Error('Should not have tags except <td> or <th> inside <tr>, current tag is '+tagName)
+          console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${tagName} have been ignore.`)
+        }else{
+          let subTag=new SubTagClass(tagStr,tagName)
+          res+=subTag.execMerge('','')
         }
-        let subTag=new SubTagClass(tagStr,tagName)
-        res+=subTag.execMerge('','')
       }
       let nxt=getNxtValidTag()
       tagName=nxt[0]

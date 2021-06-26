@@ -93,7 +93,6 @@ class Pre extends Tag{
     })
 
     let ans=split.join('\n')
-    console.log('---------pre----------',res,ans)
     this.res+=res
     return ans
   }
