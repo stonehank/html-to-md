@@ -393,4 +393,22 @@ describe("test <table></table> tag",()=>{
       "|<pre><code>function plus(){    var a=5    var b=7;    return a+b    }</code></pre>|from the first column|\n")
   })
 
+  it('Empty table1',()=>{
+    let table=new Table("<table></table>")
+    expect(table.execMerge()).toBe('')
+  })
+
+  it('Empty table2',()=>{
+    let table=new Table("<table><tr>123</tr></table>")
+    expect(table.execMerge()).toBe('')
+  })
+
+  it('Empty table3',()=>{
+    let table=new Table("<table><tbody></tbody></table>")
+    expect(table.execMerge()).toBe('')
+  })
+  it('Empty table4',()=>{
+    let table=new Table("<table><thead></thead></table>")
+    expect(table.execMerge()).toBe('')
+  })
 })

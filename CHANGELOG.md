@@ -1,3 +1,7 @@
+### 0.4.1
+* Remove `throw Error`, add some errors test
+* Add empty `table` detect, add test case
+
 ### 0.4.0
 * Remove the first `\n` in some tags 
 * Escape some character in some tag, like `<b>* abc</b>`

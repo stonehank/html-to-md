@@ -29,7 +29,9 @@ class Table extends Tag{
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
       if(tagName!=null){
-        if(tagName==='thead')this.exist_thead=true
+        if(tagName==='thead'){
+          this.exist_thead=true
+        }
         if(tagName==='tbody'){
           this.exist_tbody=true
           this.empty_tbody=false
@@ -49,6 +51,11 @@ class Table extends Tag{
   }
 
   beforeReturn(str){
+    // console.log('exist head',this.exist_thead, 'exist body',this.exist_tbody, 'empty body',this.empty_tbody,str,'---')
+    if(!(this.exist_thead || this.exist_tbody || !this.empty_tbody)){
+      return ''
+    }
+    if(this.tdNum===0)return ''
     if(!this.exist_tbody && this.empty_tbody)str=str+'|'+':---|'.repeat(this.tdNum)+'\n'
     else if(!this.exist_tbody)str='|'+':---|'.repeat(this.tdNum)+''+str
     if(!this.exist_thead)str='\n'+'|'.repeat(this.tdNum+1)+(str.startsWith('\n')? '' : '\n')+str
