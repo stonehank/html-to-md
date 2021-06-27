@@ -1,23 +1,23 @@
-let selfTags=[
-  'img',
-  'hr',
-  'input',
-  'br',
-  'meta',
-  'link',
-  '!doctype',
-  'base',
-  'col',
-  'area',
-  'param',
-  'object',
-  'embed',
-  'keygen',
-  'source',
-]
+let selfTags={
+  'img':true,
+  'hr':true,
+  'input':true,
+  'br':true,
+  'meta':true,
+  'link':true,
+  '!doctype':true,
+  'base':true,
+  'col':true,
+  'area':true,
+  'param':true,
+  'object':true,
+  'embed':true,
+  'keygen':true,
+  'source':true,
+}
 
 function isSelfClosing(tag){
-  return selfTags.includes(tag.toLowerCase())
+  return !!selfTags[tag.toLowerCase()]
 }
 
 

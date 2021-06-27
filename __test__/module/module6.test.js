@@ -21,4 +21,7 @@ describe('some correction',()=>{
         let str='<p>**一个标题**<i>-- 第二个标题</i></p>'
         expect(html2Md(str)).toBe('\\*\\*一个标题\\*\\**\\-- 第二个标题*\n')
     })
+    it('test starts with space',()=>{
+        expect(html2Md(" <div><a>Sign In</a><a >Register</a></div>")).toBe("[Sign In]()[Register]()\n")
+    })
 })

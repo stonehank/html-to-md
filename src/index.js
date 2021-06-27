@@ -1,3 +1,4 @@
+// import {needIndependentLine} from "./utils";
 const {findTagClass,findValidTag,unescape,clearComment}=require('./utils')
 const config =require('./config')
 
@@ -14,7 +15,12 @@ function html2md(str,options,force=false){
       // 下一个tag是一个有效的并且不是纯文本
       let SubTagClass=findTagClass(tagName)
       let subTag=new SubTagClass(tagStr,tagName)
-      res+=subTag.execMerge()
+      let subContent=subTag.execMerge()
+
+      // if(needIndependentLine(tagName) || needIndependentLine(config.get().aliasTags[tagName])){
+      //   if(!res.endsWith('\n'))res+='\n'
+      // }
+      res+=subContent
     }else{
       // 下一个tag是一个无效的或者是纯文本
       // console.log(tagStr,tagName,'---------')
@@ -29,10 +35,12 @@ function html2md(str,options,force=false){
 }
 
 function beforeReturn(str){
-  str=str.replace(/^(\n+)+/,'')
+  // console.log('hhh'+str,'~~~~~')
+  str=str.replace(/^\s/,'').replace(/^(\s?\n\s*)+/,'')
+  // console.log('hhh'+str)
   str=str.replace(/(\n+\s*)+$/,'\n')
   return str
 }
 
-window.html2md=html2md
+
 module.exports=html2md

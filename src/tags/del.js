@@ -15,7 +15,8 @@ class Del extends Tag{
   }
 
   slimContent(str){
-    return str.replace(/^(\n\s*)+/,'').replace(/(\n\s*)+$/,'')
+    // console.log('del',str)
+    return str.trim()
   }
 
 

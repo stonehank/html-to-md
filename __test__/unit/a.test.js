@@ -9,4 +9,12 @@ describe('test <a></a> tag',()=>{
     let a=new A("<a><strong>pica</strong></a>")
     expect(a.execMerge()).toBe("[**pica**]()")
   })
+
+  it('space and \n in tag',()=>{
+    let a=new A(
+`<a href="#">
+    click
+</a>`)
+    expect(a.execMerge()).toBe('[click](#)')
+  })
 })

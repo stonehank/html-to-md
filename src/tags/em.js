@@ -15,7 +15,7 @@ class Em extends Tag{
     return '*'
   }
   slimContent(str){
-    return str.replace(/^(\n\s*)+/,'').replace(/(\n\s*)+$/,'')
+    return str.trim()
   }
 
   execMerge(gapBefore='',gapAfter=''){
