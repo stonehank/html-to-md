@@ -1,3 +1,6 @@
+### 0.4.2
+* Remove `window`
+
 ### 0.4.1
 * Remove `throw Error`, add some errors test
 * Add empty `table` detect, add test case
