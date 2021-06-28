@@ -38,7 +38,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 |skipTags|Array|[]|Declare which tags need to skip|
 |emptyTags|Array|[]|Not only skip itself,but also skip all the tas inside it|
 |ignoreTags|Array|`['','style','br','head','!doctype']`|Ignore all content inside the tag|
-|aliasTags|Object|`{figure :'div', figcaption:'div'}`|Define another tag name for some tags|
+|aliasTags|Object|`{figure :'div', figcaption:'p'}`|Define another tag name for some tags|
 
 > Priority：skipTags > emptyTags > ignoreTags > aliasTags
 
@@ -84,7 +84,7 @@ html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
 
 * support `nodeJs`
 
-* 100+`unit test` and `module test`,  code coverage `97.7%`
+* 100+`unit test` and `module test`,  code coverage `98%`
 
 > Only valid HTML will be output correctly, eg. `<p>abc<` ，`<i>abc</>`are **Not Valid** text.
 
@@ -115,6 +115,3 @@ html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
 * `tr`
 * `ul`
 
-### TODO
-
-- [x] support `options`.

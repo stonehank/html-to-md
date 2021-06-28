@@ -3,6 +3,8 @@ let independentLineTags={
   'body':true,
   'p':true,
   'div':true,
+  'section':true,
+  'aside':true,
   'form':true,
   'hr':true,
   'h1':true,

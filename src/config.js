@@ -29,15 +29,7 @@ class Config {
   }
 
   reset(){
-    this.options={
-      ignoreTags:['style','br','head','!doctype','form','svg'],
-      skipTags:['div','html','body','dl','dd','dt'],
-      emptyTags:[],
-      aliasTags:{
-        figure:'div',
-        figcaption:'div'
-      }
-    }
+    this.options=JSON.parse(JSON.stringify(defaultOptions))
   }
 }
 
@@ -55,14 +47,15 @@ function assign(obj,newObj,key){
       : obj[key]=newObj[key]
 }
 
-
-let config=new Config({
+let defaultOptions={
   ignoreTags:['','style','br','head','!doctype','form','svg','noscript','script'],
-  skipTags:['div','html','body','dl','dd','dt','nav','section','footer','main'],
+  skipTags:['div','html','body','dl','dd','dt','nav','section','footer','main','aside'],
+  emptyTags:[],
   aliasTags:{
     figure:'div',
     figcaption:'p'
   }
-})
+}
+let config=new Config(JSON.parse(JSON.stringify(defaultOptions)))
 
 module.exports=config
