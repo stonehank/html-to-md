@@ -42,5 +42,5 @@ function beforeReturn(str){
   return str
 }
 
-
+// <b><i>123</b></i>
 module.exports=html2md

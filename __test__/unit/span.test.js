@@ -1,4 +1,5 @@
 import Span from '../../src/tags/span'
+import html2Md from '../../src/index'
 
 
 describe('test <span></span> tag',()=>{
@@ -7,8 +8,16 @@ describe('test <span></span> tag',()=>{
     expect(span.execMerge()).toBe("javascript")
   })
 
-  it('can not nest, because span only exist in <pre></pre>',()=>{
+
+  it('code in span will also resolve',()=>{
     let span=new Span("<span><strong>strong</strong></span>")
-    expect(span.execMerge()).toBe("<strong>strong</strong>")
+    expect(span.execMerge()).toBe("**strong**")
   })
+
+  // it('span will treat as p, but no change line',()=>{
+  //   let spanResStr=html2Md("<span><strong>strong</strong></span><span><strong>strong</strong></span>")
+  //   expect(spanResStr).toBe("**strongstrong**")
+  // })
+
+
 })

@@ -57,8 +57,8 @@ function assign(obj,newObj,key){
 
 
 let config=new Config({
-  ignoreTags:['','style','br','head','!doctype','form','svg','noscript'],
-  skipTags:['div','html','body','dl','dd','dt','nav','section'],
+  ignoreTags:['','style','br','head','!doctype','form','svg','noscript','script'],
+  skipTags:['div','html','body','dl','dd','dt','nav','section','footer','main'],
   aliasTags:{
     figure:'div',
     figcaption:'p'

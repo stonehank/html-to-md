@@ -14,7 +14,7 @@ class Span extends Tag{
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
     while(tagStr!==''){
-      if(tagName==="span"){
+      if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName)
         res+=subTag.execMerge('','')

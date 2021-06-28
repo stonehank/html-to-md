@@ -1,3 +1,6 @@
+### 0.4.3
+* Speed up parse string
+
 ### 0.4.2
 * Remove `window`
 

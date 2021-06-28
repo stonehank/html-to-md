@@ -36,7 +36,7 @@ function findValidTag(str){
         if(startTagName==null){
           console.warn("Tag is not integrity, current tagStr is "+str.slice(startId))
           let id=i
-          while(str[id]!=='>'){
+          while(id<str.length &&  str[id]!=='>'){
             id++
           }
           i=id

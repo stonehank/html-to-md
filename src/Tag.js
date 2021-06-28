@@ -34,19 +34,15 @@ class Tag {
 
     this.attrs=parseAttrs(openTagAttrs)
     let restStr=str.slice(i+1)
-    let count=1
     let m='',endId=-1
     // console.log(str,restStr)
-    for(let j=0;j<restStr.length;j++){
-      m+=restStr[j]
-      if(m.endsWith('<'+this.tagName) && restStr[j+1]!=='/'){
-        count++
-      }else if(m.endsWith('</'+this.tagName)){
-        count--
-        endId=j-this.tagName.length-1
-      }
-      if(count===0){
-        endId=j-this.tagName.length-1
+    for(let j=restStr.length-1;j>=0;j--){
+      m=restStr[j]+m
+      if(m.startsWith('</')){
+        if(m.startsWith('</'+this.tagName+'>')){
+          // good
+          endId=j
+        }
         break
       }
     }
@@ -55,6 +51,24 @@ class Tag {
       // return
     }
     this.content=restStr.slice(0,endId)
+    // for(let j=0;j<restStr.length;j++){
+    //   m+=restStr[j]
+    //   if(m.endsWith('<'+this.tagName) && restStr[j+1]!=='/'){
+    //     count++
+    //   }else if(m.endsWith('</'+this.tagName)){
+    //     count--
+    //     endId=j-this.tagName.length-1
+    //   }
+    //   if(count===0){
+    //     endId=j-this.tagName.length-1
+    //     break
+    //   }
+    // }
+    // if(endId===-1){
+    //   console.warn("Tag "+ this.tagName +" has no close.")
+    //   // return
+    // }
+    // this.content=restStr.slice(0,endId)
   }
 
   beforeMerge(){
