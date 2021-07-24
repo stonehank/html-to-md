@@ -95,17 +95,14 @@ class Tag {
     let content=this.getContent()
     let getNxtValidTag=findValidTag(content)
     let [tagName,tagStr]=getNxtValidTag()
-    // console.log(tagName,tagStr,'-------')
     while(tagStr!==''){
       if(tagName!=null){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{parentTag:this.parentTag})
         res+=subTag.execMerge(subBeforeGap,subAfterGap)
-        // console.log(res,'###1')
       }else if(!ignoreNoTags){
         tagStr=tagStr.replace(/^(\n)+/,'\n').replace(/\n+$/,'\n')
         res+=unescape(tagStr,{needEscape:this.needEscape}).replace(/^(\n*) +/,'$1 ')
-        // console.log(res,'###2')
       }
 
       if(/^(\s?\n\s*)/.test(res)){
