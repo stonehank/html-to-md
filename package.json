@@ -39,7 +39,7 @@
     "html-webpack-plugin": "3.2.0",
     "jest": "24.8.0",
     "markdown-it": "8.4.2",
-    "marked": "0.6.2",
+    "marked": "0.7.0",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.6.0",
