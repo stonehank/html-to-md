@@ -17,4 +17,11 @@ describe('test <a></a> tag',()=>{
 </a>`)
     expect(a.execMerge()).toBe('[click](#)')
   })
+
+  it('space and \n in attributes',()=>{
+    let a=new A(
+`<a href="/#you-should-see-this"
+data-moz-do-not-send="true">link from moz</a>`)
+    expect(a.execMerge()).toBe("[link from moz](/#you-should-see-this)")
+  })
 })
