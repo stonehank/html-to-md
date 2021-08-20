@@ -1,3 +1,6 @@
+## 0.4.4
+* Fixed issue #33, use `\s` instead of `' '` in tags attribute detect.
+
 ### 0.4.3
 * Speed up parse string
 
