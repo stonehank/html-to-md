@@ -33,17 +33,22 @@ class Code extends Tag{
     let getNxtValidTag=findValidTag(content)
     let res=''
     let [tagName,tagStr]=getNxtValidTag()
+    // console.log(tagName,tagStr)
     while(tagStr!==''){
-      if(tagName==="span"  && this.language!==''){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName)
-        res+=subTag.execMerge('','')
-      }else if(tagName==="pre"){
+      // if(tagName==="span"  && this.language!==''){
+      //   let SubTagClass=findTagClass(tagName)
+      //   let subTag=new SubTagClass(tagStr,tagName)
+      //   res+=subTag.execMerge('','')
+      // }else
+      if(tagName==="pre"){
         let SubTagClass=findTagClass(tagName)
         let subTag=new SubTagClass(tagStr,tagName,{language:this.language,match:''})
         res+=subTag.execMerge('','')
+      }else if(!!tagName){
+        let SubTagClass=findTagClass(tagName)
+        let subTag=new SubTagClass(tagStr,tagName)
+        res+=subTag.execMerge('','')
       }else{
-
         if(this.match!=='' && tagStr!=null){
           let count=1
           if(tagStr.startsWith('`') || tagStr.endsWith('`')){

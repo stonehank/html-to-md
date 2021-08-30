@@ -7,9 +7,9 @@ describe('test <code></code> tag',()=>{
     expect(code.execMerge()).toBe("`javascript`")
   })
 
-  it('tag inside should be textNode',()=>{
+  it('tag inside should be render to tag',()=>{
     let code=new Code("<code><span>dfaf</span><a href=\"https://github.com/nodeca/babelfish/\"><i>babelfish</i></a></code>")
-    expect(code.execMerge()).toBe("`<span>dfaf</span><a href=\"https://github.com/nodeca/babelfish/\"><i>babelfish</i></a>`")
+    expect(code.execMerge()).toBe("`dfaf[*babelfish*](https://github.com/nodeca/babelfish/)`")
   })
 
   it('code match symbol',()=>{

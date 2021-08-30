@@ -51,24 +51,6 @@ class Tag {
       // return
     }
     this.content=restStr.slice(0,endId)
-    // for(let j=0;j<restStr.length;j++){
-    //   m+=restStr[j]
-    //   if(m.endsWith('<'+this.tagName) && restStr[j+1]!=='/'){
-    //     count++
-    //   }else if(m.endsWith('</'+this.tagName)){
-    //     count--
-    //     endId=j-this.tagName.length-1
-    //   }
-    //   if(count===0){
-    //     endId=j-this.tagName.length-1
-    //     break
-    //   }
-    // }
-    // if(endId===-1){
-    //   console.warn("Tag "+ this.tagName +" has no close.")
-    //   // return
-    // }
-    // this.content=restStr.slice(0,endId)
   }
 
   beforeMerge(){

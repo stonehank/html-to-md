@@ -206,4 +206,22 @@ describe('test <pre></pre> tag',()=>{
     expect(html2Md(str)).toBe('    ```` ` ```sdf\n' +
         '    ```\n')
   })
+
+  it('&lt; in code, should render to text',()=>{
+    let pre=new Pre('<pre><code>&lt;span&gt;\n  5\n&lt;/span&gt;\n</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+        '```\n' +
+        '<span>\n' +
+        '  5\n' +
+        '</span>\n' +
+        '```\n')
+  })
+
+  it('< in code, should render to tag',()=>{
+    let pre=new Pre('<pre><code><span>5</span>\n</code></pre>')
+    expect(pre.execMerge()).toBe('\n' +
+        '```\n' +
+        '5\n' +
+        '```\n')
+  })
 })
