@@ -7,8 +7,8 @@ describe("test <blockquote></blockquote> tag",()=>{
     let blockquote=new Blockquote("<blockquote>\n" +
       "<p>This is <strong>quote</strong>…</p>\n" +
       "</blockquote>")
-    expect(blockquote.execMerge()).toBe("\n" +
-      ">This is **quote**…\n")
+    expect(blockquote.exec()).toBe("\n" +
+      "> This is **quote**…\n")
   })
 
 
@@ -20,10 +20,10 @@ describe("test <blockquote></blockquote> tag",()=>{
       "<li>sdfsaf</li>\n" +
       "</ul>\n" +
       "</blockquote>")
-    expect(blockquote.execMerge()).toBe("\n" +
-      ">* "+' '.repeat(tagSpaceNum-2)+"sdfs\n" +
-      ">* "+' '.repeat(tagSpaceNum-2)+"sdfsdf\n" +
-      ">* "+' '.repeat(tagSpaceNum-2)+"sdfsaf\n")
+    expect(blockquote.exec()).toBe("\n" +
+      "> * "+' '.repeat(tagSpaceNum-2)+"sdfs\n" +
+      "> * "+' '.repeat(tagSpaceNum-2)+"sdfsdf\n" +
+      "> * "+' '.repeat(tagSpaceNum-2)+"sdfsaf\n")
   })
 
   it('nest blockquote',()=>{
@@ -37,12 +37,12 @@ describe("test <blockquote></blockquote> tag",()=>{
       "</blockquote>\n" +
       "</blockquote>")
 
-    expect(blockquote.execMerge()).toBe("\n" +
-      ">Blockquotes can also be nested…\n" +
+    expect(blockquote.exec()).toBe("\n" +
+      "> Blockquotes can also be nested…\n" +
       ">\n" +
-      ">>…by using additional greater-than signs right next to each other…\n" +
+      ">> …by using additional greater-than signs right next to each other…\n" +
       ">>\n" +
-      ">>>…or with spaces between arrows.\n")
+      ">>> …or with spaces between arrows.\n")
   })
 })
 

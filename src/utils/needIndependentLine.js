@@ -4,7 +4,11 @@ let independentLineTags={
   'p':true,
   'div':true,
   'section':true,
+  'blockquote':true,
   'aside':true,
+  'li':true,
+  'ul':true,
+  'ol':true,
   'form':true,
   'hr':true,
   'h1':true,
@@ -15,7 +19,8 @@ let independentLineTags={
   'h6':true,
   'dl':true,
   'dd':true,
-  'dt':true
+  'dt':true,
+  'br':true,
 }
 
 function needIndependentLine(tagName){

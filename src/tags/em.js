@@ -3,23 +3,15 @@ const Tag =require('../Tag')
 class Em extends Tag{
   constructor(str,tagName='em'){
     super(str,tagName)
-    this.needEscape=true
-    this.handleContent=this.handleContent.bind(this,'','')
   }
 
-  beforeMerge(){
-    return "*"
+  beforeMergeSpace(content){
+    return "*" + content + '*'
   }
 
-  afterMerge(){
-    return '*'
-  }
-  slimContent(str){
-    return str.trim()
-  }
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

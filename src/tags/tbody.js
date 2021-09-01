@@ -24,23 +24,24 @@ function getTdAlign(str,tdNum){
 class Tbody extends Tag{
   constructor(str,tagName='tbody',{tdNum=0}={}){
     super(str,tagName)
-    this.content=this.getContent()
     this.tdNum=tdNum
-    this.handleContent=this.handleContent.bind(this,'','\n',true)
   }
 
-  beforeMerge(){
+  beforeMergeSpace(content){
     let alignArr=getTdAlign(this.content,this.tdNum)
     let tableHr='|'
     for(let i=0;i<alignArr.length;i++){
       tableHr+=alignArr[i]
     }
-    return tableHr+'\n'
+    return tableHr+'\n' + content
   }
 
+  parseOnlyString(subTagStr, subTagName, options) {
+    return ''
+  }
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

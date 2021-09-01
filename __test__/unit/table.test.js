@@ -3,33 +3,33 @@ import Table from '../../src/tags/table'
 describe("test <table></table> tag",()=>{
 
   it('table default align style',()=>{
-    let table=new Table("<table>\n" +
-      "<thead>\n" +
-      "<tr>\n" +
-      "<th><s>col-1</s></th>\n" +
-      "<th>col-2</th>\n" +
-      "<th>col-3</th>\n" +
-      "</tr>\n" +
-      "</thead>\n" +
-      "<tbody>\n" +
-      "<tr>\n" +
-      "<td>data-1-left</td>\n" +
-      "<td>data-1-center</td>\n" +
-      "<td><code>data-1-right</code></td>\n" +
-      "</tr>\n" +
-      "<tr>\n" +
-      "<td>data-2-left</td>\n" +
-      "<td><b>data-2-center</b></td>\n" +
-      "<td>data-2-right</td>\n" +
-      "</tr>\n" +
-      "<tr>\n" +
-      "<td><i>data-3-left</i></td>\n" +
-      "<td>data-3-center</td>\n" +
-      "<td>data-3-right</td>\n" +
-      "</tr>\n" +
-      "</tbody>\n" +
-      "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    let table=new Table(`<table>
+<thead>
+<tr>
+<th><s>col-1</s></th>
+<th>col-2</th>
+<th>col-3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data-1-left</td>
+<td>data-1-center</td>
+<td><code>data-1-right</code></td>
+</tr>
+<tr>
+<td>data-2-left</td>
+<td><b>data-2-center</b></td>
+<td>data-2-right</td>
+</tr>
+<tr>
+<td><i>data-3-left</i></td>
+<td>data-3-center</td>
+<td>data-3-right</td>
+</tr>
+</tbody>
+</table>`)
+    expect(table.exec()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
       "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
@@ -64,7 +64,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
       "|:---|:---:|---:|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
@@ -74,7 +74,7 @@ describe("test <table></table> tag",()=>{
 
   it('table default align style, compact mode',()=>{
     let table=new Table(`<table><thead><tr><th><s>col-1</s></th><th>col-2</th><th>col-3</th></tr></thead><tbody><tr><td>data-1-left</td><td>data-1-center</td><td><code>data-1-right</code></td></tr><tr><td>data-2-left</td><td><b>data-2-center</b></td><td>data-2-right</td></tr><tr><td><i>data-3-left</i></td><td>data-3-center</td><td>data-3-right</td></tr></tbody></table>`)
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
       "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
@@ -84,7 +84,7 @@ describe("test <table></table> tag",()=>{
 
   it('table has align style, compact mode',()=>{
     let table=new Table(`<table class="table table-striped"><thead><tr><th style=\"text-align:left\"><s>col-1</s></th><th style=\"text-align:center\">col-2</th><th style=\"text-align:right\">col-3</th></tr></thead><tbody><tr><td style=\"text-align:left\">data-1-left</td><td style=\"text-align:center\">data-1-center</td><td style=\"text-align:right\"><code>data-1-right</code></td></tr><tr><td style=\"text-align:left\">data-2-left</td><td style=\"text-align:center\"><b>data-2-center</b></td><td style=\"text-align:right\">data-2-right</td></tr><tr><td style=\"text-align:left\"><i>data-3-left</i></td><td style=\"text-align:center\">data-3-center</td><td style=\"text-align:right\">data-3-right</td></tr></tbody></table>`)
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
       "|:---|:---:|---:|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
@@ -119,7 +119,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n\n\n\n\n\n\n" +
       "</tbody>\n\n\n\n\n\n\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|~~col-1~~|col-2|col-3|\n" +
       "|---|---|---|\n" +
       "|data-1-left|data-1-center|`data-1-right`|\n" +
@@ -150,7 +150,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|col-1|col-2|\n" +
       "|---|---|\n" +
       "|data-1-left|data-1-center|\n" +
@@ -181,7 +181,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|col-1|col-2|\n" +
       "|---|---|\n" +
       "|data-1-left|data-1-center|\n" +
@@ -207,7 +207,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|||\n" +
       "|---|---|\n" +
       "|data-1-left|data-1-center|\n" +
@@ -225,7 +225,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</thead>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|data-1-left|data-1-center|\n" +
       "|:---|:---|\n")
   })
@@ -255,7 +255,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|Tables|Are|Cool|\n" +
       "|:---:|---:|:---:|\n" +
       "|col 3 is|right-aligned|$1600|\n" +
@@ -297,14 +297,14 @@ describe("test <table></table> tag",()=>{
       "    </tr>\n" +
       "  </tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "||||\n" +
       "|---|---|---|\n" +
       "|Tables|Are|Cool|\n" +
       "|col 3 is|right-aligned|$1600|\n" +
       "|col 2 is|centered|$12|\n" +
       "|zebra stripes|are neat|$1|\n" +
-      "| <ul>          <li>item1</li>          <li>item2</li>        </ul> |See the list|from the first column|\n")
+      "|<ul>          <li>item1</li>          <li>item2</li>        </ul>|See the list|from the first column|\n")
   })
 
   it('OL inside table',()=>{
@@ -329,7 +329,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|Tables|Are|Cool|\n" +
       "|:---:|---:|:---:|\n" +
       "|col 3 is|right-aligned|$1600|\n" +
@@ -355,7 +355,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|Tables|Are|\n" +
       "|:---:|:---:|\n" +
       "|col 3 is|right-aligned|\n" +
@@ -386,7 +386,7 @@ describe("test <table></table> tag",()=>{
       "</tr>\n" +
       "</tbody>\n" +
       "</table>")
-    expect(table.execMerge()).toBe("\n" +
+    expect(table.exec()).toBe("\n" +
       "|Tables|Are|\n" +
       "|:---:|---:|\n" +
       "|col 3 is|right-aligned|\n" +
@@ -395,20 +395,20 @@ describe("test <table></table> tag",()=>{
 
   it('Empty table1',()=>{
     let table=new Table("<table></table>")
-    expect(table.execMerge()).toBe('')
+    expect(table.exec()).toBe('')
   })
 
   it('Empty table2',()=>{
     let table=new Table("<table><tr>123</tr></table>")
-    expect(table.execMerge()).toBe('')
+    expect(table.exec()).toBe('')
   })
 
   it('Empty table3',()=>{
     let table=new Table("<table><tbody></tbody></table>")
-    expect(table.execMerge()).toBe('')
+    expect(table.exec()).toBe('')
   })
   it('Empty table4',()=>{
     let table=new Table("<table><thead></thead></table>")
-    expect(table.execMerge()).toBe('')
+    expect(table.exec()).toBe('')
   })
 })

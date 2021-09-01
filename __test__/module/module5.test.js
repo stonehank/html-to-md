@@ -8,8 +8,8 @@ describe('test special', () => {
 <h1>h1</h1>Should Be Next Line</li>
 </ul>`
     expect(html2Md(str)).toBe(
-        '*  # h1\n' +
-        '   Should Be Next Line\n')
+        '*   # h1\n' +
+        '    Should Be Next Line\n')
   })
 
   it('h3 Text should be next line', () => {
@@ -18,8 +18,8 @@ describe('test special', () => {
 <h3>h3</h3>Should Be Next Line</li>
 </ul>`
     expect(html2Md(str)).toBe(
-        '*  ### h3\n' +
-        '   Should Be Next Line\n')
+        '*   ### h3\n' +
+        '    Should Be Next Line\n')
   })
 
   it('Unvalid tag with valid sub tags',()=>{

@@ -212,10 +212,8 @@ describe('module test1',()=>{
 
     expect(html2Md(str)).toBe('**Advertisement 😃**\n' +
       '\n' +
-      '*  **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image\n' +
-      'resize in browser.\n' +
-      '*  **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly\n' +
-      'i18n with plurals support and easy syntax.\n' +
+      '*   **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image resize in browser.\n' +
+      '*   **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly i18n with plurals support and easy syntax.\n' +
       '\n' +
       'You will like those projects!\n' +
       '\n' +
@@ -249,7 +247,7 @@ describe('module test1',()=>{
       '\n' +
       'test… test… test… test?.. test!..\n' +
       '\n' +
-      '!!! ??? ,  – —\n' +
+      '!!! ??? , – —\n' +
       '\n' +
       '“Smartypants, double quotes” and ‘single quotes’\n' +
       '\n' +
@@ -267,48 +265,48 @@ describe('module test1',()=>{
       '\n' +
       '## Blockquotes\n' +
       '\n' +
-      '>Blockquotes can also be nested…\n' +
+      '> Blockquotes can also be nested…\n' +
       '>\n' +
-      '>>…by using additional greater-than signs right next to each other…\n' +
+      '>> …by using additional greater-than signs right next to each other…\n' +
       '>>\n' +
-      '>>>…or with spaces between arrows.\n' +
+      '>>> …or with spaces between arrows.\n' +
       '\n' +
       '## Lists\n' +
       '\n' +
       'Unordered\n' +
       '\n' +
-      '*  Create a list by starting a line with `+`, `-`, or `*`\n' +
-      '*  Sub-lists are made by indenting 2 spaces:\n' +
-      '   *  Marker character change forces new list start:\n' +
-      '      *  Ac tristique libero volutpat at\n' +
-      '      \n' +
-      '      *  Facilisis in pretium nisl aliquet\n' +
-      '      \n' +
-      '      *  Nulla volutpat aliquam velit\n' +
-      '*  Very easy!\n' +
+      '*   Create a list by starting a line with `+`, `-`, or `*`\n' +
+      '*   Sub-lists are made by indenting 2 spaces:\n' +
+      '    *   Marker character change forces new list start:\n' +
+      '        *   Ac tristique libero volutpat at\n' +
+      '\n' +
+      '        *   Facilisis in pretium nisl aliquet\n' +
+      '\n' +
+      '        *   Nulla volutpat aliquam velit\n' +
+      '*   Very easy!\n' +
       '\n' +
       'Ordered\n' +
       '\n' +
-      '1. Lorem ipsum dolor sit amet\n' +
+      '1.  Lorem ipsum dolor sit amet\n' +
       '\n' +
-      '2. Consectetur adipiscing elit\n' +
+      '2.  Consectetur adipiscing elit\n' +
       '\n' +
-      '3. Integer molestie lorem at massa\n' +
+      '3.  Integer molestie lorem at massa\n' +
       '\n' +
-      '4. You can use sequential numbers…\n' +
+      '4.  You can use sequential numbers…\n' +
       '\n' +
-      '5. …or keep all the numbers as `1.`\n' +
+      '5.  …or keep all the numbers as `1.`\n' +
       '\n' +
-      '1. Lorem ipsum dolor sit amet\n' +
-      '2. Consectetur adipiscing elit\n' +
-      '3. Integer molestie lorem at massa\n' +
-      '4. You can use sequential numbers…\n' +
-      '5. …or keep all the numbers as `1.`\n' +
+      '1.  Lorem ipsum dolor sit amet\n' +
+      '2.  Consectetur adipiscing elit\n' +
+      '3.  Integer molestie lorem at massa\n' +
+      '4.  You can use sequential numbers…\n' +
+      '5.  …or keep all the numbers as `1.`\n' +
       '\n' +
       'Start numbering with offset:\n' +
       '\n' +
-      '57. foo\n' +
-      '58. bar\n' +
+      '57.  foo\n' +
+      '58.  bar\n' +
       '\n' +
       '## Code\n' +
       '\n' +
@@ -365,8 +363,7 @@ describe('module test1',()=>{
       '\n' +
       '## Images\n' +
       '\n' +
-      '![Minion](https://octodex.github.com/images/minion.png)\n' +
-      '![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg)\n' +
+      '![Minion](https://octodex.github.com/images/minion.png) ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg)\n' +
       '\n' +
       'Like links, Images also have a footnote style syntax\n' +
       '\n' +
@@ -376,8 +373,7 @@ describe('module test1',()=>{
       '\n' +
       '## Plugins\n' +
       '\n' +
-      'The killer feature of `markdown-it` is very effective support of\n' +
-      '[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\n' +
+      'The killer feature of `markdown-it` is very effective support of [syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\n' +
       '\n' +
       '### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\n' +
       '\n' +
@@ -385,38 +381,38 @@ describe('module test1',()=>{
       '\n' +
       '### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\n' +
       '\n' +
-      '*  19<sup>th</sup>\n' +
-      '*  H<sub>2</sub>O\n' +
+      '*   19<sup>th</sup>\n' +
+      '*   H<sub>2</sub>O\n' +
       '\n' +
       '### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\n' +
       '\n' +
-      'Footnote 1 link<sup>[[1]](#fn1)</sup>.\n' +
+      'Footnote 1 link<sup>[\\[1\\]](#fn1)</sup>.\n' +
       '\n' +
-      'Footnote 2 link<sup>[[2]](#fn2)</sup>.\n' +
+      'Footnote 2 link<sup>[\\[2\\]](#fn2)</sup>.\n' +
       '\n' +
-      'Inline footnote<sup>[[3]](#fn3)</sup> definition.\n' +
+      'Inline footnote<sup>[\\[3\\]](#fn3)</sup> definition.\n' +
       '\n' +
-      'Duplicated footnote reference<sup>[[2:1]](#fn2)</sup>.\n' +
+      'Duplicated footnote reference<sup>[\\[2:1\\]](#fn2)</sup>.\n' +
       '\n' +
       '*here be dragons*\n' +
       '\n' +
       '## Todo list\n' +
       '\n' +
-      '*  [ ]  not finish-1\n' +
-      '*  [ ]  not finish-2\n' +
-      '*  [ ]  not finish-3\n' +
-      '*  [ ]  not finish-4\n' +
+      '*   [ ]  not finish-1\n' +
+      '*   [ ]  not finish-2\n' +
+      '*   [ ]  not finish-3\n' +
+      '*   [ ]  not finish-4\n' +
       '\n' +
       '## Done list\n' +
       '\n' +
-      '*  [x]  finish-1\n' +
-      '*  [x]  finish-2\n' +
-      '*  [x]  finish-3\n' +
-      '*  [x]  finish-4\n')
+      '*   [x]  finish-1\n' +
+      '*   [x]  finish-2\n' +
+      '*   [x]  finish-3\n' +
+      '*   [x]  finish-4\n')
   })
 
-  it('test-2',()=>{
+  it('input without li parent,  not render',()=>{
     let str='<input type="checkbox" checked disabled />\n<input type="checkbox" disabled />'
-    expect(html2Md(str)).toBe('<input type="checkbox" checked disabled />\n<input type="checkbox" disabled />')
+    expect(html2Md(str)).toBe('')
   })
 })

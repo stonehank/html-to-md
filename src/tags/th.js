@@ -1,47 +1,26 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass}=require('../utils')
 
 
 class Th extends Tag{
   constructor(str,tagName='th'){
     super(str,tagName)
-    this.curTagName=tagName
+    this.tagName=tagName
   }
 
-  handleContent(){
-    let res=''
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let [tagName,tagStr]=getNxtValidTag()
-    while(tagStr!==''){
-      if(tagName!=null){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{parentTag:this.curTagName})
-        res+=subTag.execMerge('','')
-      }else{
-        tagStr=tagStr.replace(/^(\n)+/,'').replace(/\n+$/,'')
-        res+=unescape(tagStr).replace(/^(\n*) +/,'$1 ')
-        if(res.startsWith('\n')){
-          res=res.trimLeft()
-        }
-        if(res.endsWith('\n')){
-          res=res.trimRight()
-        }
-      }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
+
+  beforeMergeSpace(content){
+    return content + '|'
+  }
+
+  parseValidSubTag(subTagStr, subTagName) {
+    if(subTagName==='ul' || subTagName==='ol' || subTagName==='table' || subTagName==='pre'){
+      return subTagStr.replace(/([\n\r])/g,'')
     }
-    return res
+    return super.parseValidSubTag(subTagStr, subTagName)
   }
 
-  afterMerge(){
-    return '|'
-  }
-
-
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

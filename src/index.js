@@ -15,7 +15,7 @@ function html2md(str,options,force=false){
       // 下一个tag是一个有效的并且不是纯文本
       let SubTagClass=findTagClass(tagName)
       let subTag=new SubTagClass(tagStr,tagName)
-      let subContent=subTag.execMerge()
+      let subContent=subTag.exec()
 
       // if(needIndependentLine(tagName) || needIndependentLine(config.get().aliasTags[tagName])){
       //   if(!res.endsWith('\n'))res+='\n'

@@ -1,19 +1,19 @@
 const Tag =require('../Tag')
 
 class __Heading__ extends Tag{
-  constructor(str,tagName='1'){
+  constructor(str,tagName='h1'){
     super(str,tagName)
-    this.handleContent=this.handleContent.bind(this,'','')
   }
 
-  beforeMerge(){
-    return '# '
+  beforeMergeSpace(content){
+    return '# '+content
   }
 
 
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    if(!gapAfter)gapAfter='\n'
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap,endGap){
+    if(!prevGap)prevGap='\n'
+    if(!endGap)endGap='\n'
+    return super.exec(prevGap,endGap)
   }
 
 }

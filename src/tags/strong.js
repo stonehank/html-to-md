@@ -3,25 +3,15 @@ const Tag =require('../Tag')
 class Strong extends Tag{
   constructor(str,tagName='strong'){
     super(str,tagName)
-    this.needEscape=true
-    this.handleContent=this.handleContent.bind(this,'','')
   }
 
-  beforeMerge(){
-    return "**"
-  }
-
-  afterMerge(){
-    return "**"
+  beforeMergeSpace(content){
+    return "**" + content + "**"
   }
 
 
-  slimContent(str){
-    return str.trim()
-  }
-
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

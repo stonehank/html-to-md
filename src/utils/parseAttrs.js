@@ -4,8 +4,12 @@ function parseAttrs(attrStr){
     if(i===attrStr.length || /\s/.test(attrStr[i])){
       if(!inside|| i===attrStr.length){
         let slimKey=key.trim()
-        if(slimKey[slimKey.length-1]==='/')slimKey=slimKey.slice(0,slimKey.length-1)
-        obj[slimKey]=value.trim()
+        if(slimKey[slimKey.length-1]==='/'){
+          slimKey=slimKey.slice(0,slimKey.length-1)
+        }
+        if(slimKey){
+          obj[slimKey]=value.trim()
+        }
         key=''
         value=''
       }
@@ -20,5 +24,6 @@ function parseAttrs(attrStr){
   }
   return obj
 }
+
 
 module.exports=parseAttrs

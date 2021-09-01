@@ -1,43 +1,22 @@
-const Tag =require('../Tag')
+const Tag = require('../Tag')
 
 
- class P extends Tag{
-  constructor(str,tagName='p',{layer=1,isFirstTag=false}={}){
-    super(str,tagName)
-      this.needEscape=true
-    this.layer=layer
-    this.leadingSpace=isFirstTag ? '' : this.tabSpace.repeat(this.layer-1)
-  }
+class P extends Tag {
+    constructor(str, tagName = 'p', {layer = 1, isFirstTag = false} = {}) {
+        super(str, tagName)
+        this.layer = layer
+        this.leadingSpace = isFirstTag ? '' : this.tabSpace.repeat(this.layer - 1)
+    }
 
-  beforeMerge(){
-    return this.leadingSpace
-  }
+    beforeMergeSpace(content) {
+        return this.leadingSpace + content
+    }
 
-  // handleContent(){
-  //   let content=this.getContent()
-  //   let getNxtValidTag=findValidTag(content)
-  //   let res=''
-  //   let [tagName,tagStr]=getNxtValidTag()
-  //   while(tagStr!==''){
-  //     if(tagName!=null){
-  //       let SubTagClass=findTagClass(tagName)
-  //       let subTag=new SubTagClass(tagStr,tagName)
-  //       res+=subTag.execMerge()
-  //     }else{
-  //       res+=unescape(tagStr)
-  //     }
-  //     let nxt=getNxtValidTag()
-  //     tagName=nxt[0]
-  //     tagStr=nxt[1]
-  //   }
-  //   return res
-  // }
-
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    return super.execMerge(gapBefore,gapAfter)
-  }
+    exec(prevGap = '\n', endGap = '\n') {
+        return super.exec(prevGap, endGap)
+    }
 
 }
 
 
-module.exports=P
+module.exports = P

@@ -1,5 +1,5 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass,shouldRenderRawInside}=require('../utils')
+const {findTagClass}=require('../utils')
 
 function countTdNum(str){
   let trStr=''
@@ -22,32 +22,24 @@ class Table extends Tag{
     this.tdNum= countTdNum(this.content)
   }
 
-  handleContent(){
-    let res=''
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let [tagName,tagStr]=getNxtValidTag()
-    while(tagStr!==''){
-      if(tagName!=null){
-        if(tagName==='thead'){
-          this.exist_thead=true
-        }
-        if(tagName==='tbody'){
-          this.exist_tbody=true
-          this.empty_tbody=false
-        }
-        if(tagName==='tr'){
-          this.empty_tbody=false
-        }
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{tdNum:this.tdNum})
-        res+=subTag.execMerge('','\n')
-      }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
+  parseValidSubTag(subTagStr, subTagName) {
+    if(subTagName==='thead'){
+      this.exist_thead=true
     }
-    return res
+    if(subTagName==='tbody'){
+      this.exist_tbody=true
+      this.empty_tbody=false
+    }
+    if(subTagName==='tr'){
+      this.empty_tbody=false
+    }
+    let SubTagClass=findTagClass(subTagName)
+    let subTag=new SubTagClass(subTagStr,subTagName,{tdNum:this.tdNum})
+    return subTag.exec('','\n')
+  }
+
+  parseOnlyString(subTagStr, subTagName, options) {
+    return ''
   }
 
   beforeReturn(str){
@@ -62,11 +54,8 @@ class Table extends Tag{
     return str
   }
 
-  execMerge(gapBefore='\n',gapAfter=''){
-    if(shouldRenderRawInside.includes(this.parentTag)){
-      return this.rawStr.replace(/[\n\r]/g,'')
-    }
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='\n',endGap='\n'){
+    return super.exec(prevGap,endGap)
   }
 
 }

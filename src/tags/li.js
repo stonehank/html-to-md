@@ -1,59 +1,80 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass}=require('../utils')
+const {findTagClass}=require('../utils')
+const {CODE_INDENT_SPACE} = require('../utils/CONSTANT')
 
 class Li extends Tag{
-  constructor(str,tagName='li',{match='*',layer=1}={}){
+  constructor(str,tagName='li',{match='*'+' '.repeat(CODE_INDENT_SPACE.length-1),layer=1}={}){
     super(str,tagName)
     this.match=match
     this.layer=layer
-    this.hasPTag=false
     this.leadingSpace=this.tabSpace.repeat(this.layer-1)
+    this._isFirstSubTag=true
+    this.extraGap=false
   }
 
-  beforeMerge(){
-    return this.leadingSpace+this.match+' '
-  }
+  beforeMergeSpace(content){
+    let extraGap=''
 
-  handleContent(){
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let res=''
-    let isFirstTag=true
-    let [tagName,tagStr]=getNxtValidTag()
-    while(tagStr!==''){
-      let tabSpace= isFirstTag ? '' : this.tabSpace
-      if(tagName!=null){
-        if(tagName==='p')this.hasPTag=true
-        // 在li内部 需要另起一行，并且内部可以嵌套
-        let isSubList=tagName==='ul' || tagName==='ol' || tagName==='blockquote' || tagName==='pre'
-        let SubTagClass=findTagClass(tagName)
-        let nxtLayer=this.layer+1
-        let subTag=new SubTagClass(tagStr,tagName,{layer:nxtLayer,parentTag:'li',isFirstTag})
-        let startGap=(tagName==='p' && !isFirstTag) ? '\n' : ''
-        let endGap=isSubList ? '\n' : tagName==='p' ? '\n' : ''
-        if((isSubList) && !isFirstTag && !res.endsWith('\n') ){
-          res+='\n'
-        }
-        res+=subTag.execMerge(startGap,endGap)
-      }else{
-        tagStr=tagStr.replace(/(^\n|\n$)/g,'').replace(/^\s+|\s+$/g,' ')
-        res+=res.endsWith('\n') ? tabSpace.repeat(this.layer) + tagStr : tagStr
-      }
-      if(tagStr.trim()!=='')isFirstTag=false
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
+    if(this.extraGap){
+      extraGap='\n'
     }
-    return res
+    return extraGap+this.leadingSpace+this.match + content
   }
 
-  afterSlim(str){
-    if(this.hasPTag && !str.endsWith('\n\n'))str+='\n'
-    return str
+  parseValidSubTag(subTagStr, subTagName) {
+    let extraGap=subTagName==='p'
+    // 在li内部 需要另起一行，并且内部可以嵌套
+    let isOneGap=subTagName==='ul'
+        || subTagName==='ol'
+        || subTagName==='blockquote'
+        || subTagName==='pre'
+    let SubTagClass=findTagClass(subTagName)
+    let subTag=new SubTagClass(subTagStr,subTagName,
+        {
+          layer:this.layer+1,
+          parentTag:this.tagName,
+          isFirstTag:this._isFirstSubTag
+        })
+    // let prevGap='', endGap=''
+    // if(!this._isFirstSubTag){
+    //   if(extraGap){
+    //     prevGap='\n'
+    //   } else if(isOneGap){
+    //     prevGap='\n'
+    //   }
+    // }
+    this._isFirstSubTag=false
+    // if(extraGap){
+    //   endGap='\n'
+    // }else if(isOneGap){
+    //   endGap='\n'
+    // }
+    this.extraGap=this.extraGap || extraGap
+    // console.log(subTag.exec(prevGap,endGap))
+    return subTag.exec()
   }
 
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    return super.execMerge(gapBefore,gapAfter)
+  parseOnlyString(subTagStr, subTagName, options) {
+    options.leadingSpace=this.leadingSpace
+    if(subTagStr.trim()!=='')this._isFirstSubTag=false
+    return super.parseOnlyString(subTagStr, subTagName, options);
+  }
+
+  afterParsed(content) {
+    // console.log(content)
+    return super.afterParsed(content);
+  }
+
+  beforeReturn(content) {
+    return super.beforeReturn(content);
+  }
+
+  // slim(content) {
+  //   return this._isFirstSubTag ? content.replace(/^\s?\n+/,'').trimRight() : content.trim()
+  // }
+
+  exec(prevGap='\n',endGap='\n'){
+    return super.exec(prevGap,endGap)
   }
 
 }

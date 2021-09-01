@@ -11,8 +11,9 @@ class __Ignore__{
     this.parentTag=parentTag
   }
 
-  execMerge(){
+  exec(){
     if(this.parentTag==='li' && this.tagName==='br'){
+      // BR 必须有2个空位才会换行
       return '  \n'
     }
     return ''

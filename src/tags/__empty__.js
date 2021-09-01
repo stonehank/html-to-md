@@ -1,7 +1,5 @@
 const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
-
-const {findValidTag}=require('../utils')
 /*
 *
 * <div><b>abc</b></div>
@@ -9,32 +7,24 @@ const {findValidTag}=require('../utils')
 *
 * */
 class __Empty__ extends Tag{
-  constructor(str,tagName='__empty__'){
-    super(str,tagName)
+  constructor(str,tagName='__empty__',options){
+    super(str,tagName,options)
     this.tagName=tagName
   }
-
-  handleContent(){
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let res=''
-    let [tagName,tagStr]=getNxtValidTag()
-    while(tagStr!==''){
-      if(tagName!=null){
-        let subTag=new __Empty__(tagStr,tagName)
-        res+=subTag.execMerge()
-      }else{
-        res+=tagStr
-      }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
-    }
-    return res
+  slim(content){
+    return content
   }
 
-  execMerge(){
-    return super.execMerge('','')
+  parseValidSubTag(subTagStr, subTagName){
+    return new __Empty__(subTagStr,subTagName).exec()
+  }
+
+  parseOnlyString(subTagStr, subTagName,options){
+    return subTagStr
+  }
+
+  exec(){
+    return super.exec('','')
   }
 
 }
@@ -46,8 +36,8 @@ class __EmptySelfClose__ extends SelfCloseTag{
   }
 
 
-  execMerge(){
-    return super.execMerge('','')
+  exec(){
+    return super.exec('','')
   }
 
 }

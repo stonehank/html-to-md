@@ -1,5 +1,6 @@
 const isSelfClosing=require("./isSelfClosing")
 
+
 function getTagName(str,id){
   let name=''
   while(id<str.length && /[a-zA-Z0-9!]/.test(str[id])){
@@ -14,6 +15,9 @@ function findValidTag(str){
   return ()=>{
     let res=''
     let startTagName=null,count=0,endTagName=null,canBeBreak=false
+    if(startId >= str.length){
+      return [startTagName,res]
+    }
     for(let i=startId;i<str.length;i++){
       if(str[i]==="<" && str[i+1]!=="/"){
         if(res!=='' && startTagName==null && !canBeBreak){

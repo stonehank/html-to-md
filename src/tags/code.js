@@ -1,6 +1,6 @@
 const Tag =require('../Tag')
-const {findValidTag,findTagClass,unescape}=require('../utils')
-
+const {__Empty__,__EmptySelfClose__} =require('../tags/__Empty__')
+const {findTagClass,isSelfClosing,unescape}=require('../utils')
 
 class Code extends Tag{
   constructor(str,tagName='code',{match='`',language=''}={}){
@@ -9,74 +9,51 @@ class Code extends Tag{
     this.language=language
   }
 
-  beforeReturn(str){
-    return str
-  }
-
-  beforeMerge(){
+  beforeMergeSpace(content){
+    let startMatch, endMatch
+    // 不是在pre内部，也不是多个`
     if(this.match!=='' && this.match!=='`'){
-      return this.match+' '
+      startMatch= this.match+' '
+      endMatch=' '+this.match
+    }else{
+      startMatch=this.match
+      endMatch=this.match
     }
-    return this.match
+    return startMatch + content + endMatch
   }
 
-  afterMerge(){
-    if(this.match!=='' && this.match!=='`'){
-      return ' '+this.match
+  parseValidSubTag(subTagStr, subTagName) {
+    if(subTagName==="pre"){
+      let SubTagClass=findTagClass(subTagName)
+      let subTag=new SubTagClass(subTagStr,subTagName,{language:this.language,match:''})
+      return subTag.exec('','')
+    }else{
+      let SubTagClass=findTagClass(subTagName)
+      let subTag=new SubTagClass(subTagStr,subTagName,{parentTag:'code',strKeepFormat:true})
+      return subTag.exec('','')
     }
-    return this.match
   }
 
-
-  handleContent(){
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let res=''
-    let [tagName,tagStr]=getNxtValidTag()
-    // console.log(tagName,tagStr)
-    while(tagStr!==''){
-      // if(tagName==="span"  && this.language!==''){
-      //   let SubTagClass=findTagClass(tagName)
-      //   let subTag=new SubTagClass(tagStr,tagName)
-      //   res+=subTag.execMerge('','')
-      // }else
-      if(tagName==="pre"){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName,{language:this.language,match:''})
-        res+=subTag.execMerge('','')
-      }else if(!!tagName){
-        let SubTagClass=findTagClass(tagName)
-        let subTag=new SubTagClass(tagStr,tagName)
-        res+=subTag.execMerge('','')
-      }else{
-        if(this.match!=='' && tagStr!=null){
-          let count=1
-          if(tagStr.startsWith('`') || tagStr.endsWith('`')){
-            count=2
-            if(tagStr.startsWith('``') || tagStr.endsWith('``')){
-              count=3
-            }
-          }
-          this.match='`'.repeat(count)
+  parseOnlyString(subTagStr, subTagName, options) {
+    if(this.match!=='' && subTagStr!=null){
+      let count=1
+      if(subTagStr.startsWith('`') || subTagStr.endsWith('`')){
+        count=2
+        if(subTagStr.startsWith('``') || subTagStr.endsWith('``')){
+          count=3
         }
-        res+=unescape(tagStr)
       }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
+      this.match='`'.repeat(count)
     }
-
-    return res
+    return unescape(subTagStr)
   }
 
-  execMerge(gapBefore='',gapAfter=''){
-    let str=''+gapBefore
-    let content=this.handleContent()
-    str+=this.beforeMerge()
-    str+=this.slimContent(content)
-    str+=this.afterMerge()
-    str+=gapAfter
-    return this.afterSlim(str)
+  slim(content) {
+    return content;
+  }
+
+  exec(prevGap = '', endGap = '') {
+    return super.exec(prevGap, endGap);
   }
 
 }

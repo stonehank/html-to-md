@@ -9,9 +9,9 @@ describe("test <ol></ol> tag",()=>{
       '<li>two</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.execMerge()).toBe('\n1. one\n' +
-      '2. two\n' +
-      '3. three\n')
+    expect(ol.exec()).toBe('\n1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
+      '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
+      '3.'+' '.repeat(tagSpaceNum-2)+'three\n')
   })
 
   it('nest order list',()=>{
@@ -26,7 +26,7 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.execMerge()).toBe('\n' +
+    expect(ol.exec()).toBe('\n' +
       '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
       '2.'+ ' '.repeat(tagSpaceNum-2)+'two\n' +
       ' '.repeat(tagSpaceNum)+ '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
@@ -48,7 +48,7 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.execMerge()).toBe('\n' +
+    expect(ol.exec()).toBe('\n' +
       '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
       '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
       ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-1\n' +
@@ -96,24 +96,24 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.execMerge()).toBe('\n' +
-      '1. **STRONG**\n' +
-      '2. [ATag](https://github.com/-it/markdown-it-sub)\n' +
-      '   *  unorder-1\n' +
-      '   *  unorder-2\n' +
-      '      1. one\n' +
-      '      2. two\n' +
-      '         >*  bq-nest-1\n' +
-      '         >\n' +
-      '         >>*  bq-nest-2\n' +
-      '         >>\n' +
-      '         >>>*  bq-nest-3\n' +
-      '   *  unorder-3\n' +
-      '      *  code\n' +
-      '         ```javascript\n' +
-      '         var a=5\n' +
-      '         ```\n' +
-      '3. three\n')
+    expect(ol.exec()).toBe('\n' +
+      '1.'+' '.repeat(tagSpaceNum-2)+ '**STRONG**\n' +
+      '2.'+' '.repeat(tagSpaceNum-2)+ '[ATag](https://github.com/-it/markdown-it-sub)\n' +
+      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-1\n' +
+      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-2\n' +
+      ' '.repeat(tagSpaceNum*2)+'1.'+' '.repeat(tagSpaceNum-2)+ 'one\n' +
+      ' '.repeat(tagSpaceNum*2)+'2.'+' '.repeat(tagSpaceNum-2)+ 'two\n' +
+      ' '.repeat(tagSpaceNum*3)+'> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-1\n' +
+      ' '.repeat(tagSpaceNum*3)+'>\n' +
+      ' '.repeat(tagSpaceNum*3)+'>> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-2\n' +
+      ' '.repeat(tagSpaceNum*3)+'>>\n' +
+      ' '.repeat(tagSpaceNum*3)+'>>> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-3\n' +
+      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-3\n' +
+      ' '.repeat(tagSpaceNum*2)+'*'+' '.repeat(tagSpaceNum-1)+ 'code\n' +
+      ' '.repeat(tagSpaceNum*3)+'```javascript\n' +
+      ' '.repeat(tagSpaceNum*3)+'var a=5\n' +
+      ' '.repeat(tagSpaceNum*3)+'```\n' +
+      '3.'+' '.repeat(tagSpaceNum-2)+ 'three\n')
   })
 
 
@@ -136,16 +136,16 @@ describe("test <ol></ol> tag",()=>{
       "</li>\n" +
       "</ol>")
 
-    expect(ol.execMerge()).toBe('\n' +
-      '1. Lorem ipsum dolor sit amet\n' +
+    expect(ol.exec()).toBe('\n' +
+      '1.'+' '.repeat(tagSpaceNum-2)+ 'Lorem ipsum dolor sit amet\n' +
       '\n' +
-      '2. Consectetur adipiscing elit\n' +
+      '2.'+' '.repeat(tagSpaceNum-2)+ 'Consectetur adipiscing elit\n' +
       '\n' +
-      '3. Integer molestie lorem at massa\n' +
+      '3.'+' '.repeat(tagSpaceNum-2)+ 'Integer molestie lorem at massa\n' +
       '\n' +
-      '4. You can use sequential numbers…\n' +
+      '4.'+' '.repeat(tagSpaceNum-2)+ 'You can use sequential numbers…\n' +
       '\n' +
-      '5. …or keep all the numbers as `1.`\n')
+      '5.'+' '.repeat(tagSpaceNum-2)+ '…or keep all the numbers as `1.`\n')
   })
 })
 

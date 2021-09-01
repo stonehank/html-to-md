@@ -1,5 +1,4 @@
 import Ul from '../../src/tags/ul'
-import Ol from "../../src/tags/ol";
 const {tagSpaceNum}=require('../options')
 
 describe("test <ul></ul> tag",()=>{
@@ -10,7 +9,7 @@ describe("test <ul></ul> tag",()=>{
       '<li>two</li>\n' +
       '<li>three</li>\n' +
       '</ul>')
-    expect(ul.execMerge()).toBe('\n' +
+    expect(ul.exec()).toBe('\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'one\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'two\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'three\n')
@@ -28,7 +27,7 @@ describe("test <ul></ul> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ul>')
-    expect(ul.execMerge()).toBe('\n' +
+    expect(ul.exec()).toBe('\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'one\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'two\n' +
       ' '.repeat(tagSpaceNum)+'* '+' '.repeat(tagSpaceNum-2)+'one\n' +
@@ -50,7 +49,7 @@ describe("test <ul></ul> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ul>')
-    expect(ul.execMerge()).toBe('\n' +
+    expect(ul.exec()).toBe('\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'one\n' +
       '* '+' '.repeat(tagSpaceNum-2)+'two\n' +
       ' '.repeat(tagSpaceNum)+'1.'+' '.repeat(tagSpaceNum-2)+'unorder-1\n' +
@@ -104,30 +103,30 @@ describe("test <ul></ul> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ul>')
-    expect(ul.execMerge()).toBe('\n' +
-      '*  **STRONG**\n' +
-      '*  [ATag](https://github.com/-it/markdown-it-sub)\n' +
-      '   1. unorder-1\n' +
-      '   2. unorder-2\n' +
-      '      *  one\n' +
-      '      *  two\n' +
-      '         >1. bq-nest-1\n' +
-      '         >\n' +
-      '         >>1. bq-nest-2\n' +
-      '         >>\n' +
-      '         >>>1. bq-nest-3\n' +
-      '   3. unorder-3\n' +
-      '      1. code\n' +
-      '         ```javascript\n' +
-      '         function a(){\n' +
-      '             let b=5\n' +
-      '             let obj={\n' +
-      '                     x:100\n' +
-      '                 }\n' +
-      '             return obj.x+b\n' +
-      '         }\n' +
-      '         ```\n' +
-      '*  three\n')
+    expect(ul.exec()).toBe('\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'**STRONG**\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[ATag](https://github.com/-it/markdown-it-sub)\n' +
+      ' '.repeat(tagSpaceNum)+'1.'+' '.repeat(tagSpaceNum-2)+'unorder-1\n' +
+      ' '.repeat(tagSpaceNum)+'2.'+' '.repeat(tagSpaceNum-2)+'unorder-2\n' +
+      ' '.repeat(tagSpaceNum*2)+'*'+' '.repeat(tagSpaceNum-1)+'one\n' +
+      ' '.repeat(tagSpaceNum*2)+'*'+' '.repeat(tagSpaceNum-1)+'two\n' +
+      ' '.repeat(tagSpaceNum*3)+'> 1.'+' '.repeat(tagSpaceNum-2)+'bq-nest-1\n' +
+      ' '.repeat(tagSpaceNum*3)+'>\n' +
+      ' '.repeat(tagSpaceNum*3)+'>> 1.'+' '.repeat(tagSpaceNum-2)+'bq-nest-2\n' +
+      ' '.repeat(tagSpaceNum*3)+'>>\n' +
+      ' '.repeat(tagSpaceNum*3)+'>>> 1.'+' '.repeat(tagSpaceNum-2)+'bq-nest-3\n' +
+      ' '.repeat(tagSpaceNum)+'3.'+' '.repeat(tagSpaceNum-2)+'unorder-3\n' +
+      ' '.repeat(tagSpaceNum*2)+'1.'+' '.repeat(tagSpaceNum-2)+'code\n' +
+      ' '.repeat(tagSpaceNum*3)+'```javascript\n' +
+      ' '.repeat(tagSpaceNum*3)+'function a(){\n' +
+      ' '.repeat(tagSpaceNum*3)+'    let b=5\n' +
+      ' '.repeat(tagSpaceNum*3)+'    let obj={\n' +
+      ' '.repeat(tagSpaceNum*3)+'            x:100\n' +
+      ' '.repeat(tagSpaceNum*3)+'        }\n' +
+      ' '.repeat(tagSpaceNum*3)+'    return obj.x+b\n' +
+      ' '.repeat(tagSpaceNum*3)+'}\n' +
+      ' '.repeat(tagSpaceNum*3)+'```\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'three\n')
   })
 
   it("li nest p",()=>{
@@ -145,16 +144,16 @@ describe("test <ul></ul> tag",()=>{
       "</li>\n" +
       "</ul>")
 
-    expect(ul.execMerge()).toBe('\n' +
-      '*  Lorem ipsum dolor sit amet\n' +
+    expect(ul.exec()).toBe('\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Lorem ipsum dolor sit amet\n' +
       '\n' +
-      '*  Consectetur adipiscing elit\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Consectetur adipiscing elit\n' +
       '\n' +
-      '*  Integer molestie lorem at massa\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Integer molestie lorem at massa\n' +
       '\n' +
-      '*  You can use sequential numbers…\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'You can use sequential numbers…\n' +
       '\n' +
-      '*  …or keep all the numbers as `1.`\n')
+      '*'+' '.repeat(tagSpaceNum-1)+'…or keep all the numbers as `1.`\n')
   })
 
   it("text in li",()=>{
@@ -172,12 +171,12 @@ describe("test <ul></ul> tag",()=>{
       "</li>\n" +
       "</ul>")
 
-    expect(ul.execMerge()).toBe('\n' +
-      '*  Lorem ipsum dolor sit amet\n' +
-      '*  Consectetur adipiscing elit\n' +
-      '*  Integer molestie lorem at massa\n' +
-      '*  You can use sequential numbers…\n' +
-      '*  …or keep all the numbers as `1.`\n')
+    expect(ul.exec()).toBe('\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Lorem ipsum dolor sit amet\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Consectetur adipiscing elit\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'Integer molestie lorem at massa\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'You can use sequential numbers…\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'…or keep all the numbers as `1.`\n')
   })
 
   it("todo list",()=>{
@@ -188,11 +187,11 @@ describe("test <ul></ul> tag",()=>{
       '<li><input disabled="" type="checkbox"> not finish-4</li>\n' +
       '</ul>')
 
-    expect(ul.execMerge()).toBe('\n' +
-      '*  [ ]  not finish-1\n' +
-      '*  [ ]  not finish-2\n' +
-      '*  [ ]  not finish-3\n' +
-      '*  [ ]  not finish-4\n')
+    expect(ul.exec()).toBe('\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[ ]  not finish-1\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[ ]  not finish-2\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[ ]  not finish-3\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[ ]  not finish-4\n')
   })
 
   it("done list",()=>{
@@ -203,11 +202,11 @@ describe("test <ul></ul> tag",()=>{
       '<li><input checked="" disabled="" type="checkbox"> finish-4</li>\n' +
       '</ul>')
 
-    expect(ul.execMerge()).toBe('\n' +
-      '*  [x]  finish-1\n' +
-      '*  [x]  finish-2\n' +
-      '*  [x]  finish-3\n' +
-      '*  [x]  finish-4\n')
+    expect(ul.exec()).toBe('\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[x]  finish-1\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[x]  finish-2\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[x]  finish-3\n' +
+      '*'+' '.repeat(tagSpaceNum-1)+'[x]  finish-4\n')
   })
 
   it("test <br>",()=>{
@@ -219,12 +218,82 @@ describe("test <ul></ul> tag",()=>{
         '默认是True</li>\n' +
         '</ul>')
 
-    expect(ul.execMerge()).toBe('\n' +
-        '*  **参数replace**  \n' +
-        '   用来设置是否可以取相同元素：  \n' +
-        '   True表示可以取相同数字；  \n' +
-        '   False表示不可以取相同数字。  \n' +
-        '   默认是True\n')
+    expect(ul.exec()).toBe(
+`
+*   **参数replace**  
+    用来设置是否可以取相同元素：  
+    True表示可以取相同数字；  
+    False表示不可以取相同数字。  
+    默认是True
+`
+    )
+  })
+
+  it("test <br> 2",()=>{
+    let ul=new Ul('<ul>\n' +
+        '<li><strong>参数replace</strong><br>\n' +
+        '用来设置是否可以取相同元素：<br>\n' +
+        'True表示可以取相同数字；<br>\n' +
+        '<ul>\n' +
+        '<li><strong>nest参数replace</strong><br>\n' +
+        'nest用来设置是否可以取相同元素：<br>\n' +
+        'nestTrue表示可以取相同数字；<br>\n' +
+        'nestFalse表示不可以取相同数字。<br>\n' +
+        'nest默认是True</li>\n' +
+        '</ul>' +
+        '默认是True</li>\n' +
+        '</ul>')
+
+    expect(ul.exec()).toBe(`
+*   **参数replace**  
+    用来设置是否可以取相同元素：  
+    True表示可以取相同数字；  
+
+    *   **nest参数replace**  
+        nest用来设置是否可以取相同元素：  
+        nestTrue表示可以取相同数字；  
+        nestFalse表示不可以取相同数字。  
+        nest默认是True
+
+    默认是True
+`)
+  })
+
+
+  it("nest ul-2",()=>{
+    let ul=new Ul(`<ul>
+<li>Create a list by starting a line with <code>+</code>, <code>-</code>, or <code>*</code></li>
+<li>Sub-lists are made by indenting 2 spaces:
+<ul>
+<li>Marker character change forces new list start:
+<ul>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+<ul>
+<li>Facilisis in pretium nisl aliquet</li>
+</ul>
+<ul>
+<li>Nulla volutpat aliquam velit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Very easy!</li>
+</ul>`)
+
+    expect(ul.exec()).toBe(`
+*   Create a list by starting a line with \`+\`, \`-\`, or \`*\`
+*   Sub-lists are made by indenting 2 spaces:
+    *   Marker character change forces new list start:
+        *   Ac tristique libero volutpat at
+
+
+        *   Facilisis in pretium nisl aliquet
+
+
+        *   Nulla volutpat aliquam velit
+*   Very easy!
+`)
   })
 })
 

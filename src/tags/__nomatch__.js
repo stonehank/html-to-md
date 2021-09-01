@@ -2,8 +2,8 @@ const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
 /*
 *
-* <div><b>abc</b></div>
-* ==> <div>**abc**</div>
+* <sub><b>abc</b></sub>
+* ==> <sub>**abc**</sub>
 *
 * */
 
@@ -11,19 +11,15 @@ class __NoMatch__ extends Tag{
   constructor(str,tagName='__nomatch__'){
     super(str,tagName)
     this.tagName=tagName
-    this.handleContent=this.handleContent.bind(this,'','')
   }
 
-  beforeMerge(){
-    return `<${this.tagName}>`
+  beforeMergeSpace(content){
+    return `<${this.tagName}>${content}</${this.tagName}>`
   }
 
-  afterMerge(){
-    return `</${this.tagName}>`
-  }
 
-  execMerge(){
-    return super.execMerge('','')
+  exec(){
+    return super.exec('','')
   }
 
 }
@@ -35,7 +31,7 @@ class __NoMatchSelfClose__ extends SelfCloseTag{
     this.str=str
   }
 
-  execMerge(){
+  exec(){
     return `<${this.tagName} />`
   }
 

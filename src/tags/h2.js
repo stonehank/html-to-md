@@ -7,12 +7,12 @@ class H2 extends __Heading__{
     super(str,tagName)
   }
 
-  beforeMerge(){
-    return "## "
+  beforeMergeSpace(content){
+    return "## "+ content
   }
 
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='\n',endGap='\n'){
+    return super.exec(prevGap,endGap)
   }
 
 }

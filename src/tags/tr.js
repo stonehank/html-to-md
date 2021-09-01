@@ -9,35 +9,26 @@ class Tr extends Tag{
     super(str,tagName)
   }
 
-  beforeMerge(){
-    return '|'
+  beforeMergeSpace(content){
+    return '|' + content
   }
 
-
-  handleContent(){
-    let res=''
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let [tagName,tagStr]=getNxtValidTag()
-    while(tagStr!==''){
-      if(tagName!==null){
-        let SubTagClass=findTagClass(tagName)
-        if(tagName!=='td' && tagName!=='th' && aliasTags[tagName]!=='td' && aliasTags[tagName]!=='th' && SubTagClass !== __Ignore__ ){
-          console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${tagName} have been ignore.`)
-        }else{
-          let subTag=new SubTagClass(tagStr,tagName)
-          res+=subTag.execMerge('','')
-        }
-      }
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
+  parseValidSubTag(subTagStr, subTagName) {
+    let SubTagClass=findTagClass(subTagName)
+    if(subTagName!=='td' && subTagName!=='th' && aliasTags[subTagName]!=='td' && aliasTags[subTagName]!=='th' && SubTagClass !== __Ignore__ ){
+      console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`)
+      return ''
+    }else{
+      let subTag=new SubTagClass(subTagStr,subTagName)
+      return subTag.exec('','')
     }
-    return res
   }
 
-  execMerge(gapBefore='',gapAfter='\n'){
-    return super.execMerge(gapBefore,gapAfter)
+  parseOnlyString(subTagStr, subTagName, options) {
+    return ''
+  }
+  exec(prevGap='',endGap='\n'){
+    return super.exec(prevGap,endGap)
   }
 
 }

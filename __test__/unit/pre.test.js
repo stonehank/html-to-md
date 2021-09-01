@@ -9,7 +9,7 @@ describe('test <pre></pre> tag',()=>{
       "line 2 of code\n" +
       "line 3 of code\n" +
       "</code></pre>\n")
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '// Some comments\n' +
       'line 1 of code\n' +
@@ -21,7 +21,7 @@ describe('test <pre></pre> tag',()=>{
   it('no language, childNode should be textNode-1',()=>{
     let pre=new Pre('<pre class="hljs"><code>"somthing" speaking\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '"somthing" speaking\n' +
       '```\n')
@@ -29,7 +29,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('no language, childNode should be textNode-2',()=>{
     let pre=new Pre("<pre class=\"hljs\"><code>&lt;span class=\"hljs-number\"&gt;5&lt;/span&gt;</code></pre>")
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '<span class="hljs-number">5</span>\n' +
       '```\n')
@@ -38,7 +38,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('no language, childNode should be textNode-3, remain format',()=>{
     let pre=new Pre('<pre class="hljs"><code>&lt;span class="hljs-number"&gt;\n  5\n&lt;/span&gt;\n</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '<span class="hljs-number">\n' +
       '  5\n' +
@@ -51,7 +51,7 @@ describe('test <pre></pre> tag',()=>{
     let pre=new Pre('<pre class="hljs"><code>js\n' +
       'var a=5\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       'js\n' +
       'var a=5\n' +
@@ -63,7 +63,7 @@ describe('test <pre></pre> tag',()=>{
       '&lt;code class="language-js"&gt;&lt;/code&gt;\n' +
       'var a=5\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       'language-js\n' +
       '<code class="language-js"></code>\n' +
@@ -72,13 +72,13 @@ describe('test <pre></pre> tag',()=>{
   })
 
   it('default language is javascript',()=>{
-    let pre=new Pre('<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
+    let pre=new Pre('<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>) </span>{\n' +
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
       '}\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```javascript\n' +
-      'function abc(){\n' +
+      'function abc() {\n' +
       '  let x=5\n' +
       '}\n```\n')
   })
@@ -89,7 +89,7 @@ describe('test <pre></pre> tag',()=>{
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
       '}\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```javascript\n' +
       'function abc(){\n' +
       '  let x=5\n' +
@@ -100,7 +100,7 @@ describe('test <pre></pre> tag',()=>{
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
       '}\n' +
       '</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```java\n' +
       'function abc(){\n' +
       '  let x=5\n' +
@@ -108,23 +108,24 @@ describe('test <pre></pre> tag',()=>{
   })
 
   it('has language, span should be parse, should add language-2',()=>{
-    let pre=new Pre('<pre class="hljs language-javascript"><code>&lt;span&gt;<span class="hljs-keyword">var</span>&lt;<span class="hljs-regexp">/span&gt;\n' +
-      'function abc(){\n' +
-      '  let x=5\n' +
-      '}\n' +
-      '</span></code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
-      '```javascript\n' +
-      '<span>var</span>\n' +
-      'function abc(){\n' +
-      '  let x=5\n' +
-      '}\n' +
-      '```\n')
+    let pre=new Pre(`<pre class="hljs language-js"><code><span class="hljs-keyword">var</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{
+  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>
+}
+</code></pre>`)
+    expect(pre.exec()).toBe(`
+\`\`\`javascript
+var
+function abc(){
+  let x=5
+}
+\`\`\`
+`)
   })
 
   it('text outside code',()=>{
     let pre=new Pre("<pre><strong>输入：</strong>N = 5, lamps = [[0,0],[4,4]], queries = [[1,1],[1,0]]\n<strong>输出：</strong>[1,0]\n<strong>解释： </strong>\n在执行第一次查询之前，我们位于 [0, 0] 和 [4, 4] 灯是亮着的。\n表示哪些单元格亮起的网格如下所示，其中 [0, 0] 位于左上角：\n1 1 1 1 1\n1 1 0 0 1\n1 0 1 0 1\n1 0 0 1 1\n1 1 1 1 1\n然后，由于单元格 [1, 1] 亮着，第一次查询返回 1。在此查询后，位于 [0，0] 处的灯将关闭，网格现在如下所示：\n1 0 0 0 1\n0 1 0 0 1\n0 0 1 0 1\n0 0 0 1 1\n1 1 1 1 1\n在执行第二次查询之前，我们只有 [4, 4] 处的灯亮着。现在，[1, 0] 处的查询返回 0，因为该单元格不再亮着。\n</pre>")
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '输入：N = 5, lamps = [[0,0],[4,4]], queries = [[1,1],[1,0]]\n' +
       '输出：[1,0]\n' +
@@ -148,7 +149,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('pre nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```javascript\n' +
       'var a=5\n' +
       '```\n')
@@ -157,7 +158,7 @@ describe('test <pre></pre> tag',()=>{
   it('pre nest pre 2',()=>{
     let pre=new Pre('<pre><code class="language-java"><pre class="hljs"><code><span class="hljs-function">def <span class="hljs-title">a</span><span class="hljs-params">()</span>:\n' +
       '  return 6</span></code></pre></code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```java\n' +
       'def a():\n' +
       '  return 6\n' +
@@ -166,7 +167,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('multi nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><pre><code class="language-js"><pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```javascript\n' +
       'var a=5\n' +
       'var a=5\n' +
@@ -176,7 +177,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('tag inside pre should be empty',()=>{
     let pre=new Pre('<pre><strong><i>this is normal text</i></strong></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       'this is normal text\n' +
       '```\n')
@@ -184,7 +185,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('ignore extra tags if exist <code>',()=>{
     let pre=new Pre('<pre><code>123</code><strong><i>this is normal text</i></strong></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
       '```\n' +
       '123\n' +
       '```\n')
@@ -209,7 +210,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('&lt; in code, should render to text',()=>{
     let pre=new Pre('<pre><code>&lt;span&gt;\n  5\n&lt;/span&gt;\n</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
         '```\n' +
         '<span>\n' +
         '  5\n' +
@@ -219,7 +220,7 @@ describe('test <pre></pre> tag',()=>{
 
   it('< in code, should render to tag',()=>{
     let pre=new Pre('<pre><code><span>5</span>\n</code></pre>')
-    expect(pre.execMerge()).toBe('\n' +
+    expect(pre.exec()).toBe('\n' +
         '```\n' +
         '5\n' +
         '```\n')

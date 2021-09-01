@@ -1,62 +1,60 @@
-const Tag =require('../Tag')
-const {findValidTag,findTagClass}=require('../utils')
+const Tag = require('../Tag')
+const {findTagClass} = require('../utils')
 
-class Blockquote extends Tag{
-  constructor(str,tagName='blockquote',{matchCounts=1,layer=1}={}){
-    super(str,tagName)
-    this.matchCounts=matchCounts
-    this.layer=layer
-    this.leadingSpace=this.tabSpace.repeat(this.layer-1)
-    this.match='>'.repeat(this.matchCounts)
-    this.fillPerLine=this.fillPerLine.bind(this)
-  }
-
-
-  fillPerLine(lineStr){
-    // let preLayer=' '.repeat((this.layer-1)*4)
-    if(!lineStr.startsWith('>') &&  this.matchCounts)
-      return this.leadingSpace+this.match+lineStr
-    return this.leadingSpace+lineStr
-  }
+class Blockquote extends Tag {
+    constructor(str, tagName = 'blockquote', {matchCounts = 1, layer = 1} = {}) {
+        super(str, tagName)
+        this.matchCounts = matchCounts
+        this.layer = layer
+        this.leadingSpace = this.tabSpace.repeat(this.layer - 1)
+        this.match = '>'.repeat(this.matchCounts)
+        this._isFirstSubTag = true
+        this.fillPerLine = this.fillPerLine.bind(this)
+    }
 
 
-  handleContent(){
-    let res=''
-    let content=this.getContent()
-    let getNxtValidTag=findValidTag(content)
-    let [tagName,tagStr]=getNxtValidTag()
-    let isFirstTag=true
-    while(tagStr!==''){
-      if(tagName!=null){
-        let SubTagClass=findTagClass(tagName)
-        let isSubblockq=tagName==='blockquote'
-        let subTag=new SubTagClass(tagStr,tagName,isSubblockq ? {matchCounts:this.matchCounts+1} : {})
-        if(!isFirstTag){
-          res+=(res.endsWith("\n") ? '' : '\n')+this.match+'\n'
+    beforeMergeSpace(content) {
+        if(content.trim()==='')return ''
+        return this.match + ' ' + content
+    }
+
+    afterMergeSpace(content) {
+        let split = content.split('\n')
+        split = split.map(n => {
+            if (n === '') return ''
+            return this.fillPerLine(n)
+        })
+        return split.join('\n')
+    }
+
+    fillPerLine(lineStr) {
+        if (!lineStr.startsWith('>') && this.matchCounts)
+            return this.leadingSpace + this.match + ' ' + lineStr
+        return this.leadingSpace + lineStr
+    }
+
+    parseValidSubTag(subTagStr, subTagName) {
+        let SubTagClass = findTagClass(subTagName)
+        let isSubIsBlockquote = subTagName === 'blockquote'
+        let subTag = new SubTagClass(subTagStr, subTagName, isSubIsBlockquote ? {matchCounts: this.matchCounts + 1} : {})
+        if (!this._isFirstSubTag) {
+            return this.match + '\n' + subTag.exec('', '\n')
+        } else {
+            this._isFirstSubTag = false
+            return subTag.exec('', '\n')
         }
-        res+=subTag.execMerge('','\n')
-      }
-      if(tagStr.trim()!=='')isFirstTag=false
-      let nxt=getNxtValidTag()
-      tagName=nxt[0]
-      tagStr=nxt[1]
     }
-    let split=res.split('\n')
-    split=split.map(n=>{
-      if(n==='')return ''
-      return this.fillPerLine(n)
-    })
-    return split.join('\n')
-  }
 
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    if(this.layer>1){
-      gapBefore=''
+
+    exec(prevGap = '\n', endGap = '\n') {
+        // if (this.layer > 1) {
+        //     prevGap = ''
+        // }
+        return super.exec(prevGap, endGap)
     }
-    return super.execMerge(gapBefore,gapAfter)
-  }
 
 }
-module.exports=Blockquote
+
+module.exports = Blockquote
 
 

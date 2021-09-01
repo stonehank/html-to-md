@@ -6,7 +6,7 @@ describe('Remove some space',()=>{
 
   it('The space between tags should be remove',()=>{
     let spaceHtml=new P("<p>       <strong>strong</strong></p>")
-    expect(spaceHtml.execMerge()).toBe("\n" +
+    expect(spaceHtml.exec()).toBe("\n" +
       " **strong**\n")
   })
 

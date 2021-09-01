@@ -1,6 +1,6 @@
 const Tag =require('../Tag')
 const SelfCloseTag =require('../SelfCloseTag')
-const {needIndependentLine} =require('../utils')
+const {needIndependentLine,getRealTagName} =require('../utils')
 /*
 *
 * <div><b>abc</b></div>
@@ -14,18 +14,18 @@ class __Skip__ extends Tag{
     this.tagName=tagName
     this.parentTag=parentTag
     this.noNeedWrap=['td','th']
-    this.handleContent=this.handleContent.bind(this)
-  }
-  afterSlim(str){
-    return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
   }
 
+  // afterSlim(str){
+  //   return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
+  // }
+  //
 
-
-  execMerge(){
-    let need=needIndependentLine(this.tagName) && !this.noNeedWrap.includes(this.parentTag)
+  exec(){
+    let need=needIndependentLine(getRealTagName(this.tagName)) && !this.noNeedWrap.includes(this.parentTag)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
-    return super.execMerge(pre,aft)
+    console.log(this.tagName,JSON.stringify(pre),JSON.stringify(aft),this.rawStr)
+    return super.exec(pre,aft)
   }
 }
 
@@ -36,7 +36,7 @@ class __SkipSelfClose__ extends SelfCloseTag{
     this.str=str
   }
 
-  execMerge(){
+  exec(){
     return this.str
   }
 

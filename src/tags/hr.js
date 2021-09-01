@@ -1,34 +1,31 @@
 const SelfCloseTag =require('../SelfCloseTag')
 
 class Hr extends SelfCloseTag{
-  constructor(str,tagName='hr',{layer=1,isFirstTag=false}={}){
-    super(str,tagName)
-    this.layer=layer
-    this.isFirstTag=isFirstTag
+  constructor(str,tagName='hr',options){
+    super(str,tagName,options)
+    console.log(this.layer,this.leadingSpace,this.tabSpace)
   }
 
-  beforeMerge(){
-    return "---"
+  beforeMergeSpace(){
+    return this.leadingSpace + "---"
   }
 
-  beforeReturn(str){
-    if(this.layer>1 || this.isFirstTag){
-      return str
-    }
-    str.replace(/^(\n\s*)+/,'\n\n')
+  beforeReturn(content){
+    // if(this.layer>1 || this.isFirstTag){
+    //   return content
+    // }
+    content.replace(/^(\n\s*)+/,'\n\n')
       .replace(/(\n\s*)+$/,'\n\n')
-    return str
+    return  content
   }
 
-  handleContent(){
-    return ''
-  }
 
-  execMerge(gapBefore='\n',gapAfter='\n'){
-    if(this.layer>1 || this.isFirstTag){
-      gapAfter='\n'
-    }
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='\n',endGap='\n'){
+    // if(this.layer>1 || this.isFirstTag){
+    //   endGap='\n'
+    // }
+    console.log(JSON.stringify(prevGap+'---'+endGap))
+    return super.exec(prevGap,endGap)
   }
 
 }

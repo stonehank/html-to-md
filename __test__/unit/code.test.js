@@ -4,12 +4,12 @@ const html2Md=require('../../src/index')
 describe('test <code></code> tag',()=>{
   it('has textNode',()=>{
     let code=new Code("<code>javascript</code>")
-    expect(code.execMerge()).toBe("`javascript`")
+    expect(code.exec()).toBe("`javascript`")
   })
 
   it('tag inside should be render to tag',()=>{
     let code=new Code("<code><span>dfaf</span><a href=\"https://github.com/nodeca/babelfish/\"><i>babelfish</i></a></code>")
-    expect(code.execMerge()).toBe("`dfaf[*babelfish*](https://github.com/nodeca/babelfish/)`")
+    expect(code.exec()).toBe("`dfaf[*babelfish*](https://github.com/nodeca/babelfish/)`")
   })
 
   it('code match symbol',()=>{

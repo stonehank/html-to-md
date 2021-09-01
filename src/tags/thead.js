@@ -5,12 +5,11 @@ const Tag =require('../Tag')
 class Thead extends Tag{
   constructor(str,tagName='thead'){
     super(str,tagName)
-    this.handleContent=this.handleContent.bind(this,'','',true)
   }
 
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

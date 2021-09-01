@@ -7,8 +7,15 @@ class Td extends Th{
     super(str,tagName)
   }
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  parseValidSubTag(subTagStr, subTagName) {
+    if(subTagName==='ul' || subTagName==='ol' || subTagName==='table' || subTagName==='pre'){
+      return subTagStr.replace(/([\n\r])/g,'')
+    }
+    return super.parseValidSubTag(subTagStr, subTagName)
+  }
+
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

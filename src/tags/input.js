@@ -1,34 +1,26 @@
 const SelfCloseTag =require('../SelfCloseTag')
 
-class Img extends SelfCloseTag{
-  constructor(str,tagName='input',{parentTag=null}={}){
+class Input extends SelfCloseTag{
+  constructor(str,tagName='input',{parentTag=''}={}){
     super(str,tagName)
-    this.attrs=this.getAttrs()
     this.parentTag=parentTag
-    this.str=str
   }
 
 
 
-  beforeMerge(){
-    if(this.parentTag!=="li")return this.str
-    // if(this.parentTag!=="li")beforeStr='* '
-    let {disabled,type,checked}=this.attrs
-
-    if(type==="checkbox" ){
+  beforeMergeSpace(){
+    let {type,checked}=this.attrs
+    if(this.parentTag === "li" && type==="checkbox"){
       return checked!=null ? '[x] ' : '[ ] '
     }
-    return this.str
-  }
-  beforeReturn(str){
-    // if(this.parentTag!=="li")return str+'\n'
-    return str
+    return ''
   }
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }
-module.exports=Img
+module.exports=Input
 

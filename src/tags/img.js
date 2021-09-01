@@ -6,21 +6,16 @@ class Img extends SelfCloseTag{
   }
 
 
-
-  beforeMerge(){
-    return `![`
-  }
-
-  afterMerge(){
-    let {src,alt}=this.getAttrs()
+  beforeMergeSpace(){
+    let {src,alt}=this.attrs
     if(!alt)alt=''
     if(!src)src=''
-    return `${alt}](${src})`
+    return `![${alt}](${src})`
   }
 
 
-  execMerge(gapBefore='',gapAfter=''){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap='',endGap=''){
+    return super.exec(prevGap,endGap)
   }
 
 }

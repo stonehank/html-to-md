@@ -5,8 +5,8 @@ class I extends Em{
     super(str,tagName)
   }
 
-  execMerge(gapBefore,gapAfter){
-    return super.execMerge(gapBefore,gapAfter)
+  exec(prevGap,endGap){
+    return super.exec(prevGap,endGap)
   }
 
 }

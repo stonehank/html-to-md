@@ -5,13 +5,13 @@ import html2Md from '../../src/index'
 describe('test <span></span> tag',()=>{
   it('no nest',()=>{
     let span=new Span("<span>javascript</span>")
-    expect(span.execMerge()).toBe("javascript")
+    expect(span.exec()).toBe("javascript")
   })
 
 
   it('code in span will also resolve',()=>{
     let span=new Span("<span><strong>strong</strong></span>")
-    expect(span.execMerge()).toBe("**strong**")
+    expect(span.exec()).toBe("**strong**")
   })
 
   // it('span will treat as p, but no change line',()=>{

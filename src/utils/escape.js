@@ -52,7 +52,14 @@ function unescape(s,{needEscape=false}={}) {
 
 }
 
+function extraEscape(s){
+  return _extra_escapes.reduce(function (accumulator, escape) {
+    return accumulator.replace(escape[0], escape[1])
+  }, s)
+}
+
 module.exports = {
   escape,
+  extraEscape,
   unescape
 }
