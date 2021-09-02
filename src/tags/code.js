@@ -55,7 +55,7 @@ class Code extends Tag{
       }
       this.match='`'.repeat(count)
     }
-    console.log(this.keepFormat,JSON.stringify(subTagStr))
+    // console.log(this.keepFormat,JSON.stringify(subTagStr))
     // 将&lt;转换为<，等等
     return unescape(subTagStr)
   }

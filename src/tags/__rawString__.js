@@ -1,6 +1,5 @@
 const {extraEscape}=require('../utils')
 const needIndependentLine=require('../utils/needIndependentLine')
-const {TAB_SPACE} = require('../utils/CONSTANT')
 
 
 class __RawString__{
@@ -29,16 +28,16 @@ class __RawString__{
     if(this.keepFormat)return str
 
     let _str= str.replace(/\s+/g,' ')
-    console.log(this.prevTagName,this.nextTagName)
-    if(needIndependentLine(this.prevTagName) || needIndependentLine(this.nextTagName)){
-      _str=str.trim()
+    //TODO ?
+    // if(needIndependentLine(this.prevTagName) || needIndependentLine(this.nextTagName)){
+    //   _str=str.trim()
+    // }
+    if(this.prevTagName && needIndependentLine(this.prevTagName)){
+      _str=_str.trimLeft()
     }
-    // if(this.prevTagName && needIndependentLine(this.prevTagName)){
-    //   _str=_str.trimLeft()
-    // }
-    // if(this.nextTagName && needIndependentLine(this.nextTagName)){
-    //   _str=_str.trimRight()
-    // }
+    if(this.nextTagName && needIndependentLine(this.nextTagName)){
+      _str=_str.trimRight()
+    }
     return _str
   }
 

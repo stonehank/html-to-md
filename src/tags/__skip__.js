@@ -15,11 +15,6 @@ class __Skip__ extends Tag{
     this.tagName=tagName
   }
 
-  // afterSlim(str){
-  //   return str.replace(/^\n+/,'\n').replace(/\n+$/,'\n')
-  // }
-  //
-
   exec(){
     let need=needIndependentLine(getRealTagName(this.tagName)) && !this.noNeedWrap.includes(this.parentTag)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
@@ -28,8 +23,8 @@ class __Skip__ extends Tag{
 }
 
 class __SkipSelfClose__ extends SelfCloseTag{
-  constructor(str,tagName='__skipselfclose__'){
-    super(str,tagName)
+  constructor(str,tagName='__skipselfclose__',options){
+    super(str,tagName,options)
     this.tagName=tagName
     this.str=str
   }

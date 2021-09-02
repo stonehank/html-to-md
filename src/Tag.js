@@ -199,7 +199,7 @@ class Tag {
             let _currentTagName=nextTagName
             nextTagName=afterNextTagName
             nextTagStr=afterNextTagStr
-            console.log(this.tagName,JSON.stringify(nextStr))
+            // console.log(this.tagName,JSON.stringify(nextStr))
             if(!this.keepFormat && _currentTagName == null && this.__isEmpty__(nextStr)){
                 continue
             }
@@ -212,7 +212,7 @@ class Tag {
         content = this.slim(content)
         if(!this.keepFormat && this.__isEmpty__(content))return ''
         content = this.beforeMergeSpace(content)
-        // 当<img>后面跟随<p>情况，需要p多空一行
+        // 当类似<img>后面跟随<p>情况，需要<p>多空一行
         if(needIndependentLine(this.tagName)
             && !!this.prevTagName
             && !content.startsWith('\n')

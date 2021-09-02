@@ -24,7 +24,7 @@ class Blockquote extends Tag {
             if (n === '') return ''
             return this.fillPerLine(n)
         })
-        console.log(content,split)
+        // console.log(content,split)
         return split.join('\n')
     }
 
