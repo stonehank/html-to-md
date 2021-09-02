@@ -1,26 +1,47 @@
 const {findValidTag, findTagClass, parseAttrs} = require('./utils')
 const RawString = require('./tags/__rawString__')
-const {TAB_SPACE} = require('./utils/CONSTANT')
+const {SINGLE} = require('./utils/CONSTANT')
+const needIndependentLine = require('./utils/needIndependentLine')
+const getRealTagName = require('./utils/getRealTagName')
 
 
 class Tag {
     constructor(str, tagName, {
-        tabSpace = TAB_SPACE,
-        parentTag = '',
-        strKeepFormat=false,
+        keepFormat=false,
+        prevTagName='',
+        nextTagName='',
+        parentTag='',
+        isFirstTag=true,
+        calcLeading=false,
+        leadingSpace='',
         layer=1,
-        isFirstTag=false
+        noWrap=false,
+        match=null,
+        intendSpace='',
+        language='',
+        count=1,
+        tdNum=0,
     } = {}) {
         this.tagName = tagName
         this.rawStr = str
         this.parentTag = parentTag
-        this.strKeepFormat=strKeepFormat || parentTag==='code' || parentTag==='pre'
-        this.needEscape = false
+        this.prevTagName = prevTagName
+        this.nextTagName = nextTagName
         this.isFirstTag = isFirstTag
-        this.tabSpace = tabSpace
+        this.calcLeading = calcLeading
+        this.leadingSpace = leadingSpace
         this.layer = layer
-        this.leadingSpace=this.tabSpace.repeat(this.layer-1)
+        this.noWrap=noWrap
+        this.match=match
+        this.intendSpace=intendSpace
+        this.language=language
+        this.count=count
+        this.tdNum=tdNum
+
+        this.keepFormat=keepFormat || parentTag==='code' || parentTag==='pre'
         if (!this.__detectStr__(str, this.tagName)) {
+            this.attrs={}
+            this.content=''
             return
         }
         let {attr, content} = this.__fetchTagAttrAndContent__(str)
@@ -93,6 +114,19 @@ class Tag {
         }
     }
 
+    __onlyLeadingSpace__(str){
+        str=str.trim()
+        for(let i=0;i<str.length;i++){
+            if(str[i]!==SINGLE)return false
+        }
+        return true
+    }
+
+
+    __isEmpty__(str){
+        if(this.keepFormat)return false
+        return str==='' || (this.calcLeading && this.__onlyLeadingSpace__(str))
+    }
 
     // 在步骤开始前，一般只需返回空字符串
     beforeParse() {
@@ -100,26 +134,15 @@ class Tag {
     }
 
     // 存在tagName时，解析步骤
-    parseValidSubTag(subTagStr, subTagName) {
+    parseValidSubTag(subTagStr, subTagName,options) {
         let SubTagClass = findTagClass(subTagName)
-        let subTag = new SubTagClass(subTagStr, subTagName, {
-            parentTag: this.tagName,
-            strKeepFormat: this.strKeepFormat
-        })
+        let subTag = new SubTagClass(subTagStr, subTagName, options)
         return subTag.exec()
     }
 
     // 不存在tagName时，解析步骤
     parseOnlyString(subTagStr, subTagName,options) {
-        let rawString = new RawString(subTagStr, subTagName, {
-            parentTag: this.tagName,
-            hasNext:options.hasNext,
-            strKeepFormat: this.strKeepFormat || options.strKeepFormat,
-            nextTagName:options.nextTagName,
-            prevTagName:options.prevTagName,
-            hasPrev:options.hasPrev,
-            layer:options.layer || 1,
-        })
+        let rawString = new RawString(subTagStr, subTagName, options)
         return rawString.exec()
     }
 
@@ -131,17 +154,13 @@ class Tag {
 
     // 去除不必要的空行
     slim(content) {
-        if(this.strKeepFormat)return content
-        // console.log(content,this.layer)
-        // if(this.layer>1){
-        //     return content.replace(/^\n+/g,'').trimRight()
-        // }
+        if(this.keepFormat)return content
         return content.trim()
-        // return content.replace(/^ +/g,'').replace(/ +$/g,'')
     }
 
     // 去除不必要的空行后，但在合并必要的空行前
     beforeMergeSpace(content) {
+
         return content
     }
 
@@ -163,26 +182,46 @@ class Tag {
         let prevTagName=null
         while (nextTagStr!== '') {
             let [afterNextTagName,afterNextTagStr]=getNxtValidTag()
-            if (nextTagName != null) {
-                content += this.parseValidSubTag(nextTagStr, nextTagName)
-            } else {
-                content += this.parseOnlyString(nextTagStr, nextTagName, {
-                    nextTagName:afterNextTagName,
-                    prevTagName,
-                    strKeepFormat:this.strKeepFormat,
-                    layer:this.layer + 1
-                })
+            let options={
+                parentTag:this.tagName,
+                nextTagName:afterNextTagName,
+                prevTagName:prevTagName,
+                leadingSpace:this.leadingSpace,
+                layer:this.layer,
+                keepFormat:this.keepFormat,
             }
-            prevTagName=nextTagName
+            let nextStr
+            if (nextTagName != null) {
+                nextStr = this.parseValidSubTag(nextTagStr, nextTagName,options)
+            } else {
+                nextStr = this.parseOnlyString(nextTagStr, nextTagName, options)
+            }
+            let _currentTagName=nextTagName
             nextTagName=afterNextTagName
             nextTagStr=afterNextTagStr
+            console.log(this.tagName,JSON.stringify(nextStr))
+            if(!this.keepFormat && _currentTagName == null && this.__isEmpty__(nextStr)){
+                continue
+            }
+            prevTagName=_currentTagName
+            this.isFirstTag=false
+            content+=nextStr
         }
         // console.log(content)
         content = this.afterParsed(content)
         content = this.slim(content)
-        if(content.trim()==='')return ''
+        if(!this.keepFormat && this.__isEmpty__(content))return ''
         content = this.beforeMergeSpace(content)
+        // 当<img>后面跟随<p>情况，需要p多空一行
+        if(needIndependentLine(this.tagName)
+            && !!this.prevTagName
+            && !content.startsWith('\n')
+            && !needIndependentLine(this.prevTagName)
+        ){
+            prevGap='\n\n'
+        }
         content = prevGap + content + endGap
+        if(this.noWrap) content=content.replace(/\s+/g,' ')
         content = this.afterMergeSpace(content)
         content = this.beforeReturn(content)
         return content

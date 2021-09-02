@@ -1,9 +1,8 @@
 const SelfCloseTag =require('../SelfCloseTag')
 
 class Input extends SelfCloseTag{
-  constructor(str,tagName='input',{parentTag=''}={}){
-    super(str,tagName)
-    this.parentTag=parentTag
+  constructor(str,tagName='input',options){
+    super(str,tagName,options)
   }
 
 

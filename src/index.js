@@ -5,7 +5,8 @@ const config =require('./config')
 function html2md(str,options,force=false){
   config.set(options,force)
   str=clearComment(str)
-  str=str.replace(/(\s*\r\n\s*)/g,'').replace(/&nbsp;/g,"")
+  str=str.trim()
+  str=str.replace(/(\r\n)/g,'').replace(/&nbsp;/g,"")
   let getNxtValidTag=findValidTag(str)
   let res=''
   let [tagName,tagStr]=getNxtValidTag()
@@ -36,9 +37,10 @@ function html2md(str,options,force=false){
 
 function beforeReturn(str){
   // console.log('hhh'+str,'~~~~~')
-  str=str.replace(/^\s/,'').replace(/^(\s?\n\s*)+/,'')
+  str=str.replace(/^\n+/,'')
   // console.log('hhh'+str)
-  str=str.replace(/(\n+\s*)+$/,'\n')
+  str=str.replace(/\s+$/,'')
+  str=str.replace(/☈/g,' ')
   return str
 }
 

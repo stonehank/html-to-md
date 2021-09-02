@@ -1,8 +1,8 @@
 const SelfCloseTag =require('../SelfCloseTag')
 
 class Img extends SelfCloseTag{
-  constructor(str,tagName='img'){
-    super(str,tagName)
+  constructor(str,tagName='img',options){
+    super(str,tagName,options)
   }
 
 

@@ -1,8 +1,9 @@
 const Tag =require('../Tag')
 
 class Strong extends Tag{
-  constructor(str,tagName='strong'){
-    super(str,tagName)
+  constructor(str,tagName='strong',options){
+    super(str,tagName,options)
+    this.layer=1
   }
 
   beforeMergeSpace(content){

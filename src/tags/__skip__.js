@@ -9,11 +9,10 @@ const {needIndependentLine,getRealTagName} =require('../utils')
 * */
 
 class __Skip__ extends Tag{
-  constructor(str,tagName='__skip__',{parentTag=''}={}){
-    super(str,tagName,{parentTag:parentTag})
-    this.tagName=tagName
-    this.parentTag=parentTag
+  constructor(str,tagName='__skip__',options){
+    super(str,tagName,options)
     this.noNeedWrap=['td','th']
+    this.tagName=tagName
   }
 
   // afterSlim(str){
@@ -24,7 +23,6 @@ class __Skip__ extends Tag{
   exec(){
     let need=needIndependentLine(getRealTagName(this.tagName)) && !this.noNeedWrap.includes(this.parentTag)
     let pre=need ? '\n' : '', aft=need ? '\n' : ''
-    console.log(this.tagName,JSON.stringify(pre),JSON.stringify(aft),this.rawStr)
     return super.exec(pre,aft)
   }
 }

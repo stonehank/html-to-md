@@ -1,8 +1,8 @@
 const Em =require('./em')
 
 class I extends Em{
-  constructor(str,tagName='i'){
-    super(str,tagName)
+  constructor(str,tagName='i',options){
+    super(str,tagName,options)
   }
 
   exec(prevGap,endGap){

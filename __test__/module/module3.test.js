@@ -45,7 +45,7 @@ describe('test codes',()=>{
       '  if(pq.length===1)return pq[0]\n' +
       '  return 0\n' +
       '};\n' +
-      '```\n')
+      '```')
   })
 
   it('test-2',()=>{
@@ -91,7 +91,7 @@ describe('test codes',()=>{
       '  }\n' +
       '  return finalAns\n' +
       '};\n' +
-      '```\n')
+      '```')
   })
 
 })

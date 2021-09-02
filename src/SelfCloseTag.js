@@ -1,21 +1,26 @@
 const { parseAttrs} = require('./utils')
-const {TAB_SPACE} = require('./utils/CONSTANT')
 
 class SelfCloseTag {
   constructor(str,tagName,{
-    tabSpace = TAB_SPACE,
     parentTag = '',
+    leadingSpace='',
     layer=1,
-    isFirstTag=false
+    isFirstTag=false,
+    prevTagName='',
+    nextTagName='',
+    match=null,
+    intendSpace='',
   }={}){
     this.tagName = tagName
     this.rawStr = str
     this.parentTag = parentTag
     this.isFirstTag = isFirstTag
-    this.tabSpace = tabSpace
+    this.prevTagName = prevTagName
+    this.nextTagName = nextTagName
+    this.leadingSpace = leadingSpace
     this.layer = layer
-    this.leadingSpace=this.tabSpace.repeat(this.layer-1)
     if (!this.__detectStr__(str, this.tagName)) {
+      this.attrs={}
       return
     }
     let {attr} = this.__fetchTagAttr__(str)
@@ -73,8 +78,8 @@ class SelfCloseTag {
 
 
   // 在合并必要的空行前
-  beforeMergeSpace(str) {
-    return str
+  beforeMergeSpace(content) {
+    return content
   }
 
   // 合并必要的空行后
@@ -83,8 +88,8 @@ class SelfCloseTag {
   }
 
   // 最终返回前
-  beforeReturn(str) {
-    return str
+  beforeReturn(content) {
+    return content
   }
 
   exec(prevGap = '', endGap = '') {

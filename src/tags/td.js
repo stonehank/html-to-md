@@ -3,8 +3,8 @@ const Th =require('./th')
 
 
 class Td extends Th{
-  constructor(str,tagName='td'){
-    super(str,tagName)
+  constructor(str,tagName='td',options){
+    super(str,tagName,options)
   }
 
   parseValidSubTag(subTagStr, subTagName) {

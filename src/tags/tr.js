@@ -1,12 +1,12 @@
 const Tag =require('../Tag')
 const __Ignore__=require('./__ignore__')
-const {findValidTag,findTagClass}=require('../utils')
+const {findTagClass}=require('../utils')
 const {aliasTags}=require('../config').get()
 
 
 class Tr extends Tag{
-  constructor(str,tagName='tr'){
-    super(str,tagName)
+  constructor(str,tagName='tr',options){
+    super(str,tagName,options)
   }
 
   beforeMergeSpace(content){

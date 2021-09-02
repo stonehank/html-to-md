@@ -48,10 +48,10 @@ options:
 
 |名称|数据类型|默认值|说明|
 |:---:|:---:|:---:|:---:|
-|skipTags|Array|`['div','html','body','dl','dd','dt']`|需要忽略的标签名|
+|skipTags|Array|`['div','html','body','nav','section','footer','main','aside']`|需要忽略的标签名|
 |emptyTags|Array|`[]`|不仅忽略它本身，它内部所有标签名全部忽略|
-|ignoreTags|Array|`['','style','br','head','!doctype','form']`|忽视标签及其内部所有内容|
-|aliasTags|Object|`{figure :'div', figcaption:'p'}`|为标签定义一个别名(通常作用于一些不常用标签)|
+|ignoreTags|Array|`['','style','head','!doctype','form','svg','noscript','script']`|忽视标签及其内部所有内容|
+|aliasTags|Object|`{figure :'p', figcaption:'p', dl:'p', dd:'p', dt:'p',}`|为标签定义一个别名(通常作用于一些不常用标签)|
 
 
 > 优先权：skipTags > emptyTags > ignoreTags > aliasTags

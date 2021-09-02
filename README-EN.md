@@ -35,10 +35,11 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 
 |name|data type|default|explain|
 |:---:|:---:|:---:|:---:|
-|skipTags|Array|[]|Declare which tags need to skip|
-|emptyTags|Array|[]|Not only skip itself,but also skip all the tas inside it|
-|ignoreTags|Array|`['','style','br','head','!doctype']`|Ignore all content inside the tag|
-|aliasTags|Object|`{figure :'div', figcaption:'p'}`|Define another tag name for some tags|
+|skipTags|Array|`['div','html','body','nav','section','footer','main','aside']`|Declare which tags need to skip|
+|emptyTags|Array|`[]`|Not only skip itself,but also skip all the tas inside it|
+|ignoreTags|Array|`['','style','head','!doctype','form','svg','noscript','script']`|Ignore all content inside the tag|
+|aliasTags|Object|`{figure :'p', figcaption:'p', dl:'p', dd:'p', dt:'p',}`|Define another tag name for some tags|
+
 
 > Priority：skipTags > emptyTags > ignoreTags > aliasTags
 

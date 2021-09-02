@@ -9,14 +9,15 @@ const SelfCloseTag =require('../SelfCloseTag')
 class __Empty__ extends Tag{
   constructor(str,tagName='__empty__',options){
     super(str,tagName,options)
-    this.tagName=tagName
   }
   slim(content){
     return content
   }
 
-  parseValidSubTag(subTagStr, subTagName){
-    return new __Empty__(subTagStr,subTagName).exec()
+  parseValidSubTag(subTagStr, subTagName,options){
+    return new __Empty__(subTagStr,subTagName,{
+      ...options
+    }).exec()
   }
 
   parseOnlyString(subTagStr, subTagName,options){

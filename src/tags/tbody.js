@@ -22,9 +22,8 @@ function getTdAlign(str,tdNum){
 }
 
 class Tbody extends Tag{
-  constructor(str,tagName='tbody',{tdNum=0}={}){
-    super(str,tagName)
-    this.tdNum=tdNum
+  constructor(str,tagName='tbody',options){
+    super(str,tagName,options)
   }
 
   beforeMergeSpace(content){

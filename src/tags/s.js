@@ -2,8 +2,8 @@ const Del =require('./del')
 
 
 class S extends Del{
-  constructor(str,tagName='s'){
-    super(str,tagName)
+  constructor(str,tagName='s',options){
+    super(str,tagName,options)
   }
 
   exec(prevGap,endGap){

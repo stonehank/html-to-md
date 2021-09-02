@@ -2,8 +2,8 @@ const Tag =require('../Tag')
 
 
 class Th extends Tag{
-  constructor(str,tagName='th'){
-    super(str,tagName)
+  constructor(str,tagName='th',options){
+    super(str,tagName,options)
     this.tagName=tagName
   }
 

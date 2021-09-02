@@ -48,11 +48,14 @@ function assign(obj,newObj,key){
 }
 
 let defaultOptions={
-  ignoreTags:['','style','br','head','!doctype','form','svg','noscript','script'],
-  skipTags:['div','html','body','dl','dd','dt','nav','section','footer','main','aside'],
+  ignoreTags:['','style','head','!doctype','form','svg','noscript','script'],
+  skipTags:['div','html','body','nav','section','footer','main','aside'],
   emptyTags:[],
   aliasTags:{
-    figure:'div',
+    figure:'p',
+    dl:'p',
+    dd:'p',
+    dt:'p',
     figcaption:'p'
   }
 }

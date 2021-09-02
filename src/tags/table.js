@@ -13,12 +13,11 @@ function countTdNum(str){
 }
 
 class Table extends Tag{
-  constructor(str,tagName='table',{parentTag=''}={}){
+  constructor(str,tagName='table',options){
     super(str,tagName)
     this.exist_thead=false
     this.exist_tbody=false
     this.empty_tbody=true
-    this.parentTag=parentTag
     this.tdNum= countTdNum(this.content)
   }
 

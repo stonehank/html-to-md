@@ -9,7 +9,7 @@ describe('test special', () => {
 
   it('test-2', () => {
     let str = "<!DOCTYPE><html><body><i>abc<b>xxx</b></i></body></html>"
-    expect(html2Md(str)).toBe("*abc**xxx***\n")
+    expect(html2Md(str)).toBe("*abc**xxx***")
   })
 
   it('test-3', () => {
@@ -23,7 +23,7 @@ describe('test special', () => {
       '\n' +
       ' - bar\n' +
       ' - baz\n' +
-      '```\n')
+      '```')
   })
 
 
@@ -59,41 +59,41 @@ describe('test special', () => {
       '</code></pre>\n' +
       '</li>\n' +
       '</ul>'
-    expect(html2Md(str)).toBe("*   **Since version 1.4.0, showdown supports the markdown=\"1\" attribute**, but for older versions, this attribute is ignored. This means:\n" +
-        "    \n" +
-        "    ```\n" +
-        "      <div markdown=\"1\">\n" +
-        "           Markdown does *not* work in here.\n" +
-        "      </div>\n" +
-        "    ```\n" +
+    expect(html2Md(str)).toBe("* **Since version 1.4.0, showdown supports the markdown=\"1\" attribute**, but for older versions, this attribute is ignored. This means:\n" +
         "\n" +
-        "*   You can only nest square brackets in link titles to a depth of two levels:\n" +
-        "    \n" +
-        "    ```\n" +
-        "      [[fine]](http://www.github.com/)\n" +
-        "      [[[broken]]](http://www.github.com/)\n" +
-        "    ```\n" +
-        "    \n" +
-        "    If you need more, you can escape them with backslashes.\n" +
+        "  ```\n" +
+        "    <div markdown=\"1\">\n" +
+        "         Markdown does *not* work in here.\n" +
+        "    </div>\n" +
+        "  ```\n" +
         "\n" +
-        "*   A list is **single paragraph** if it has only **1 line-break separating items** and it becomes **multi paragraph if ANY of its items is separated by 2 line-breaks**:\n" +
-        "    \n" +
-        "    ```markdown\n" +
-        "     - foo\n" +
+        "* You can only nest square brackets in link titles to a depth of two levels:\n" +
         "\n" +
-        "     - bar\n" +
-        "     - baz\n" +
-        "    ```\n" +
-        "    \n" +
-        "    becomes\n" +
-        "    \n" +
-        "    ```html\n" +
-        "    <ul>\n" +
-        "      <li><p>foo</p></li>\n" +
-        "      <li><p>bar</p></li>\n" +
-        "      <li><p>baz</p></li>\n" +
-        "    </ul>\n" +
-        "    ```\n")
+        "  ```\n" +
+        "    [[fine]](http://www.github.com/)\n" +
+        "    [[[broken]]](http://www.github.com/)\n" +
+        "  ```\n" +
+        "\n" +
+        "  If you need more, you can escape them with backslashes.\n" +
+        "\n" +
+        "* A list is **single paragraph** if it has only **1 line-break separating items** and it becomes **multi paragraph if ANY of its items is separated by 2 line-breaks**:\n" +
+        "\n" +
+        "  ```markdown\n" +
+        "   - foo\n" +
+        "\n" +
+        "   - bar\n" +
+        "   - baz\n" +
+        "  ```\n" +
+        "\n" +
+        "  becomes\n" +
+        "\n" +
+        "  ```html\n" +
+        "  <ul>\n" +
+        "    <li><p>foo</p></li>\n" +
+        "    <li><p>bar</p></li>\n" +
+        "    <li><p>baz</p></li>\n" +
+        "  </ul>\n" +
+        "  ```")
   })
 
 
@@ -110,17 +110,17 @@ describe('test special', () => {
       "</code></pre>\n" +
       "</li>\n" +
       "</ul>"
-    expect(html2Md(str)).toBe("*   rawgit CDN\n" +
-        "    \n" +
-        "    ```\n" +
-        "      https://cdn.rawgit.com/showdownjs/showdown/<version tag>/dist/showdown.min.js\n" +
-        "    ```\n" +
+    expect(html2Md(str)).toBe("* rawgit CDN\n" +
         "\n" +
-        "*   cdnjs\n" +
-        "    \n" +
-        "    ```\n" +
-        "      https://cdnjs.cloudflare.com/ajax/libs/showdown/<version tag>/showdown.min.js\n" +
-        "    ```\n")
+        "  ```\n" +
+        "    https://cdn.rawgit.com/showdownjs/showdown/<version tag>/dist/showdown.min.js\n" +
+        "  ```\n" +
+        "\n" +
+        "* cdnjs\n" +
+        "\n" +
+        "  ```\n" +
+        "    https://cdnjs.cloudflare.com/ajax/libs/showdown/<version tag>/showdown.min.js\n" +
+        "  ```")
   })
 
   it(" ``` inside <code></code>, should be nest", () => {
@@ -157,18 +157,18 @@ describe('test special', () => {
       '    x = 0\n' +
       '    x = 2 + 2\n' +
       '    what is x\n' +
-      '    ```\n')
+      '    ```')
   })
 
   it('multi nest p', () => {
-    expect(html2Md('<ul>\n<li>\n<p>p-1</p>\n<p>p-2</p>\n</li>\n<li>\n<p>p-3</p>\n<p>p-4</p>\n</li>\n</ul>')).toBe(
-      '*   p-1\n' +
-      '    \n' +
-      '    p-2\n' +
-      '\n' +
-      '*   p-3\n' +
-      '    \n' +
-      '    p-4\n')
+    expect(html2Md('<ul>\n<li>\n<p>p-1</p>\n<p>p-2</p>\n</li>\n<li>\n<p>p-3</p>\n<p>p-4</p>\n</li>\n</ul>'))
+    .toBe("* p-1\n" +
+        "\n" +
+        "  p-2\n" +
+        "\n" +
+        "* p-3\n" +
+        "\n" +
+        "  p-4")
   })
 
   it(" ``` in complicate list", () => {
@@ -187,15 +187,14 @@ describe('test special', () => {
       '</li>\n' +
       '<li>c</li>\n' +
       '</ul>'))
-      .toBe("*   a\n" +
-          "*   b\n" +
+      .toBe("* a\n" +
+          "* b\n" +
+          "  * code\n" +
           "\n" +
-          "    *   code\n" +
-          "        \n" +
-          "            ```javascript\n" +
-          "            function\n" +
-          "            ```\n" +
-          "*   c\n")
+          "        ```javascript\n" +
+          "        function\n" +
+          "        ```\n" +
+          "* c")
   })
 
   it(" ``` in blockquote", () => {
@@ -217,7 +216,7 @@ describe('test special', () => {
           ">>> `fsdf`\n" +
           ">>>\n" +
           ">>>     ```sdfsdfsdf```\n" +
-          ">>>     this is function\n")
+          ">>>     this is function")
   })
 
   it(" ``` in list without <p>", () => {
@@ -228,9 +227,9 @@ describe('test special', () => {
       '```</code></pre>\n' +
       '</li>\n' +
       '</ul>\n'))
-      .toBe("*   ```\n" +
-          "    var a=5\n" +
-          "    ```\n")
+      .toBe("*     ```\n" +
+          "      var a=5\n" +
+          "      ```")
   })
 
   it(" multi nest code", () => {
@@ -248,11 +247,11 @@ describe('test special', () => {
       '</ul>\n' +
       '</li>\n' +
       '</ul>'))
-      .toBe("*   c\n" +
-          "    *   d\n" +
-          "        *   ```\n" +
-          "            abc\n" +
-          "            ```\n")
+      .toBe("* c\n" +
+          "  * d\n" +
+          "    * ```\n" +
+          "      abc\n" +
+          "      ```")
   })
 
   it(" multi nest code2", () => {
@@ -271,11 +270,14 @@ describe('test special', () => {
       '</ul>\n' +
       '</li>\n' +
       '</ul>'))
-      .toBe("*   c\n" +
-          "    *   d\n" +
-          "        *   ```\n" +
+      .toBe("* c\n" +
+          "  * d\n" +
+          "    *     ```\n" +
           "\n" +
-          "         abc\n")
+          "      abc\n" +
+          "      ```\n" +
+          "\n" +
+          "      ```")
   })
 
 
@@ -290,11 +292,12 @@ describe('test special', () => {
       "</li>\n" +
       "</ol>\n" +
       "</li>\n" +
-      "</ol>\n")).toBe("1.  sdff\n" +
-        "    1.  sdfsf\n" +
-        "    2.  ---\n" +
-        "        \n" +
-        "        ---\n")
+      "</ol>\n")).toBe(
+        "1. sdff\n" +
+        "   1. sdfsf\n" +
+        "   2. ---\n" +
+        "\n" +
+        "      ---")
   })
   it('slim hr',()=>{
     expect(html2Md('<hr>\n\n\n\n\n\n\n' +
@@ -303,7 +306,7 @@ describe('test special', () => {
       '\n' +
       '---\n' +
       '\n' +
-      '---\n')
+      '---')
   })
 })
 

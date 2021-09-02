@@ -72,7 +72,11 @@ describe('test <pre></pre> tag',()=>{
   })
 
   it('default language is javascript',()=>{
-    let pre=new Pre('<pre><code><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>) </span>{\n' +
+    let pre=new Pre('<pre><code>' +
+        '<span class="hljs-function">' +
+          '<span class="hljs-keyword">function</span> ' +
+          '<span class="hljs-title">abc</span>(<span class="hljs-params"></span>)' +
+        ' </span>{\n' +
       '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
       '}\n' +
       '</code></pre>')
@@ -148,7 +152,16 @@ function abc(){
   })
 
   it('pre nest pre',()=>{
-    let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
+    let pre=new Pre('<pre>' +
+        '<code class="language-js">' +
+        '<pre class="hljs">' +
+        '<code>' +
+        '<span class="hljs-keyword">var</span>' +
+        ' a=<span class="hljs-number">5</span>' +
+        '</code>' +
+        '</pre>' +
+        '</code>' +
+        '</pre>')
     expect(pre.exec()).toBe('\n' +
       '```javascript\n' +
       'var a=5\n' +
@@ -167,12 +180,14 @@ function abc(){
 
   it('multi nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><pre><code class="language-js"><pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
-    expect(pre.exec()).toBe('\n' +
-      '```javascript\n' +
-      'var a=5\n' +
-      'var a=5\n' +
-      'var a=5\n' +
-      '```\n')
+    expect(pre.exec()).toBe("\n" +
+        "```javascript\n" +
+        "var a=5\n" +
+        "\n" +
+        "var a=5\n" +
+        "\n" +
+        "var a=5\n" +
+        "```\n")
   })
 
   it('tag inside pre should be empty',()=>{
@@ -183,30 +198,25 @@ function abc(){
       '```\n')
   })
 
-  it('ignore extra tags if exist <code>',()=>{
+  it('if exist <code>, render other tags and keep format',()=>{
     let pre=new Pre('<pre><code>123</code><strong><i>this is normal text</i></strong></pre>')
     expect(pre.exec()).toBe('\n' +
       '```\n' +
-      '123\n' +
+      '123this is normal text\n' +
       '```\n')
   })
 
   it('pre intend 1',()=>{
     let str='<pre><code>``` ` ```sdf</code></pre>'
-    expect(html2Md(str)).toBe('    ``` ` ```sdf\n')
+    expect(html2Md(str)).toBe('    ``` ` ```sdf')
   })
   it('pre intend 2',()=>{
     let str='<pre><code>``` ` ```sdf\n' +
         '````</code></pre>'
-    expect(html2Md(str)).toBe('    ``` ` ```sdf\n' +
-        '    ````\n')
+    expect(html2Md(str)).toBe("    ``` ` ```sdf\n" +
+        "    ````")
   })
-  it('pre intend 3',()=>{
-    let str='<pre><code>```` ` ```sdf\n' +
-        '```</code></pre>'
-    expect(html2Md(str)).toBe('    ```` ` ```sdf\n' +
-        '    ```\n')
-  })
+
 
   it('&lt; in code, should render to text',()=>{
     let pre=new Pre('<pre><code>&lt;span&gt;\n  5\n&lt;/span&gt;\n</code></pre>')
@@ -224,5 +234,14 @@ function abc(){
         '```\n' +
         '5\n' +
         '```\n')
+  })
+
+  it('no wrap in code',()=>{
+    let str=html2Md('<code><span class="hljs-keyword">var</span><br>\n' +
+        '<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">abc</span>(<span class="hljs-params"></span>)</span>{\n' +
+        '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
+        '}\n' +
+        '</code>')
+    expect(str).toBe("`var function abc(){ let x=5 } `")
   })
 })

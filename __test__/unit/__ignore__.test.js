@@ -10,7 +10,7 @@ describe('直接忽视整个tag',()=>{
 
 
   it('忽视 i 及其内部abc ',()=>{
-    expect(html2Md("<b><i>abc</i></b>",{ignoreTags:['i']})).toBe('****')
+    expect(html2Md("<b><i>abc</i></b>",{ignoreTags:['i']})).toBe('')
   })
 
   it('忽视内部所有tag',()=>{

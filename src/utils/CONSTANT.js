@@ -1,8 +1,10 @@
-const TAB_SPACE='    '
-const CODE_INDENT_SPACE='    '
+const SINGLE='☈'
+const DOUBLE='☈☈'
+const TRIPLE='☈☈☈'
 
 
 module.exports={
-    TAB_SPACE,
-    CODE_INDENT_SPACE
+    SINGLE,
+    DOUBLE,
+    TRIPLE,
 }

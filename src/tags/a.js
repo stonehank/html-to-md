@@ -1,8 +1,8 @@
 const Tag =require('../Tag')
 
 class A extends Tag{
-  constructor(str,tagName='a'){
-    super(str,tagName)
+  constructor(str,tagName='a',options){
+    super(str,tagName,options)
   }
 
   beforeMergeSpace(content){

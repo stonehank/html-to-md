@@ -4,10 +4,8 @@ const {findTagClass}=require('../utils')
 const {aliasTags}=require('../config').get()
 
 class Ol extends Tag{
-  constructor(str,tagName='ol',{layer=1,parentTag=''}={}){
-    super(str,tagName)
-    this.layer=layer
-    this.parentTag=parentTag
+  constructor(str,tagName='ol',options){
+    super(str,tagName,options)
     this.count=this.attrs.start || 1
   }
 
@@ -17,9 +15,12 @@ class Ol extends Tag{
       console.error('Should not have tags except <li> inside ol, current tag is '+subTagName+', current tagStr is'+subTagStr )
       return ''
     }else{
+      let match=this.count+'. '
       let subTag=new SubTagClass(subTagStr,subTagName,{
-        match:this.count+'.  ',
-        layer:this.layer
+        calcLeading:true,
+        leadingSpace:this.leadingSpace,
+        layer:this.layer,
+        match:match,
       })
       this.count++
       return subTag.exec('','\n')
@@ -28,13 +29,6 @@ class Ol extends Tag{
 
   parseOnlyString(subTagStr, subTagName, options) {
     return ''
-  }
-
-  slim(content) {
-    if(this.layer>1){
-      return content
-    }
-    return content.trim()
   }
 
   exec(prevGap='\n',endGap='\n'){

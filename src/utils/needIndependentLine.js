@@ -1,8 +1,11 @@
+const getRealTagName=require('./getRealTagName')
+
 let independentLineTags={
   'html':true,
   'body':true,
   'p':true,
   'div':true,
+  'pre':true,
   'section':true,
   'blockquote':true,
   'aside':true,
@@ -24,7 +27,8 @@ let independentLineTags={
 }
 
 function needIndependentLine(tagName){
-  return !!independentLineTags[tagName]
+  let realName=getRealTagName(tagName)
+  return !!independentLineTags[realName]
 }
 
 module.exports=needIndependentLine

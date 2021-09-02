@@ -1,21 +1,23 @@
-import Ol from '../../src/tags/ol'
-const {tagSpaceNum}=require('../options')
+const html2Md=require('../../src/index')
+// const {OL_SPACE}=require('../options')
+const OL_SPACE=3
+const UL_SPACE=2
 
 describe("test <ol></ol> tag",()=>{
 
   it('order list',()=>{
-    let ol=new Ol('<ol>\n' +
+    let ol=html2Md('<ol>\n' +
       '<li>one</li>\n' +
       '<li>two</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.exec()).toBe('\n1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
-      '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
-      '3.'+' '.repeat(tagSpaceNum-2)+'three\n')
+    expect(ol).toBe('1.'+' '.repeat(OL_SPACE-2)+'one\n' +
+      '2.'+' '.repeat(OL_SPACE-2)+'two\n' +
+      '3.'+' '.repeat(OL_SPACE-2)+'three')
   })
 
   it('nest order list',()=>{
-    let ol=new Ol('<ol>\n' +
+    let ol=html2Md('<ol>\n' +
       '<li>one</li>\n' +
       '<li>two\n' +
       '<ol>\n' +
@@ -26,18 +28,18 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.exec()).toBe('\n' +
-      '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
-      '2.'+ ' '.repeat(tagSpaceNum-2)+'two\n' +
-      ' '.repeat(tagSpaceNum)+ '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
-      ' '.repeat(tagSpaceNum)+ '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
-      ' '.repeat(tagSpaceNum)+ '3.'+' '.repeat(tagSpaceNum-2)+'three\n' +
-      '3.'+ ' '.repeat(tagSpaceNum-2)+ 'three\n')
+    expect(ol).toBe(
+      '1.'+' '.repeat(OL_SPACE-2)+'one\n' +
+      '2.'+ ' '.repeat(OL_SPACE-2)+'two\n' +
+      ' '.repeat(OL_SPACE)+ '1.'+' '.repeat(OL_SPACE-2)+'one\n' +
+      ' '.repeat(OL_SPACE)+ '2.'+' '.repeat(OL_SPACE-2)+'two\n' +
+      ' '.repeat(OL_SPACE)+ '3.'+' '.repeat(OL_SPACE-2)+'three\n' +
+      '3.'+ ' '.repeat(OL_SPACE-2)+ 'three')
   })
 
 
   it('nest ul',()=>{
-    let ol=new Ol('<ol>\n' +
+    let ol=html2Md('<ol>\n' +
       '<li>one</li>\n' +
       '<li>two\n' +
       '<ul>\n' +
@@ -48,17 +50,17 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.exec()).toBe('\n' +
-      '1.'+' '.repeat(tagSpaceNum-2)+'one\n' +
-      '2.'+' '.repeat(tagSpaceNum-2)+'two\n' +
-      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-1\n' +
-      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-2\n' +
-      ' '.repeat(tagSpaceNum)+ '* '+' '.repeat(tagSpaceNum-2)+'unorder-3\n' +
-      '3.'+' '.repeat(tagSpaceNum-2)+'three\n')
+    expect(ol).toBe(
+      '1.'+' '.repeat(OL_SPACE-2)+'one\n' +
+      '2.'+' '.repeat(OL_SPACE-2)+'two\n' +
+      ' '.repeat(OL_SPACE)+ '* '+' '.repeat(UL_SPACE-2)+'unorder-1\n' +
+      ' '.repeat(OL_SPACE)+ '* '+' '.repeat(UL_SPACE-2)+'unorder-2\n' +
+      ' '.repeat(OL_SPACE)+ '* '+' '.repeat(UL_SPACE-2)+'unorder-3\n' +
+      '3.'+' '.repeat(OL_SPACE-2)+'three')
   })
 
   it('complicate nest',()=>{
-    let ol=new Ol('<ol>\n' +
+    let ol=html2Md('<ol>\n' +
       '<li><strong>STRONG</strong></li>\n' +
       '<li><a href="https://github.com/-it/markdown-it-sub">ATag</a>\n' +
       '<ul>\n' +
@@ -96,29 +98,30 @@ describe("test <ol></ol> tag",()=>{
       '</li>\n' +
       '<li>three</li>\n' +
       '</ol>')
-    expect(ol.exec()).toBe('\n' +
-      '1.'+' '.repeat(tagSpaceNum-2)+ '**STRONG**\n' +
-      '2.'+' '.repeat(tagSpaceNum-2)+ '[ATag](https://github.com/-it/markdown-it-sub)\n' +
-      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-1\n' +
-      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-2\n' +
-      ' '.repeat(tagSpaceNum*2)+'1.'+' '.repeat(tagSpaceNum-2)+ 'one\n' +
-      ' '.repeat(tagSpaceNum*2)+'2.'+' '.repeat(tagSpaceNum-2)+ 'two\n' +
-      ' '.repeat(tagSpaceNum*3)+'> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-1\n' +
-      ' '.repeat(tagSpaceNum*3)+'>\n' +
-      ' '.repeat(tagSpaceNum*3)+'>> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-2\n' +
-      ' '.repeat(tagSpaceNum*3)+'>>\n' +
-      ' '.repeat(tagSpaceNum*3)+'>>> *'+' '.repeat(tagSpaceNum-1)+ 'bq-nest-3\n' +
-      ' '.repeat(tagSpaceNum)+'*'+' '.repeat(tagSpaceNum-1)+ 'unorder-3\n' +
-      ' '.repeat(tagSpaceNum*2)+'*'+' '.repeat(tagSpaceNum-1)+ 'code\n' +
-      ' '.repeat(tagSpaceNum*3)+'```javascript\n' +
-      ' '.repeat(tagSpaceNum*3)+'var a=5\n' +
-      ' '.repeat(tagSpaceNum*3)+'```\n' +
-      '3.'+' '.repeat(tagSpaceNum-2)+ 'three\n')
+    expect(ol).toBe(
+      '1.'+' '.repeat(OL_SPACE-2)+ '**STRONG**\n' +
+      '2.'+' '.repeat(OL_SPACE-2)+ '[ATag](https://github.com/-it/markdown-it-sub)\n' +
+      '\n'+
+      ' '.repeat(OL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'unorder-1\n' +
+      ' '.repeat(OL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'unorder-2\n' +
+      ' '.repeat(OL_SPACE+UL_SPACE)+'1.'+' '.repeat(OL_SPACE-2)+ 'one\n' +
+      ' '.repeat(OL_SPACE+UL_SPACE)+'2.'+' '.repeat(OL_SPACE-2)+ 'two\n' +
+      ' '.repeat(OL_SPACE*2+UL_SPACE)+'> *'+' '.repeat(UL_SPACE-1)+ 'bq-nest-1\n' +
+      ' '.repeat(OL_SPACE*2+UL_SPACE)+'>\n' +
+      ' '.repeat(OL_SPACE*2+UL_SPACE)+'>> *'+' '.repeat(UL_SPACE-1)+ 'bq-nest-2\n' +
+      ' '.repeat(OL_SPACE*2+UL_SPACE)+'>>\n' +
+      ' '.repeat(OL_SPACE*2+UL_SPACE)+'>>> *'+' '.repeat(UL_SPACE-1)+ 'bq-nest-3\n' +
+      ' '.repeat(OL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'unorder-3\n' +
+      ' '.repeat(OL_SPACE+UL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'code\n' +
+      ' '.repeat(OL_SPACE+2*UL_SPACE)+'```javascript\n' +
+      ' '.repeat(OL_SPACE+2*UL_SPACE)+'var a=5\n' +
+      ' '.repeat(OL_SPACE+2*UL_SPACE)+'```\n' +
+      '3.'+' '.repeat(OL_SPACE-2)+ 'three')
   })
 
 
   it("li nest p",()=>{
-    let ol=new Ol("<ol>\n" +
+    let ol=html2Md("<ol>\n" +
       "<li>\n" +
       "<p>Lorem ipsum dolor sit amet</p>\n" +
       "</li>\n" +
@@ -136,16 +139,16 @@ describe("test <ol></ol> tag",()=>{
       "</li>\n" +
       "</ol>")
 
-    expect(ol.exec()).toBe('\n' +
-      '1.'+' '.repeat(tagSpaceNum-2)+ 'Lorem ipsum dolor sit amet\n' +
+    expect(ol).toBe(
+      '1.'+' '.repeat(OL_SPACE-2)+ 'Lorem ipsum dolor sit amet\n' +
       '\n' +
-      '2.'+' '.repeat(tagSpaceNum-2)+ 'Consectetur adipiscing elit\n' +
+      '2.'+' '.repeat(OL_SPACE-2)+ 'Consectetur adipiscing elit\n' +
       '\n' +
-      '3.'+' '.repeat(tagSpaceNum-2)+ 'Integer molestie lorem at massa\n' +
+      '3.'+' '.repeat(OL_SPACE-2)+ 'Integer molestie lorem at massa\n' +
       '\n' +
-      '4.'+' '.repeat(tagSpaceNum-2)+ 'You can use sequential numbers…\n' +
+      '4.'+' '.repeat(OL_SPACE-2)+ 'You can use sequential numbers…\n' +
       '\n' +
-      '5.'+' '.repeat(tagSpaceNum-2)+ '…or keep all the numbers as `1.`\n')
+      '5.'+' '.repeat(OL_SPACE-2)+ '…or keep all the numbers as `1.`')
   })
 })
 

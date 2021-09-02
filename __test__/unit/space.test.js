@@ -7,7 +7,7 @@ describe('Remove some space',()=>{
   it('The space between tags should be remove',()=>{
     let spaceHtml=new P("<p>       <strong>strong</strong></p>")
     expect(spaceHtml.exec()).toBe("\n" +
-      " **strong**\n")
+      "**strong**\n")
   })
 
   it('The space between tags should be remove 2',()=>{
@@ -24,10 +24,10 @@ describe('Remove some space',()=>{
       "  <h1>APCIterator::__construct</h1>\n" +
       " </div></div></div></div>")
     expect(spaceHtml).toBe(
-      "*  [PHP Manual](index.html)\n" +
-      "*  [APCIterator](class.apciterator.html)\n" +
-      "*  Constructs an APCIterator iterator object\n" +
+      "* [PHP Manual](index.html)\n" +
+      "* [APCIterator](class.apciterator.html)\n" +
+      "* Constructs an APCIterator iterator object\n" +
       "\n" +
-      "# APCIterator::__construct\n")
+      "# APCIterator::\\_\\_construct")
   })
 })

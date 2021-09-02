@@ -1,43 +1,48 @@
 const Tag =require('../Tag')
 const {__Empty__ ,__EmptySelfClose__}=require('./__empty__')
 const {findTagClass,isSelfClosing,getLanguage}=require('../utils')
-const {CODE_INDENT_SPACE} = require('../utils/CONSTANT')
+const {DOUBLE} = require('../utils/CONSTANT')
+
+/**
+ * 在pre内部所有元素，应该转换为 plain text，并入 ``` 内部， 保持格式
+ */
+
 class Pre extends Tag{
-  constructor(str,tagName='pre',{layer=1,language=null,match='```',isFirstTag=false,parentTag=''}={}){
-    super(str,tagName)
-    let hasCodeSymbol=this.content.includes('```')
-    this.layer=layer
-    this.match=hasCodeSymbol ? '' : match
-    this.isFirstTag=isFirstTag
-    this.leadingSpace=this.tabSpace.repeat(this.layer-1)
-    this.indentSpace=hasCodeSymbol ? CODE_INDENT_SPACE : ''
-    this.existCodeTag=false
-    this.parentTag=parentTag
-    this.language = language!=null ? language : getLanguage(str)
+  constructor(str,tagName='pre',options){
+    super(str,tagName, options)
+    this.indentSpace=DOUBLE+DOUBLE
+    this.isIndent=this.content.includes('```')
+    this.match=this.isIndent ? '' : '```'
+    this.language = this.language || getLanguage(str)
+    this.keepFormat=true
   }
 
 
+
+
   beforeMergeSpace(content){
-    let matchLang=this.match==='' ? '' : (this.match+this.language+'\n')
-    let before=matchLang==='' ? '' : (this.isFirstTag ? matchLang : matchLang)
+    // 嵌套时
+    let before=(this.isIndent || this.parentTag==='code') ? '' : (this.match+this.language+'\n')
     let gap=''
     if(!content.endsWith('\n'))gap='\n'
-    let after=this.match==='' ? gap : gap+this.indentSpace+this.match
+    let after=(this.isIndent || this.parentTag==='code') ? ''  : gap  + this.match
     return before + content + after
   }
 
 
   fillPerLine(lineStr){
-    // match==='' 说明是用间隔形成code标签
-    if(this.isFirstTag && this.match===''){
-      return this.indentSpace+lineStr
+    let leadingSpace=''
+    if(this.calcLeading){
+      leadingSpace=this.leadingSpace
     }
-    return this.leadingSpace+this.indentSpace+lineStr
+    if(this.isIndent){
+      return leadingSpace + this.indentSpace+lineStr
+    }
+    return leadingSpace + lineStr
   }
 
 
   afterMergeSpace(content) {
-    console.log(content)
     let split = content.split('\n')
     split = split.map(n => {
       if (n === '') return ''
@@ -46,22 +51,28 @@ class Pre extends Tag{
     return split.join('\n')
   }
 
-  parseValidSubTag(subTagStr, subTagName) {
+  parseValidSubTag(subTagStr, subTagName,options) {
     if(subTagName==='code'){
-      this.existCodeTag=true
       let SubTagClass=findTagClass(subTagName)
-      let subTag=new SubTagClass(subTagStr,subTagName,{match:'',language:this.language,parentTag:'pre'})
+      let subTag=new SubTagClass(subTagStr,subTagName,{
+        ...options,
+        match:'',
+        language:this.language
+      })
       return subTag.exec('','')
-    } else{
-      if(this.existCodeTag)return ''
+    }else{
       let emptyTag
       if(isSelfClosing(subTagName)){
         emptyTag=new __EmptySelfClose__(subTagStr,subTagName)
       } else {
-        emptyTag = new __Empty__(subTagStr, subTagName,{parentTag:'pre',strKeepFormat:true})
+        emptyTag = new __Empty__(subTagStr, subTagName,{
+          ...options,
+          keepFormat:true
+        })
       }
       return emptyTag.exec()
     }
+
   }
 
   parseOnlyString(subTagStr, subTagName, options) {

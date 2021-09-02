@@ -23,9 +23,9 @@ describe('error test', () => {
       '</li>'
 
     expect(html2Md(str)).toBe(
-        '>1. bq-nest-2\n' +
+        '> 1. bq-nest-2\n' +
         '>\n' +
-        '>>1. bq-nest-3\n')
+        '>> 1. bq-nest-3')
   })
 
   it('unvalid tag', () => {
@@ -69,7 +69,7 @@ describe('error test', () => {
         '|---|\n' +
         '|data-1-left|data-1-center|\n' +
         '|data-2-left|data-2-center|\n' +
-        '|data-3-left|data-3-center|\n')
+        '|data-3-left|data-3-center|')
   })
 
   it('Not valid p in Ol',()=>{
@@ -79,7 +79,7 @@ describe('error test', () => {
         '<li>three</li>\n' +
         '</ol>'
     expect(html2Md(str)).toBe('1. one\n' +
-        '2. three\n')
+        '2. three')
   })
 
   it('Not valid tag in Ul',()=>{
@@ -88,8 +88,8 @@ describe('error test', () => {
         '<b>two</b>\n' +
         '<li>three</li>\n' +
         '</ul>'
-    expect(html2Md(str)).toBe('*  one\n' +
-        '*  three\n')
+    expect(html2Md(str)).toBe('* one\n' +
+        '* three')
   })
 })
 
