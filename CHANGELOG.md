@@ -1,3 +1,11 @@
+## 0.5
+
+#### Refactor
+
+* Less space
+* Change some default configs
+
+
 ## 0.4.4
 * Fixed issue #33, use `\s` instead of `' '` in tags attribute detect.
 
