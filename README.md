@@ -46,12 +46,71 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options,force)
 
 options:
 
-|名称|数据类型|默认值|说明|
-|:---:|:---:|:---:|:---:|
-|skipTags|Array|`['div','html','body','nav','section','footer','main','aside']`|需要忽略的标签名|
-|emptyTags|Array|`[]`|不仅忽略它本身，它内部所有标签名全部忽略|
-|ignoreTags|Array|`['','style','head','!doctype','form','svg','noscript','script']`|忽视标签及其内部所有内容|
-|aliasTags|Object|`{figure :'p', figcaption:'p', dl:'p', dd:'p', dt:'p',}`|为标签定义一个别名(通常作用于一些不常用标签)|
+<table>
+<thead>
+<tr>
+<th align="center">名称</th>
+<th align="center">数据类型</th>
+<th align="center">默认值</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">skipTags</td>
+<td align="center">Array</td>
+<td align="left"><pre>
+<code>[
+  'div',
+  'html',
+  'body',
+  'nav',
+  'section',
+  'footer',
+  'main',
+  'aside'
+]</code></pre></td>
+<td align="center">需要忽略的标签名</td>
+</tr>
+<tr>
+<td align="center">emptyTags</td>
+<td align="center">Array</td>
+<td align="center"><code>[]</code></td>
+<td align="center">不仅忽略它本身，它内部所有标签名全部忽略</td>
+</tr>
+<tr>
+<td align="center">ignoreTags</td>
+<td align="center">Array</td>
+<td align="left">
+<pre>
+<code>[
+  '',
+  'style',
+  'head',
+  '!doctype',
+  'form',
+  'svg',
+  'noscript',
+  'script'
+]</code></pre></td>
+<td align="center">忽视标签及其内部所有内容</td>
+</tr>
+<tr>
+<td align="center">aliasTags</td>
+<td align="center">Object</td>
+<td align="left">
+  <pre>
+<code>{
+  figure :'p',
+  figcaption:'p',
+  dl:'p', 
+  dd:'p', 
+  dt:'p'
+}</code></pre></td>
+<td align="center">为标签定义一个别名(通常作用于一些不常用标签)</td>
+</tr>
+</tbody>
+</table>
 
 
 > 优先权：skipTags > emptyTags > ignoreTags > aliasTags
