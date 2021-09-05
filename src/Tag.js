@@ -20,7 +20,7 @@ class Tag {
         intendSpace='',
         language='',
         count=1,
-        tdNum=0,
+        tableColumnCount=0,
     } = {}) {
         this.tagName = tagName
         this.rawStr = str
@@ -36,7 +36,7 @@ class Tag {
         this.intendSpace=intendSpace
         this.language=language
         this.count=count
-        this.tdNum=tdNum
+        this.tableColumnCount=tableColumnCount
 
         this.keepFormat=keepFormat || parentTag==='code' || parentTag==='pre'
         if (!this.__detectStr__(str, this.tagName)) {

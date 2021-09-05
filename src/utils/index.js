@@ -7,6 +7,7 @@ const getLanguage=require('./getLanguage')
 const clearComment=require('./clearComment')
 const getRealTagName=require('./getRealTagName')
 const needIndependentLine=require('./needIndependentLine')
+const getTableAlign=require('./getTableAlign')
 const shouldRenderRawInside=require('./shouldRenderRawInside')
 
 
@@ -21,6 +22,7 @@ module.exports={
   findValidTag,
   isSelfClosing,
   parseAttrs,
+  getTableAlign,
   getLanguage,
   clearComment,
   needIndependentLine,

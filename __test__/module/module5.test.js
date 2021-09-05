@@ -31,7 +31,7 @@ describe('test special', () => {
       '<tr><td>sdfdfdfdfdf<tdfdfdfdfdfd</td></tr>\n' +
       '</table>')).toBe(
       "||\n" +
-      "|:---|\n" +
+      "|---|\n" +
       "|sdfdfdfdfdf<tdfdfdfdfdfd|")
   })
 

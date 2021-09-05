@@ -25,5 +25,5 @@ function parseAttrs(attrStr){
   return obj
 }
 
-
+// console.log(parseAttrs('td style="abc:left, xyz : center, text-align:   center"'))
 module.exports=parseAttrs

@@ -1,5 +1,5 @@
 const Tag =require('../Tag')
-const {findTagClass}=require('../utils')
+const {findTagClass,getTableAlign}=require('../utils')
 
 function countTdNum(str){
   let trStr=''
@@ -12,13 +12,14 @@ function countTdNum(str){
   return Math.max(trStr.split('</td>').length-1,trStr.split('</th>').length-1)
 }
 
+
 class Table extends Tag{
   constructor(str,tagName='table',options){
     super(str,tagName)
     this.exist_thead=false
     this.exist_tbody=false
     this.empty_tbody=true
-    this.tdNum= countTdNum(this.content)
+    this.tableColumnCount= countTdNum(this.content)
   }
 
   parseValidSubTag(subTagStr, subTagName) {
@@ -33,7 +34,7 @@ class Table extends Tag{
       this.empty_tbody=false
     }
     let SubTagClass=findTagClass(subTagName)
-    let subTag=new SubTagClass(subTagStr,subTagName,{tdNum:this.tdNum})
+    let subTag=new SubTagClass(subTagStr,subTagName,{tableColumnCount:this.tableColumnCount})
     return subTag.exec('','\n')
   }
 
@@ -42,14 +43,26 @@ class Table extends Tag{
   }
 
   beforeReturn(str){
-    // console.log('exist head',this.exist_thead, 'exist body',this.exist_tbody, 'empty body',this.empty_tbody,str,'---')
-    if(!(this.exist_thead || this.exist_tbody || !this.empty_tbody)){
-      return ''
+    // 无head，无body
+    if(!(this.exist_thead || this.exist_tbody || !this.empty_tbody))return ''
+    // 无内容
+    if(this.tableColumnCount===0)return ''
+    // 无body 或者 空body
+    if(!this.exist_tbody){
+      // 从head中获取方向信息
+      let alignArr=getTableAlign(this.content,this.tableColumnCount)
+      let tableHr='|'
+      for(let i=0;i<alignArr.length;i++){
+        tableHr+=alignArr[i]
+      }
+      if(this.empty_tbody){
+        str=str+tableHr+'\n'
+      }else{
+        str=tableHr+''+str
+      }
     }
-    if(this.tdNum===0)return ''
-    if(!this.exist_tbody && this.empty_tbody)str=str+'|'+':---|'.repeat(this.tdNum)+'\n'
-    else if(!this.exist_tbody)str='|'+':---|'.repeat(this.tdNum)+''+str
-    if(!this.exist_thead)str='\n'+'|'.repeat(this.tdNum+1)+(str.startsWith('\n')? '' : '\n')+str
+    // 无head
+    if(!this.exist_thead)str='\n'+'|'.repeat(this.tableColumnCount+1)+(str.startsWith('\n')? '' : '\n')+str
     return str
   }
 

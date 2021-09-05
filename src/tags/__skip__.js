@@ -25,8 +25,6 @@ class __Skip__ extends Tag{
 class __SkipSelfClose__ extends SelfCloseTag{
   constructor(str,tagName='__skipselfclose__',options){
     super(str,tagName,options)
-    this.tagName=tagName
-    this.str=str
   }
 
   exec(){
