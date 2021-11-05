@@ -12,3 +12,4 @@ coverage
 demo
 dist
 codecov.yml
+.npmrc

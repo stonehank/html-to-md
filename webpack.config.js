@@ -15,7 +15,11 @@ module.exports= {
   output: {
     path: path.join(__dirname, 'dist'),
     filename:'index.js',
-    libraryTarget: 'commonjs2',
+    library: {
+      type: 'umd',
+      name: 'html2md',
+    },
+    globalObject: 'this',
   },
   optimization: {
     minimize: true,
