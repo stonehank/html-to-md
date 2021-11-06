@@ -1,9 +1,15 @@
+## 0.5.1
+
+* Support attr:align in table
+* Add UMD to support browser [#41](https://github.com/stonehank/html-to-md/pull/41)
+
 ## 0.5.0
 
 #### Refactor
 
 * Less space
 * Change some default configs
+* Add typings for typescript [#34](https://github.com/stonehank/html-to-md/pull/34)
 
 
 ## 0.4.4
