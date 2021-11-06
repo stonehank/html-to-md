@@ -9,13 +9,20 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const src = path.join(__dirname, 'src')
 
+/** @type {import('webpack').Configuration} */
 module.exports= {
   mode: 'production',
   entry: path.join( src, 'index.js'),
   output: {
     path: path.join(__dirname, 'dist'),
     filename:'index.js',
-    libraryTarget: 'commonjs2',
+    library: {
+      root: 'html2md',
+      amd: 'html2md',
+      commonjs: 'html2md',
+    },
+    globalObject: 'this',
+    libraryTarget: 'umd',
   },
   optimization: {
     minimize: true,
