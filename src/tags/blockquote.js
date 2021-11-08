@@ -28,9 +28,10 @@ class Blockquote extends Tag {
             }
         }
         split = split.map(n => {
-            if (n=== '') return ''
+            if (n === '') return ''
             return this.fillPerLine(n)
         })
+        // console.log(content,split)
         return split.join('\n')
     }
 
@@ -71,8 +72,8 @@ class Blockquote extends Tag {
         if(this.calcLeading){
             leadingSpace=this.leadingSpace
         }
-        let prevNeedNewLine=needIndependentLine(options.prevTagName)
-        let nextNeedNewLine=needIndependentLine(options.nextTagName)
+        let prevNeedNewLine=needIndependentLine(options.prevTagName)  && options.prevTagName!=='br'
+        let nextNeedNewLine=needIndependentLine(options.nextTagName)  && options.nextTagName!=='br'
         let needNewLine=needIndependentLine(subTagName) && subTagName!=='br'
         if(this.isFirstTag){
             return str.trimLeft().replace(leadingSpace,'')
