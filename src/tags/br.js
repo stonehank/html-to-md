@@ -1,13 +1,13 @@
-const Tag =require('../Tag')
+const SelfCloseTag =require('../SelfCloseTag')
 
 
-class Br extends Tag{
+class Br extends SelfCloseTag{
   constructor(str,tagName='b',options){
     super(str,tagName,options)
   }
 
-  exec(prevGap,endGap){
-    return '  \n'
+  exec(prevGap,endGap='\n'){
+    return '  '+endGap
   }
 
 }

@@ -1,4 +1,4 @@
-const {findTagClass,findValidTag,unescape,clearComment}=require('./utils')
+const {findTagClass,findValidTag,unescape,clearComment,needIndependentLine}=require('./utils')
 const config =require('./config')
 
 function html2md(str,options,force=false){
@@ -8,23 +8,31 @@ function html2md(str,options,force=false){
   str=str.replace(/(\r\n)/g,'').replace(/&nbsp;/g,"")
   let getNxtValidTag=findValidTag(str)
   let res=''
-  let [tagName,tagStr]=getNxtValidTag()
+  let prevTagName=null
+  let [nextTagName,nextTagStr]=getNxtValidTag()
   // 还存在下一个tag，递归寻找
-  while(tagStr!==''){
-    if(tagName!=null){
+  while(nextTagStr!==''){
+    if(nextTagName!=null){
       // 下一个tag是一个有效的并且不是纯文本
-      let SubTagClass=findTagClass(tagName)
-      let subTag=new SubTagClass(tagStr,tagName)
+      let SubTagClass=findTagClass(nextTagName)
+      let subTag=new SubTagClass(nextTagStr,nextTagName)
       let subContent=subTag.exec()
-      res+=subContent
+      let prevIsIndependent=needIndependentLine(prevTagName)
+      let curIsIndependent=needIndependentLine(nextTagName)
+      if(curIsIndependent && !prevIsIndependent && !res.endsWith('\n')){
+        res+= '\n' + subContent
+      }else{
+        res+=subContent
+      }
     }else{
       // 下一个tag是一个无效的或者是纯文本
-      res+=tagStr
+      res+=nextTagStr
       res=res.replace(/(\n\s*)+$/,'\n')
     }
+    prevTagName=nextTagName
     let nxt=getNxtValidTag()
-    tagName=nxt[0]
-    tagStr=nxt[1]
+    nextTagName=nxt[0]
+    nextTagStr=nxt[1]
   }
   return beforeReturn(unescape(res))
 }

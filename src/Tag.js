@@ -21,6 +21,7 @@ class Tag {
         language='',
         count=1,
         tableColumnCount=0,
+        noExtraLine=false,
     } = {}) {
         this.tagName = tagName
         this.rawStr = str
@@ -37,6 +38,8 @@ class Tag {
         this.language=language
         this.count=count
         this.tableColumnCount=tableColumnCount
+        // 在blockquote内部，如果前面img 后面p 不会再有额外的一行，因为在内部已经处理了
+        this.noExtraLine=noExtraLine
 
         this.keepFormat=keepFormat || parentTag==='code' || parentTag==='pre'
         if (!this.__detectStr__(str, this.tagName)) {
@@ -185,6 +188,7 @@ class Tag {
             let options={
                 parentTag:this.tagName,
                 nextTagName:afterNextTagName,
+                afterNextTagStr:afterNextTagStr,
                 prevTagName:prevTagName,
                 leadingSpace:this.leadingSpace,
                 layer:this.layer,
@@ -213,7 +217,8 @@ class Tag {
         if(!this.keepFormat && this.__isEmpty__(content))return ''
         content = this.beforeMergeSpace(content)
         // 当类似<img>后面跟随<p>情况，需要<p>多空一行
-        if(needIndependentLine(this.tagName)
+        if( !this.noExtraLine
+            && needIndependentLine(this.tagName)
             && !!this.prevTagName
             && !content.startsWith('\n')
             && !needIndependentLine(this.prevTagName)

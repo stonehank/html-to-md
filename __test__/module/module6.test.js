@@ -24,4 +24,10 @@ describe('some correction',()=>{
     it('test starts with space',()=>{
         expect(html2Md(" <div><a>Sign In</a><a >Register</a></div>")).toBe("[Sign In]()[Register]()")
     })
+
+    it('test no wrapper',()=>{
+        expect(html2Md(" <b>bold</b><p>paragraph2</p>")).toBe("**bold**\n" +
+            "\n" +
+            "paragraph2")
+    })
 })

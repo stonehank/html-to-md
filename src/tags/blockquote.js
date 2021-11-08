@@ -1,3 +1,4 @@
+const needIndependentLine =require("../utils/needIndependentLine")
 const Tag = require('../Tag')
 const {findTagClass} = require('../utils')
 
@@ -20,11 +21,16 @@ class Blockquote extends Tag {
 
     afterMergeSpace(content) {
         let split = content.split('\n')
+        // 去除连续
+        for(let i=split.length-1;i>=0;i--){
+            if(i<split.length-1 && split[i].trim()==='>' && split[i+1].trim()==='>'){
+                split.splice(i,1)
+            }
+        }
         split = split.map(n => {
-            if (n === '') return ''
+            if (n=== '') return ''
             return this.fillPerLine(n)
         })
-        // console.log(content,split)
         return split.join('\n')
     }
 
@@ -50,26 +56,44 @@ class Blockquote extends Tag {
             subTag = new SubTagClass(subTagStr, subTagName, {
                 ...options,
                 calcLeading:this.calcLeading,
-                match: this.match + '>'
+                match: this.match + '>',
+                noExtraLine:true
             })
         }else{
             let SubTagClass = findTagClass(subTagName)
             subTag = new SubTagClass(subTagStr, subTagName, {
                 ...options,
+                noExtraLine:true
             })
         }
-        let str=subTag.exec('', '\n')
-
+        let str=subTag.exec()
         let leadingSpace=''
         if(this.calcLeading){
             leadingSpace=this.leadingSpace
         }
-
+        let prevNeedNewLine=needIndependentLine(options.prevTagName)
+        let nextNeedNewLine=needIndependentLine(options.nextTagName)
+        let needNewLine=needIndependentLine(subTagName) && subTagName!=='br'
         if(this.isFirstTag){
             return str.trimLeft().replace(leadingSpace,'')
         }else{
-            return leadingSpace+this.match + '\n' + str
+            if(needNewLine){
+                str=leadingSpace+this.match + str
+                if(!prevNeedNewLine){
+                    str='\n' + str
+                }
+                if(!nextNeedNewLine && (options.afterNextTagStr && options.afterNextTagStr.trim())){
+                    // console.log(options.afterNextTagStr)
+                    str+=this.match + '\n'
+                }
+            }else{
+                if(prevNeedNewLine) {
+                    return leadingSpace + this.match + '\n' + str
+                }
+                return str
+            }
         }
+        return str
     }
 
 
