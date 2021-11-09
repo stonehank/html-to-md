@@ -82,5 +82,26 @@ describe("test <blockquote></blockquote> tag",()=>{
         ">\n" +
         "> paragraph2")
   })
+
+  it('multiple br in blockquote',()=>{
+    let blockquote=html2Md("<blockquote>主题: React\n" +
+        "        <br><br><br>\n" +
+        "        难度: <del>ddd</del>\n" +
+        "        <p>paragraph1</p>\n" +
+        "        raw text1<b>bold</b>\n" +
+        "        <p>paragraph2</p>\n" +
+        "    </blockquote>")
+
+    expect(blockquote).toBe("> 主题: React  \n" +
+        ">   \n" +
+        ">   \n" +
+        "> 难度: ~~ddd~~\n" +
+        ">\n" +
+        "> paragraph1\n" +
+        ">\n" +
+        "> raw text1**bold**\n" +
+        ">\n" +
+        "> paragraph2")
+  })
 })
 

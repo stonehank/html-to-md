@@ -35,6 +35,11 @@ class Blockquote extends Tag {
         return split.join('\n')
     }
 
+    beforeReturn(content) {
+        // 去除空行
+        return content.replace('\n\n','\n')
+    }
+
     fillPerLine(lineStr) {
         let startWith='>'
         if(this.calcLeading){
@@ -72,7 +77,7 @@ class Blockquote extends Tag {
         if(this.calcLeading){
             leadingSpace=this.leadingSpace
         }
-        let prevNeedNewLine=needIndependentLine(options.prevTagName)  && options.prevTagName!=='br'
+        let prevNeedNewLine=needIndependentLine(options.prevTagName) && options.prevTagName!=='br'
         let nextNeedNewLine=needIndependentLine(options.nextTagName)  && options.nextTagName!=='br'
         let needNewLine=needIndependentLine(subTagName) && subTagName!=='br'
         if(this.isFirstTag){
