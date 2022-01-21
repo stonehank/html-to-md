@@ -1,3 +1,11 @@
+## 0.5.4
+
+* fix [#43](https://github.com/stonehank/html-to-md/issues/43)
+
+## 0.5.2 - 0.5.3
+
+* fix [#42](https://github.com/stonehank/html-to-md/issues/42)
+
 ## 0.5.1
 
 * Support attr:align in table

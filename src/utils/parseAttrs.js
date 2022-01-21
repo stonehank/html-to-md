@@ -16,7 +16,8 @@ function parseAttrs(attrStr){
     }else if(attrStr[i]==='"' || attrStr[i]==="'"){
       inside=!inside
       continue
-    }else if(attrStr[i]==="="){
+    // only pass not inside attr value (https://github.com/stonehank/html-to-md/issues/43)
+    }else if(attrStr[i]==="=" && !inside){
       continue
     }
     if(!inside)key+=attrStr[i]
