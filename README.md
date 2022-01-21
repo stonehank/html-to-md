@@ -68,7 +68,9 @@ options:
   'section',
   'footer',
   'main',
-  'aside'
+  'aside',
+  'article',
+  'header'
 ]</code></pre></td>
 <td align="center">需要忽略的标签名</td>
 </tr>
@@ -91,7 +93,8 @@ options:
   'form',
   'svg',
   'noscript',
-  'script'
+  'script',
+  'meta'
 ]</code></pre></td>
 <td align="center">忽视标签及其内部所有内容</td>
 </tr>

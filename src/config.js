@@ -48,8 +48,8 @@ function assign(obj,newObj,key){
 }
 
 let defaultOptions={
-  ignoreTags:['','style','head','!doctype','form','svg','noscript','script'],
-  skipTags:['div','html','body','nav','section','footer','main','aside'],
+  ignoreTags:['','style','head','!doctype','form','svg','noscript','script','meta'],
+  skipTags:['div','html','body','nav','section','footer','main','aside','article','header'],
   emptyTags:[],
   aliasTags:{
     figure:'p',
