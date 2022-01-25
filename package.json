@@ -19,6 +19,8 @@
   "homepage": "https://github.com/stonehank/html-to-md#README",
   "license": "MIT",
   "scripts": {
+    "prepublishOnly": "node prepublish.js",
+    "release": "cross-env RELEASE_MODE=true npm run build && npm publish",
     "test:part": "jest",
     "test": "jest --coverage && codecov",
     "build": "npm run test && npm run build:demo && npm run build:main",
