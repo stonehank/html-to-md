@@ -3,7 +3,7 @@ const RawString = require('./tags/__rawString__')
 const {SINGLE} = require('./utils/CONSTANT')
 const needIndependentLine = require('./utils/needIndependentLine')
 const getRealTagName = require('./utils/getRealTagName')
-
+const trim=require('./utils/trim')
 
 class Tag {
     constructor(str, tagName, {
@@ -157,7 +157,10 @@ class Tag {
 
     // 去除不必要的空行
     slim(content) {
-        if(this.keepFormat)return content
+        // 在代码块内部
+        if(this.keepFormat){
+            return content
+        }
         return content.trim()
     }
 
@@ -165,6 +168,15 @@ class Tag {
     beforeMergeSpace(content) {
 
         return content
+    }
+
+    mergeSpace(content,prevGap,endGap){
+        if(this.keepFormat && this.tagName!=='pre'){
+            // 在代码块内部减少换行
+            return content.endsWith('\n') ? content  : (content + endGap.replace(/\n+/g,'\n'))
+        }else{
+            return prevGap + content + endGap
+        }
     }
 
     // 合并必要的空行后
@@ -203,7 +215,6 @@ class Tag {
             let _currentTagName=nextTagName
             nextTagName=afterNextTagName
             nextTagStr=afterNextTagStr
-            // console.log(this.tagName,JSON.stringify(nextStr))
             if(_currentTagName == null && this.__isEmpty__(nextStr)){
                 continue
             }
@@ -211,7 +222,6 @@ class Tag {
             this.isFirstTag=false
             content+=nextStr
         }
-        // console.log(content)
         content = this.afterParsed(content)
         content = this.slim(content)
         if(!this.keepFormat && this.__isEmpty__(content))return ''
@@ -225,7 +235,8 @@ class Tag {
         ){
             prevGap='\n\n'
         }
-        content = prevGap + content + endGap
+        content=this.mergeSpace(content,prevGap,endGap)
+
         if(this.noWrap && !this.keepFormat) content=content.replace(/\s+/g,' ')
         content = this.afterMergeSpace(content)
         content = this.beforeReturn(content)
