@@ -57,7 +57,8 @@ class Pre extends Tag{
       let subTag=new SubTagClass(subTagStr,subTagName,{
         ...options,
         match:'',
-        language:this.language
+        language:this.language,
+        keepFormat:true
       })
       return subTag.exec('','')
     }else{

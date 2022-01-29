@@ -13,13 +13,13 @@ class Tr extends Tag{
     return '|' + content
   }
 
-  parseValidSubTag(subTagStr, subTagName) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     let SubTagClass=findTagClass(subTagName)
     if(subTagName!=='td' && subTagName!=='th' && aliasTags[subTagName]!=='td' && aliasTags[subTagName]!=='th' && SubTagClass !== __Ignore__ ){
       console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`)
       return ''
     }else{
-      let subTag=new SubTagClass(subTagStr,subTagName)
+      let subTag=new SubTagClass(subTagStr,subTagName, options)
       return subTag.exec('','')
     }
   }

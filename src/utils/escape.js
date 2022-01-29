@@ -38,7 +38,6 @@ function escape(s) {
 }
 
 function unescape(s,{needEscape=false}={}) {
-  // console.log(s)
   s= (s && reHasEscapedHtml.test(s)) ?
     s.replace(reEscapedHtml, (entity) => unescapeMap[entity]) :
     s
@@ -47,7 +46,6 @@ function unescape(s,{needEscape=false}={}) {
       return accumulator.replace(escape[0], escape[1])
     }, s)
   }
-  // console.log(s)
   return s
 
 }

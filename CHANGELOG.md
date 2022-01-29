@@ -1,4 +1,4 @@
-## 0.5.4
+## 0.5.4 - 0.5.6
 
 * fix [#43](https://github.com/stonehank/html-to-md/issues/43)
 

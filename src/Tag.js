@@ -41,7 +41,7 @@ class Tag {
         // 在blockquote内部，如果前面img 后面p 不会再有额外的一行，因为在内部已经处理了
         this.noExtraLine=noExtraLine
 
-        this.keepFormat=keepFormat || parentTag==='code' || parentTag==='pre'
+        this.keepFormat=keepFormat
         if (!this.__detectStr__(str, this.tagName)) {
             this.attrs={}
             this.content=''
@@ -204,7 +204,7 @@ class Tag {
             nextTagName=afterNextTagName
             nextTagStr=afterNextTagStr
             // console.log(this.tagName,JSON.stringify(nextStr))
-            if(!this.keepFormat && _currentTagName == null && this.__isEmpty__(nextStr)){
+            if(_currentTagName == null && this.__isEmpty__(nextStr)){
                 continue
             }
             prevTagName=_currentTagName
@@ -226,7 +226,7 @@ class Tag {
             prevGap='\n\n'
         }
         content = prevGap + content + endGap
-        if(this.noWrap) content=content.replace(/\s+/g,' ')
+        if(this.noWrap && !this.keepFormat) content=content.replace(/\s+/g,' ')
         content = this.afterMergeSpace(content)
         content = this.beforeReturn(content)
         return content

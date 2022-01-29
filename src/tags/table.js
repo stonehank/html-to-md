@@ -22,7 +22,7 @@ class Table extends Tag{
     this.tableColumnCount= countTdNum(this.content)
   }
 
-  parseValidSubTag(subTagStr, subTagName) {
+  parseValidSubTag(subTagStr, subTagName,options) {
     if(subTagName==='thead'){
       this.exist_thead=true
     }
@@ -34,7 +34,7 @@ class Table extends Tag{
       this.empty_tbody=false
     }
     let SubTagClass=findTagClass(subTagName)
-    let subTag=new SubTagClass(subTagStr,subTagName,{tableColumnCount:this.tableColumnCount})
+    let subTag=new SubTagClass(subTagStr,subTagName,{...options,tableColumnCount:this.tableColumnCount})
     return subTag.exec('','\n')
   }
 

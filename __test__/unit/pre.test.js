@@ -242,6 +242,15 @@ function abc(){
         '  <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>\n' +
         '}\n' +
         '</code>')
-    expect(str).toBe("`var function abc(){ let x=5 } `")
+    expect(str).toBe("`var function abc(){ let x=5 }`")
+  })
+
+  it('keep format in pre code',()=>{
+    let str=html2Md(`<pre><code class="language-javascript hljs"><ol class="hljs-ln" style="width:100%"><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="1"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line"><span class="hljs-keyword">function</span> <span class="hljs-title function_">printPartOfDocument</span>(<span class="hljs-params"></span>) {</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="2"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">    <span class="hljs-variable language_">_this</span>.<span class="hljs-property">init</span>.<span class="hljs-title function_">apply</span>(<span class="hljs-variable language_">this</span>, <span class="hljs-variable language_">arguments</span>)</div></div></li><li><div class="hljs-ln-numbers"><div class="hljs-ln-line hljs-ln-n" data-line-number="3"></div></div><div class="hljs-ln-code"><div class="hljs-ln-line">}</div></div></li></ol></code></pre>`,{skipTags:['html','body','nav','section','footer','main','aside','article','header'],emptyTags:['div']},true)
+    expect(str).toBe("```javascript\n" +
+        "1. function printPartOfDocument() {\n" +
+        "2.     _this.init.apply(this, arguments)\n" +
+        "3. }\n" +
+        "```")
   })
 })

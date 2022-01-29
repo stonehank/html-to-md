@@ -12,11 +12,11 @@ class Th extends Tag{
     return content + '|'
   }
 
-  parseValidSubTag(subTagStr, subTagName) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     if(subTagName==='ul' || subTagName==='ol' || subTagName==='table' || subTagName==='pre'){
       return subTagStr.replace(/([\n\r])/g,'')
     }
-    return super.parseValidSubTag(subTagStr, subTagName)
+    return super.parseValidSubTag(subTagStr, subTagName, options)
   }
 
   exec(prevGap='',endGap=''){

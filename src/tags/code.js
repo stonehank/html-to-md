@@ -23,6 +23,7 @@ class Code extends Tag{
     return startMatch + content + endMatch
   }
 
+
   // 在嵌套pre中，pre应该视为换行
   parseValidSubTag(subTagStr, subTagName,options) {
     if(subTagName==="pre"){
@@ -37,7 +38,7 @@ class Code extends Tag{
       let SubTagClass=findTagClass(subTagName)
       let subTag=new SubTagClass(subTagStr,subTagName,{
         ...options,
-        keepFormat:true,
+        keepFormat:this.keepFormat,
         noWrap:this.noWrap
       })
       return subTag.exec('','')
@@ -61,9 +62,9 @@ class Code extends Tag{
   }
 
   slim(content) {
-    return content;
+    if(this.keepFormat)return content
+    return content.trim()
   }
-
   exec(prevGap = '', endGap = '') {
     return super.exec(prevGap, endGap);
   }

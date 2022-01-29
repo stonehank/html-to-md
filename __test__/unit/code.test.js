@@ -21,4 +21,9 @@ describe('test <code></code> tag',()=>{
     let str='<code>`123``</code>'
     expect(html2Md(str)).toBe('``` `123`` ```')
   })
+
+  it('slim space',()=>{
+    let str='<code>0    <span>123</span>  </code>'
+    expect(html2Md(str)).toBe('`0 123`')
+  })
 })
