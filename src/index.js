@@ -2,6 +2,7 @@ const {findTagClass,findValidTag,unescape,clearComment,needIndependentLine}=requ
 const config =require('./config')
 
 function html2md(str,options,force=false){
+  config.reset()
   config.set(options,force)
   str=clearComment(str)
   str=str.trim()
