@@ -101,7 +101,7 @@ module.exports= env=>{
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebPackPlugin({
-        template: isDev ? "./debugDev.html" : "./index.html",
+        template: isDev ? "./dev/index.html" : "./index.html",
         filename: "./index.html"
       })
     ],

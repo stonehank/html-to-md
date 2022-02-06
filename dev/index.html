@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html-to-md live demo</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js"></script>
+    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.15.8/build/highlight.min.js"></script>
+    <style>
+        html {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        body {
+            /*margin:0;*/
+        }
+
+        img {
+            width: 30%;
+        }
+
+        #wrap {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px;
+        }
+
+        #pageChoose {
+            display: flex;
+            margin: 8px;
+            height: 64px;
+        }
+
+        .page {
+            flex: 1;
+            text-align: center;
+            vertical-align: middle;
+            line-height: 3rem;
+            cursor: pointer;
+            background: #ccc;
+            box-shadow: 6px 6px 6px -4px #2a2a2a;
+            border-radius: 5px;
+            margin: 8px;
+            user-select: none;
+        }
+
+        .page-has-selected {
+            box-shadow: 2px 2px 4px #9d9d9d;
+            background: #d1d1d1;
+        }
+
+        .page:active {
+            box-shadow: 1px 1px 4px #acacac;
+            background: #d1d1d1;
+        }
+
+        #page-selected-2 .io {
+            font-size: 0.8rem;
+            width: 48%;
+            resize: horizontal;
+            min-width: 20%;
+            height: 55vh;
+        }
+
+        #page-selected-2 #inputHTML {
+            border: 1px solid #a9a9a9;;
+            overflow: auto;
+        }
+
+        #page-selected-2 #outputMD {
+            resize: none;
+            flex: 1
+        }
+
+        #page-selected-1 .io {
+            font-size: 0.8rem;
+            width: 33%;
+            resize: horizontal;
+            min-width: 20%;
+            height: 55vh;
+        }
+
+        #page-selected-1 #outputHTML, #page-selected-1 #outputMD {
+            border: 1px solid #a9a9a9;;
+            overflow: auto;
+        }
+
+        #page-selected-1 #outputMD {
+            resize: none;
+            flex: 1
+        }
+
+        textarea {
+            line-height: 1.5
+        }
+
+        .infoWrap {
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .info {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        #syncScrBtnRender {
+            border: 1px;
+            background: lightgreen;
+            padding: 0.2rem;
+            border-radius: 4px;
+            margin: 0.5rem;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div id="pageChoose">
+    <span class="page" data-page="0">MD → HTML → MD</span>
+    <span class="page" data-page="1">HTML → MD</span>
+</div>
+<div id="page-selected-1">
+</div>
+<div id="page-selected-2" style="display:none">
+</div>
+<div>
+    <label for="skipTags">skipTags</label>
+    <input type="text" id="skipTags" style="width:100%"  />
+</div>
+<div>
+    <label for="emptyTags">emptyTags</label>
+    <input type="text" id="emptyTags" style="width:100%"  />
+</div>
+<div>
+    <label for="ignoreTags">ignoreTags</label>
+    <input type="text" id="ignoreTags" style="width:100%"  />
+</div>
+<div>
+    <label for="syncScrBtn" id="syncScrBtnRender">sync scroll</label>
+    <input type="checkbox" id="syncScrBtn" checked style="font-size:1rem"/>
+</div>
+
+<script>
+    let ignoreTags=['','style','head','!doctype','form','svg','noscript','script','meta'],
+        skipTags=['div','html','body','nav','section','footer','main','aside','article','header'],
+        emptyTags=[],
+        aliasTags={
+        figure:'p',
+            dl:'p',
+            dd:'p',
+            dt:'p',
+            figcaption:'p'
+    }
+    const PAGE1HTML = '<div class="infoWrap">\n' +
+        '        <span class="info">markdown</span>\n' +
+        '        <span class="info">\n' +
+        '        <span style="font-size:0.8rem">转换工具选择👉</span>\n' +
+        '        <select id="chooseM2H">\n' +
+        '            <option value="markdown-it">markdown-it</option>\n' +
+        '            <option value="marked">marked</option>\n' +
+        '        </select>\n' +
+        '    </span>\n' +
+        '        <span class="info">html</span>\n' +
+        '        <span class="info">\n' +
+        '        <span>👉</span>\n' +
+        '        <select disabled>\n' +
+        '            <option value="html-to-md">html-to-md</option>\n' +
+        '        </select>\n' +
+        '    </span>\n' +
+        '        <span class="info">markdown</span>\n' +
+        '    </div>\n' +
+        '    <div id="wrap" class="markdown-body page-selected-0">\n' +
+        '        <textarea id="inputMD" class="io"></textarea>\n' +
+        '        <div id="outputHTML" class="io" ></div>\n' +
+        '        <textarea id="outputMD" readonly class="io"></textarea>\n' +
+        '    </div>'
+
+    const PAGE2HTML = '<div class="infoWrap">\n' +
+        '        <span class="info">html</span>\n' +
+        '        <span class="info">\n' +
+        '        <span>👉</span>\n' +
+        '        <select disabled>\n' +
+        '            <option value="html-to-md">html-to-md</option>\n' +
+        '        </select>\n' +
+        '    </span>\n' +
+        '        <span class="info">markdown</span>\n' +
+        '    </div>\n' +
+        '    <div id="wrap" class="markdown-body ">\n' +
+        '        <textarea id="inputHTML" class="io" ></textarea>\n' +
+        '        <textarea id="outputMD" readonly class="io"></textarea>\n' +
+        '    </div>'
+
+
+    const PLACEHOLDER='---\n' +
+        '\n' +
+        '# h1 Heading\n' +
+        '## h2 Heading\n' +
+        '### h3 Heading\n' +
+        '#### h4 Heading\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '## Emphasis\n' +
+        '\n' +
+        '**This is bold text**\n' +
+        '\n' +
+        '*This is italic text*\n' +
+        '\n' +
+        '~~Strikethrough~~\n' +
+        '\n' +
+        '\n' +
+        '## Blockquotes\n' +
+        '\n' +
+        '> Blockquotes can also be nested...\n' +
+        '>> ...by using additional greater-than signs right next to each other...\n' +
+        '\n' +
+        '\n' +
+        '### Blockquote list\n' +
+        '\n' +
+        '> * list1\n' +
+        '> * list2\n' +
+        '\n' +
+        '\n' +
+        '## Lists\n' +
+        'Ordered\n' +
+        '\n' +
+        '1. Lorem ipsum dolor sit amet\n' +
+        '2. Consectetur adipiscing elit\n' +
+        '3. Integer molestie lorem at massa\n' +
+        '1. You can use sequential numbers...\n' +
+        '\n' +
+        'Start numbering with offset:\n' +
+        '\n' +
+        '57. foo\n' +
+        '1. bar\n' +
+        '\n' +
+        'Syntax highlighting\n' +
+        '\n' +
+        '``` js\n' +
+        'var foo = function (bar) {\n' +
+        '  return bar++;\n' +
+        '};\n' +
+        '\n' +
+        'console.log(foo(5));\n' +
+        '```\n' +
+        '\n' +
+        '\n' +
+        '## Tables\n' +
+        '\n' +
+        '| Option | Description |\n' +
+        '| ------ | ----------- |\n' +
+        '| data   | path to data files to supply the data that will be passed into templates. |\n' +
+        '| engine | engine to be used for processing templates. Handlebars is the default. |\n' +
+        '| ext    | extension to be used for dest files. |\n' +
+        '\n' +
+        '## Todo list\n' +
+        '\n' +
+        '- [ ] not finish-1\n' +
+        '\n' +
+        '## Done list\n' +
+        '\n' +
+        '- [x] finish-1\n'
+
+    const PLACEHOLDER2 =
+        `<h1>h1 Heading</h1>
+
+<hr>
+
+<h2>Emphasis</h2>
+<p><em><strong>Bold and italic</strong></em></p>
+<p><strong>This is bold text</strong></p>
+
+<h2>Tables</h2>
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>data</td><td>path to data files to supply the data that will be passed into templates.</td></tr>
+<tr><td>engine</td><td>engine to be used for processing templates. Handlebars is the default.</td></tr>
+<tr><td>ext</td><td>extension to be used for dest files.</td></tr>
+</tbody>
+</table>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> finish-1</li>
+<li><input checked="" disabled="" type="checkbox"> finish-2</li>
+<li><input checked="" disabled="" type="checkbox"> finish-3</li>
+</ul>
+`
+</script>
+<script>
+    function handleConfig(){
+
+    }
+
+</script>
+
+<script>
+    window.onload = () => {
+        let hljs = window.hljs,
+            mdItObj = window.markdownit({
+                html: true,
+                highlight: function (str, lang) {
+                    let langClass = '"hljs language-' + lang + '"'
+                    if (lang && hljs.getLanguage(lang)) {
+                        try {
+                            return '<pre class=' + langClass + '><code>' +
+                                hljs.highlight(lang, str, true).value +
+                                '</code></pre>';
+                        } catch (__) {
+                        }
+                    }
+                    return '<pre class="hljs"><code>' + mdItObj.utils.escapeHtml(str) + '</code></pre>';
+                }
+            }),
+            mdIt = mdItObj.render.bind(mdItObj),
+            marked = window.marked,
+            html2md = window.html2md,
+            md2Html = mdIt,
+            delay = false,
+            timer = null
+        window.curPage = 'page2'
+        marked.setOptions({
+            highlight: function (str, lang) {
+                if (lang && hljs.getLanguage(lang)) {
+                    try {
+                        return hljs.highlight(lang, str, true).value
+                    } catch (__) {
+                    }
+                }
+
+                return mdItObj.utils.escapeHtml(str)
+            }
+        });
+
+        let io = document.getElementsByClassName("io"),
+            syncScrBtn = document.getElementById("syncScrBtn"),
+            pageChoose = document.getElementById("pageChoose"),
+            pageChooseBtns = pageChoose.getElementsByClassName("page")
+
+        function fillPage1() {
+            let page1 = document.getElementById("page-selected-1"),
+                page2 = document.getElementById("page-selected-2")
+            page2.style.display = 'none'
+            page1.style.display = 'block'
+            pageChooseBtns[0].className = "page page-has-selected"
+            pageChooseBtns[1].className = "page"
+            if(page1.innerHTML.trim()==='')page1.innerHTML = PAGE1HTML
+            let inputMd = document.querySelector("#page-selected-1 #inputMD"),
+                outputMD = document.querySelector("#page-selected-1 #outputMD"),
+                outputHTML = document.querySelector("#page-selected-1 #outputHTML"),
+                chooseM2H = document.querySelector("#page-selected-1 #chooseM2H")
+            if (inputMd.value === '') inputMd.value = PLACEHOLDER
+            show(inputMd, outputHTML, outputMD)
+            inputMd.addEventListener("input", page1AfterInput)
+            chooseM2H.addEventListener("change", page1AfterSelect)
+            checkIfBindScr()
+        }
+
+
+        function page1AfterSelect(ev) {
+            md2Html = ev.target.value === "marked" ? marked.parse : mdIt
+            page1AfterInput()
+        }
+
+        function page1AfterInput() {
+            let inputMd = document.querySelector("#page-selected-1 #inputMD"),
+                outputMD = document.querySelector("#page-selected-1 #outputMD"),
+                outputHTML = document.querySelector("#page-selected-1 #outputHTML")
+            show(inputMd, outputHTML, outputMD)
+        }
+
+        function destroyPage1() {
+            let inputMd = document.querySelector("#page-selected-1 #inputMD"),
+                chooseM2H = document.querySelector("#page-selected-1 #chooseM2H")
+            inputMd.removeEventListener("input", page1AfterInput)
+            chooseM2H.removeEventListener("change", page1AfterSelect)
+        }
+
+        function fillPage2() {
+            let page1 = document.getElementById("page-selected-1"),
+                page2 = document.getElementById("page-selected-2")
+            page1.style.display = 'none'
+            page2.style.display = 'block'
+            pageChooseBtns[1].className = "page page-has-selected"
+            pageChooseBtns[0].className = "page"
+            if(page2.innerHTML.trim()==='')page2.innerHTML = PAGE2HTML
+            let inputHTML = document.getElementById("inputHTML")
+            if (inputHTML.value === '') inputHTML.value = PLACEHOLDER2
+            inputHTML.addEventListener("input", page2AfterInput)
+            page2AfterInput()
+            checkIfBindScr()
+        }
+
+        function page2AfterInput() {
+            let inputHTML = document.querySelector("#page-selected-2 #inputHTML"),
+                outputMD = document.querySelector("#page-selected-2 #outputMD")
+            show(null, inputHTML, outputMD)
+            console.log('all done')
+        }
+
+        function destroyPage2() {
+            let inputHTML = document.querySelector("#page-selected-2 #inputHTML")
+            inputHTML.removeEventListener("input", page2AfterInput)
+        }
+
+        function syncScroll(ev) {
+            let ele = ev.target
+            if (!delay) {
+                clearTimeout(timer)
+                delay = true
+                if (ele.className === 'io') {
+                    let scrRatio = ele.scrollTop / ele.scrollHeight
+                    for (let j = 0; j < io.length; j++) {
+                        if (io[j] === ele) continue
+                        io[j].scrollTo({
+                            top: io[j].scrollHeight * scrRatio
+                        })
+                    }
+                }
+                timer = setTimeout(() => {
+                    delay = false
+                }, 30)
+            }
+        }
+
+        function bindScr(io) {
+            for (let i = 0; i < io.length; i++) {
+                let ele = io[i]
+                ele.addEventListener("scroll", syncScroll)
+            }
+        }
+
+        function unbindScr(io) {
+            for (let i = 0; i < io.length; i++) {
+                let ele = io[i]
+                ele.removeEventListener("scroll", syncScroll)
+            }
+        }
+
+        function toggleSyncScroll(ev) {
+            if (ev.target.checked) {
+                bindScr(io)
+            } else {
+                unbindScr(io)
+            }
+        }
+
+        function show(inputMd, HTML, outputMd) {
+            render(md2Html, html2md, inputMd, HTML, outputMd)
+        }
+
+        function checkIfBindScr() {
+            let checked = syncScrBtn.checked
+            if (checked) {
+                bindScr(io)
+            } else {
+                unbindScr(io)
+            }
+        }
+
+        pageChoose.addEventListener('click', (ev) => {
+            let ele = ev.target
+            let pageId = ele.getAttribute('data-page')
+            if (pageId === '0') {
+                destroyPage2()
+                fillPage1()
+                curPage='page1'
+            } else if (pageId === '1') {
+                destroyPage1()
+                fillPage2()
+                curPage='page2'
+            }
+        })
+        syncScrBtn.addEventListener('change', toggleSyncScroll)
+
+        fillPage2()
+        checkIfBindScr()
+
+        const skipTagsEle=document.getElementById('skipTags'),
+            emptyTagsEle=document.getElementById('emptyTags'),
+            ignoreTagsEle=document.getElementById('ignoreTags')
+        skipTagsEle.value=skipTags.join(', ')
+        emptyTagsEle.value=emptyTags.join(', ')
+        ignoreTagsEle.value=ignoreTags.join(', ')
+        skipTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(skipTags,ev.target.value)) return
+            skipTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        emptyTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(emptyTags,ev.target.value)) return
+            emptyTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        ignoreTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(ignoreTags,ev.target.value)) return
+            ignoreTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        function isSameConfig(oldArray,newStr){
+            let oldVal=oldArray.join(',').replace(/\s/g,'')
+            let newVal=newStr.replace(/\s/g,'')
+            return oldVal===newVal
+        }
+        function getNewConfig(newStr){
+            return newStr.replace(/\s/g,'').split(',')
+        }
+        function rerenderAfterConfig(){
+            if(window.curPage==='page1'){
+                page1AfterInput()
+            }else{
+                page2AfterInput()
+            }
+        }
+    }
+</script>
+<script>
+
+
+    function render(md2Html, html2md, ele1, ele2, ele3) {
+        let htmlTxt = null, output
+        if (ele1) {
+            let mdInp = ele1.value
+            console.time('md->html')
+            htmlTxt = md2Html(mdInp)
+            console.timeEnd('md->html')
+        } else {
+            htmlTxt = ele2.value
+        }
+        console.time('html->md')
+        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags},true)
+        console.log(htmlTxt,output,{skipTags,ignoreTags,emptyTags,aliasTags})
+        console.timeEnd('html->md')
+
+        if (ele1) ele2.innerHTML = htmlTxt
+        ele3.value = output
+        console.log('render done')
+
+    }
+</script>
+<script>
+    let unescapeMap = {};
+    let escapeMap = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '`': '&#x60;',
+    };
+
+    for (let key in escapeMap) {
+        unescapeMap[escapeMap[key]] = key;
+    }
+
+    let reUnescapedHtml = /[&<>"'`]/g
+    let reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+    let reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60);/g
+    let reHasEscapedHtml = RegExp(reEscapedHtml.source)
+
+    function escape(s) {
+        return (s && reHasUnescapedHtml.test(s)) ?
+            s.replace(reUnescapedHtml, (chr) => escapeMap[chr]) :
+            s
+    }
+
+    function unescape(s) {
+        return (s && reHasEscapedHtml.test(s)) ?
+            s.replace(reEscapedHtml, (entity) => unescapeMap[entity]) :
+            s
+    }
+
+    window.unescape = unescape
+</script>
+</body>
+</html>

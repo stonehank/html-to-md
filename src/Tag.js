@@ -2,8 +2,8 @@ const {findValidTag, findTagClass, parseAttrs} = require('./utils')
 const RawString = require('./tags/__rawString__')
 const {SINGLE} = require('./utils/CONSTANT')
 const needIndependentLine = require('./utils/needIndependentLine')
-const getRealTagName = require('./utils/getRealTagName')
-const trim=require('./utils/trim')
+// const getRealTagName = require('./utils/getRealTagName')
+// const trim=require('./utils/trim')
 
 class Tag {
     constructor(str, tagName, {
