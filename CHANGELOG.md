@@ -1,3 +1,12 @@
+# 0.5.8
+
+* fix[#45](https://github.com/stonehank/html-to-md/issues/45)
+
+# 0.5.7
+
+1. fixed: keep format in coding block(#44)
+2. reset config before start
+
 ## 0.5.4 - 0.5.6
 
 * fix [#43](https://github.com/stonehank/html-to-md/issues/43)
