@@ -3,7 +3,7 @@ const isSelfClosing=require("./isSelfClosing")
 
 function getTagName(str,id){
   let name=''
-  while(id<str.length && /[a-zA-Z0-9!]/.test(str[id])){
+  while(id<str.length && /[a-zA-Z0-9!\-]/.test(str[id])){
     name+=str[id++]
   }
   return name.toLowerCase()

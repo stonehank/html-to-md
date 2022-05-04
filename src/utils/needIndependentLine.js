@@ -27,6 +27,7 @@ let independentLineTags={
 }
 
 function needIndependentLine(tagName){
+  if(!tagName)return false
   let realName=getRealTagName(tagName)
   return !!independentLineTags[realName]
 }

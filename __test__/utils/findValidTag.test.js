@@ -51,4 +51,7 @@ describe('测试寻找标签',()=>{
     expect(findValidTag("<div>ssss<divvvvvvvv</div>")()).toStrictEqual(["div", "<div>ssss<divvvvvvvv</div>"])
   })
 
+  it('tags with -',()=>{
+    expect(findValidTag("<ab-cd>ssss</ab-cd>")()).toStrictEqual(["ab-cd", "<ab-cd>ssss</ab-cd>"])
+  })
 })
