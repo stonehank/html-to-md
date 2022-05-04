@@ -88,8 +88,7 @@ class Blockquote extends Tag {
                 if(!prevNeedNewLine){
                     str='\n' + str
                 }
-                if(!nextNeedNewLine && (options.afterNextTagStr && options.afterNextTagStr.trim())){
-                    // console.log(options.afterNextTagStr)
+                if(!nextNeedNewLine && (options.nextTagStr && options.nextTagStr.trim())){
                     str+=this.match + '\n'
                 }
             }else{

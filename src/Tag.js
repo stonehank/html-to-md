@@ -10,6 +10,8 @@ class Tag {
         keepFormat=false,
         prevTagName='',
         nextTagName='',
+        prevTagStr='',
+        nextTagStr='',
         parentTag='',
         isFirstTag=true,
         calcLeading=false,
@@ -28,6 +30,8 @@ class Tag {
         this.parentTag = parentTag
         this.prevTagName = prevTagName
         this.nextTagName = nextTagName
+        this.prevTagStr = prevTagStr
+        this.nextTagStr = nextTagStr
         this.isFirstTag = isFirstTag
         this.calcLeading = calcLeading
         this.leadingSpace = leadingSpace
@@ -194,14 +198,15 @@ class Tag {
         let content = this.beforeParse()
         let getNxtValidTag = findValidTag(this.content)
         let [nextTagName, nextTagStr] = getNxtValidTag()
-        let prevTagName=null
+        let prevTagName=null, prevTagStr=null
         while (nextTagStr!== '') {
             let [afterNextTagName,afterNextTagStr]=getNxtValidTag()
             let options={
                 parentTag:this.tagName,
                 nextTagName:afterNextTagName,
-                afterNextTagStr:afterNextTagStr,
+                nextTagStr:afterNextTagStr,
                 prevTagName:prevTagName,
+                prevTagStr:content,
                 leadingSpace:this.leadingSpace,
                 layer:this.layer,
                 keepFormat:this.keepFormat,
@@ -221,6 +226,7 @@ class Tag {
             prevTagName=_currentTagName
             this.isFirstTag=false
             content+=nextStr
+            prevTagStr=content
         }
         content = this.afterParsed(content)
         content = this.slim(content)
