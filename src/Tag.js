@@ -191,7 +191,10 @@ class Tag {
 
 
     exec(prevGap = '', endGap = '') {
-        let content = this.beforeParse()
+      let content = this.beforeParse()
+      if (this.attrs.align) {
+        return this.rawStr
+      }
         let getNxtValidTag = findValidTag(this.content)
         let [nextTagName, nextTagStr] = getNxtValidTag()
         let prevTagName=null
