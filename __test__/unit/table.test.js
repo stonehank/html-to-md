@@ -92,7 +92,7 @@ describe("test <table></table> tag",()=>{
       "|*data-3-left*|data-3-center|data-3-right|\n")
   })
 
-  it('table also support align style',()=>{
+  it.skip('table also support align style',()=>{
     let table=new Table(
 `<table class="table table-striped">
   <thead>
@@ -268,7 +268,7 @@ describe("test <table></table> tag",()=>{
       "|---|---|\n")
   })
 
-  it('UL inside table(with css style)',()=>{
+  it.skip('UL inside table(with css style)',()=>{
     let table=new Table("<table>\n" +
       "<thead>\n" +
       "<tr>\n" +
@@ -300,7 +300,7 @@ describe("test <table></table> tag",()=>{
       "|<ul style='height:102px'>          <li style='height:50px'>item1</li>          <li>item2</li>        </ul>|See the list|from the first column|\n")
   })
 
-  it('UL inside table(with css style and wrap)',()=>{
+  it.skip('UL inside table(with css style and wrap)',()=>{
     let table=new Table("<table>\n" +
       "  <tbody>\n" +
       "    <tr>\n" +
