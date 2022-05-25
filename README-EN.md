@@ -18,7 +18,7 @@
 
 ##### install
 
-`npm -i html-to-md`
+`npm i html-to-md`
 
 ##### example
 
