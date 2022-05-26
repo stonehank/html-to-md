@@ -29,6 +29,15 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 // ***strong and italic***
 ```
 
+##### ES6 example
+
+```js
+import html2md from 'html2md'
+
+console.log(html2.md('<string><em>strong and italic</em></strong>,options))
+// ***strong and italic***
+```
+
 ### Config(Not require)：
 
 * options:
