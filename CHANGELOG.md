@@ -1,7 +1,6 @@
-### 0.5.9.1
+### 0.6.0
 
 * fix undefined language in pre tag
-
 
 ### 0.5.9
 
