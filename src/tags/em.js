@@ -1,8 +1,8 @@
 const Tag =require('../Tag')
 
 class Em extends Tag{
-  constructor(str,tagName='em'){
-    super(str,tagName)
+  constructor(str,tagName='em',options){
+    super(str,tagName,options)
   }
 
   beforeMergeSpace(content){
@@ -11,6 +11,9 @@ class Em extends Tag{
 
 
   exec(prevGap='',endGap=''){
+    // console.log('em',this.options)
+    if(this.parentTag==='strong' && this.nextTagStr)endGap=' '
+    if(this.prevTagStr && !this.prevTagStr.endsWith('\\*') && this.prevTagStr.endsWith('*'))prevGap=' '
     return super.exec(prevGap,endGap)
   }
 

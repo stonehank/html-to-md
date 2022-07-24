@@ -16,7 +16,15 @@ function html2md(str,options,force=false){
     if(nextTagName!=null){
       // 下一个tag是一个有效的并且不是纯文本
       let SubTagClass=findTagClass(nextTagName)
-      let subTag=new SubTagClass(nextTagStr,nextTagName)
+      let options={
+        parentTag:null,
+        prevTagName:prevTagName,
+        prevTagStr:res,
+        // leadingSpace:this.leadingSpace,
+        // layer:this.layer,
+        // keepFormat:this.keepFormat,
+      }
+      let subTag=new SubTagClass(nextTagStr,nextTagName,options)
       let subContent=subTag.exec()
       let prevIsIndependent=needIndependentLine(prevTagName)
       let curIsIndependent=needIndependentLine(nextTagName)

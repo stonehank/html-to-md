@@ -1,21 +1,26 @@
-# 0.5.8
+### 0.5.9
+
+* fix p tag add an extra gap when inside text node.
+* update get language function define in pre tag.
+
+### 0.5.8
 
 * fix[#45](https://github.com/stonehank/html-to-md/issues/45)
 
-# 0.5.7
+### 0.5.7
 
 1. fixed: keep format in coding block(#44)
 2. reset config before start
 
-## 0.5.4 - 0.5.6
+### 0.5.4 - 0.5.6
 
 * fix [#43](https://github.com/stonehank/html-to-md/issues/43)
 
-## 0.5.2 - 0.5.3
+### 0.5.2 - 0.5.3
 
 * fix [#42](https://github.com/stonehank/html-to-md/issues/42)
 
-## 0.5.1
+### 0.5.1
 
 * Support attr:align in table
 * Add UMD to support browser [#41](https://github.com/stonehank/html-to-md/pull/41)
@@ -29,7 +34,7 @@
 * Add typings for typescript [#34](https://github.com/stonehank/html-to-md/pull/34)
 
 
-## 0.4.4
+### 0.4.4
 * Fixed issue #33, use `\s` instead of `' '` in tags attribute detect.
 
 ### 0.4.3

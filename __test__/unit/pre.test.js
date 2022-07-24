@@ -94,7 +94,7 @@ describe('test <pre></pre> tag',()=>{
       '}\n' +
       '</code></pre>')
     expect(pre.exec()).toBe('\n' +
-      '```javascript\n' +
+      '```js\n' +
       'function abc(){\n' +
       '  let x=5\n' +
       '}\n```\n')
@@ -117,14 +117,13 @@ describe('test <pre></pre> tag',()=>{
   <span class="hljs-keyword">let</span> x=<span class="hljs-number">5</span>
 }
 </code></pre>`)
-    expect(pre.exec()).toBe(`
-\`\`\`javascript
-var
-function abc(){
-  let x=5
-}
-\`\`\`
-`)
+    expect(pre.exec()).toBe("\n" +
+        "```js\n" +
+        "var\n" +
+        "function abc(){\n" +
+        "  let x=5\n" +
+        "}\n" +
+        "```\n")
   })
 
   it('text outside code',()=>{
@@ -163,7 +162,7 @@ function abc(){
         '</code>' +
         '</pre>')
     expect(pre.exec()).toBe('\n' +
-      '```javascript\n' +
+      '```js\n' +
       'var a=5\n' +
       '```\n')
   })
@@ -181,7 +180,7 @@ function abc(){
   it('multi nest pre',()=>{
     let pre=new Pre('<pre><code class="language-js"><pre class="hljs"><code><pre><code class="language-js"><pre><code class="language-js"><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><pre class="hljs"><code><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre><span class="hljs-keyword">var</span> a=<span class="hljs-number">5</span></code></pre></code></pre>')
     expect(pre.exec()).toBe("\n" +
-        "```javascript\n" +
+        "```js\n" +
         "var a=5\n" +
         "\n" +
         "var a=5\n" +

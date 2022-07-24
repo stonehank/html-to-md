@@ -18,7 +18,7 @@ describe('test special', () => {
       " - </span>bar\n" +
       "<span class=\"hljs-bullet\"> - </span>baz\n" +
       "</code></pre>"
-    expect(html2Md(str)).toBe('```markdown\n' +
+    expect(html2Md(str)).toBe('```md\n' +
       ' - foo\n' +
       '\n' +
       ' - bar\n' +
@@ -78,7 +78,7 @@ describe('test special', () => {
         "\n" +
         "* A list is **single paragraph** if it has only **1 line-break separating items** and it becomes **multi paragraph if ANY of its items is separated by 2 line-breaks**:\n" +
         "\n" +
-        "  ```markdown\n" +
+        "  ```md\n" +
         "   - foo\n" +
         "\n" +
         "   - bar\n" +
@@ -143,7 +143,7 @@ describe('test special', () => {
       '\n' +
       'To create blocks of code you should indent it by four spaces.\n' +
       '\n' +
-      '```markdown\n' +
+      '```md\n' +
       '    this is a piece\n' +
       '    of\n' +
       '    code\n' +

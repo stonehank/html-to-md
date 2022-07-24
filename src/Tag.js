@@ -238,9 +238,11 @@ class Tag {
             && !!this.prevTagName
             && !content.startsWith('\n')
             && !needIndependentLine(this.prevTagName)
+            && this.parentTag
         ){
             prevGap='\n\n'
         }
+        console.log(JSON.stringify(prevGap))
         content=this.mergeSpace(content,prevGap,endGap)
 
         if(this.noWrap && !this.keepFormat) content=content.replace(/\s+/g,' ')

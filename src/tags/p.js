@@ -4,6 +4,7 @@ const Tag = require('../Tag')
 class P extends Tag {
     constructor(str, tagName = 'p', options) {
         super(str, tagName,options)
+        this.options=options
     }
 
     beforeMergeSpace(content) {
@@ -15,6 +16,7 @@ class P extends Tag {
 
 
     exec(prevGap = '\n', endGap = '\n') {
+        // console.log(this.options)
         if(
             (!this.prevTagName && !!this.prevTagStr)
             && !this.prevTagStr.endsWith('\n')
@@ -27,6 +29,7 @@ class P extends Tag {
         ){
             endGap='\n\n'
         }
+        // console.log(JSON.stringify(prevGap),JSON.stringify(endGap))
         return super.exec(prevGap, endGap)
     }
 

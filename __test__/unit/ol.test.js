@@ -113,7 +113,7 @@ describe("test <ol></ol> tag",()=>{
       ' '.repeat(OL_SPACE*2+UL_SPACE)+'>>> *'+' '.repeat(UL_SPACE-1)+ 'bq-nest-3\n' +
       ' '.repeat(OL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'unorder-3\n' +
       ' '.repeat(OL_SPACE+UL_SPACE)+'*'+' '.repeat(UL_SPACE-1)+ 'code\n' +
-      ' '.repeat(OL_SPACE+2*UL_SPACE)+'```javascript\n' +
+      ' '.repeat(OL_SPACE+2*UL_SPACE)+'```js\n' +
       ' '.repeat(OL_SPACE+2*UL_SPACE)+'var a=5\n' +
       ' '.repeat(OL_SPACE+2*UL_SPACE)+'```\n' +
       '3.'+' '.repeat(OL_SPACE-2)+ 'three')

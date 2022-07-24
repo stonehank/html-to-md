@@ -1,21 +1,25 @@
-import Em from '../../src/tags/em'
-
+let html2Md=require('../../src/index')
 
 describe('test <em></em> tag',()=>{
   it('no nest',()=>{
-    let em=new Em("<em>javascript</em>")
-    expect(em.exec()).toBe("*javascript*")
+    let em=html2Md("<em>javascript</em>")
+    expect(em).toBe("*javascript*")
   })
 
   it('can nest',()=>{
-    let em=new Em("<em><strong>strong and italic</strong></em>")
-    expect(em.exec()).toBe("***strong and italic***")
+    let em=html2Md("<em><strong>strong and italic</strong></em>")
+    expect(em).toBe("***strong and italic***")
   })
 
   it('换行需要省略',()=>{
-    let em=new Em("<em>\n" +
+    let em=html2Md("<em>\n" +
       "<strong>strong and italic</strong>\n" +
       "</em>")
-    expect(em.exec()).toBe("***strong and italic***")
+    expect(em).toBe("***strong and italic***")
+  })
+
+  it('和strong重叠时需要空格',()=>{
+    let em=html2Md("<strong>和为目标值</strong><em><code>target</code></em>")
+    expect(em).toBe("**和为目标值** *`target`*")
   })
 })

@@ -1,14 +1,12 @@
-import I from '../../src/tags/i'
-
+let html2Md=require('../../src/index')
+const {SYMBOL_I,SYMBOL_B}=require('../options')
 
 describe('test <i></i> tag',()=>{
   it('no nest',()=>{
-    let i=new I("<i>javascript</i>")
-    expect(i.exec()).toBe("*javascript*")
+    expect(html2Md("<i>javascript</i>")).toBe(SYMBOL_I+"javascript"+SYMBOL_I)
   })
 
   it('can nest',()=>{
-    let i=new I("<i><strong>strong and italic</strong></i>")
-    expect(i.exec()).toBe("***strong and italic***")
+    expect(html2Md("<i><strong>strong and italic</strong></i>")).toBe(SYMBOL_I+SYMBOL_B+"strong and italic"+SYMBOL_B+SYMBOL_I)
   })
 })

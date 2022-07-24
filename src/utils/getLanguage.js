@@ -16,18 +16,21 @@
 * */
 
 
-const toStandard={
-  'js':'javascript',
-  'py':'python',
-  'c++':'cpp',
-  'md':'markdown'
-}
+// const toStandard={
+//   'js':'javascript',
+//   'py':'python',
+//   'c++':'cpp',
+//   'md':'markdown'
+// }
 
+const DEFAULT_LANG='javascript'
+
+// only exec in pre tag
 function getLanguage(str){
-  let matchLang=str.match(/<.*?class=".*?language-(\bc\b|\bjava\b|\bjs\b|\bjavascript\b|\bpython\b|\bcpp\b|\bc\+\+\b|\bpy\b|\bcss\b|\bhtml\b|\bmarkdown\b|\bmd\b)".*?>/)
-  if(matchLang)return toStandard[matchLang[1]] || matchLang[1]
+  let matchLang=str.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/)
+  if(matchLang)return matchLang[1]
   let match=str.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/)
-  return match ? 'javascript' : ''
+  return match ? DEFAULT_LANG : ''
 }
 
 module.exports=getLanguage

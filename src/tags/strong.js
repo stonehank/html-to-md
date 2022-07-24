@@ -12,6 +12,8 @@ class Strong extends Tag{
 
 
   exec(prevGap='',endGap=''){
+    // console.log('strong',this.options)
+    if(this.prevTagStr && this.prevTagStr.endsWith('*'))prevGap=' '
     return super.exec(prevGap,endGap)
   }
 
