@@ -19,4 +19,8 @@ describe('find the lang',()=>{
     it('with highlight default',()=>{
         expect(getLanguage('<pre class="hljs font-small"><code><span class="hljs-keyword">let abc</span></code></pre>')).toBe('javascript')
     })
+
+    it('with no lang',()=>{
+        expect(getLanguage('<pre class="hljs language-"><code><span class="hljs-keyword">let abc</span></code></pre>')).toBe('')
+    })
 })

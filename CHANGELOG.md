@@ -1,3 +1,8 @@
+### 0.5.9.1
+
+* fix undefined language in pre tag
+
+
 ### 0.5.9
 
 * fix p tag add an extra gap when inside text node.

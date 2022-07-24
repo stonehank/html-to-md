@@ -28,7 +28,7 @@ const DEFAULT_LANG='javascript'
 // only exec in pre tag
 function getLanguage(str){
   let matchLang=str.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/)
-  if(matchLang)return matchLang[1]
+  if(matchLang)return matchLang[1] || ''
   let match=str.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/)
   return match ? DEFAULT_LANG : ''
 }
