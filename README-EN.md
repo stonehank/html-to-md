@@ -1,4 +1,4 @@
-> A JS library for convert HTML to Markdown.[中文](./README.md)
+> A JS library for converting HTML to Markdown.[中文](./README.md)
 
 ---
 
@@ -31,21 +31,21 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 // ***strong and italic***
 ```
 
-### Config(Not require)：
+### Config(Not required)：
 
 * options:
 
 |name|data type|default|explain|
 |:---:|:---:|:---:|:---:|
 |skipTags|Array|`['div','html','body','nav','section','footer','main','aside','article','header']`|Declare which tags need to skip|
-|emptyTags|Array|`[]`|Not only skip itself,but also skip all the tas inside it|
+|emptyTags|Array|`[]`|Not only skip itself,but also skip all the tags inside it|
 |ignoreTags|Array|`['','style','head','!doctype','form','svg','noscript','script','meta']`|Ignore all content inside the tag|
 |aliasTags|Object|`{figure :'p', figcaption:'p', dl:'p', dd:'p', dt:'p',}`|Define another tag name for some tags|
 
 
 > Priority：skipTags > emptyTags > ignoreTags > aliasTags
 
-Example
+Example:
 ```javascript
 html2md('<><b><i>abc</i></b></>',{ignoreTags:['']})
 // ''
@@ -89,7 +89,7 @@ html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
 
 * 100+`unit test` and `module test`,  code coverage `98%`
 
-> Only valid HTML will be output correctly, eg. `<p>abc<` ，`<i>abc</>`are **Not Valid** text.
+> Only valid HTML will be output correctly, eg. `<p>abc<` ，`<i>abc</>` are **Not Valid** text.
 
 ### Support Tags
 
