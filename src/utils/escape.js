@@ -6,15 +6,17 @@ let escapeMap = {
   '"': '&quot;',
   "'": '&#39;',
   '`': '&#x60;',
+  '“': '&ldquo;',
+  '”': '&rdquo;',
 };
 
 for (let key in escapeMap) {
   unescapeMap[escapeMap[key]] = key;
 }
 
-let reUnescapedHtml = /[&<>"'`]/g
+let reUnescapedHtml = /[&<>"'`“”]/g
 let reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
-let reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60);/g
+let reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60|ldquo|rdquo);/g
 let reHasEscapedHtml = RegExp(reEscapedHtml.source)
 let _extra_escapes = [
   [/\\/g, '\\\\'],

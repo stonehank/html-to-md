@@ -1,3 +1,4 @@
+import html2md from '../../src'
 import P from '../../src/tags/p'
 
 
@@ -25,5 +26,15 @@ describe('test <p></p> tag',()=>{
         "请求并拥有一\n" +
         "\n" +
         "定编程能力的谷歌浏览器插件...\n")
+  })
+
+  it('p tag gaps 1',()=>{
+    let str=html2md("<p>1234</p>&nbsp;\n\n\n\n&nbsp;<p>5678</p>")
+    expect(str).toBe("1234\n\n5678")
+  })
+
+  it('p tag gaps 2',()=>{
+    let str=html2md("<p>1234</p>&nbsp;&nbsp;<p>5678</p>")
+    expect(str).toBe("1234\n\n5678")
   })
 })

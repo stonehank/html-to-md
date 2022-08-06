@@ -6,7 +6,7 @@ function html2md(str,options,force=false){
   config.set(options,force)
   str=clearComment(str)
   str=str.trim()
-  str=str.replace(/(\r\n)/g,'').replace(/&nbsp;/g,"")
+  str=str.replace(/(\r\n)/g,'').replace(/&nbsp;/g," ")
   let getNxtValidTag=findValidTag(str)
   let res=''
   let prevTagName=null
@@ -15,7 +15,7 @@ function html2md(str,options,force=false){
   while(nextTagStr!==''){
     if(nextTagName!=null){
       // 下一个tag是一个有效的并且不是纯文本
-      let SubTagClass=findTagClass(nextTagName)
+      let SubTagClass=findTagClass(nextTagName) 
       let options={
         parentTag:null,
         prevTagName:prevTagName,
