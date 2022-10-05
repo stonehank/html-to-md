@@ -1,3 +1,9 @@
+### 0.6.1
+
+* add title in a tag
+* add input options in demo page
+
+
 ### 0.6.0
 
 * fix undefined language in pre tag
