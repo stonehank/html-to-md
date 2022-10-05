@@ -130,6 +130,18 @@
             font-size: 16px;
             resize: vertical;
         }
+        #previewCode{
+            margin:8px 0 0 18px;
+            font-size:13px;
+        }
+        .hljs {
+            color: #24292e;
+            background: #f2f2f2;
+        }
+        .hljs-code {
+            /* prettylights-syntax-comment */
+            color: #4a4e53;
+        }
     </style>
 </head>
 <body>
@@ -142,7 +154,7 @@
 <div id="page-selected-2" style="display:none">
 </div>
 <sectoin style="display:flex; flex-flow:row; justify-content: space-between; align-items:flex-start; padding: 0 10px">
-    <section style="display:flex; flex-flow:column;flex:6;margin-right:24px;">
+    <section style="display:flex; flex-flow:column;flex:4;margin-right:24px;">
         <div class="form-item">
             <label for="skipTags">skipTags</label>
             <input type="text" id="skipTags" style="width:100%"/>
@@ -160,9 +172,12 @@
             <input type="checkbox" id="syncScrBtn" checked style="font-size:1rem"/>
         </div>
     </section>
-    <div style="flex:3" class="form-item">
+    <div style="flex:2" class="form-item">
         <label for="aliasTags">aliasTags</label>
-        <textarea rows="6" id="aliasTags" style="width:100%" ></textarea>
+        <textarea rows="9" id="aliasTags" style="width:100%" ></textarea>
+    </div>
+    <div style="width:50%;max-width: 50%;" id="previewCode" >
+        
     </div>
 </sectoin>
 
@@ -177,6 +192,7 @@
             dt:'p',
             figcaption:'p'
         }
+
     const PAGE1HTML = '<div class="infoWrap">\n' +
         '        <span class="info">markdown</span>\n' +
         '        <span class="info">\n' +
@@ -330,7 +346,7 @@
                         } catch (__) {
                         }
                     }
-                    return '<pre class="hljs"><code>' + mdItObj.utils.escapeHtml(str) + '</code></pre>';
+                    return '<pre class="hljs"><code class="hljs-code">' + mdItObj.utils.escapeHtml(str) + '</code></pre>';
                 }
             }),
             mdIt = mdItObj.render.bind(mdItObj),
@@ -356,7 +372,8 @@
         let io = document.getElementsByClassName("io"),
             syncScrBtn = document.getElementById("syncScrBtn"),
             pageChoose = document.getElementById("pageChoose"),
-            pageChooseBtns = pageChoose.getElementsByClassName("page")
+            pageChooseBtns = pageChoose.getElementsByClassName("page"),
+            previewCodeEle = document.getElementById("previewCode")
 
         function fillPage1() {
             let page1 = document.getElementById("page-selected-1"),
@@ -384,6 +401,7 @@
         }
 
         function page1AfterInput() {
+            previewCodeEle.innerHTML = md2Html(generatePreviewCode())
             let inputMd = document.querySelector("#page-selected-1 #inputMD"),
                 outputMD = document.querySelector("#page-selected-1 #outputMD"),
                 outputHTML = document.querySelector("#page-selected-1 #outputHTML")
@@ -413,6 +431,7 @@
         }
 
         function page2AfterInput() {
+            previewCodeEle.innerHTML = md2Html(generatePreviewCode())
             let inputHTML = document.querySelector("#page-selected-2 #inputHTML"),
                 outputMD = document.querySelector("#page-selected-2 #outputMD")
             show(null, inputHTML, outputMD)
@@ -525,6 +544,24 @@
             aliasTags=getNewObjectConfig(ev.target.value)
             rerenderAfterConfig()
         })
+        function generatePreviewCode (){
+            let toObjectString = obj => Object.entries(obj).map(([k, v]) => `        '${k}': '${v}'`).join(',\n');
+            let toArrayString = arr => arr.map(val=>`'${val}'`).join(', ')
+            return (
+`
+\`\`\`
+const html2md=require('html-to-md')
+
+html2md(str, {
+    ignoreTags: [${toArrayString(ignoreTags)}],
+    skipTags: [${toArrayString(skipTags)}],
+    emptyTags: [${toArrayString(emptyTags)}],
+    aliasTags: {\n${toObjectString(aliasTags)}\n    },
+}, true)
+\`\`\`
+`
+            )
+        }
         function isSameObjectConfig(oldObject, newStr){
             return JSON.stringify(oldObject).replace(/["{}]/g,'').replace(/\s/g,'') === newStr.replace(/\s/g, '')
         }
@@ -534,7 +571,7 @@
             return oldVal===newVal
         }
         function getNewObjectConfig(newStr){
-            let arr = getNewConfig(newStr)
+            let arr = getNewConfig(newStr).filter(Boolean)
             let obj={}
             for(let str of arr){
                 let [key, value] = str.split(':')
@@ -569,7 +606,7 @@
         }
         console.time('html->md')
         output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags},true)
-        console.log(htmlTxt,output,{skipTags,ignoreTags,emptyTags,aliasTags})
+        // console.log(htmlTxt,output,{skipTags,ignoreTags,emptyTags,aliasTags})
         console.timeEnd('html->md')
 
         if (ele1) ele2.innerHTML = htmlTxt
