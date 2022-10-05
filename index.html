@@ -32,6 +32,7 @@
         #pageChoose {
             display: flex;
             margin: 8px;
+            height: 64px;
         }
 
         .page {
@@ -62,7 +63,7 @@
             width: 48%;
             resize: horizontal;
             min-width: 20%;
-            height: 70vh;
+            height: 55vh;
         }
 
         #page-selected-2 #inputHTML {
@@ -80,7 +81,7 @@
             width: 33%;
             resize: horizontal;
             min-width: 20%;
-            height: 70vh;
+            height: 55vh;
         }
 
         #page-selected-1 #outputHTML, #page-selected-1 #outputMD {
@@ -117,6 +118,18 @@
             cursor: pointer;
         }
 
+        .form-item{
+            display:flex; 
+            flex-flow:column;
+        }
+        .form-item input{
+            height: 28px;
+            font-size: 16px;
+        }
+        .form-item textarea{
+            font-size: 16px;
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
@@ -128,12 +141,42 @@
 </div>
 <div id="page-selected-2" style="display:none">
 </div>
-<div>
-    <label for="syncScrBtn" id="syncScrBtnRender">sync scroll</label>
-    <input type="checkbox" id="syncScrBtn" checked style="font-size:1rem"/>
-</div>
+<sectoin style="display:flex; flex-flow:row; justify-content: space-between; align-items:flex-start; padding: 0 10px">
+    <section style="display:flex; flex-flow:column;flex:6;margin-right:24px;">
+        <div class="form-item">
+            <label for="skipTags">skipTags</label>
+            <input type="text" id="skipTags" style="width:100%"/>
+        </div>
+        <div class="form-item">
+            <label for="emptyTags">emptyTags</label>
+            <input type="text" id="emptyTags" style="width:100%"  />
+        </div>
+        <div class="form-item">
+            <label for="ignoreTags">ignoreTags</label>
+            <input type="text" id="ignoreTags" style="width:100%"  />
+        </div>
+        <div>
+            <label for="syncScrBtn" id="syncScrBtnRender">sync scroll</label>
+            <input type="checkbox" id="syncScrBtn" checked style="font-size:1rem"/>
+        </div>
+    </section>
+    <div style="flex:3" class="form-item">
+        <label for="aliasTags">aliasTags</label>
+        <textarea rows="6" id="aliasTags" style="width:100%" ></textarea>
+    </div>
+</sectoin>
 
 <script>
+    let ignoreTags=['','style','head','!doctype','form','svg','noscript','script','meta'],
+        skipTags=['div','html','body','nav','section','footer','main','aside','article','header'],
+        emptyTags=[],
+        aliasTags={
+            figure:'p',
+            dl:'p',
+            dd:'p',
+            dt:'p',
+            figcaption:'p'
+        }
     const PAGE1HTML = '<div class="infoWrap">\n' +
         '        <span class="info">markdown</span>\n' +
         '        <span class="info">\n' +
@@ -296,6 +339,7 @@
             md2Html = mdIt,
             delay = false,
             timer = null
+        window.curPage = 'page2'
         marked.setOptions({
             highlight: function (str, lang) {
                 if (lang && hljs.getLanguage(lang)) {
@@ -335,7 +379,7 @@
 
 
         function page1AfterSelect(ev) {
-            md2Html = ev.target.value === "marked" ? marked : mdIt
+            md2Html = ev.target.value === "marked" ? marked.parse : mdIt
             page1AfterInput()
         }
 
@@ -441,16 +485,73 @@
             if (pageId === '0') {
                 destroyPage2()
                 fillPage1()
+                curPage='page1'
             } else if (pageId === '1') {
                 destroyPage1()
                 fillPage2()
+                curPage='page2'
             }
         })
         syncScrBtn.addEventListener('change', toggleSyncScroll)
+
         fillPage2()
         checkIfBindScr()
 
-
+        const skipTagsEle=document.getElementById('skipTags'),
+            emptyTagsEle=document.getElementById('emptyTags'),
+            ignoreTagsEle=document.getElementById('ignoreTags'),
+            aliasTagsEle=document.getElementById('aliasTags')
+        skipTagsEle.value=skipTags.join(', ')
+        emptyTagsEle.value=emptyTags.join(', ')
+        ignoreTagsEle.value=ignoreTags.join(', ')
+        aliasTagsEle.value=JSON.stringify(aliasTags).replace(/["{}]/g,'').replace(/,/g,',\n')
+        skipTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(skipTags,ev.target.value)) return
+            skipTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        emptyTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(emptyTags,ev.target.value)) return
+            emptyTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        ignoreTagsEle.addEventListener('change',(ev)=>{
+            if(isSameConfig(ignoreTags,ev.target.value)) return
+            ignoreTags=getNewConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        aliasTagsEle.addEventListener('change',(ev)=>{
+            if(isSameObjectConfig(aliasTags,ev.target.value)) return
+            aliasTags=getNewObjectConfig(ev.target.value)
+            rerenderAfterConfig()
+        })
+        function isSameObjectConfig(oldObject, newStr){
+            return JSON.stringify(oldObject).replace(/["{}]/g,'').replace(/\s/g,'') === newStr.replace(/\s/g, '')
+        }
+        function isSameConfig(oldArray,newStr){
+            let oldVal=oldArray.join(',').replace(/\s/g,'')
+            let newVal=newStr.replace(/\s/g,'')
+            return oldVal===newVal
+        }
+        function getNewObjectConfig(newStr){
+            let arr = getNewConfig(newStr)
+            let obj={}
+            for(let str of arr){
+                let [key, value] = str.split(':')
+                obj[key] = value
+            }
+            return obj
+        }
+        function getNewConfig(newStr){
+            return newStr.replace(/\s/g,'').split(',')
+        }
+        function rerenderAfterConfig(){
+            if(window.curPage==='page1'){
+                page1AfterInput()
+            }else{
+                page2AfterInput()
+            }
+        }
     }
 </script>
 <script>
@@ -467,7 +568,8 @@
             htmlTxt = ele2.value
         }
         console.time('html->md')
-        output = html2md(htmlTxt)
+        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags},true)
+        console.log(htmlTxt,output,{skipTags,ignoreTags,emptyTags,aliasTags})
         console.timeEnd('html->md')
 
         if (ele1) ele2.innerHTML = htmlTxt
