@@ -357,7 +357,7 @@ describe('module test1',()=>{
       '\n' +
       '[link text](http://dev.nodeca.com)\n' +
       '\n' +
-      '[link with title](http://nodeca.github.io/pica/demo/)\n' +
+      '[link with title](http://nodeca.github.io/pica/demo/ "title text!")\n' +
       '\n' +
       'Autoconverted link [https://github.com/nodeca/pica](https://github.com/nodeca/pica) (enable linkify to see)\n' +
       '\n' +
