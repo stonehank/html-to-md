@@ -6,9 +6,12 @@ class A extends Tag{
   }
 
   beforeMergeSpace(content){
-    let {href}=this.attrs
+    let {href, title}=this.attrs
     if(!href){
       href=''
+    }
+    if(title){
+      return `[${content}](${href} "${title}")`
     }
     return `[${content}](${href})`
   }

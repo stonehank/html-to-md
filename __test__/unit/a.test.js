@@ -24,4 +24,9 @@ describe('test <a></a> tag',()=>{
 data-moz-do-not-send="true">link from moz</a>`)
     expect(a.exec()).toBe("[link from moz](/#you-should-see-this)")
   })
+
+  it('title in tag',()=>{
+    let a=new A(`<a href="/#you-should-see-this" title="some title">link from moz</a>`)
+    expect(a.exec()).toBe(`[link from moz](/#you-should-see-this "some title")`)
+  })
 })
