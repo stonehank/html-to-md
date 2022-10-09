@@ -1,38 +1,34 @@
-const Tag =require('../Tag')
-const __Ignore__=require('./__ignore__')
-const {findTagClass}=require('../utils')
-const {aliasTags}=require('../config').get()
+const Tag = require('../Tag')
+const __Ignore__ = require('./__ignore__')
+const { getTagConstructor } = require('../utils')
+const { aliasTags } = require('../config').get()
 
-
-class Tr extends Tag{
-  constructor(str,tagName='tr',options){
-    super(str,tagName,options)
+class Tr extends Tag {
+  constructor (str, tagName = 'tr', options) {
+    super(str, tagName, options)
   }
 
-  beforeMergeSpace(content){
+  beforeMergeSpace (content) {
     return '|' + content
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
-    let SubTagClass=findTagClass(subTagName)
-    if(subTagName!=='td' && subTagName!=='th' && aliasTags[subTagName]!=='td' && aliasTags[subTagName]!=='th' && SubTagClass !== __Ignore__ ){
+  parseValidSubTag (subTagStr, subTagName, options) {
+    const SubTagClass = getTagConstructor(subTagName)
+    if (subTagName !== 'td' && subTagName !== 'th' && aliasTags[subTagName] !== 'td' && aliasTags[subTagName] !== 'th' && SubTagClass !== __Ignore__) {
       console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`)
       return ''
-    }else{
-      let subTag=new SubTagClass(subTagStr,subTagName, options)
-      return subTag.exec('','')
+    } else {
+      const subTag = new SubTagClass(subTagStr, subTagName, options)
+      return subTag.exec('', '')
     }
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString (subTagStr, subTagName, options) {
     return ''
   }
-  exec(prevGap='',endGap='\n'){
-    return super.exec(prevGap,endGap)
+
+  exec (prevGap = '', endGap = '\n') {
+    return super.exec(prevGap, endGap)
   }
-
 }
-module.exports=Tr
-
-
-
+module.exports = Tr

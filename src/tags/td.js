@@ -1,25 +1,19 @@
-const Th =require('./th')
+const Th = require('./th')
 
-
-
-class Td extends Th{
-  constructor(str,tagName='td',options){
-    super(str,tagName,options)
+class Td extends Th {
+  constructor (str, tagName = 'td', options) {
+    super(str, tagName, options)
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
-    if(subTagName==='ul' || subTagName==='ol' || subTagName==='table' || subTagName==='pre'){
-      return subTagStr.replace(/([\n\r])/g,'')
+  parseValidSubTag (subTagStr, subTagName, options) {
+    if (subTagName === 'ul' || subTagName === 'ol' || subTagName === 'table' || subTagName === 'pre') {
+      return subTagStr.replace(/([\n\r])/g, '')
     }
     return super.parseValidSubTag(subTagStr, subTagName, options)
   }
 
-  exec(prevGap='',endGap=''){
-    return super.exec(prevGap,endGap)
+  exec (prevGap = '', endGap = '') {
+    return super.exec(prevGap, endGap)
   }
-
 }
-module.exports=Td
-
-
-
+module.exports = Td

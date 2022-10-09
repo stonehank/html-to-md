@@ -1,17 +1,13 @@
-const Tag =require('../Tag')
+const Tag = require('../Tag')
 
-
-class Span extends Tag{
-  constructor(str,tagName='span',options){
-    super(str,tagName,options)
+class Span extends Tag {
+  constructor (str, tagName = 'span', options) {
+    super(str, tagName, options)
   }
 
-
-
-  exec(prevGap = '', endGap = '') {
-    return super.exec(prevGap, endGap);
+  exec (prevGap = '', endGap = '') {
+    return super.exec(prevGap, endGap)
   }
 }
 
-
-module.exports=Span
+module.exports = Span

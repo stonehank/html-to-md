@@ -1,17 +1,13 @@
-const Strong =require('./strong')
+const Strong = require('./strong')
 
-
-class B extends Strong{
-  constructor(str,tagName='b',options){
-    super(str,tagName,options)
+class B extends Strong {
+  constructor (str, tagName = 'b', options) {
+    super(str, tagName, options)
   }
 
-  exec(prevGap,endGap){
-    return super.exec(prevGap,endGap)
+  exec (prevGap, endGap) {
+    return super.exec(prevGap, endGap)
   }
-
 }
 
-
-module.exports=B
-
+module.exports = B

@@ -1,25 +1,20 @@
-const SelfCloseTag =require('../SelfCloseTag')
+const SelfCloseTag = require('../SelfCloseTag')
 
-class Input extends SelfCloseTag{
-  constructor(str,tagName='input',options){
-    super(str,tagName,options)
+class Input extends SelfCloseTag {
+  constructor (str, tagName = 'input', options) {
+    super(str, tagName, options)
   }
 
-
-
-  beforeMergeSpace(){
-    let {type,checked}=this.attrs
-    if(this.parentTag === "li" && type==="checkbox"){
-      return checked!=null ? '[x] ' : '[ ] '
+  beforeMergeSpace () {
+    const { type, checked } = this.attrs
+    if (this.parentTag === 'li' && type === 'checkbox') {
+      return checked != null ? '[x] ' : '[ ] '
     }
     return ''
   }
 
-
-  exec(prevGap='',endGap=''){
-    return super.exec(prevGap,endGap)
+  exec (prevGap = '', endGap = '') {
+    return super.exec(prevGap, endGap)
   }
-
 }
-module.exports=Input
-
+module.exports = Input

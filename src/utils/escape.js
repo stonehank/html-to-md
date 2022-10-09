@@ -1,5 +1,5 @@
-let unescapeMap = {};
-let escapeMap = {
+const unescapeMap = {}
+const escapeMap = {
   '&': '&amp;',
   '<': '&lt;',
   '>': '&gt;',
@@ -7,18 +7,18 @@ let escapeMap = {
   "'": '&#39;',
   '`': '&#x60;',
   '“': '&ldquo;',
-  '”': '&rdquo;',
-};
-
-for (let key in escapeMap) {
-  unescapeMap[escapeMap[key]] = key;
+  '”': '&rdquo;'
 }
 
-let reUnescapedHtml = /[&<>"'`“”]/g
-let reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
-let reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60|ldquo|rdquo);/g
-let reHasEscapedHtml = RegExp(reEscapedHtml.source)
-let _extra_escapes = [
+for (const key in escapeMap) {
+  unescapeMap[escapeMap[key]] = key
+}
+
+const reUnescapedHtml = /[&<>"'`“”]/g
+const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+const reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60|ldquo|rdquo);/g
+const reHasEscapedHtml = RegExp(reEscapedHtml.source)
+const _extra_escapes = [
   [/\\/g, '\\\\'],
   [/\*/g, '\\*'],
   [/^-/g, '\\-'],
@@ -33,26 +33,25 @@ let _extra_escapes = [
   [/_/g, '\\_'],
   [/^(\d+)\. /g, '$1\\. ']
 ]
-function escape(s) {
-  return (s && reHasUnescapedHtml.test(s)) ?
-    s.replace(reUnescapedHtml, (chr) => escapeMap[chr]) :
-    s
+function escape (s) {
+  return (s && reHasUnescapedHtml.test(s))
+    ? s.replace(reUnescapedHtml, (chr) => escapeMap[chr])
+    : s
 }
 
-function unescape(s,{needEscape=false}={}) {
-  s= (s && reHasEscapedHtml.test(s)) ?
-    s.replace(reEscapedHtml, (entity) => unescapeMap[entity]) :
-    s
-  if(needEscape){
-    s= _extra_escapes.reduce(function (accumulator, escape) {
+function unescape (s, { needEscape = false } = {}) {
+  s = (s && reHasEscapedHtml.test(s))
+    ? s.replace(reEscapedHtml, (entity) => unescapeMap[entity])
+    : s
+  if (needEscape) {
+    s = _extra_escapes.reduce(function (accumulator, escape) {
       return accumulator.replace(escape[0], escape[1])
     }, s)
   }
   return s
-
 }
 
-function extraEscape(s){
+function extraEscape (s) {
   return _extra_escapes.reduce(function (accumulator, escape) {
     return accumulator.replace(escape[0], escape[1])
   }, s)

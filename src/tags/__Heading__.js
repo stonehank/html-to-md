@@ -1,22 +1,19 @@
-const Tag =require('../Tag')
+const Tag = require('../Tag')
 
-class __Heading__ extends Tag{
-  constructor(str,tagName='h1'){
-    super(str,tagName)
+class __Heading__ extends Tag {
+  constructor (str, tagName = 'h1') {
+    super(str, tagName)
   }
 
-  beforeMergeSpace(content){
-    return '# '+content
+  beforeMergeSpace (content) {
+    return '# ' + content
   }
 
-
-  exec(prevGap,endGap){
-    if(!prevGap)prevGap='\n'
-    if(!endGap)endGap='\n'
-    return super.exec(prevGap,endGap)
+  exec (prevGap, endGap) {
+    if (!prevGap)prevGap = '\n'
+    if (!endGap)endGap = '\n'
+    return super.exec(prevGap, endGap)
   }
-
 }
 
-
-module.exports=__Heading__
+module.exports = __Heading__

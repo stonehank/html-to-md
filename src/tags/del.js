@@ -1,21 +1,17 @@
-const Tag =require('../Tag')
+const Tag = require('../Tag')
 
-class Del extends Tag{
-  constructor(str,tagName='del'){
-    super(str,tagName)
+class Del extends Tag {
+  constructor (str, tagName = 'del') {
+    super(str, tagName)
   }
 
-  beforeMergeSpace(content){
-    return "~~" + content + "~~"
+  beforeMergeSpace (content) {
+    return '~~' + content + '~~'
   }
 
-
-  exec(prevGap='',endGap=''){
-    return super.exec(prevGap,endGap)
+  exec (prevGap = '', endGap = '') {
+    return super.exec(prevGap, endGap)
   }
-
 }
 
-
-module.exports=Del
-
+module.exports = Del

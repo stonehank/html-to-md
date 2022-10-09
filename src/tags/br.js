@@ -1,17 +1,13 @@
-const SelfCloseTag =require('../SelfCloseTag')
+const SelfCloseTag = require('../SelfCloseTag')
 
-
-class Br extends SelfCloseTag{
-  constructor(str,tagName='b',options){
-    super(str,tagName,options)
+class Br extends SelfCloseTag {
+  constructor (str, tagName = 'b', options) {
+    super(str, tagName, options)
   }
 
-  exec(prevGap,endGap='\n'){
-    return '  '+endGap
+  exec (prevGap, endGap = '\n') {
+    return '  ' + endGap
   }
-
 }
 
-
-module.exports=Br
-
+module.exports = Br

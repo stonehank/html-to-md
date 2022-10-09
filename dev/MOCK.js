@@ -37,8 +37,7 @@ const PAGE2HTML = '<div class="infoWrap">\n' +
     '        <textarea id="outputMD" readonly class="io"></textarea>\n' +
     '    </div>'
 
-
-const PLACEHOLDER='---\n' +
+const PLACEHOLDER = '---\n' +
     '\n' +
     '# h1 Heading\n' +
     '## h2 Heading\n' +

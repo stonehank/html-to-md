@@ -1,29 +1,24 @@
-const SelfCloseTag =require('../SelfCloseTag')
+const SelfCloseTag = require('../SelfCloseTag')
 
-class Hr extends SelfCloseTag{
-  constructor(str,tagName='hr',options){
-    super(str,tagName,options)
+class Hr extends SelfCloseTag {
+  constructor (str, tagName = 'hr', options) {
+    super(str, tagName, options)
   }
 
-  beforeMergeSpace(){
-    let leadingSpace=this.leadingSpace
-    return leadingSpace + "---"
+  beforeMergeSpace () {
+    const leadingSpace = this.leadingSpace
+    return leadingSpace + '---'
   }
 
-
-
-  beforeReturn(content){
-    content.replace(/^(\n\s*)+/,'\n\n')
-      .replace(/(\n\s*)+$/,'\n\n')
-    return  content
+  beforeReturn (content) {
+    content.replace(/^(\n\s*)+/, '\n\n')
+      .replace(/(\n\s*)+$/, '\n\n')
+    return content
   }
 
-
-  exec(prevGap='\n',endGap='\n'){
-    return super.exec(prevGap,endGap)
+  exec (prevGap = '\n', endGap = '\n') {
+    return super.exec(prevGap, endGap)
   }
-
 }
 
-
-module.exports=Hr
+module.exports = Hr

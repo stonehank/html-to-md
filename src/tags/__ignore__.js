@@ -5,18 +5,15 @@
 *
 * */
 
-class __Ignore__{
-  constructor(str,tagName='__ignore__',{parentTag=''}={}){
-    this.tagName=tagName
-    this.parentTag=parentTag
+class __Ignore__ {
+  constructor (str, tagName = '__ignore__', { parentTag = '' } = {}) {
+    this.tagName = tagName
+    this.parentTag = parentTag
   }
 
-  exec(){
+  exec () {
     return ''
   }
 }
 
-
-module.exports=__Ignore__
-
-
+module.exports = __Ignore__

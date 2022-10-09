@@ -1,5 +1,5 @@
-const Tag =require('../Tag')
-const SelfCloseTag =require('../SelfCloseTag')
+const Tag = require('../Tag')
+const SelfCloseTag = require('../SelfCloseTag')
 /*
 *
 * <sub><b>abc</b></sub>
@@ -7,36 +7,31 @@ const SelfCloseTag =require('../SelfCloseTag')
 *
 * */
 
-class __NoMatch__ extends Tag{
-  constructor(str,tagName='__nomatch__'){
-    super(str,tagName)
-    this.tagName=tagName
+class __NoMatch__ extends Tag {
+  constructor (str, tagName = '__nomatch__') {
+    super(str, tagName)
+    this.tagName = tagName
   }
 
-  beforeMergeSpace(content){
+  beforeMergeSpace (content) {
     return `<${this.tagName}>${content}</${this.tagName}>`
   }
 
-
-  exec(){
-    return super.exec('','')
+  exec () {
+    return super.exec('', '')
   }
-
 }
 
-class __NoMatchSelfClose__ extends SelfCloseTag{
-  constructor(str,tagName='__nomatchselfclose__'){
-    super(str,tagName)
-    this.tagName=tagName
-    this.str=str
+class __NoMatchSelfClose__ extends SelfCloseTag {
+  constructor (str, tagName = '__nomatchselfclose__') {
+    super(str, tagName)
+    this.tagName = tagName
+    this.str = str
   }
 
-  exec(){
+  exec () {
     return `<${this.tagName} />`
   }
-
 }
 
-module.exports={__NoMatch__,__NoMatchSelfClose__}
-
-
+module.exports = { __NoMatch__, __NoMatchSelfClose__ }

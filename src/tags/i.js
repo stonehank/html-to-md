@@ -1,14 +1,13 @@
-const Em =require('./em')
+const Em = require('./em')
 
-class I extends Em{
-  constructor(str,tagName='i',options){
-    super(str,tagName,options)
+class I extends Em {
+  constructor (str, tagName = 'i', options) {
+    super(str, tagName, options)
   }
 
-  exec(prevGap,endGap){
-    return super.exec(prevGap,endGap)
+  exec (prevGap, endGap) {
+    return super.exec(prevGap, endGap)
   }
-
 }
 
-module.exports=I
+module.exports = I
