@@ -1,7 +1,7 @@
-const {findValidTag, findTagClass, parseAttrs} = require('./utils')
+const {generateGetNextValidTag, getTagConstructor, getTagAttributes} = require('./utils')
 const RawString = require('./tags/__rawString__')
 const {SINGLE} = require('./utils/CONSTANT')
-const needIndependentLine = require('./utils/needIndependentLine')
+const isIndependentTag = require('./utils/isIndependentTag')
 // const getRealTagName = require('./utils/getRealTagName')
 // const trim=require('./utils/trim')
 
@@ -116,7 +116,7 @@ class Tag {
             console.warn("Tag " + this.tagName + " has no close.")
         }
         return {
-            attr: parseAttrs(openTagAttrs),
+            attr: getTagAttributes(openTagAttrs),
             content: restStr.slice(0, endId)
         }
     }
@@ -142,7 +142,7 @@ class Tag {
 
     // 存在tagName时，解析步骤
     parseValidSubTag(subTagStr, subTagName,options) {
-        let SubTagClass = findTagClass(subTagName)
+        let SubTagClass = getTagConstructor(subTagName)
         let subTag = new SubTagClass(subTagStr, subTagName, options)
         return subTag.exec()
     }
@@ -196,7 +196,7 @@ class Tag {
 
     exec(prevGap = '', endGap = '') {
         let content = this.beforeParse()
-        let getNxtValidTag = findValidTag(this.content)
+        let getNxtValidTag = generateGetNextValidTag(this.content)
         let [nextTagName, nextTagStr] = getNxtValidTag()
         let prevTagName=null, prevTagStr=null
         while (nextTagStr!== '') {
@@ -234,15 +234,14 @@ class Tag {
         content = this.beforeMergeSpace(content)
         // 当类似<img>后面跟随<p>情况，需要<p>多空一行
         if( !this.noExtraLine
-            && needIndependentLine(this.tagName)
+            && isIndependentTag(this.tagName)
             && !!this.prevTagName
             && !content.startsWith('\n')
-            && !needIndependentLine(this.prevTagName)
+            && !isIndependentTag(this.prevTagName)
             && this.parentTag
         ){
             prevGap='\n\n'
         }
-        console.log(JSON.stringify(prevGap))
         content=this.mergeSpace(content,prevGap,endGap)
 
         if(this.noWrap && !this.keepFormat) content=content.replace(/\s+/g,' ')

@@ -5,7 +5,7 @@ describe('直接忽视整个tag',()=>{
 
 
   it('忽视 所有 ',()=>{
-    expect(html2Md("<><b><i>abc</i></b></>",{ignoreTags:['']})).toBe('')
+    expect(html2Md("<><b><i>abc</i></b></>",{ignoreTags:['']}, true)).toBe('')
   })
 
 

@@ -108,19 +108,26 @@
             font-weight: bold;
         }
 
-        #syncScrBtnRender {
+        .check-label {
             border: 1px;
             background: lightgreen;
-            padding: 0.2rem;
-            border-radius: 4px;
-            margin: 0.5rem;
+            padding: 4px 8px;
+            border-radius: 2px;
             display: inline-block;
             cursor: pointer;
+            margin-right:4px;
+        }
+        .form-row-item{
+            display: flex;
+            flex-flow:row;
+            align-items: center;
+            margin-top:6px;
         }
 
         .form-item{
             display:flex; 
             flex-flow:column;
+            margin-top:6px;
         }
         .form-item input{
             height: 28px;
@@ -167,9 +174,21 @@
             <label for="ignoreTags">ignoreTags</label>
             <input type="text" id="ignoreTags" style="width:100%"  />
         </div>
-        <div>
-            <label for="syncScrBtn" id="syncScrBtnRender">sync scroll</label>
-            <input type="checkbox" id="syncScrBtn" checked style="font-size:1rem"/>
+        <div class="form-row-item">
+            <label class="check-label">renderCustomTag</label>
+            <input type="radio" id="renderCustomTag-true" name="renderCustomTag" checked value="all" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTag-true">True</label>
+            <input type="radio" id="renderCustomTag-skip" name="renderCustomTag" value="SKIP" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTag-skip">Skip</label>
+            <input type="radio" id="renderCustomTag-ignore" name="renderCustomTag" value="IGNORE" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTag-ignore">Ignore</label>
+            <input type="radio" id="renderCustomTag-empty" name="renderCustomTag" value="EMPTY"  style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTag-empty">Empty</label>
+        </div>
+        </div>
+        <div class="form-row-item">
+            <label for="syncScrBtn" class="check-label">sync scroll</label>
+            <input type="checkbox" id="syncScrBtn" checked style="width: 20px;height: 20px;"/>
         </div>
     </section>
     <div style="flex:2" class="form-item">
@@ -191,7 +210,8 @@
             dd:'p',
             dt:'p',
             figcaption:'p'
-        }
+        },
+        renderCustomTag=true
 
     const PAGE1HTML = '<div class="infoWrap">\n' +
         '        <span class="info">markdown</span>\n' +
@@ -516,10 +536,14 @@
         fillPage2()
         checkIfBindScr()
 
+       
+    
         const skipTagsEle=document.getElementById('skipTags'),
             emptyTagsEle=document.getElementById('emptyTags'),
             ignoreTagsEle=document.getElementById('ignoreTags'),
-            aliasTagsEle=document.getElementById('aliasTags')
+            aliasTagsEle=document.getElementById('aliasTags'),
+            renderCustomTagEles = document.querySelectorAll('input[name="renderCustomTag"]');
+
         skipTagsEle.value=skipTags.join(', ')
         emptyTagsEle.value=emptyTags.join(', ')
         ignoreTagsEle.value=ignoreTags.join(', ')
@@ -544,6 +568,16 @@
             aliasTags=getNewObjectConfig(ev.target.value)
             rerenderAfterConfig()
         })
+
+        renderCustomTagEles.forEach(function(ele){
+            ele.addEventListener('change', function(){
+                if(ele.checked){
+                    renderCustomTag = ele.value === 'all' ? true : ele.value
+                    rerenderAfterConfig()
+                }
+            })
+        })
+
         function generatePreviewCode (){
             let toObjectString = obj => Object.entries(obj).map(([k, v]) => `        '${k}': '${v}'`).join(',\n');
             let toArrayString = arr => arr.map(val=>`'${val}'`).join(', ')
@@ -557,6 +591,7 @@ html2md(str, {
     skipTags: [${toArrayString(skipTags)}],
     emptyTags: [${toArrayString(emptyTags)}],
     aliasTags: {\n${toObjectString(aliasTags)}\n    },
+    renderCustomTag: ${renderCustomTag === true ? 'true' : `'${renderCustomTag}'`}
 }, true)
 \`\`\`
 `
@@ -605,8 +640,7 @@ html2md(str, {
             htmlTxt = ele2.value
         }
         console.time('html->md')
-        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags},true)
-        // console.log(htmlTxt,output,{skipTags,ignoreTags,emptyTags,aliasTags})
+        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags,renderCustomTag},true)
         console.timeEnd('html->md')
 
         if (ele1) ele2.innerHTML = htmlTxt

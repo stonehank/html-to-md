@@ -41,6 +41,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>',options))
 |emptyTags|Array|`[]`|Not only skip itself,but also skip all the tags inside it|
 |ignoreTags|Array|`['','style','head','!doctype','form','svg','noscript','script','meta']`|Ignore all content inside the tag|
 |aliasTags|Object|`{figure :'p', figcaption:'p', dl:'p', dd:'p', dt:'p',}`|Define another tag name for some tags|
+|renderCustomTag|Boolean \| `SKIP`( same as `false` ) \| `EMPTY` \| `IGNORE` |`true`|Define render not valida HTML tag, or render as `skipTags`, `emptyTags` or `ignoreTags`|
 
 
 > Priority：skipTags > emptyTags > ignoreTags > aliasTags
@@ -58,6 +59,9 @@ html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
 
 html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
 // *  abc
+
+html2md('<test><b><i>abc</i></b></test>',{renderCustomTag: 'SKIP'})
+// ***abc***
 ```
 
 * force(Boolean)(Default value is false)

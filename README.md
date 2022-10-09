@@ -8,11 +8,9 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/html-to-md.svg)
 ![David](https://img.shields.io/david/stonehank/html-to-md.svg)
 
-
 ### 效果
 
 [live-demo](https://stonehank.github.io/html-to-md/)
-
 
 ### 为什么做这个工具
 
@@ -26,7 +24,6 @@
 但后来偶尔一次使用，面对更复杂的`html`格式，就会出现混乱，这个库也就是一个重构版，
 当然，它可能还存在很多`bug`没有发现，但希望能在后续不断完善，如果有发现`bug`，请提`issue`或`PR`，我会第一时间进行处理。
 
-
 ### 使用说明
 
 ##### 安装
@@ -36,11 +33,13 @@
 ##### 使用
 
 ```js
-const html2md=require('html-to-md')
+const html2md = require("html-to-md");
 // or if you're using ES6
-import html2md from 'html2md'
+import html2md from "html2md";
 
-console.log(html2md('<strong><em>strong and italic</em></strong>',options,force))
+console.log(
+  html2md("<strong><em>strong and italic</em></strong>", options, force)
+);
 // ***strong and italic***
 ```
 
@@ -114,84 +113,101 @@ options:
 }</code></pre></td>
 <td align="center">为标签定义一个别名(通常作用于一些不常用标签)</td>
 </tr>
+<tr>
+<td align="center">renderCustomTag</td>
+<td align="center">Boolean | 'SKIP' | 'EMPTY' | 'IGNORE'</td>
+<td align="left">
+<code>true</code></td>
+<td align="left">定义是否渲染自定义标签（非HTML标签），
+<ul>
+<li><code>true</code>：渲染</li>
+<li><code>false | SKIP</code>：添加至<code>skipTags</code></li>
+<li><code>EMPTY</code>：添加至<code>emptyTags</code></li>
+<li><code>IGNORE</code>：添加至<code>ignoreTags</code></li>
+</ul>
+</td>
+</tr>
 </tbody>
 </table>
-
 
 > 优先权：skipTags > emptyTags > ignoreTags > aliasTags
 
 例：
+
 ```javascript
-html2md('<><b><i>abc</i></b></>',{ignoreTags:['']})
+html2md("<><b><i>abc</i></b></>", { ignoreTags: [""] });
 // ''
 
-html2md('<><b><i>abc</i></b></>',{skipTags:['']})
+html2md("<><b><i>abc</i></b></>", { skipTags: [""] });
 // ***abc***
 
-html2md('<><b><i>abc</i></b></>',{emptyTags:['']})
+html2md("<><b><i>abc</i></b></>", { emptyTags: [""] });
 // abc
 
-html2md('<><b><i>abc</i></b></>',{skipTags:[''],aliasTags:{b:'ul',i:'li'}})
+html2md("<><b><i>abc</i></b></>", {
+  skipTags: [""],
+  aliasTags: { b: "ul", i: "li" },
+});
 // *  abc
+
+html2md("<test><b><i>abc</i></b></test>", { renderCustomTag: "SKIP" });
+// ***abc***
 ```
 
-force(Boolean)(默认false)
+force(Boolean)(默认 false)
 
-|值|说明|
-|:---:|:---:|
-|true|表示强制使用自定义配置|
-|false|对自定义配置使用`Object.assign`操作|
+|  值   |                说明                 |
+| :---: | :---------------------------------: |
+| true  |       表示强制使用自定义配置        |
+| false | 对自定义配置使用`Object.assign`操作 |
 
 例：
+
 ```javascript
 // 默认 skipTags 为 ['div','html','body']
 
 // 配置一：
-html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},false)
+html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, false);
 // skipTags 为 ['div','html','body','b']
 
 // 配置二：
-html2md('<div><b><i>abc</i></b></div>',{skipTags :['b']},true)
+html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, true);
 // 经过配置后 skipTags 为 ['b']
-
 ```
 
 ### 特点
 
-* 快速，小巧，无任何依赖，`gzip` 7kb
+- 快速，小巧，无任何依赖，`gzip` 7kb
 
-* 支持`nodeJS`，参数(html文本)为字符串
+- 支持`nodeJS`，参数(html 文本)为字符串
 
-* 100+单元测试和模块测试，覆盖率`98%`
+- 100+单元测试和模块测试，覆盖率`98%`
 
-
-> 注意：只有有效规范的HTML文本才能准确显示结果，如`<p>abc<` ，`<i>abc</>`等都是**无效**文本
+> 注意：只有有效规范的 HTML 文本才能准确显示结果，如`<p>abc<` ，`<i>abc</>`等都是**无效**文本
 
 ### 支持标签
 
-* `a`
-* `b`
-* `blockquote`
-* `code`
-* `del`
-* `em`
-* `h1~h6`
-* `hr`
-* `i`
-* `img`
-* `input`
-* `li`
-* `ol`
-* `p`
-* `pre`
-* `s`
-* `strong`
-* `table`
-* `tbody`
-* `td`
-* `th`
-* `thead`
-* `tr`
-* `ul`
-
-
+- `a`
+- `b`
+- `blockquote`
+- `code`
+- `del`
+- `em`
+- `h1~h6`
+- `hr`
+- `i`
+- `img`
+- `input`
+- `li`
+- `ol`
+- `p`
+- `pre`
+- `s`
+- `strong`
+- `table`
+- `tbody`
+- `td`
+- `th`
+- `thead`
+- `tr`
+- `ul`
