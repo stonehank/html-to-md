@@ -113,7 +113,7 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 </tr>
 <tr>
 <td align="center">renderCustomTags</td>
-<td align="left"><code>&nbsp;&nbsp;Boolean <br>| 'SKIP' <br>| 'EMPTY' <br>| 'IGNORE'</code></td>
+<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>| <code>'SKIP'</code> <br>| <code>'EMPTY'</code> <br>| <code>'IGNORE'</code></td>
 <td align="center">
 <code>true</code></td>
 <td align="left">Define how to render not valida HTML tags

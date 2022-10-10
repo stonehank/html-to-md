@@ -125,7 +125,7 @@ options:
 </tr>
 <tr>
 <td align="center">renderCustomTags</td>
-<td align="left"><code>&nbsp;&nbsp;Boolean <br>| 'SKIP' <br>| 'EMPTY' <br>| 'IGNORE'</code></td>
+<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>| <code>'SKIP'</code> <br>| <code>'EMPTY'</code> <br>| <code>'IGNORE'</code></td>
 <td align="center">
 <code>true</code></td>
 <td align="left">定义是否渲染自定义标签（非HTML标签），
