@@ -1,6 +1,8 @@
-
-function getTagAttributes (attrStr) {
-  const obj = {}; let inside = false; let key = ''; let value = ''
+function getTagAttributes(attrStr) {
+  const obj = {}
+  let inside = false
+  let key = ''
+  let value = ''
   for (let i = 0; i <= attrStr.length; i++) {
     if (i === attrStr.length || /\s/.test(attrStr[i])) {
       if (!inside || i === attrStr.length) {
@@ -17,11 +19,11 @@ function getTagAttributes (attrStr) {
     } else if (attrStr[i] === '"' || attrStr[i] === "'") {
       inside = !inside
       continue
-    // only pass not inside attr value (https://github.com/stonehank/html-to-md/issues/43)
+      // only pass not inside attr value (https://github.com/stonehank/html-to-md/issues/43)
     } else if (attrStr[i] === '=' && !inside) {
       continue
     }
-    if (!inside)key += attrStr[i]
+    if (!inside) key += attrStr[i]
     else value += attrStr[i]
   }
 

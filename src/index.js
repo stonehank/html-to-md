@@ -1,7 +1,13 @@
-const { getTagConstructor, generateGetNextValidTag, unescape, clearComment, isIndependentTag } = require('./utils')
+const {
+  getTagConstructor,
+  generateGetNextValidTag,
+  unescape,
+  clearComment,
+  isIndependentTag,
+} = require('./utils')
 const config = require('./config')
 
-function html2md (str, options, force = false) {
+function html2md(str, options, force = false) {
   config.reset()
   config.set(options, force)
   str = clearComment(str)
@@ -19,7 +25,7 @@ function html2md (str, options, force = false) {
       const options = {
         parentTag: null,
         prevTagName,
-        prevTagStr: res
+        prevTagStr: res,
         // leadingSpace:this.leadingSpace,
         // layer:this.layer,
         // keepFormat:this.keepFormat,
@@ -46,7 +52,7 @@ function html2md (str, options, force = false) {
   return beforeReturn(unescape(res))
 }
 
-function beforeReturn (str) {
+function beforeReturn(str) {
   str = str.replace(/^\n+/, '')
   str = str.replace(/\s+$/, '')
   str = str.replace(/☈/g, ' ')

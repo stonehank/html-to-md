@@ -8,7 +8,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 const src = path.join(__dirname, 'src')
 
-module.exports = env => {
+module.exports = (env) => {
   const isDev = process.env.NODE_ENV === 'development'
   return {
     mode: isDev ? 'development' : 'production',
@@ -17,7 +17,7 @@ module.exports = env => {
       path: path.join(__dirname, 'demo'),
       filename: './html-to-md.js',
       library: 'html2md',
-      libraryTarget: 'window'
+      libraryTarget: 'window',
     },
     devtool: isDev ? 'cheap-module-source-map' : false,
     optimization: isDev
@@ -28,31 +28,31 @@ module.exports = env => {
             new TerserPlugin({
               terserOptions: {
                 parse: {
-                  ecma: 8
+                  ecma: 8,
                 },
                 compress: {
                   ecma: 5,
                   warnings: false,
                   comparisons: false,
-                  inline: 2
+                  inline: 2,
                 },
                 mangle: {
-                  safari10: true
+                  safari10: true,
                 },
                 output: {
                   ecma: 5,
                   comments: false,
-                  ascii_only: true
-                }
+                  ascii_only: true,
+                },
               },
               parallel: !isWsl,
-              cache: true
-            })
-          ]
+              cache: true,
+            }),
+          ],
         },
 
     resolve: {
-      extensions: ['.js', '.json']
+      extensions: ['.js', '.json'],
     },
     module: {
       rules: [
@@ -65,9 +65,9 @@ module.exports = env => {
             ? {
                 cacheDirectory: true,
                 cacheCompression: true,
-                compact: true
+                compact: true,
               }
-            : {}
+            : {},
         },
         {
           test: /\.css$/,
@@ -81,35 +81,35 @@ module.exports = env => {
                 plugins: () => [
                   require('postcss-flexbugs-fixes'),
                   require('postcss-preset-env')({
-                    stage: 3
-                  })
-                ]
-              }
-            }
-          ]
+                    stage: 3,
+                  }),
+                ],
+              },
+            },
+          ],
         },
         {
           test: /\.html$/,
           use: [
             {
-              loader: 'html-loader'
-            }
-          ]
-        }
-      ]
+              loader: 'html-loader',
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new CleanWebpackPlugin(),
       new HtmlWebPackPlugin({
         template: './index.html',
-        filename: './index.html'
-      })
+        filename: './index.html',
+      }),
     ],
     devServer: isDev
       ? {
           clientLogLevel: 'none',
-          overlay: true
+          overlay: true,
         }
-      : {}
+      : {},
   }
 }

@@ -2,18 +2,17 @@ module.exports = {
   env: {
     commonjs: true,
     es2021: true,
-    node: true
+    node: true,
   },
-  extends: 'standard',
-  overrides: [
-  ],
-  parserOptions: {
-    ecmaVersion: 'latest'
-  },
+  plugins: ['prettier'],
   rules: {
     'no-unused-vars': 1,
     camelcase: 0,
-    'no-prototype-builtins': 0
+    'no-prototype-builtins': 0,
+    'prettier/prettier': 'error',
   },
-  ignorePatterns: ['*.test.js', '*.md']
+  parserOptions: {
+    sourceType: 'module',
+  },
+  ignorePatterns: ['*.test.js', '*.md'],
 }

@@ -1,17 +1,17 @@
 /*
-*
-* <div><b>abc</b></div>
-* ==> ''
-*
-* */
+ *
+ * <div><b>abc</b></div>
+ * ==> ''
+ *
+ * */
 
 class __Ignore__ {
-  constructor (str, tagName = '__ignore__', { parentTag = '' } = {}) {
+  constructor(str, tagName = '__ignore__', { parentTag = '' } = {}) {
     this.tagName = tagName
     this.parentTag = parentTag
   }
 
-  exec () {
+  exec() {
     return ''
   }
 }

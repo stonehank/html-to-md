@@ -13,10 +13,10 @@ const selfTags = {
   object: true,
   embed: true,
   keygen: true,
-  source: true
+  source: true,
 }
 
-function isSelfClosing (tag) {
+function isSelfClosing(tag) {
   return !!selfTags[tag.toLowerCase()]
 }
 

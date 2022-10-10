@@ -2,21 +2,23 @@ const config = require('../config')
 const isSelfClosing = require('./isSelfClosing')
 const isValidHTMLTags = require('./isValidHTMLTags')
 
-function getTagConstructor (tagName) {
+function getTagConstructor(tagName) {
   let clazz
-  const {
-    skipTags, emptyTags, ignoreTags, aliasTags, renderCustomTags
-  } = config.get()
+  const { skipTags, emptyTags, ignoreTags, aliasTags, renderCustomTags } =
+    config.get()
   const selfClose = isSelfClosing(tagName)
   if (skipTags.includes(tagName)) {
     const skip = require('../tags/__skip__')
     return selfClose ? skip.__SkipSelfClose__ : skip.__Skip__
-  } if (emptyTags.includes(tagName)) {
+  }
+  if (emptyTags.includes(tagName)) {
     const empty = require('../tags/__empty__')
     return selfClose ? empty.__EmptySelfClose__ : empty.__Empty__
-  } if (ignoreTags.includes(tagName)) {
+  }
+  if (ignoreTags.includes(tagName)) {
     return require('../tags/__ignore__')
-  } if (aliasTags[tagName] != null) {
+  }
+  if (aliasTags[tagName] != null) {
     const newTagName = aliasTags[tagName]
     return getTagConstructor(newTagName)
   }
@@ -26,10 +28,12 @@ function getTagConstructor (tagName) {
     if (renderCustomTags === false || renderCustomTags === 'SKIP') {
       const skip = require('../tags/__skip__')
       return selfClose ? skip.__SkipSelfClose__ : skip.__Skip__
-    } if (renderCustomTags === 'EMPTY') {
+    }
+    if (renderCustomTags === 'EMPTY') {
       const empty = require('../tags/__empty__')
       return selfClose ? empty.__EmptySelfClose__ : empty.__Empty__
-    } if (renderCustomTags === 'IGNORE') {
+    }
+    if (renderCustomTags === 'IGNORE') {
       return require('../tags/__ignore__')
     }
   }

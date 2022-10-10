@@ -1,11 +1,11 @@
 const SelfCloseTag = require('../SelfCloseTag')
 
 class Input extends SelfCloseTag {
-  constructor (str, tagName = 'input', options) {
+  constructor(str, tagName = 'input', options) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace () {
+  beforeMergeSpace() {
     const { type, checked } = this.attrs
     if (this.parentTag === 'li' && type === 'checkbox') {
       return checked != null ? '[x] ' : '[ ] '
@@ -13,7 +13,7 @@ class Input extends SelfCloseTag {
     return ''
   }
 
-  exec (prevGap = '', endGap = '') {
+  exec(prevGap = '', endGap = '') {
     return super.exec(prevGap, endGap)
   }
 }

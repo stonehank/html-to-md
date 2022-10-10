@@ -1,7 +1,7 @@
 const Tag = require('../Tag')
 const { getTagConstructor, getTableAlign } = require('../utils')
 
-function countTdNum (str) {
+function countTdNum(str) {
   let trStr = ''
   for (let i = 0; i < str.length; i++) {
     if (trStr.endsWith('</tr>')) {
@@ -9,11 +9,14 @@ function countTdNum (str) {
     }
     trStr += str[i]
   }
-  return Math.max(trStr.split('</td>').length - 1, trStr.split('</th>').length - 1)
+  return Math.max(
+    trStr.split('</td>').length - 1,
+    trStr.split('</th>').length - 1
+  )
 }
 
 class Table extends Tag {
-  constructor (str, tagName = 'table', options) {
+  constructor(str, tagName = 'table', options) {
     super(str, tagName)
     this.exist_thead = false
     this.exist_tbody = false
@@ -21,7 +24,7 @@ class Table extends Tag {
     this.tableColumnCount = countTdNum(this.content)
   }
 
-  parseValidSubTag (subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     if (subTagName === 'thead') {
       this.exist_thead = true
     }
@@ -33,15 +36,18 @@ class Table extends Tag {
       this.empty_tbody = false
     }
     const SubTagClass = getTagConstructor(subTagName)
-    const subTag = new SubTagClass(subTagStr, subTagName, { ...options, tableColumnCount: this.tableColumnCount })
+    const subTag = new SubTagClass(subTagStr, subTagName, {
+      ...options,
+      tableColumnCount: this.tableColumnCount,
+    })
     return subTag.exec('', '\n')
   }
 
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     return ''
   }
 
-  beforeReturn (str) {
+  beforeReturn(str) {
     // 无head，无body
     if (!(this.exist_thead || this.exist_tbody || !this.empty_tbody)) return ''
     // 无内容
@@ -61,11 +67,16 @@ class Table extends Tag {
       }
     }
     // 无head
-    if (!this.exist_thead)str = '\n' + '|'.repeat(this.tableColumnCount + 1) + (str.startsWith('\n') ? '' : '\n') + str
+    if (!this.exist_thead)
+      str =
+        '\n' +
+        '|'.repeat(this.tableColumnCount + 1) +
+        (str.startsWith('\n') ? '' : '\n') +
+        str
     return str
   }
 
-  exec (prevGap = '\n', endGap = '\n') {
+  exec(prevGap = '\n', endGap = '\n') {
     return super.exec(prevGap, endGap)
   }
 }

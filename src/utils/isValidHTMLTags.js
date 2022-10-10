@@ -165,10 +165,10 @@ const tags = [
   'var',
   'video',
   'wbr',
-  'xmp'
+  'xmp',
 ]
 
-function isValidHTMLTags (tag) {
+function isValidHTMLTags(tag) {
   if (typeof tag !== 'string') return false
   return tags.includes(tag.toLowerCase())
 }

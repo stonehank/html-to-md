@@ -1,16 +1,20 @@
 const { getTagAttributes } = require('./utils')
 
 class SelfCloseTag {
-  constructor (str, tagName, {
-    parentTag = '',
-    leadingSpace = '',
-    layer = 1,
-    isFirstTag = false,
-    prevTagName = '',
-    nextTagName = '',
-    match = null,
-    intendSpace = ''
-  } = {}) {
+  constructor(
+    str,
+    tagName,
+    {
+      parentTag = '',
+      leadingSpace = '',
+      layer = 1,
+      isFirstTag = false,
+      prevTagName = '',
+      nextTagName = '',
+      match = null,
+      intendSpace = '',
+    } = {}
+  ) {
     this.tagName = tagName
     this.rawStr = str
     this.parentTag = parentTag
@@ -33,12 +37,15 @@ class SelfCloseTag {
    * @param tagName
    * @returns {boolean}
    */
-  __detectStr__ (str, tagName) {
+  __detectStr__(str, tagName) {
     if (str[0] !== '<') {
-      console.error(`Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`)
+      console.error(
+        `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`
+      )
       return false
     }
-    let name = ''; let name_done = false
+    let name = ''
+    let name_done = false
     for (let i = 1; i < str.length; i++) {
       if (str[i] === '>') break
       if (!name_done && /(\s|\/)/.test(str[i])) {
@@ -49,7 +56,12 @@ class SelfCloseTag {
       }
     }
     if (name !== tagName) {
-      console.warn('Tag is not match tagName, tagName in str is ' + name + ', which tagName passed from parent is ' + tagName)
+      console.warn(
+        'Tag is not match tagName, tagName in str is ' +
+          name +
+          ', which tagName passed from parent is ' +
+          tagName
+      )
       return false
     }
     return true
@@ -60,38 +72,39 @@ class SelfCloseTag {
    * @param str
    * @returns {{attr: {}, content: *}}
    */
-  __fetchTagAttr__ (str) {
-    let openTagAttrs = ''; let i = 1
+  __fetchTagAttr__(str) {
+    let openTagAttrs = ''
+    let i = 1
     for (; i < str.length; i++) {
       if (str[i] === '>') break
       openTagAttrs += str[i]
     }
     return {
-      attr: getTagAttributes(openTagAttrs)
+      attr: getTagAttributes(openTagAttrs),
     }
   }
 
   // 在步骤开始前，一般只需返回空字符串
-  beforeParse () {
+  beforeParse() {
     return ''
   }
 
   // 在合并必要的空行前
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     return content
   }
 
   // 合并必要的空行后
-  afterMergeSpace (str) {
+  afterMergeSpace(str) {
     return str
   }
 
   // 最终返回前
-  beforeReturn (content) {
+  beforeReturn(content) {
     return content
   }
 
-  exec (prevGap = '', endGap = '') {
+  exec(prevGap = '', endGap = '') {
     let content = this.beforeParse()
     content = this.beforeMergeSpace(content)
     content = prevGap + content + endGap

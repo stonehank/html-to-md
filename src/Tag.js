@@ -1,28 +1,36 @@
-const { getTagConstructor, getTagAttributes, generateGetNextValidTag } = require('./utils')
+const {
+  getTagConstructor,
+  getTagAttributes,
+  generateGetNextValidTag,
+} = require('./utils')
 const RawString = require('./tags/__rawString__')
 const { SINGLE } = require('./utils/CONSTANT')
 const isIndependentTag = require('./utils/isIndependentTag')
 
 class Tag {
-  constructor (str, tagName, {
-    keepFormat = false,
-    prevTagName = '',
-    nextTagName = '',
-    prevTagStr = '',
-    nextTagStr = '',
-    parentTag = '',
-    isFirstTag = true,
-    calcLeading = false,
-    leadingSpace = '',
-    layer = 1,
-    noWrap = false,
-    match = null,
-    intendSpace = '',
-    language = '',
-    count = 1,
-    tableColumnCount = 0,
-    noExtraLine = false
-  } = {}) {
+  constructor(
+    str,
+    tagName,
+    {
+      keepFormat = false,
+      prevTagName = '',
+      nextTagName = '',
+      prevTagStr = '',
+      nextTagStr = '',
+      parentTag = '',
+      isFirstTag = true,
+      calcLeading = false,
+      leadingSpace = '',
+      layer = 1,
+      noWrap = false,
+      match = null,
+      intendSpace = '',
+      language = '',
+      count = 1,
+      tableColumnCount = 0,
+      noExtraLine = false,
+    } = {}
+  ) {
     this.tagName = tagName
     this.rawStr = str
     this.parentTag = parentTag
@@ -55,17 +63,20 @@ class Tag {
   }
 
   /**
-     * Detect is a valid tag string
-     * @param str
-     * @param tagName
-     * @returns {boolean}
-     */
-  __detectStr__ (str, tagName) {
+   * Detect is a valid tag string
+   * @param str
+   * @param tagName
+   * @returns {boolean}
+   */
+  __detectStr__(str, tagName) {
     if (str[0] !== '<') {
-      console.error(`Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`)
+      console.error(
+        `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`
+      )
       return false
     }
-    let name = ''; let name_done = false
+    let name = ''
+    let name_done = false
     for (let i = 1; i < str.length; i++) {
       if (str[i] === '>') break
       if (!name_done && /(\s|\/)/.test(str[i])) {
@@ -78,29 +89,39 @@ class Tag {
 
     // SelfClose tag
     if (name.endsWith('/')) {
-      console.warn('There detect a self close tag, which name is:', name.slice(0, -1))
+      console.warn(
+        'There detect a self close tag, which name is:',
+        name.slice(0, -1)
+      )
       return false
     }
     if (name !== tagName) {
-      console.warn('Tag is not match tagName, tagName in str is ' + name + ', which tagName passed from parent is ' + tagName)
+      console.warn(
+        'Tag is not match tagName, tagName in str is ' +
+          name +
+          ', which tagName passed from parent is ' +
+          tagName
+      )
       return false
     }
     return true
   }
 
   /**
-     *
-     * @param str
-     * @returns {{attr: {}, content: *}}
-     */
-  __fetchTagAttrAndContent__ (str) {
-    let openTagAttrs = ''; let i = 1
+   *
+   * @param str
+   * @returns {{attr: {}, content: *}}
+   */
+  __fetchTagAttrAndContent__(str) {
+    let openTagAttrs = ''
+    let i = 1
     for (; i < str.length; i++) {
       if (str[i] === '>') break
       openTagAttrs += str[i]
     }
     const restStr = str.slice(i + 1)
-    let m = ''; let endId = -1
+    let m = ''
+    let endId = -1
     for (let j = restStr.length - 1; j >= 0; j--) {
       m = restStr[j] + m
       if (m.startsWith('</')) {
@@ -115,11 +136,11 @@ class Tag {
     }
     return {
       attr: getTagAttributes(openTagAttrs),
-      content: restStr.slice(0, endId)
+      content: restStr.slice(0, endId),
     }
   }
 
-  __onlyLeadingSpace__ (str) {
+  __onlyLeadingSpace__(str) {
     str = str.trim()
     for (let i = 0; i < str.length; i++) {
       if (str[i] !== SINGLE) return false
@@ -127,36 +148,36 @@ class Tag {
     return true
   }
 
-  __isEmpty__ (str) {
+  __isEmpty__(str) {
     if (this.keepFormat) return false
     return str === '' || (this.calcLeading && this.__onlyLeadingSpace__(str))
   }
 
   // 在步骤开始前，一般只需返回空字符串
-  beforeParse () {
+  beforeParse() {
     return ''
   }
 
   // 存在tagName时，解析步骤
-  parseValidSubTag (subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     const SubTagClass = getTagConstructor(subTagName)
     const subTag = new SubTagClass(subTagStr, subTagName, options)
     return subTag.exec()
   }
 
   // 不存在tagName时，解析步骤
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     const rawString = new RawString(subTagStr, subTagName, options)
     return rawString.exec()
   }
 
   // 在解析完毕后，此时还并未去除不必要的空行
-  afterParsed (content) {
+  afterParsed(content) {
     return content
   }
 
   // 去除不必要的空行
-  slim (content) {
+  slim(content) {
     // 在代码块内部
     if (this.keepFormat) {
       return content
@@ -165,34 +186,37 @@ class Tag {
   }
 
   // 去除不必要的空行后，但在合并必要的空行前
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     return content
   }
 
-  mergeSpace (content, prevGap, endGap) {
+  mergeSpace(content, prevGap, endGap) {
     if (this.keepFormat && this.tagName !== 'pre') {
       // 在代码块内部减少换行
-      return content.endsWith('\n') ? content : (content + endGap.replace(/\n+/g, '\n'))
+      return content.endsWith('\n')
+        ? content
+        : content + endGap.replace(/\n+/g, '\n')
     } else {
       return prevGap + content + endGap
     }
   }
 
   // 合并必要的空行后
-  afterMergeSpace (content) {
+  afterMergeSpace(content) {
     return content
   }
 
   // 最终返回前
-  beforeReturn (content) {
+  beforeReturn(content) {
     return content
   }
 
-  exec (prevGap = '', endGap = '') {
+  exec(prevGap = '', endGap = '') {
     let content = this.beforeParse()
     const getNxtValidTag = generateGetNextValidTag(this.content)
     let [nextTagName, nextTagStr] = getNxtValidTag()
-    let prevTagName = null; let prevTagStr = null
+    let prevTagName = null
+    let prevTagStr = null
     while (nextTagStr !== '') {
       const [afterNextTagName, afterNextTagStr] = getNxtValidTag()
       const options = {
@@ -203,7 +227,7 @@ class Tag {
         prevTagStr: content,
         leadingSpace: this.leadingSpace,
         layer: this.layer,
-        keepFormat: this.keepFormat
+        keepFormat: this.keepFormat,
       }
       let nextStr
       if (nextTagName != null) {
@@ -227,12 +251,13 @@ class Tag {
     if (!this.keepFormat && this.__isEmpty__(content)) return ''
     content = this.beforeMergeSpace(content)
     // 当类似<img>后面跟随<p>情况，需要<p>多空一行
-    if (!this.noExtraLine &&
-            isIndependentTag(this.tagName) &&
-            !!this.prevTagName &&
-            !content.startsWith('\n') &&
-            !isIndependentTag(this.prevTagName) &&
-            this.parentTag
+    if (
+      !this.noExtraLine &&
+      isIndependentTag(this.tagName) &&
+      !!this.prevTagName &&
+      !content.startsWith('\n') &&
+      !isIndependentTag(this.prevTagName) &&
+      this.parentTag
     ) {
       prevGap = '\n\n'
     }

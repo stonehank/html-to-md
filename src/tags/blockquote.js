@@ -3,13 +3,13 @@ const Tag = require('../Tag')
 const { getTagConstructor } = require('../utils')
 
 class Blockquote extends Tag {
-  constructor (str, tagName = 'blockquote', options) {
+  constructor(str, tagName = 'blockquote', options) {
     super(str, tagName, options)
     this.match = this.match || '>'
     this.fillPerLine = this.fillPerLine.bind(this)
   }
 
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     if (content.trim() === '') return ''
     const matchStr = this.match + ' ' + content
     if (this.calcLeading) {
@@ -18,15 +18,19 @@ class Blockquote extends Tag {
     return matchStr
   }
 
-  afterMergeSpace (content) {
+  afterMergeSpace(content) {
     let split = content.split('\n')
     // 去除连续
     for (let i = split.length - 1; i >= 0; i--) {
-      if (i < split.length - 1 && split[i].trim() === '>' && split[i + 1].trim() === '>') {
+      if (
+        i < split.length - 1 &&
+        split[i].trim() === '>' &&
+        split[i + 1].trim() === '>'
+      ) {
         split.splice(i, 1)
       }
     }
-    split = split.map(n => {
+    split = split.map((n) => {
       if (n === '') return ''
       return this.fillPerLine(n)
     })
@@ -34,12 +38,12 @@ class Blockquote extends Tag {
     return split.join('\n')
   }
 
-  beforeReturn (content) {
+  beforeReturn(content) {
     // 去除空行
     return content.replace('\n\n', '\n')
   }
 
-  fillPerLine (lineStr) {
+  fillPerLine(lineStr) {
     let startWith = '>'
     if (this.calcLeading) {
       startWith = this.leadingSpace + '>'
@@ -54,7 +58,7 @@ class Blockquote extends Tag {
     return lineStr
   }
 
-  parseValidSubTag (subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     let subTag
     if (subTagName === 'blockquote') {
       const SubTagClass = getTagConstructor(subTagName)
@@ -62,13 +66,13 @@ class Blockquote extends Tag {
         ...options,
         calcLeading: this.calcLeading,
         match: this.match + '>',
-        noExtraLine: true
+        noExtraLine: true,
       })
     } else {
       const SubTagClass = getTagConstructor(subTagName)
       subTag = new SubTagClass(subTagStr, subTagName, {
         ...options,
-        noExtraLine: true
+        noExtraLine: true,
       })
     }
     let str = subTag.exec()
@@ -76,8 +80,10 @@ class Blockquote extends Tag {
     if (this.calcLeading) {
       leadingSpace = this.leadingSpace
     }
-    const prevNeedNewLine = isIndependentTag(options.prevTagName) && options.prevTagName !== 'br'
-    const nextNeedNewLine = isIndependentTag(options.nextTagName) && options.nextTagName !== 'br'
+    const prevNeedNewLine =
+      isIndependentTag(options.prevTagName) && options.prevTagName !== 'br'
+    const nextNeedNewLine =
+      isIndependentTag(options.nextTagName) && options.nextTagName !== 'br'
     const needNewLine = isIndependentTag(subTagName) && subTagName !== 'br'
     if (this.isFirstTag) {
       return str.trimLeft().replace(leadingSpace, '')
@@ -87,7 +93,11 @@ class Blockquote extends Tag {
         if (!prevNeedNewLine) {
           str = '\n' + str
         }
-        if (!nextNeedNewLine && (options.nextTagStr && options.nextTagStr.trim())) {
+        if (
+          !nextNeedNewLine &&
+          options.nextTagStr &&
+          options.nextTagStr.trim()
+        ) {
           str += this.match + '\n'
         }
       } else {
@@ -100,7 +110,7 @@ class Blockquote extends Tag {
     return str
   }
 
-  exec (prevGap = '\n', endGap = '\n') {
+  exec(prevGap = '\n', endGap = '\n') {
     return super.exec(prevGap, endGap)
   }
 }

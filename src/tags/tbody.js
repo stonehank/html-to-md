@@ -2,11 +2,11 @@ const Tag = require('../Tag')
 const { getTableAlign } = require('../utils')
 
 class Tbody extends Tag {
-  constructor (str, tagName = 'tbody', options) {
+  constructor(str, tagName = 'tbody', options) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     const alignArr = getTableAlign(this.content, this.tableColumnCount)
     let tableHr = '|'
     for (let i = 0; i < alignArr.length; i++) {
@@ -15,11 +15,11 @@ class Tbody extends Tag {
     return tableHr + '\n' + content
   }
 
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     return ''
   }
 
-  exec (prevGap = '', endGap = '') {
+  exec(prevGap = '', endGap = '') {
     return super.exec(prevGap, endGap)
   }
 }
