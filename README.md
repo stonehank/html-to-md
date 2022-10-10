@@ -6,7 +6,17 @@
 [![npm](https://img.shields.io/npm/v/html-to-md.svg)](https://www.npmjs.com/package/html-to-md)
 [![codecov](https://codecov.io/gh/stonehank/html-to-md/branch/master/graph/badge.svg)](https://codecov.io/gh/stonehank/html-to-md)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/html-to-md.svg)
-![David](https://img.shields.io/david/stonehank/html-to-md.svg)
+![](https://img.shields.io/badge/dependencies-0-brightgreen)
+
+### 特点
+
+- 快速，小巧，无任何依赖，`gzip` 11kb
+
+- 支持`nodeJS`，参数(html 文本)为字符串
+
+- 200+单元测试和模块测试，覆盖率`97%`
+
+> 注意：只有有效规范的 HTML 文本才能准确显示结果，如`<p>abc<` ，`<i>abc</>`等都是**无效**文本
 
 ### 效果
 
@@ -115,8 +125,8 @@ options:
 </tr>
 <tr>
 <td align="center">renderCustomTags</td>
-<td align="center">Boolean | 'SKIP' | 'EMPTY' | 'IGNORE'</td>
-<td align="left">
+<td align="left"><code>&nbsp;&nbsp;Boolean <br>| 'SKIP' <br>| 'EMPTY' <br>| 'IGNORE'</code></td>
+<td align="center">
 <code>true</code></td>
 <td align="left">定义是否渲染自定义标签（非HTML标签），
 <ul>
@@ -174,16 +184,6 @@ html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, false);
 html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, true);
 // 经过配置后 skipTags 为 ['b']
 ```
-
-### 特点
-
-- 快速，小巧，无任何依赖，`gzip` 7kb
-
-- 支持`nodeJS`，参数(html 文本)为字符串
-
-- 100+单元测试和模块测试，覆盖率`98%`
-
-> 注意：只有有效规范的 HTML 文本才能准确显示结果，如`<p>abc<` ，`<i>abc</>`等都是**无效**文本
 
 ### 支持标签
 
