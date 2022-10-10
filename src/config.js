@@ -1,12 +1,12 @@
 class Config {
-  // renderCustomTag true, false, [SKIP, IGNORE, EMPTY]
-  constructor ({ skipTags = [], emptyTags = [], ignoreTags = [], aliasTags = {}, renderCustomTag = true } = {}) {
+  // renderCustomTags true, false, [SKIP, IGNORE, EMPTY]
+  constructor ({ skipTags = [], emptyTags = [], ignoreTags = [], aliasTags = {}, renderCustomTags = true } = {}) {
     this.options = {
       skipTags,
       emptyTags,
       ignoreTags,
       aliasTags,
-      renderCustomTag
+      renderCustomTags
     }
   }
 
@@ -62,7 +62,7 @@ const defaultOptions = {
     dt: 'p',
     figcaption: 'p'
   },
-  renderCustomTag: true
+  renderCustomTags: true
 }
 const config = new Config(JSON.parse(JSON.stringify(defaultOptions)))
 

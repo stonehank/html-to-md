@@ -175,15 +175,15 @@
             <input type="text" id="ignoreTags" style="width:100%"  />
         </div>
         <div class="form-row-item">
-            <label class="check-label">renderCustomTag</label>
-            <input type="radio" id="renderCustomTag-true" name="renderCustomTag" checked value="all" style="width: 20px;height: 20px;"/>
-            <label for="renderCustomTag-true">True</label>
-            <input type="radio" id="renderCustomTag-skip" name="renderCustomTag" value="SKIP" style="width: 20px;height: 20px;"/>
-            <label for="renderCustomTag-skip">Skip</label>
-            <input type="radio" id="renderCustomTag-ignore" name="renderCustomTag" value="IGNORE" style="width: 20px;height: 20px;"/>
-            <label for="renderCustomTag-ignore">Ignore</label>
-            <input type="radio" id="renderCustomTag-empty" name="renderCustomTag" value="EMPTY"  style="width: 20px;height: 20px;"/>
-            <label for="renderCustomTag-empty">Empty</label>
+            <label class="check-label">renderCustomTags</label>
+            <input type="radio" id="renderCustomTags-true" name="renderCustomTags" checked value="all" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTags-true">True</label>
+            <input type="radio" id="renderCustomTags-skip" name="renderCustomTags" value="SKIP" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTags-skip">Skip</label>
+            <input type="radio" id="renderCustomTags-ignore" name="renderCustomTags" value="IGNORE" style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTags-ignore">Ignore</label>
+            <input type="radio" id="renderCustomTags-empty" name="renderCustomTags" value="EMPTY"  style="width: 20px;height: 20px;"/>
+            <label for="renderCustomTags-empty">Empty</label>
         </div>
         </div>
         <div class="form-row-item">
@@ -211,7 +211,7 @@
             dt:'p',
             figcaption:'p'
         },
-        renderCustomTag=true
+        renderCustomTags=true
 
     const PAGE1HTML = '<div class="infoWrap">\n' +
         '        <span class="info">markdown</span>\n' +
@@ -542,7 +542,7 @@
             emptyTagsEle=document.getElementById('emptyTags'),
             ignoreTagsEle=document.getElementById('ignoreTags'),
             aliasTagsEle=document.getElementById('aliasTags'),
-            renderCustomTagEles = document.querySelectorAll('input[name="renderCustomTag"]');
+            renderCustomTagEles = document.querySelectorAll('input[name="renderCustomTags"]');
 
         skipTagsEle.value=skipTags.join(', ')
         emptyTagsEle.value=emptyTags.join(', ')
@@ -572,7 +572,7 @@
         renderCustomTagEles.forEach(function(ele){
             ele.addEventListener('change', function(){
                 if(ele.checked){
-                    renderCustomTag = ele.value === 'all' ? true : ele.value
+                    renderCustomTags = ele.value === 'all' ? true : ele.value
                     rerenderAfterConfig()
                 }
             })
@@ -591,7 +591,7 @@ html2md(str, {
     skipTags: [${toArrayString(skipTags)}],
     emptyTags: [${toArrayString(emptyTags)}],
     aliasTags: {\n${toObjectString(aliasTags)}\n    },
-    renderCustomTag: ${renderCustomTag === true ? 'true' : `'${renderCustomTag}'`}
+    renderCustomTags: ${renderCustomTags === true ? 'true' : `'${renderCustomTags}'`}
 }, true)
 \`\`\`
 `
@@ -640,7 +640,7 @@ html2md(str, {
             htmlTxt = ele2.value
         }
         console.time('html->md')
-        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags,renderCustomTag},true)
+        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags,renderCustomTags},true)
         console.timeEnd('html->md')
 
         if (ele1) ele2.innerHTML = htmlTxt

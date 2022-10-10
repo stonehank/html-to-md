@@ -114,7 +114,7 @@ options:
 <td align="center">为标签定义一个别名(通常作用于一些不常用标签)</td>
 </tr>
 <tr>
-<td align="center">renderCustomTag</td>
+<td align="center">renderCustomTags</td>
 <td align="center">Boolean | 'SKIP' | 'EMPTY' | 'IGNORE'</td>
 <td align="left">
 <code>true</code></td>
@@ -150,7 +150,7 @@ html2md("<><b><i>abc</i></b></>", {
 });
 // *  abc
 
-html2md("<test><b><i>abc</i></b></test>", { renderCustomTag: "SKIP" });
+html2md("<test><b><i>abc</i></b></test>", { renderCustomTags: "SKIP" });
 // ***abc***
 ```
 

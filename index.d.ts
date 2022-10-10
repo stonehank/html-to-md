@@ -4,7 +4,7 @@ declare module 'html-to-md' {
     emptyTags: string[]
     ignoreTags: string[]
     aliasTags: Record<string, string>
-    renderCustomTag: boolean | 'SKIP' | 'EMPTY' | 'IGNORE'
+    renderCustomTags: boolean | 'SKIP' | 'EMPTY' | 'IGNORE'
   }
 
   function html2md(

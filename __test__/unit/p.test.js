@@ -2,7 +2,7 @@ import html2md from '../../src'
 import P from '../../src/tags/p'
 const config = require('../../src/config')
 
-config.set({renderCustomTag:true})
+config.set({renderCustomTags:true})
 
 describe('test <p></p> tag',()=>{
   it('textNode',()=>{

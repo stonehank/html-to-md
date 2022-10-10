@@ -5,7 +5,7 @@ const isValidHTMLTags = require('./isValidHTMLTags')
 function getTagConstructor (tagName) {
   let clazz
   const {
-    skipTags, emptyTags, ignoreTags, aliasTags, renderCustomTag
+    skipTags, emptyTags, ignoreTags, aliasTags, renderCustomTags
   } = config.get()
   const selfClose = isSelfClosing(tagName)
   if (skipTags.includes(tagName)) {
@@ -22,14 +22,14 @@ function getTagConstructor (tagName) {
   }
 
   const lowerTag = tagName.toLowerCase()
-  if (renderCustomTag !== true && !isValidHTMLTags(lowerTag)) {
-    if (renderCustomTag === false || renderCustomTag === 'SKIP') {
+  if (renderCustomTags !== true && !isValidHTMLTags(lowerTag)) {
+    if (renderCustomTags === false || renderCustomTags === 'SKIP') {
       const skip = require('../tags/__skip__')
       return selfClose ? skip.__SkipSelfClose__ : skip.__Skip__
-    } if (renderCustomTag === 'EMPTY') {
+    } if (renderCustomTags === 'EMPTY') {
       const empty = require('../tags/__empty__')
       return selfClose ? empty.__EmptySelfClose__ : empty.__Empty__
-    } if (renderCustomTag === 'IGNORE') {
+    } if (renderCustomTags === 'IGNORE') {
       return require('../tags/__ignore__')
     }
   }
