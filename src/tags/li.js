@@ -10,37 +10,36 @@ const { DOUBLE, TRIPLE } = require('../utils/CONSTANT')
  * 在li内部的字符串，只有换行了，才需要layer
  */
 class Li extends Tag {
-  constructor (str, tagName = 'li', options) {
+  constructor(str, tagName = 'li', options) {
     super(str, tagName, options)
     // 在没有UL的情况下
     this.match = this.match || '* '
     this.extraGap = ''
   }
 
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     return this.extraGap + this.leadingSpace + this.match + content
   }
 
-  __calcNextLeading__ () {
+  __calcNextLeading__() {
     return this.match.length === 2
       ? DOUBLE
       : this.match.length === 3
-        ? TRIPLE
-        : this.match.length === 4
-          ? DOUBLE
-          : TRIPLE + DOUBLE
+      ? TRIPLE
+      : this.match.length === 4
+      ? DOUBLE
+      : TRIPLE + DOUBLE
   }
 
-  parseValidSubTag (subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     const SubTagClass = getTagConstructor(subTagName)
     const nextLeading = this.__calcNextLeading__()
-    const subTag = new SubTagClass(subTagStr, subTagName,
-      {
-        ...options,
-        calcLeading: true,
-        leadingSpace: this.leadingSpace + nextLeading,
-        layer: this.layer + 1
-      })
+    const subTag = new SubTagClass(subTagStr, subTagName, {
+      ...options,
+      calcLeading: true,
+      leadingSpace: this.leadingSpace + nextLeading,
+      layer: this.layer + 1,
+    })
     const str = subTag.exec()
     if (subTagName === 'p') {
       this.extraGap = '\n'
@@ -52,7 +51,7 @@ class Li extends Tag {
     }
   }
 
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     let calcLeading = false
     if (isIndependentTag(options.prevTagName)) {
       calcLeading = true
@@ -62,7 +61,7 @@ class Li extends Tag {
       ...options,
       calcLeading,
       leadingSpace: this.leadingSpace + nextLeading,
-      layer: this.layer + 1
+      layer: this.layer + 1,
     })
     if (this.isFirstTag) {
       return str.replace(this.leadingSpace + nextLeading, '')
@@ -71,11 +70,11 @@ class Li extends Tag {
     }
   }
 
-  beforeReturn (content) {
+  beforeReturn(content) {
     return super.beforeReturn(content)
   }
 
-  exec (prevGap = '\n', endGap = '\n') {
+  exec(prevGap = '\n', endGap = '\n') {
     return super.exec(prevGap, endGap)
   }
 }

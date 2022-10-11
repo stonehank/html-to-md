@@ -2,15 +2,19 @@ const { extraEscape } = require('../utils')
 const isIndependentTag = require('../utils/isIndependentTag')
 
 class __RawString__ {
-  constructor (str, tagName = '__nomatch__', {
-    keepFormat = false,
-    prevTagName = '',
-    nextTagName = '',
-    parentTag = '',
-    calcLeading = false,
-    layer = 1,
-    leadingSpace = ''
-  } = {}) {
+  constructor(
+    str,
+    tagName = '__nomatch__',
+    {
+      keepFormat = false,
+      prevTagName = '',
+      nextTagName = '',
+      parentTag = '',
+      calcLeading = false,
+      layer = 1,
+      leadingSpace = '',
+    } = {}
+  ) {
     this.tagName = tagName
     this.nextTagName = nextTagName
     this.prevTagName = prevTagName
@@ -22,7 +26,7 @@ class __RawString__ {
     this.rawStr = str
   }
 
-  slim (str) {
+  slim(str) {
     if (this.keepFormat) return str
 
     let _str = str.replace(/\s+/g, ' ')
@@ -39,7 +43,7 @@ class __RawString__ {
     return _str
   }
 
-  beforeReturn (content) {
+  beforeReturn(content) {
     if (this.keepFormat) return content
     if (this.calcLeading) {
       return this.leadingSpace + extraEscape(content)
@@ -47,7 +51,7 @@ class __RawString__ {
     return extraEscape(content)
   }
 
-  exec () {
+  exec() {
     let content = this.rawStr
     content = this.slim(content)
     content = this.beforeReturn(content)

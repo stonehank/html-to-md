@@ -1,7 +1,10 @@
-function trim (str, {
-  type = 'whitespace' || 'linebreak' || 'all',
-  ori = 'left' || 'right' || 'all'
-} = {}) {
+function trim(
+  str,
+  {
+    type = 'whitespace' || 'linebreak' || 'all',
+    ori = 'left' || 'right' || 'all',
+  } = {}
+) {
   if (!str) return ''
   const { leftSpace, rightSpace, content } = parse(str)
   const reg = regType[type]
@@ -18,10 +21,10 @@ function trim (str, {
 const regType = {
   all: /\s/,
   linebreak: /\n/,
-  whitespace: /([ \t])/
+  whitespace: /([ \t])/,
 }
 
-function filter (str, reg) {
+function filter(str, reg) {
   let newStr = ''
   for (let i = 0; i < str.length; i++) {
     if (reg.test(str[i])) continue
@@ -30,8 +33,11 @@ function filter (str, reg) {
   return newStr
 }
 
-function parse (str) {
-  let leftSpace = ''; let rightSpace = ''; let leftEndIdx; let rightStartIdx
+function parse(str) {
+  let leftSpace = ''
+  let rightSpace = ''
+  let leftEndIdx
+  let rightStartIdx
   for (let i = 0; i < str.length; i++) {
     if (/\s/.test(str[i])) {
       leftSpace += str[i]
@@ -51,7 +57,7 @@ function parse (str) {
   return {
     leftSpace,
     rightSpace,
-    content: str.slice(leftEndIdx, rightStartIdx + 1)
+    content: str.slice(leftEndIdx, rightStartIdx + 1),
   }
 }
 

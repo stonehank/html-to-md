@@ -25,10 +25,12 @@
 const DEFAULT_LANG = 'javascript'
 
 // only exec in pre tag
-function getLanguage (str) {
+function getLanguage(str) {
   const matchLang = str.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/)
   if (matchLang) return matchLang[1] || ''
-  const match = str.match(/<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/)
+  const match = str.match(
+    /<span.*?hljs-(comment|keyword|number|string|literal|built_in|function|title|bullet).*?<\/span>/
+  )
   return match ? DEFAULT_LANG : ''
 }
 

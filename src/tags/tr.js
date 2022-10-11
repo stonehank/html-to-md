@@ -4,18 +4,26 @@ const { getTagConstructor } = require('../utils')
 const { aliasTags } = require('../config').get()
 
 class Tr extends Tag {
-  constructor (str, tagName = 'tr', options) {
+  constructor(str, tagName = 'tr', options) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     return '|' + content
   }
 
-  parseValidSubTag (subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr, subTagName, options) {
     const SubTagClass = getTagConstructor(subTagName)
-    if (subTagName !== 'td' && subTagName !== 'th' && aliasTags[subTagName] !== 'td' && aliasTags[subTagName] !== 'th' && SubTagClass !== __Ignore__) {
-      console.error(`Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`)
+    if (
+      subTagName !== 'td' &&
+      subTagName !== 'th' &&
+      aliasTags[subTagName] !== 'td' &&
+      aliasTags[subTagName] !== 'th' &&
+      SubTagClass !== __Ignore__
+    ) {
+      console.error(
+        `Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`
+      )
       return ''
     } else {
       const subTag = new SubTagClass(subTagStr, subTagName, options)
@@ -23,11 +31,11 @@ class Tr extends Tag {
     }
   }
 
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     return ''
   }
 
-  exec (prevGap = '', endGap = '\n') {
+  exec(prevGap = '', endGap = '\n') {
     return super.exec(prevGap, endGap)
   }
 }

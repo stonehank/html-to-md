@@ -7,7 +7,7 @@ const escapeMap = {
   "'": '&#39;',
   '`': '&#x60;',
   '“': '&ldquo;',
-  '”': '&rdquo;'
+  '”': '&rdquo;',
 }
 
 for (const key in escapeMap) {
@@ -31,18 +31,19 @@ const _extra_escapes = [
   [/\]/g, '\\]'],
   [/^>/g, '\\>'],
   [/_/g, '\\_'],
-  [/^(\d+)\. /g, '$1\\. ']
+  [/^(\d+)\. /g, '$1\\. '],
 ]
-function escape (s) {
-  return (s && reHasUnescapedHtml.test(s))
+function escape(s) {
+  return s && reHasUnescapedHtml.test(s)
     ? s.replace(reUnescapedHtml, (chr) => escapeMap[chr])
     : s
 }
 
-function unescape (s, { needEscape = false } = {}) {
-  s = (s && reHasEscapedHtml.test(s))
-    ? s.replace(reEscapedHtml, (entity) => unescapeMap[entity])
-    : s
+function unescape(s, { needEscape = false } = {}) {
+  s =
+    s && reHasEscapedHtml.test(s)
+      ? s.replace(reEscapedHtml, (entity) => unescapeMap[entity])
+      : s
   if (needEscape) {
     s = _extra_escapes.reduce(function (accumulator, escape) {
       return accumulator.replace(escape[0], escape[1])
@@ -51,7 +52,7 @@ function unescape (s, { needEscape = false } = {}) {
   return s
 }
 
-function extraEscape (s) {
+function extraEscape(s) {
   return _extra_escapes.reduce(function (accumulator, escape) {
     return accumulator.replace(escape[0], escape[1])
   }, s)
@@ -60,5 +61,5 @@ function extraEscape (s) {
 module.exports = {
   escape,
   extraEscape,
-  unescape
+  unescape,
 }

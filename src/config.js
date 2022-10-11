@@ -1,24 +1,30 @@
 class Config {
   // renderCustomTags true, false, [SKIP, IGNORE, EMPTY]
-  constructor ({ skipTags = [], emptyTags = [], ignoreTags = [], aliasTags = {}, renderCustomTags = true } = {}) {
+  constructor({
+    skipTags = [],
+    emptyTags = [],
+    ignoreTags = [],
+    aliasTags = {},
+    renderCustomTags = true,
+  } = {}) {
     this.options = {
       skipTags,
       emptyTags,
       ignoreTags,
       aliasTags,
-      renderCustomTags
+      renderCustomTags,
     }
   }
 
-  get () {
+  get() {
     return this.options
   }
 
-  clear () {
+  clear() {
     this.options = {}
   }
 
-  set (obj, force) {
+  set(obj, force) {
     if (Object.prototype.toString.call(obj) === '[object Object]') {
       for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
@@ -32,12 +38,12 @@ class Config {
     }
   }
 
-  reset () {
+  reset() {
     this.options = JSON.parse(JSON.stringify(defaultOptions))
   }
 }
 
-function assign (obj, newObj, key) {
+function assign(obj, newObj, key) {
   if (obj[key] == null) {
     obj[key] = newObj[key]
     return
@@ -45,24 +51,45 @@ function assign (obj, newObj, key) {
   const isArray = Array.isArray(obj[key])
   const isObj = Object.prototype.toString.call(obj[key]) === '[object Object]'
   isArray
-    ? obj[key] = obj[key].concat(newObj[key])
+    ? (obj[key] = obj[key].concat(newObj[key]))
     : isObj
-      ? obj[key] = Object.assign(obj[key], newObj[key])
-      : obj[key] = newObj[key]
+    ? (obj[key] = Object.assign(obj[key], newObj[key]))
+    : (obj[key] = newObj[key])
 }
 
 const defaultOptions = {
-  ignoreTags: ['', 'style', 'head', '!doctype', 'form', 'svg', 'noscript', 'script', 'meta'],
-  skipTags: ['div', 'html', 'body', 'nav', 'section', 'footer', 'main', 'aside', 'article', 'header'],
+  ignoreTags: [
+    '',
+    'style',
+    'head',
+    '!doctype',
+    'form',
+    'svg',
+    'noscript',
+    'script',
+    'meta',
+  ],
+  skipTags: [
+    'div',
+    'html',
+    'body',
+    'nav',
+    'section',
+    'footer',
+    'main',
+    'aside',
+    'article',
+    'header',
+  ],
   emptyTags: [],
   aliasTags: {
     figure: 'p',
     dl: 'p',
     dd: 'p',
     dt: 'p',
-    figcaption: 'p'
+    figcaption: 'p',
   },
-  renderCustomTags: true
+  renderCustomTags: true,
 }
 const config = new Config(JSON.parse(JSON.stringify(defaultOptions)))
 

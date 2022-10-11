@@ -23,5 +23,5 @@ module.exports = {
   getLanguage,
   clearComment,
   isIndependentTag,
-  shouldRenderRawInside
+  shouldRenderRawInside,
 }

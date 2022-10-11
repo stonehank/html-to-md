@@ -1,6 +1,6 @@
 const config = require('../config.js')
 
-function getRealTagName (tagName) {
+function getRealTagName(tagName) {
   if (!tagName) return tagName
   const { aliasTags } = config.get()
   if (aliasTags[tagName] != null) {

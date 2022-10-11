@@ -1,4 +1,1 @@
-module.exports = [
-  'th',
-  'td'
-]
+module.exports = ['th', 'td']

@@ -23,10 +23,10 @@ const independentLineTags = {
   dl: true,
   dd: true,
   dt: true,
-  br: true
+  br: true,
 }
 
-function isIndependentTag (tagName) {
+function isIndependentTag(tagName) {
   if (!tagName) return false
   const realName = getRealTagName(tagName)
   return !!independentLineTags[realName]

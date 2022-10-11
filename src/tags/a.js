@@ -1,11 +1,11 @@
 const Tag = require('../Tag')
 
 class A extends Tag {
-  constructor (str, tagName = 'a', options) {
+  constructor(str, tagName = 'a', options) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace (content) {
+  beforeMergeSpace(content) {
     let { href, title } = this.attrs
     if (!href) {
       href = ''
@@ -16,14 +16,14 @@ class A extends Tag {
     return `[${content}](${href})`
   }
 
-  parseOnlyString (subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr, subTagName, options) {
     if (this.parentTag === 'tbody' || this.parentTag === 'thead') {
       return subTagStr
     }
     return super.parseOnlyString(subTagStr, subTagName, options)
   }
 
-  exec (prevGap = '', endGap = '') {
+  exec(prevGap = '', endGap = '') {
     return super.exec(prevGap, endGap)
   }
 }

@@ -1,11 +1,11 @@
 const SelfCloseTag = require('../SelfCloseTag')
 
 class Br extends SelfCloseTag {
-  constructor (str, tagName = 'b', options) {
+  constructor(str, tagName = 'b', options) {
     super(str, tagName, options)
   }
 
-  exec (prevGap, endGap = '\n') {
+  exec(prevGap, endGap = '\n') {
     return '  ' + endGap
   }
 }
