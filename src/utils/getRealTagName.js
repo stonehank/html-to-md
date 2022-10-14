@@ -1,4 +1,4 @@
-const config = require('../config.js')
+import config from '../config'
 
 function getRealTagName(tagName) {
   if (!tagName) return tagName
@@ -9,4 +9,4 @@ function getRealTagName(tagName) {
   return tagName
 }
 
-module.exports = getRealTagName
+export default getRealTagName

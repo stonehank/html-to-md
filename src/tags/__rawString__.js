@@ -1,5 +1,5 @@
-const { extraEscape } = require('../utils')
-const isIndependentTag = require('../utils/isIndependentTag')
+import { extraEscape } from '../utils'
+import isIndependentTag from '../utils/isIndependentTag'
 
 class __RawString__ {
   constructor(
@@ -59,4 +59,4 @@ class __RawString__ {
   }
 }
 
-module.exports = __RawString__
+export default __RawString__

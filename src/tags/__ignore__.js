@@ -16,4 +16,4 @@ class __Ignore__ {
   }
 }
 
-module.exports = __Ignore__
+export default __Ignore__

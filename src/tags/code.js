@@ -1,5 +1,5 @@
-const Tag = require('../Tag')
-const { getTagConstructor, unescape } = require('../utils')
+import Tag from '../Tag'
+import { getTagConstructor, unescapeStr } from '../utils'
 
 class Code extends Tag {
   constructor(str, tagName = 'code', options) {
@@ -56,7 +56,7 @@ class Code extends Tag {
     }
     // console.log(this.keepFormat,JSON.stringify(subTagStr))
     // 将&lt;转换为<，等等
-    return unescape(subTagStr)
+    return unescapeStr(subTagStr)
   }
 
   slim(content) {
@@ -69,4 +69,4 @@ class Code extends Tag {
   }
 }
 
-module.exports = Code
+export default Code

@@ -1,4 +1,4 @@
-const Strong = require('./strong')
+import Strong from './strong'
 
 class B extends Strong {
   constructor(str, tagName = 'b', options) {
@@ -10,4 +10,4 @@ class B extends Strong {
   }
 }
 
-module.exports = B
+export default B

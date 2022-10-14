@@ -1,11 +1,11 @@
-const {
+import {
   getTagConstructor,
   generateGetNextValidTag,
-  unescape,
+  unescapeStr,
   clearComment,
   isIndependentTag,
-} = require('./utils')
-const config = require('./config')
+} from './utils'
+import config from './config'
 
 function html2md(str, options, force = false) {
   config.reset()
@@ -49,7 +49,7 @@ function html2md(str, options, force = false) {
     nextTagName = nxt[0]
     nextTagStr = nxt[1]
   }
-  return beforeReturn(unescape(res))
+  return beforeReturn(unescapeStr(res))
 }
 
 function beforeReturn(str) {
@@ -59,4 +59,4 @@ function beforeReturn(str) {
   return str
 }
 
-module.exports = html2md
+export default html2md

@@ -1,11 +1,11 @@
-const {
+import {
   getTagConstructor,
   getTagAttributes,
   generateGetNextValidTag,
-} = require('./utils')
-const RawString = require('./tags/__rawString__')
-const { SINGLE } = require('./utils/CONSTANT')
-const isIndependentTag = require('./utils/isIndependentTag')
+} from './utils'
+import RawString from './tags/__rawString__'
+import { SINGLE } from './utils/CONSTANT'
+import isIndependentTag from './utils/isIndependentTag'
 
 class Tag {
   constructor(
@@ -270,4 +270,4 @@ class Tag {
   }
 }
 
-module.exports = Tag
+export default Tag

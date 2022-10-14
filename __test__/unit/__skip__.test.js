@@ -1,5 +1,5 @@
-let html2Md=require('../../src/index')
-let config=require('../../src/config')
+import html2Md from '../../src/index'
+import config from '../../src/config'
 
 describe('跳过指定的tag标签，内部不影响',()=>{
 

@@ -1,6 +1,6 @@
-const Tag = require('../Tag')
-const SelfCloseTag = require('../SelfCloseTag')
-const { isIndependentTag, getRealTagName } = require('../utils')
+import Tag from '../Tag'
+import SelfCloseTag from '../SelfCloseTag'
+import { isIndependentTag, getRealTagName } from '../utils'
 /*
  *
  * <div><b>abc</b></div>
@@ -28,6 +28,7 @@ class __Skip__ extends Tag {
 class __SkipSelfClose__ extends SelfCloseTag {
   constructor(str, tagName = '__skipselfclose__', options) {
     super(str, tagName, options)
+    this.str = str
   }
 
   exec() {
@@ -35,4 +36,4 @@ class __SkipSelfClose__ extends SelfCloseTag {
   }
 }
 
-module.exports = { __Skip__, __SkipSelfClose__ }
+export { __Skip__, __SkipSelfClose__ }

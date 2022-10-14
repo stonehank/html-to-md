@@ -1,7 +1,7 @@
-const Tag = require('../Tag')
-const { __Empty__, __EmptySelfClose__ } = require('./__empty__')
-const { getTagConstructor, isSelfClosing, getLanguage } = require('../utils')
-const { DOUBLE } = require('../utils/CONSTANT')
+import Tag from '../Tag'
+import { __Empty__, __EmptySelfClose__ } from './__empty__'
+import { getTagConstructor, isSelfClosing, getLanguage } from '../utils'
+import { DOUBLE } from '../utils/CONSTANT'
 
 /**
  * 在pre内部所有元素，应该转换为 plain text，并入 ``` 内部， 保持格式
@@ -87,4 +87,4 @@ class Pre extends Tag {
   }
 }
 
-module.exports = Pre
+export default Pre

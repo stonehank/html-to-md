@@ -21,6 +21,7 @@ module.exports = {
       amd: 'html2md',
       commonjs: 'html2md',
     },
+    libraryExport: 'default',
     globalObject: 'this',
     libraryTarget: 'umd',
   },

@@ -1,5 +1,4 @@
-let html2Md=require('../../src/index')
-
+import html2Md from '../../src/index'
 
 describe('替换标签',()=>{
 

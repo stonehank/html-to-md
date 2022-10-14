@@ -34,4 +34,4 @@ function getLanguage(str) {
   return match ? DEFAULT_LANG : ''
 }
 
-module.exports = getLanguage
+export default getLanguage

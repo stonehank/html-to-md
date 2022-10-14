@@ -1,5 +1,5 @@
-const Tag = require('../Tag')
-const { getTableAlign } = require('../utils')
+import Tag from '../Tag'
+import { getTableAlign } from '../utils'
 
 class Tbody extends Tag {
   constructor(str, tagName = 'tbody', options) {
@@ -23,4 +23,4 @@ class Tbody extends Tag {
     return super.exec(prevGap, endGap)
   }
 }
-module.exports = Tbody
+export default Tbody

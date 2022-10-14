@@ -1,4 +1,4 @@
-const H6=require( '../../src/tags/h6')
+import H6 from '../../src/tags/h6'
 
 describe('test <h6></h6> tag',()=>{
   it('no nest',()=>{

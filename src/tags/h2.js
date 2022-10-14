@@ -1,4 +1,4 @@
-const __Heading__ = require('./__Heading__')
+import __Heading__ from './__Heading__'
 
 class H2 extends __Heading__ {
   constructor(str, tagName = 'h2') {
@@ -14,4 +14,4 @@ class H2 extends __Heading__ {
   }
 }
 
-module.exports = H2
+export default H2

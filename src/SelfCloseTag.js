@@ -1,4 +1,4 @@
-const { getTagAttributes } = require('./utils')
+import { getTagAttributes } from './utils'
 
 class SelfCloseTag {
   constructor(
@@ -114,4 +114,4 @@ class SelfCloseTag {
   }
 }
 
-module.exports = SelfCloseTag
+export default SelfCloseTag

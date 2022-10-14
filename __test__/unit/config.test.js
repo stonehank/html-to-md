@@ -1,4 +1,4 @@
-let config=require('../../src/config')
+import config from '../../src/config'
 
 describe('跳过指定的tag标签，内部不影响',()=>{
   beforeEach(()=>{

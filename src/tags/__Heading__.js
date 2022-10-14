@@ -1,4 +1,4 @@
-const Tag = require('../Tag')
+import Tag from '../Tag'
 
 class __Heading__ extends Tag {
   constructor(str, tagName = 'h1') {
@@ -16,4 +16,4 @@ class __Heading__ extends Tag {
   }
 }
 
-module.exports = __Heading__
+export default __Heading__

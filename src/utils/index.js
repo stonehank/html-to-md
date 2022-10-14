@@ -1,19 +1,19 @@
-const { escape, extraEscape, unescape } = require('./escape')
-const generateGetNextValidTag = require('./generateGetNextValidTag')
-const getTagConstructor = require('./getTagConstructor')
-const isSelfClosing = require('./isSelfClosing')
-const getTagAttributes = require('./getTagAttributes')
-const getLanguage = require('./getLanguage')
-const clearComment = require('./clearComment')
-const getRealTagName = require('./getRealTagName')
-const isIndependentTag = require('./isIndependentTag')
-const getTableAlign = require('./getTableAlign')
-const shouldRenderRawInside = require('./shouldRenderRawInside')
+import { escape, extraEscape, unescapeStr } from './escape'
+import generateGetNextValidTag from './generateGetNextValidTag'
+import getTagConstructor from './getTagConstructor'
+import isSelfClosing from './isSelfClosing'
+import getTagAttributes from './getTagAttributes'
+import getLanguage from './getLanguage'
+import clearComment from './clearComment'
+import getRealTagName from './getRealTagName'
+import isIndependentTag from './isIndependentTag'
+import getTableAlign from './getTableAlign'
+import shouldRenderRawInside from './shouldRenderRawInside'
 
-module.exports = {
+export {
   escape,
   extraEscape,
-  unescape,
+  unescapeStr,
   getRealTagName,
   getTagConstructor,
   generateGetNextValidTag,

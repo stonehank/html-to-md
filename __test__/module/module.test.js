@@ -1,4 +1,4 @@
-const html2Md=require('../../src/index')
+import html2Md from '../../src/index'
 
 describe('module test1',()=>{
   it('test-1',()=>{

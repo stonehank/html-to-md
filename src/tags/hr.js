@@ -1,4 +1,4 @@
-const SelfCloseTag = require('../SelfCloseTag')
+import SelfCloseTag from '../SelfCloseTag'
 
 class Hr extends SelfCloseTag {
   constructor(str, tagName = 'hr', options) {
@@ -20,4 +20,4 @@ class Hr extends SelfCloseTag {
   }
 }
 
-module.exports = Hr
+export default Hr

@@ -173,4 +173,4 @@ function isValidHTMLTags(tag) {
   return tags.includes(tag.toLowerCase())
 }
 
-module.exports = isValidHTMLTags
+export default isValidHTMLTags

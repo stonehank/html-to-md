@@ -1,7 +1,7 @@
-const Tag = require('../Tag')
-const { getTagConstructor } = require('../utils')
-const isIndependentTag = require('../utils/isIndependentTag')
-const { DOUBLE, TRIPLE } = require('../utils/CONSTANT')
+import Tag from '../Tag'
+import { getTagConstructor } from '../utils'
+import isIndependentTag from '../utils/isIndependentTag'
+import { DOUBLE, TRIPLE } from '../utils/CONSTANT'
 
 /**
  * 内部含有p， 如果是第一个元素，需要最后额外加一个\n，否则开始额外加一个\n
@@ -79,4 +79,4 @@ class Li extends Tag {
   }
 }
 
-module.exports = Li
+export default Li

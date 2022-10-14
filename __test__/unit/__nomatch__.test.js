@@ -1,5 +1,4 @@
-let html2Md=require('../../src/index')
-
+import html2Md from '../../src/index'
 
 describe('对于不匹配，消除attrs，标签不处理',()=>{
 

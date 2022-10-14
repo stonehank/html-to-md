@@ -1,4 +1,4 @@
-const Em = require('./em')
+import Em from './em'
 
 class I extends Em {
   constructor(str, tagName = 'i', options) {
@@ -10,4 +10,4 @@ class I extends Em {
   }
 }
 
-module.exports = I
+export default I

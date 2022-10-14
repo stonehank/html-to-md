@@ -1,6 +1,5 @@
-let html2Md=require('../../src/index')
-const {SYMBOL_I,SYMBOL_B}=require('../options')
-
+import html2Md from '../../src/index'
+import {SYMBOL_I,SYMBOL_B} from '../options'
 describe('test <i></i> tag',()=>{
   it('no nest',()=>{
     expect(html2Md("<i>javascript</i>")).toBe(SYMBOL_I+"javascript"+SYMBOL_I)

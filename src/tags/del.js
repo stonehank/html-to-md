@@ -1,4 +1,4 @@
-const Tag = require('../Tag')
+import Tag from '../Tag'
 
 class Del extends Tag {
   constructor(str, tagName = 'del') {
@@ -14,4 +14,4 @@ class Del extends Tag {
   }
 }
 
-module.exports = Del
+export default Del

@@ -39,7 +39,7 @@ function escape(s) {
     : s
 }
 
-function unescape(s, { needEscape = false } = {}) {
+function unescapeStr(s, { needEscape = false } = {}) {
   s =
     s && reHasEscapedHtml.test(s)
       ? s.replace(reEscapedHtml, (entity) => unescapeMap[entity])
@@ -58,8 +58,4 @@ function extraEscape(s) {
   }, s)
 }
 
-module.exports = {
-  escape,
-  extraEscape,
-  unescape,
-}
+export { escape, extraEscape, unescapeStr }

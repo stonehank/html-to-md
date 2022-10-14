@@ -1,5 +1,5 @@
 import Code from '../../src/tags/code'
-const html2Md=require('../../src/index')
+import html2Md from '../../src/index'
 
 describe('test <code></code> tag',()=>{
   it('has textNode',()=>{

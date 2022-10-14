@@ -1,4 +1,4 @@
-let html2Md=require('../../src/index')
+import html2Md from '../../src/index'
 
 
 describe('直接忽视整个tag',()=>{

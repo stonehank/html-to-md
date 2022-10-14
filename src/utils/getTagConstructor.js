@@ -1,6 +1,6 @@
-const config = require('../config')
-const isSelfClosing = require('./isSelfClosing')
-const isValidHTMLTags = require('./isValidHTMLTags')
+import config from '../config'
+import isSelfClosing from './isSelfClosing'
+import isValidHTMLTags from './isValidHTMLTags'
 
 function getTagConstructor(tagName) {
   let clazz
@@ -16,7 +16,7 @@ function getTagConstructor(tagName) {
     return selfClose ? empty.__EmptySelfClose__ : empty.__Empty__
   }
   if (ignoreTags.includes(tagName)) {
-    return require('../tags/__ignore__')
+    return require('../tags/__ignore__').default
   }
   if (aliasTags[tagName] != null) {
     const newTagName = aliasTags[tagName]
@@ -34,12 +34,12 @@ function getTagConstructor(tagName) {
       return selfClose ? empty.__EmptySelfClose__ : empty.__Empty__
     }
     if (renderCustomTags === 'IGNORE') {
-      return require('../tags/__ignore__')
+      return require('../tags/__ignore__').default
     }
   }
 
   try {
-    clazz = require(`../tags/${tagName}`)
+    clazz = require(`../tags/${tagName}`).default
   } catch (e) {
     if (selfClose) {
       clazz = require('../tags/__nomatch__').__NoMatchSelfClose__
@@ -51,4 +51,4 @@ function getTagConstructor(tagName) {
   return clazz
 }
 
-module.exports = getTagConstructor
+export default getTagConstructor

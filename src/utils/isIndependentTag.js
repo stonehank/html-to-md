@@ -1,4 +1,4 @@
-const getRealTagName = require('./getRealTagName')
+import getRealTagName from './getRealTagName'
 
 const independentLineTags = {
   html: true,
@@ -32,4 +32,4 @@ function isIndependentTag(tagName) {
   return !!independentLineTags[realName]
 }
 
-module.exports = isIndependentTag
+export default isIndependentTag

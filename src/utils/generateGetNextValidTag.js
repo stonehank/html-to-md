@@ -1,4 +1,4 @@
-const isSelfClosing = require('./isSelfClosing')
+import isSelfClosing from './isSelfClosing'
 
 function getTagName(str, id) {
   let name = ''
@@ -78,4 +78,4 @@ function generateGetNextValidTag(str) {
   }
 }
 
-module.exports = generateGetNextValidTag
+export default generateGetNextValidTag

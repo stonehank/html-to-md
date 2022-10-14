@@ -1,5 +1,5 @@
-const Tag = require('../Tag')
-const { getTagConstructor, getTableAlign } = require('../utils')
+import Tag from '../Tag'
+import { getTagConstructor, getTableAlign } from '../utils'
 
 function countTdNum(str) {
   let trStr = ''
@@ -80,4 +80,4 @@ class Table extends Tag {
     return super.exec(prevGap, endGap)
   }
 }
-module.exports = Table
+export default Table

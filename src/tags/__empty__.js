@@ -1,5 +1,5 @@
-const Tag = require('../Tag')
-const SelfCloseTag = require('../SelfCloseTag')
+import Tag from '../Tag'
+import SelfCloseTag from '../SelfCloseTag'
 /*
  *
  * <div><b>abc</b></div>
@@ -41,4 +41,4 @@ class __EmptySelfClose__ extends SelfCloseTag {
   }
 }
 
-module.exports = { __Empty__, __EmptySelfClose__ }
+export { __Empty__, __EmptySelfClose__ }

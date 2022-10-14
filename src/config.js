@@ -91,6 +91,4 @@ const defaultOptions = {
   },
   renderCustomTags: true,
 }
-const config = new Config(JSON.parse(JSON.stringify(defaultOptions)))
-
-module.exports = config
+export default new Config(JSON.parse(JSON.stringify(defaultOptions)))

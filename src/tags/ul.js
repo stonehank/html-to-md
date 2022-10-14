@@ -1,7 +1,8 @@
-const Tag = require('../Tag')
-const __Ignore__ = require('./__ignore__')
-const { getTagConstructor } = require('../utils')
-const { aliasTags } = require('../config').get()
+import Tag from '../Tag'
+import __Ignore__ from './__ignore__'
+import { getTagConstructor } from '../utils'
+import config from '../config'
+const { aliasTags } = config.get()
 
 class Ul extends Tag {
   constructor(str, tagName = 'ul', options) {
@@ -46,4 +47,4 @@ class Ul extends Tag {
   }
 }
 
-module.exports = Ul
+export default Ul

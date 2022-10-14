@@ -1,6 +1,6 @@
-const isIndependentTag = require('../utils/isIndependentTag')
-const Tag = require('../Tag')
-const { getTagConstructor } = require('../utils')
+import isIndependentTag from '../utils/isIndependentTag'
+import Tag from '../Tag'
+import { getTagConstructor } from '../utils'
 
 class Blockquote extends Tag {
   constructor(str, tagName = 'blockquote', options) {
@@ -115,4 +115,4 @@ class Blockquote extends Tag {
   }
 }
 
-module.exports = Blockquote
+export default Blockquote

@@ -20,4 +20,4 @@ function isSelfClosing(tag) {
   return !!selfTags[tag.toLowerCase()]
 }
 
-module.exports = isSelfClosing
+export default isSelfClosing

@@ -29,4 +29,4 @@ function getTableAlign(str, tableColumnCount) {
 
   return res
 }
-module.exports = getTableAlign
+export default getTableAlign

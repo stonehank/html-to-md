@@ -1,4 +1,4 @@
-const SelfCloseTag = require('../SelfCloseTag')
+import SelfCloseTag from '../SelfCloseTag'
 
 class Img extends SelfCloseTag {
   constructor(str, tagName = 'img', options) {
@@ -16,4 +16,4 @@ class Img extends SelfCloseTag {
     return super.exec(prevGap, endGap)
   }
 }
-module.exports = Img
+export default Img

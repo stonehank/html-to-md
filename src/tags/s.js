@@ -1,4 +1,4 @@
-const Del = require('./del')
+import Del from './del'
 
 class S extends Del {
   constructor(str, tagName = 's', options) {
@@ -10,4 +10,4 @@ class S extends Del {
   }
 }
 
-module.exports = S
+export default S

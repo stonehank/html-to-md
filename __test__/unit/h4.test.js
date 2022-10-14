@@ -1,4 +1,4 @@
-const H4=require( '../../src/tags/h4')
+import H4 from '../../src/tags/h4'
 
 
 describe('test <h4></h4> tag',()=>{

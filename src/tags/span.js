@@ -1,4 +1,4 @@
-const Tag = require('../Tag')
+import Tag from '../Tag'
 
 class Span extends Tag {
   constructor(str, tagName = 'span', options) {
@@ -10,4 +10,4 @@ class Span extends Tag {
   }
 }
 
-module.exports = Span
+export default Span

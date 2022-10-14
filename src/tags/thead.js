@@ -1,4 +1,4 @@
-const Tag = require('../Tag')
+import Tag from '../Tag'
 
 class Thead extends Tag {
   constructor(str, tagName = 'thead', options) {
@@ -9,4 +9,4 @@ class Thead extends Tag {
     return super.exec(prevGap, endGap)
   }
 }
-module.exports = Thead
+export default Thead

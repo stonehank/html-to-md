@@ -1,6 +1,6 @@
 import html2md from '../../src'
 import P from '../../src/tags/p'
-const config = require('../../src/config')
+import config from '../../src/config'
 
 config.set({renderCustomTags:true})
 

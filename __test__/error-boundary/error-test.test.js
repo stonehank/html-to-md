@@ -1,7 +1,6 @@
 import Tag from "../../src/Tag";
 import SelfCloseTag from "../../src/SelfCloseTag";
-
-const html2Md = require('../../src/index')
+import html2Md from '../../src/index'
 
 describe('error test', () => {
 

@@ -1,4 +1,4 @@
-const SelfCloseTag = require('../SelfCloseTag')
+import SelfCloseTag from '../SelfCloseTag'
 
 class Input extends SelfCloseTag {
   constructor(str, tagName = 'input', options) {
@@ -17,4 +17,4 @@ class Input extends SelfCloseTag {
     return super.exec(prevGap, endGap)
   }
 }
-module.exports = Input
+export default Input

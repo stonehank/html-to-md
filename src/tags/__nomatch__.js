@@ -1,5 +1,5 @@
-const Tag = require('../Tag')
-const SelfCloseTag = require('../SelfCloseTag')
+import Tag from '../Tag'
+import SelfCloseTag from '../SelfCloseTag'
 /*
  *
  * <sub><b>abc</b></sub>
@@ -34,4 +34,4 @@ class __NoMatchSelfClose__ extends SelfCloseTag {
   }
 }
 
-module.exports = { __NoMatch__, __NoMatchSelfClose__ }
+export { __NoMatch__, __NoMatchSelfClose__ }

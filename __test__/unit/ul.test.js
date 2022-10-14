@@ -1,4 +1,4 @@
-const html2Md = require('../../src/index')
+import html2Md from '../../src/index'
 const UL_SPACE = 2
 const OL_SPACE = 3
 describe("test <ul></ul> tag", () => {

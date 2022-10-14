@@ -30,4 +30,4 @@ function getTagAttributes(attrStr) {
   return obj
 }
 
-module.exports = getTagAttributes
+export default getTagAttributes

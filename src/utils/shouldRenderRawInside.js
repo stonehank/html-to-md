@@ -1,1 +1,1 @@
-module.exports = ['th', 'td']
+export default ['th', 'td']

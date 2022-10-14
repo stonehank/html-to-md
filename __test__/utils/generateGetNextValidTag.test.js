@@ -1,4 +1,4 @@
-const {generateGetNextValidTag}=require('../../src/utils')
+import { generateGetNextValidTag } from '../../src/utils'
 
 
 describe('测试寻找标签',()=>{

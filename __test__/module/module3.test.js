@@ -1,4 +1,4 @@
-const html2Md=require('../../src/index')
+import html2Md from '../../src/index'
 
 describe('test codes',()=>{
 
