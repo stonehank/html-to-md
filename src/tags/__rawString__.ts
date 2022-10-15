@@ -1,10 +1,20 @@
+import { ParseOptions } from '../type'
 import { extraEscape } from '../utils'
 import isIndependentTag from '../utils/isIndependentTag'
 
 class __RawString__ {
+  tagName: string | null
+  nextTagName: string | null
+  prevTagName: string | null
+  parentTag: string | null
+  keepFormat: boolean
+  calcLeading: boolean
+  leadingSpace: string
+  layer: number
+  rawStr: string
   constructor(
-    str,
-    tagName = '__nomatch__',
+    str: string,
+    tagName: string | null = '__nomatch__',
     {
       keepFormat = false,
       prevTagName = '',
@@ -13,7 +23,7 @@ class __RawString__ {
       calcLeading = false,
       layer = 1,
       leadingSpace = '',
-    } = {}
+    }: ParseOptions = {}
   ) {
     this.tagName = tagName
     this.nextTagName = nextTagName
@@ -26,7 +36,7 @@ class __RawString__ {
     this.rawStr = str
   }
 
-  slim(str) {
+  slim(str: string) {
     if (this.keepFormat) return str
 
     let _str = str.replace(/\s+/g, ' ')
@@ -43,7 +53,7 @@ class __RawString__ {
     return _str
   }
 
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     if (this.keepFormat) return content
     if (this.calcLeading) {
       return this.leadingSpace + extraEscape(content)

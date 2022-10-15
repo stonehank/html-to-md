@@ -12,7 +12,7 @@ module.exports = (env) => {
   const isDev = process.env.NODE_ENV === 'development'
   return {
     mode: isDev ? 'development' : 'production',
-    entry: path.join(src, 'index.js'),
+    entry: path.join(src, 'index.ts'),
     output: {
       path: path.join(__dirname, 'demo'),
       filename: './html-to-md.js',

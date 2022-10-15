@@ -1,9 +1,19 @@
+import { SelfCloseTagOptions } from './type'
 import { getTagAttributes } from './utils'
 
 class SelfCloseTag {
+  tagName: string | null
+  parentTag: string | null
+  prevTagName: string | null
+  nextTagName: string | null
+  rawStr: string
+  isFirstTag: boolean
+  leadingSpace: string
+  layer: number
+  attrs: Record<string, string>
   constructor(
-    str,
-    tagName,
+    str: string,
+    tagName: string | null,
     {
       parentTag = '',
       leadingSpace = '',
@@ -11,9 +21,7 @@ class SelfCloseTag {
       isFirstTag = false,
       prevTagName = '',
       nextTagName = '',
-      match = null,
-      intendSpace = '',
-    } = {}
+    }: SelfCloseTagOptions = {}
   ) {
     this.tagName = tagName
     this.rawStr = str
@@ -37,7 +45,7 @@ class SelfCloseTag {
    * @param tagName
    * @returns {boolean}
    */
-  __detectStr__(str, tagName) {
+  __detectStr__(str: string, tagName: string | null) {
     if (str[0] !== '<') {
       console.error(
         `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`
@@ -70,9 +78,9 @@ class SelfCloseTag {
   /**
    *
    * @param str
-   * @returns {{attr: {}, content: *}}
+   * @returns {{attr: {}}}
    */
-  __fetchTagAttr__(str) {
+  __fetchTagAttr__(str: string) {
     let openTagAttrs = ''
     let i = 1
     for (; i < str.length; i++) {
@@ -90,17 +98,17 @@ class SelfCloseTag {
   }
 
   // 在合并必要的空行前
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return content
   }
 
   // 合并必要的空行后
-  afterMergeSpace(str) {
+  afterMergeSpace(str: string) {
     return str
   }
 
   // 最终返回前
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     return content
   }
 

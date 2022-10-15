@@ -6,11 +6,34 @@ import {
 import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
 import isIndependentTag from './utils/isIndependentTag'
+import { ParseOptions, TagOptions } from './type'
 
 class Tag {
+  tagName: string | null
+  rawStr: string
+  parentTag: string | null
+  prevTagName: string | null
+  nextTagName: string | null
+  prevTagStr: string
+  nextTagStr: string
+  isFirstTag: boolean
+  calcLeading: boolean
+  leadingSpace: string
+  layer: number
+  noWrap: boolean
+  match: string | null
+  intendSpace: string
+  language: string
+  count: number
+  tableColumnCount: number
+  noExtraLine: boolean
+  keepFormat: boolean
+  attrs: Record<string, string>
+  content: string
+
   constructor(
-    str,
-    tagName,
+    str: string,
+    tagName: string | null,
     {
       keepFormat = false,
       prevTagName = '',
@@ -29,7 +52,7 @@ class Tag {
       count = 1,
       tableColumnCount = 0,
       noExtraLine = false,
-    } = {}
+    }: TagOptions = {}
   ) {
     this.tagName = tagName
     this.rawStr = str
@@ -68,7 +91,7 @@ class Tag {
    * @param tagName
    * @returns {boolean}
    */
-  __detectStr__(str, tagName) {
+  __detectStr__(str: string, tagName: string | null) {
     if (str[0] !== '<') {
       console.error(
         `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`
@@ -112,7 +135,7 @@ class Tag {
    * @param str
    * @returns {{attr: {}, content: *}}
    */
-  __fetchTagAttrAndContent__(str) {
+  __fetchTagAttrAndContent__(str: string) {
     let openTagAttrs = ''
     let i = 1
     for (; i < str.length; i++) {
@@ -140,7 +163,7 @@ class Tag {
     }
   }
 
-  __onlyLeadingSpace__(str) {
+  __onlyLeadingSpace__(str: string) {
     str = str.trim()
     for (let i = 0; i < str.length; i++) {
       if (str[i] !== SINGLE) return false
@@ -148,7 +171,7 @@ class Tag {
     return true
   }
 
-  __isEmpty__(str) {
+  __isEmpty__(str: string) {
     if (this.keepFormat) return false
     return str === '' || (this.calcLeading && this.__onlyLeadingSpace__(str))
   }
@@ -159,25 +182,33 @@ class Tag {
   }
 
   // 存在tagName时，解析步骤
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     const SubTagClass = getTagConstructor(subTagName)
     const subTag = new SubTagClass(subTagStr, subTagName, options)
     return subTag.exec()
   }
 
   // 不存在tagName时，解析步骤
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString(
+    subTagStr: string,
+    subTagName: string | null,
+    options: ParseOptions
+  ) {
     const rawString = new RawString(subTagStr, subTagName, options)
     return rawString.exec()
   }
 
   // 在解析完毕后，此时还并未去除不必要的空行
-  afterParsed(content) {
+  afterParsed(content: string) {
     return content
   }
 
   // 去除不必要的空行
-  slim(content) {
+  slim(content: string) {
     // 在代码块内部
     if (this.keepFormat) {
       return content
@@ -186,11 +217,11 @@ class Tag {
   }
 
   // 去除不必要的空行后，但在合并必要的空行前
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return content
   }
 
-  mergeSpace(content, prevGap, endGap) {
+  mergeSpace(content: string, prevGap: string, endGap: string) {
     if (this.keepFormat && this.tagName !== 'pre') {
       // 在代码块内部减少换行
       return content.endsWith('\n')
@@ -202,12 +233,12 @@ class Tag {
   }
 
   // 合并必要的空行后
-  afterMergeSpace(content) {
+  afterMergeSpace(content: string) {
     return content
   }
 
   // 最终返回前
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     return content
   }
 

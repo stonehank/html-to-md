@@ -1,5 +1,6 @@
 import Tag from '../Tag'
 import SelfCloseTag from '../SelfCloseTag'
+import { ParseOptions, TagOptions } from '../type'
 /*
  *
  * <div><b>abc</b></div>
@@ -7,21 +8,29 @@ import SelfCloseTag from '../SelfCloseTag'
  *
  * */
 class __Empty__ extends Tag {
-  constructor(str, tagName = '__empty__', options) {
+  constructor(
+    str: string,
+    tagName: string | null = '__empty__',
+    options: TagOptions
+  ) {
     super(str, tagName, options)
   }
 
-  slim(content) {
+  slim(content: string) {
     return content
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string | null,
+    options: ParseOptions
+  ) {
     return new __Empty__(subTagStr, subTagName, {
       ...options,
     }).exec()
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr: string, subTagName: null, options: ParseOptions) {
     return subTagStr
   }
 
@@ -31,7 +40,7 @@ class __Empty__ extends Tag {
 }
 
 class __EmptySelfClose__ extends SelfCloseTag {
-  constructor(str, tagName = '__emptyselfclose__') {
+  constructor(str: string, tagName = '__emptyselfclose__') {
     super(str, tagName)
     this.tagName = tagName
   }
