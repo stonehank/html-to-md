@@ -1,22 +1,22 @@
 import isSelfClosing from './isSelfClosing'
 
-function getTagName(str, id) {
+function getTagName(str: string, idx: number) {
   let name = ''
-  while (id < str.length && /[a-zA-Z0-9!-]/.test(str[id])) {
-    name += str[id++]
+  while (idx < str.length && /[a-zA-Z0-9!-]/.test(str[idx])) {
+    name += str[idx++]
   }
 
   return name.toLowerCase()
 }
 // 找到下一个有效tag， 可多次调用，返回[tagName, tagContent]
 // 例如: <b>abc</b><i>abc</i>， 返回['b', '<b>abc</b>']
-function generateGetNextValidTag(str) {
+function generateGetNextValidTag(str: string) {
   let startId = 0
-  return () => {
+  return (): [string | null, string] => {
     let res = ''
-    let startTagName = null
+    let startTagName: string | null = null
     let count = 0
-    let endTagName = null
+    let endTagName: string | null = null
     let canBeBreak = false
     if (startId >= str.length) {
       return [startTagName, res]

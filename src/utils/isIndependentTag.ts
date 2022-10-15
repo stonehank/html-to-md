@@ -1,6 +1,6 @@
 import getRealTagName from './getRealTagName'
 
-const independentLineTags = {
+const independentLineTags: Record<string, boolean> = {
   html: true,
   body: true,
   p: true,
@@ -26,9 +26,10 @@ const independentLineTags = {
   br: true,
 }
 
-function isIndependentTag(tagName) {
+function isIndependentTag(tagName: string | null): boolean {
   if (!tagName) return false
   const realName = getRealTagName(tagName)
+  if (!realName) return false
   return !!independentLineTags[realName]
 }
 

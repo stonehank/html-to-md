@@ -1,4 +1,4 @@
-const selfTags = {
+const selfTags: Record<string, boolean> = {
   img: true,
   hr: true,
   input: true,
@@ -16,7 +16,8 @@ const selfTags = {
   source: true,
 }
 
-function isSelfClosing(tag) {
+function isSelfClosing(tag: string | null): boolean {
+  if (tag == null) return false
   return !!selfTags[tag.toLowerCase()]
 }
 

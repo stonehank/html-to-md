@@ -1,4 +1,6 @@
-function getTableAlign(str, tableColumnCount) {
+type AlignKeys = 'center' | 'left' | 'right' | 'start' | 'end'
+
+function getTableAlign(str: string, tableColumnCount: number) {
   const alignObj = {
     _default_: '---|',
     center: ':---:|',
@@ -13,16 +15,18 @@ function getTableAlign(str, tableColumnCount) {
   res = match.slice(0, tableColumnCount)
   // console.log(res,match,str)
   res = res.map((s) => {
-    const alignMatch = s.match(
+    const alignMatch: [unknown, AlignKeys] | null = s.match(
       /align\s*=\s*['"]\s*(center|left|right|start|end)/
     )
-    const styleMatch = s.match(/text-align\s*:\s*(center|left|right|start|end)/)
+    const styleMatch: [unknown, AlignKeys] | null = s.match(
+      /text-align\s*:\s*(center|left|right|start|end)/
+    )
     // Style first
     if (!alignMatch && !styleMatch) {
       return alignObj._default_
     } else if (alignMatch && !styleMatch) {
       return alignObj[alignMatch[1]] || alignObj._default_
-    } else {
+    } else if (styleMatch) {
       return alignObj[styleMatch[1]] || alignObj._default_
     }
   })

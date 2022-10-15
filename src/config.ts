@@ -1,3 +1,9 @@
+import { Html2MdOptions } from './type'
+
+interface Config {
+  options: Html2MdOptions
+}
+
 class Config {
   // renderCustomTags true, false, [SKIP, IGNORE, EMPTY]
   constructor({
@@ -24,17 +30,18 @@ class Config {
     this.options = {}
   }
 
-  set(obj, force) {
+  set(obj: Html2MdOptions | undefined, force: boolean) {
+    if (!obj) return
     if (Object.prototype.toString.call(obj) === '[object Object]') {
-      for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          if (force) {
-            this.options[key] = obj[key]
-          } else {
-            assign(this.options, obj, key)
-          }
+      ;(Object.keys(obj) as (keyof typeof obj)[]).forEach((key) => {
+        if (force) {
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          this.options[key] = obj[key]
+        } else {
+          assign(this.options, obj, key)
         }
-      }
+      })
     }
   }
 
@@ -43,8 +50,12 @@ class Config {
   }
 }
 
-function assign(obj, newObj, key) {
-  if (obj[key] == null) {
+function assign(
+  obj: Record<string, any>,
+  newObj: Record<string, unknown>,
+  key: string
+) {
+  if (!(key in obj)) {
     obj[key] = newObj[key]
     return
   }

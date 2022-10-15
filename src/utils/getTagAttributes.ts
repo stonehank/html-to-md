@@ -1,5 +1,5 @@
-function getTagAttributes(attrStr) {
-  const obj = {}
+function getTagAttributes(attrStr: string): Record<string, string> {
+  const attrsObj: Record<string, string> = {}
   let inside = false
   let key = ''
   let value = ''
@@ -11,7 +11,7 @@ function getTagAttributes(attrStr) {
           slimKey = slimKey.slice(0, slimKey.length - 1)
         }
         if (slimKey) {
-          obj[slimKey] = value.trim()
+          attrsObj[slimKey] = value.trim()
         }
         key = ''
         value = ''
@@ -27,7 +27,7 @@ function getTagAttributes(attrStr) {
     else value += attrStr[i]
   }
 
-  return obj
+  return attrsObj
 }
 
 export default getTagAttributes

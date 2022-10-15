@@ -6,8 +6,9 @@ import {
   isIndependentTag,
 } from './utils'
 import config from './config'
+import { Html2MdOptions } from './type'
 
-function html2md(str, options, force = false) {
+function html2md(str: string, options?: Html2MdOptions, force = false): string {
   config.reset()
   config.set(options, force)
   str = clearComment(str)
@@ -52,7 +53,7 @@ function html2md(str, options, force = false) {
   return beforeReturn(unescapeStr(res))
 }
 
-function beforeReturn(str) {
+function beforeReturn(str: string) {
   str = str.replace(/^\n+/, '')
   str = str.replace(/\s+$/, '')
   str = str.replace(/☈/g, ' ')

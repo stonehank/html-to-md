@@ -25,7 +25,7 @@
 const DEFAULT_LANG = 'javascript'
 
 // only exec in pre tag
-function getLanguage(str) {
+function getLanguage(str: string): string {
   const matchLang = str.match(/<.*?class=".*?language-([^\s"]*)?.*".*>/)
   if (matchLang) return matchLang[1] || ''
   const match = str.match(

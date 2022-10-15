@@ -168,7 +168,7 @@ const tags = [
   'xmp',
 ]
 
-function isValidHTMLTags(tag) {
+function isValidHTMLTags(tag: unknown) {
   if (typeof tag !== 'string') return false
   return tags.includes(tag.toLowerCase())
 }
