@@ -27,17 +27,32 @@ describe('error test', () => {
         '>> 1. bq-nest-3')
   })
 
-  it('unvalid tag', () => {
+  it('unvalid tag, string, not close, wrong tagname, self tag in Tag', () => {
     let str='String send inside Tag'
+    let str2='<b>String send inside Tag'
+    let str3='<img src="some.jpg" />'
+    let str4='<div data-attr="some-attr" />'
+    let str5='<div data-attr="some-attr" >'
     let tag=new Tag(str)
+    let tag2=new Tag(str2, 'a')
+    let tag3=new Tag(str3, 'img')
+    let tag4=new Tag(str4, 'div')
+    let tag5=new Tag(str5, 'div')
     expect(tag.content).toBe('')
+    expect(tag2.content).toBe('')
+    expect(tag3.content).toBe('')
+    expect(tag4.content).toBe('')
+    expect(tag5.content).toBe('')
   })
 
 
-  it('unvalid selfTag', () => {
+  it('unvalid selfTag, string, wrong tagName in SelfCloseTag ', () => {
     let str='String send inside selfTag'
+    let str2='<img src="some.jpg" />'
     let selfTag=new SelfCloseTag(str)
+    let selfTag2=new SelfCloseTag(str2,'input')
     expect(selfTag.attrs).toEqual({})
+    expect(selfTag2.attrs).toEqual({})
   })
 
   it('other tags inside tr', () => {

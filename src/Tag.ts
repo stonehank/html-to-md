@@ -2,6 +2,7 @@ import {
   getTagConstructor,
   getTagAttributes,
   generateGetNextValidTag,
+  isSelfClosing,
 } from './utils'
 import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
@@ -108,14 +109,14 @@ class Tag {
       }
     }
 
-    // SelfClose tag
-    if (name.endsWith('/')) {
-      console.warn(
-        'There detect a self close tag, which name is:',
-        name.slice(0, -1)
-      )
-      return false
-    }
+    // // SelfClose tag
+    // if (name.endsWith('/')) {
+    //   console.warn(
+    //     'There detect a self close tag, which name is:',
+    //     name.slice(0, -1)
+    //   )
+    //   return false
+    // }
     if (name !== tagName) {
       console.warn(
         'Tag is not match tagName, tagName in str is ' +
@@ -152,8 +153,11 @@ class Tag {
         break
       }
     }
-    if (endId === -1) {
-      console.warn('Tag ' + this.tagName + ' has no close.')
+    if (endId === -1 && isSelfClosing(this.tagName)) {
+      console.warn(
+        'There detect a self close tag, which name is:',
+        this.tagName
+      )
     }
     return {
       attr: getTagAttributes(openTagAttrs),

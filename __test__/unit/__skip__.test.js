@@ -55,4 +55,8 @@ describe('跳过指定的tag标签，内部不影响',()=>{
       "\n" +
       "`content`")
   })
+
+  it('Skip self tag',()=>{
+    expect(html2Md(`<b>123</b><img src="some.jpg" /><i>234</i>`,{skipTags:['img','b']},true)).toBe('123*234*')
+  })
 })

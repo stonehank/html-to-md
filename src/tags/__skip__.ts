@@ -27,18 +27,16 @@ class __Skip__ extends Tag {
 }
 
 class __SkipSelfClose__ extends SelfCloseTag {
-  str: string
   constructor(
     str: string,
     tagName = '__skipselfclose__',
     options: SelfCloseTagOptions
   ) {
     super(str, tagName, options)
-    this.str = str
   }
 
   exec() {
-    return this.str
+    return ''
   }
 }
 
