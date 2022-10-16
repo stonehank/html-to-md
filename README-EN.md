@@ -12,7 +12,7 @@
 
 ### Feature
 
-- speed, none of dependencies, `gizp` 11kb
+- speed, none of dependencies, `gizp` 10kb
 
 - support `nodeJs`
 

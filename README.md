@@ -10,7 +10,7 @@
 
 ### 特点
 
-- 快速，小巧，无任何依赖，`gzip` 11kb
+- 快速，小巧，无任何依赖，`gzip` 10kb
 
 - 支持`nodeJS`，参数(html 文本)为字符串
 
@@ -43,13 +43,13 @@
 ##### 使用
 
 ```js
-const html2md = require("html-to-md");
+const html2md = require('html-to-md')
 // or if you're using ES6
-import html2md from "html2md";
+import html2md from 'html2md'
 
 console.log(
-  html2md("<strong><em>strong and italic</em></strong>", options, force)
-);
+  html2md('<strong><em>strong and italic</em></strong>', options, force)
+)
 // ***strong and italic***
 ```
 
@@ -145,22 +145,22 @@ options:
 例：
 
 ```javascript
-html2md("<><b><i>abc</i></b></>", { ignoreTags: [""] });
+html2md('<><b><i>abc</i></b></>', { ignoreTags: [''] })
 // ''
 
-html2md("<><b><i>abc</i></b></>", { skipTags: [""] });
+html2md('<><b><i>abc</i></b></>', { skipTags: [''] })
 // ***abc***
 
-html2md("<><b><i>abc</i></b></>", { emptyTags: [""] });
+html2md('<><b><i>abc</i></b></>', { emptyTags: [''] })
 // abc
 
-html2md("<><b><i>abc</i></b></>", {
-  skipTags: [""],
-  aliasTags: { b: "ul", i: "li" },
-});
+html2md('<><b><i>abc</i></b></>', {
+  skipTags: [''],
+  aliasTags: { b: 'ul', i: 'li' },
+})
 // *  abc
 
-html2md("<test><b><i>abc</i></b></test>", { renderCustomTags: "SKIP" });
+html2md('<test><b><i>abc</i></b></test>', { renderCustomTags: 'SKIP' })
 // ***abc***
 ```
 
@@ -177,11 +177,11 @@ force(Boolean)(默认 false)
 // 默认 skipTags 为 ['div','html','body']
 
 // 配置一：
-html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, false);
+html2md('<div><b><i>abc</i></b></div>', { skipTags: ['b'] }, false)
 // skipTags 为 ['div','html','body','b']
 
 // 配置二：
-html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, true);
+html2md('<div><b><i>abc</i></b></div>', { skipTags: ['b'] }, true)
 // 经过配置后 skipTags 为 ['b']
 ```
 

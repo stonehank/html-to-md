@@ -1,3 +1,9 @@
+## 0.8.0
+
+- add eslint and premitter
+- sourcecode use es module
+- convert to typescript
+
 ## 0.7.0
 
 - add `renderCustomTags` in options
