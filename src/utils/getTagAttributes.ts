@@ -5,7 +5,7 @@ function getTagAttributes(attrStr: string): Record<string, string> {
   let value = ''
   for (let i = 0; i <= attrStr.length; i++) {
     if (i === attrStr.length || /\s/.test(attrStr[i])) {
-      if (!inside || i === attrStr.length) {
+      if (i === attrStr.length || !inside) {
         let slimKey = key.trim()
         if (slimKey[slimKey.length - 1] === '/') {
           slimKey = slimKey.slice(0, slimKey.length - 1)
@@ -15,6 +15,7 @@ function getTagAttributes(attrStr: string): Record<string, string> {
         }
         key = ''
         value = ''
+        if (i === attrStr.length) break
       }
     } else if (attrStr[i] === '"' || attrStr[i] === "'") {
       inside = !inside

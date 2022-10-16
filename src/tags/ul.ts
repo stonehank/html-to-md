@@ -2,7 +2,7 @@ import Tag from '../Tag'
 import __Ignore__ from './__ignore__'
 import { getTagConstructor } from '../utils'
 import config from '../config'
-import { ParseOptions, TagOptions } from '../type'
+import { TagOptions } from '../type'
 const { aliasTags } = config.get()
 
 class Ul extends Tag {

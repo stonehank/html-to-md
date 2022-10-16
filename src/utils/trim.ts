@@ -4,12 +4,16 @@ const regType: Record<string, RegExp> = {
   whitespace: /([ \t])/,
 }
 
+type TrimType = 'whitespace' | 'linebreak' | 'all'
+type OriType = 'left' | 'right' | 'all'
+type TrimOptions = {
+  type?: TrimType
+  ori?: OriType
+}
+
 function trim(
   str: string,
-  {
-    type = 'whitespace' || 'linebreak' || 'all',
-    ori = 'left' || 'right' || 'all',
-  } = {}
+  { type = 'whitespace', ori = 'left' }: TrimOptions = {}
 ): string {
   if (!str) return ''
   const { leftSpace, rightSpace, content } = parse(str)

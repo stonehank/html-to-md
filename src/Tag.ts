@@ -249,7 +249,6 @@ class Tag {
     const getNxtValidTag = generateGetNextValidTag(this.content)
     let [nextTagName, nextTagStr] = getNxtValidTag()
     let prevTagName = null
-    let prevTagStr = null
     while (nextTagStr !== '') {
       const [afterNextTagName, afterNextTagStr] = getNxtValidTag()
       const options = {
@@ -277,7 +276,6 @@ class Tag {
       prevTagName = _currentTagName
       this.isFirstTag = false
       content += nextStr
-      prevTagStr = content
     }
     content = this.afterParsed(content)
     content = this.slim(content)

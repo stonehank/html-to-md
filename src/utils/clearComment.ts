@@ -1,5 +1,5 @@
 function clearComment(str: string): string {
-  return str.replace(/<!--([^\n\r\t\s]|\n|\r|\t|\s)*?-->/g, '')
+  return str.replace(/<!--([\s\S]*?)-->/g, '')
 }
 
 export default clearComment

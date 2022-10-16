@@ -12,3 +12,5 @@ coverage
 demo
 dist
 codecov.yml
+dev/
+debugDev.html
