@@ -1,4 +1,4 @@
-let {getLanguage}=require('../../src/utils')
+import { getLanguage } from '../../src/utils'
 
 describe('find the lang',()=>{
 

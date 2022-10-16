@@ -12,12 +12,14 @@ module.exports = (env) => {
   const isDev = process.env.NODE_ENV === 'development'
   return {
     mode: isDev ? 'development' : 'production',
-    entry: path.join(src, 'index.js'),
+    entry: path.join(src, 'index.ts'),
     output: {
       path: path.join(__dirname, 'demo'),
       filename: './html-to-md.js',
       library: 'html2md',
-      libraryTarget: 'window',
+      libraryExport: 'default',
+      globalObject: 'this',
+      libraryTarget: 'umd',
     },
     devtool: isDev ? 'cheap-module-source-map' : false,
     optimization: isDev
@@ -52,11 +54,16 @@ module.exports = (env) => {
         },
 
     resolve: {
-      extensions: ['.js', '.json'],
+      extensions: ['.ts', '.js', '.json'],
     },
     module: {
       rules: [
         { parser: { requireEnsure: false } },
+        {
+          test: /\.tsx?$/,
+          use: 'ts-loader',
+          exclude: /node_modules/,
+        },
         {
           test: /\.(js)$/,
           include: path.resolve(__dirname, 'src'),

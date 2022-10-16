@@ -1,6 +1,6 @@
 // import B from '../../src/tags/b'
-let html2Md=require('../../src/index')
-const {SYMBOL_I,SYMBOL_B}=require('../options')
+import html2Md from '../../src/index'
+import {SYMBOL_I,SYMBOL_B} from '../options'
 
 describe("test <b></b> tag",()=>{
   it('no nest',()=>{

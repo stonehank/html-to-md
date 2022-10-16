@@ -1,5 +1,4 @@
-let html2Md=require('../../src/index')
-
+import html2Md from '../../src/index'
 
 describe('测试自定义标签',()=>{
 

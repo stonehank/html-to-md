@@ -1,5 +1,5 @@
 import Pre from '../../src/tags/pre'
-const html2Md=require('../../src/index')
+import html2Md from '../../src/index'
 
 describe('test <pre></pre> tag',()=>{
 

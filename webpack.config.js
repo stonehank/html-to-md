@@ -12,7 +12,7 @@ const src = path.join(__dirname, 'src')
 /** @type {import('webpack').Configuration} */
 module.exports = {
   mode: 'production',
-  entry: path.join(src, 'index.js'),
+  entry: path.join(src, 'index.ts'),
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'index.js',
@@ -21,6 +21,7 @@ module.exports = {
       amd: 'html2md',
       commonjs: 'html2md',
     },
+    libraryExport: 'default',
     globalObject: 'this',
     libraryTarget: 'umd',
   },
@@ -54,11 +55,16 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.js', '.json'],
+    extensions: ['.ts', '.js', '.json'],
   },
   module: {
     rules: [
       { parser: { requireEnsure: false } },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.js$/,
         include: path.resolve(__dirname, 'src'),

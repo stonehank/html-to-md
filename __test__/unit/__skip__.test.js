@@ -1,5 +1,5 @@
-let html2Md=require('../../src/index')
-let config=require('../../src/config')
+import html2Md from '../../src/index'
+import config from '../../src/config'
 
 describe('跳过指定的tag标签，内部不影响',()=>{
 
@@ -54,5 +54,9 @@ describe('跳过指定的tag标签，内部不影响',()=>{
       "`title`\n" +
       "\n" +
       "`content`")
+  })
+
+  it('Skip self tag',()=>{
+    expect(html2Md(`<b>123</b><img src="some.jpg" /><i>234</i>`,{skipTags:['img','b']},true)).toBe('123*234*')
   })
 })

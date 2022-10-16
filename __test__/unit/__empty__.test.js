@@ -1,5 +1,5 @@
-let html2Md=require('../../src/index')
-let config=require('../../src/config')
+import html2Md from '../../src/index'
+import config from '../../src/config'
 
 describe('清空指定的tag以及内部的标签',()=>{
 

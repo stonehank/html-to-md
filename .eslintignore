@@ -12,3 +12,6 @@ coverage
 demo
 dist
 codecov.yml
+webpack.config.js
+webpack.demo.config.js
+

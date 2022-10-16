@@ -1,6 +1,5 @@
 import P from '../../src/tags/p'
-let html2Md=require('../../src/index')
-
+import html2Md from '../../src/index'
 describe('Remove some space',()=>{
 
 

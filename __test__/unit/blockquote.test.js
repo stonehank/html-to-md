@@ -1,5 +1,5 @@
-const html2Md=require('../../src/index')
-const {tagSpaceNum}=require('../options')
+import html2Md from '../../src/index'
+import {tagSpaceNum} from '../options'
 
 describe("test <blockquote></blockquote> tag",()=>{
 

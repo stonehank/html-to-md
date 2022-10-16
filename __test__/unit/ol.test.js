@@ -1,5 +1,4 @@
-const html2Md=require('../../src/index')
-// const {OL_SPACE}=require('../options')
+import html2Md from '../../src/index'
 const OL_SPACE=3
 const UL_SPACE=2
 
