@@ -5,7 +5,6 @@ interface Config {
 }
 
 class Config {
-  // renderCustomTags true, false, [SKIP, IGNORE, EMPTY]
   constructor({
     skipTags = [],
     emptyTags = [],
@@ -102,4 +101,7 @@ const defaultOptions = {
   },
   renderCustomTags: true,
 }
-export default new Config(JSON.parse(JSON.stringify(defaultOptions)))
+const config = new Config()
+config.reset()
+
+export default config

@@ -2,6 +2,7 @@ import Tag from '../Tag'
 import { getTagConstructor } from '../utils'
 import isIndependentTag from '../utils/isIndependentTag'
 import { DOUBLE, TRIPLE } from '../utils/CONSTANT'
+import { ParseOptions, TagName, TagOptions } from '../type'
 
 /**
  * 内部含有p， 如果是第一个元素，需要最后额外加一个\n，否则开始额外加一个\n
@@ -10,28 +11,33 @@ import { DOUBLE, TRIPLE } from '../utils/CONSTANT'
  * 在li内部的字符串，只有换行了，才需要layer
  */
 class Li extends Tag {
-  constructor(str, tagName = 'li', options) {
+  extraGap: string
+  constructor(str: string, tagName = 'li', options: TagOptions) {
     super(str, tagName, options)
     // 在没有UL的情况下
     this.match = this.match || '* '
     this.extraGap = ''
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return this.extraGap + this.leadingSpace + this.match + content
   }
 
   __calcNextLeading__() {
-    return this.match.length === 2
+    return this.match?.length === 2
       ? DOUBLE
-      : this.match.length === 3
+      : this.match?.length === 3
       ? TRIPLE
-      : this.match.length === 4
+      : this.match?.length === 4
       ? DOUBLE
       : TRIPLE + DOUBLE
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     const SubTagClass = getTagConstructor(subTagName)
     const nextLeading = this.__calcNextLeading__()
     const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -51,7 +57,11 @@ class Li extends Tag {
     }
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString(
+    subTagStr: string,
+    subTagName: TagName,
+    options: ParseOptions
+  ) {
     let calcLeading = false
     if (isIndependentTag(options.prevTagName)) {
       calcLeading = true
@@ -70,7 +80,7 @@ class Li extends Tag {
     }
   }
 
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     return super.beforeReturn(content)
   }
 

@@ -1,7 +1,8 @@
 import SelfCloseTag from '../SelfCloseTag'
+import { SelfCloseTagOptions } from '../type'
 
 class Img extends SelfCloseTag {
-  constructor(str, tagName = 'img', options) {
+  constructor(str: string, tagName = 'img', options: SelfCloseTagOptions) {
     super(str, tagName, options)
   }
 

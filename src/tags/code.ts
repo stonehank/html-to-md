@@ -1,15 +1,16 @@
 import Tag from '../Tag'
+import { ParseOptions, TagOptions } from '../type'
 import { getTagConstructor, unescapeStr } from '../utils'
 
 class Code extends Tag {
-  constructor(str, tagName = 'code', options) {
+  constructor(str: string, tagName = 'code', options: TagOptions) {
     super(str, tagName, options)
     this.match = this.match == null ? '`' : this.match
     this.noWrap = this.match === '`'
     this.layer = 1
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     let startMatch, endMatch
     // 不是在pre内部，并且存在冲突，是多个`组成
     if (this.match !== '' && this.match !== '`') {
@@ -23,7 +24,11 @@ class Code extends Tag {
   }
 
   // 在嵌套pre中，pre应该视为换行
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     if (subTagName === 'pre') {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -43,7 +48,7 @@ class Code extends Tag {
     }
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr: string) {
     if (this.match !== '' && !!subTagStr) {
       let count = 1
       if (subTagStr.startsWith('`') || subTagStr.endsWith('`')) {
@@ -54,12 +59,11 @@ class Code extends Tag {
       }
       this.match = '`'.repeat(count)
     }
-    // console.log(this.keepFormat,JSON.stringify(subTagStr))
     // 将&lt;转换为<，等等
     return unescapeStr(subTagStr)
   }
 
-  slim(content) {
+  slim(content: string) {
     if (this.keepFormat) return content
     return content.trim()
   }

@@ -1,7 +1,8 @@
 import Tag from '../Tag'
+import { TagOptions } from '../type'
 
 class Thead extends Tag {
-  constructor(str, tagName = 'thead', options) {
+  constructor(str: string, tagName = 'thead', options: TagOptions) {
     super(str, tagName, options)
   }
 

@@ -21,7 +21,7 @@ class Tag {
   layer: number
   noWrap: boolean
   match: string | null
-  intendSpace: string
+  indentSpace: string
   language: string
   count: number
   tableColumnCount: number
@@ -45,7 +45,7 @@ class Tag {
       layer = 1,
       noWrap = false,
       match = null,
-      intendSpace = '',
+      indentSpace = '',
       language = '',
       count = 1,
       tableColumnCount = 0,
@@ -65,7 +65,7 @@ class Tag {
     this.layer = layer
     this.noWrap = noWrap
     this.match = match
-    this.intendSpace = intendSpace
+    this.indentSpace = indentSpace
     this.language = language
     this.count = count
     this.tableColumnCount = tableColumnCount

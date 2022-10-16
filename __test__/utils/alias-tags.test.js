@@ -16,4 +16,28 @@ describe('替换标签',()=>{
       "Fig.1 - Trulli, Puglia, Italy.")
   })
 
+  it('No li in ul, but use alias-tag',()=>{
+    expect(html2Md(
+`<ul>
+      <b>this b is alias as li</b>
+      <i>this i is alias as li</i>
+</ul>`
+, {aliasTags: {b: 'li', i:'li'}}))
+.toBe(
+`* this b is alias as li
+* this i is alias as li`
+)})
+
+it('No li in ol, but use alias-tag',()=>{
+  expect(html2Md(
+`<ol>
+    <b>this b is alias as li</b>
+    <i>this i is alias as li</i>
+</ol>`
+, {aliasTags: {b: 'li', i:'li'}}))
+.toBe(
+`1. this b is alias as li
+2. this i is alias as li`
+)})
+
 })

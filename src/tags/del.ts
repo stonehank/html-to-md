@@ -1,11 +1,11 @@
 import Tag from '../Tag'
 
 class Del extends Tag {
-  constructor(str, tagName = 'del') {
+  constructor(str: string, tagName = 'del') {
     super(str, tagName)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return '~~' + content + '~~'
   }
 

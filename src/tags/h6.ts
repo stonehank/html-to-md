@@ -1,11 +1,11 @@
 import __Heading__ from './__Heading__'
 
 class H6 extends __Heading__ {
-  constructor(str, tagName = 'h6') {
+  constructor(str: string, tagName = 'h6') {
     super(str, tagName)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return '###### ' + content
   }
 

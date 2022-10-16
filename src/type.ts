@@ -28,7 +28,7 @@ export type TagOptions = {
   layer?: number
   noWrap?: boolean
   match?: string | null
-  intendSpace?: string
+  indentSpace?: string
   language?: string
   count?: number
   tableColumnCount?: number

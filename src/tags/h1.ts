@@ -1,12 +1,12 @@
 import __Heading__ from './__Heading__'
 
-class H5 extends __Heading__ {
-  constructor(str, tagName = 'h5') {
+class H1 extends __Heading__ {
+  constructor(str: string, tagName = 'h1') {
     super(str, tagName)
   }
 
-  beforeMergeSpace(content) {
-    return '##### ' + content
+  beforeMergeSpace(content: string) {
+    return '# ' + content
   }
 
   exec(prevGap = '\n', endGap = '\n') {
@@ -14,4 +14,4 @@ class H5 extends __Heading__ {
   }
 }
 
-export default H5
+export default H1

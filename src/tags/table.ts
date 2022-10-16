@@ -1,7 +1,8 @@
 import Tag from '../Tag'
+import { ParseOptions, TagOptions } from '../type'
 import { getTagConstructor, getTableAlign } from '../utils'
 
-function countTdNum(str) {
+function countTdNum(str: string) {
   let trStr = ''
   for (let i = 0; i < str.length; i++) {
     if (trStr.endsWith('</tr>')) {
@@ -16,15 +17,22 @@ function countTdNum(str) {
 }
 
 class Table extends Tag {
-  constructor(str, tagName = 'table', options) {
-    super(str, tagName)
+  exist_thead: boolean
+  exist_tbody: boolean
+  empty_tbody: boolean
+  constructor(str: string, tagName = 'table', options: TagOptions) {
+    super(str, tagName, options)
     this.exist_thead = false
     this.exist_tbody = false
     this.empty_tbody = true
     this.tableColumnCount = countTdNum(this.content)
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     if (subTagName === 'thead') {
       this.exist_thead = true
     }
@@ -43,11 +51,11 @@ class Table extends Tag {
     return subTag.exec('', '\n')
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString() {
     return ''
   }
 
-  beforeReturn(str) {
+  beforeReturn(str: string) {
     // 无head，无body
     if (!(this.exist_thead || this.exist_tbody || !this.empty_tbody)) return ''
     // 无内容

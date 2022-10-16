@@ -1,12 +1,13 @@
 import Tag from '../Tag'
+import { TagOptions } from '../type'
 import { getTableAlign } from '../utils'
 
 class Tbody extends Tag {
-  constructor(str, tagName = 'tbody', options) {
+  constructor(str: string, tagName = 'tbody', options: TagOptions) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     const alignArr = getTableAlign(this.content, this.tableColumnCount)
     let tableHr = '|'
     for (let i = 0; i < alignArr.length; i++) {
@@ -15,7 +16,7 @@ class Tbody extends Tag {
     return tableHr + '\n' + content
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString() {
     return ''
   }
 

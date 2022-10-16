@@ -27,7 +27,7 @@ const independentLineTags: Record<string, boolean> = {
   br: true,
 }
 
-function isIndependentTag(tagName: TagName): boolean {
+function isIndependentTag(tagName?: TagName): boolean {
   if (!tagName) return false
   const realName = getRealTagName(tagName)
   if (!realName) return false

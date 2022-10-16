@@ -1,12 +1,12 @@
 import Tag from '../Tag'
+import { ParseOptions } from '../type'
 
 class P extends Tag {
-  constructor(str, tagName = 'p', options) {
+  constructor(str: string, tagName = 'p', options: ParseOptions) {
     super(str, tagName, options)
-    this.options = options
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     if (this.calcLeading) {
       return this.leadingSpace + content
     }
@@ -14,7 +14,6 @@ class P extends Tag {
   }
 
   exec(prevGap = '\n', endGap = '\n') {
-    // console.log(this.options)
     if (
       !this.prevTagName &&
       !!this.prevTagStr &&
@@ -29,7 +28,6 @@ class P extends Tag {
     ) {
       endGap = '\n\n'
     }
-    // console.log(JSON.stringify(prevGap),JSON.stringify(endGap))
     return super.exec(prevGap, endGap)
   }
 }

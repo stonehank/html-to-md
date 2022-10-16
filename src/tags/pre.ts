@@ -2,13 +2,15 @@ import Tag from '../Tag'
 import { __Empty__, __EmptySelfClose__ } from './__empty__'
 import { getTagConstructor, isSelfClosing, getLanguage } from '../utils'
 import { DOUBLE } from '../utils/CONSTANT'
+import { ParseOptions, TagOptions } from '../type'
 
 /**
  * 在pre内部所有元素，应该转换为 plain text，并入 ``` 内部， 保持格式
  */
 
 class Pre extends Tag {
-  constructor(str, tagName = 'pre', options) {
+  isIndent: boolean
+  constructor(str: string, tagName = 'pre', options: TagOptions) {
     super(str, tagName, options)
     this.indentSpace = DOUBLE + DOUBLE
     this.isIndent = this.content.includes('```')
@@ -17,7 +19,7 @@ class Pre extends Tag {
     this.keepFormat = true
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     // 嵌套时
     const before =
       this.isIndent || this.parentTag === 'code'
@@ -30,7 +32,7 @@ class Pre extends Tag {
     return before + content + after
   }
 
-  fillPerLine(lineStr) {
+  fillPerLine(lineStr: string) {
     let leadingSpace = ''
     if (this.calcLeading) {
       leadingSpace = this.leadingSpace
@@ -41,7 +43,7 @@ class Pre extends Tag {
     return leadingSpace + lineStr
   }
 
-  afterMergeSpace(content) {
+  afterMergeSpace(content: string) {
     let split = content.split('\n')
     split = split.map((n) => {
       if (n === '') return ''
@@ -50,7 +52,11 @@ class Pre extends Tag {
     return split.join('\n')
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     if (subTagName === 'code') {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -74,11 +80,11 @@ class Pre extends Tag {
     }
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString(subTagStr: string) {
     return subTagStr
   }
 
-  slim(content) {
+  slim(content: string) {
     return content
   }
 

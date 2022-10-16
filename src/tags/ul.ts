@@ -2,22 +2,19 @@ import Tag from '../Tag'
 import __Ignore__ from './__ignore__'
 import { getTagConstructor } from '../utils'
 import config from '../config'
+import { ParseOptions, TagOptions } from '../type'
 const { aliasTags } = config.get()
 
 class Ul extends Tag {
-  constructor(str, tagName = 'ul', options) {
+  constructor(str: string, tagName = 'ul', options: TagOptions) {
     super(str, tagName, options)
   }
 
-  beforeReturn(content) {
-    return super.beforeReturn(content)
-  }
-
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(subTagStr: string, subTagName: string) {
     const SubTagClass = getTagConstructor(subTagName)
     if (
       subTagName !== 'li' &&
-      aliasTags[subTagName] !== 'li' &&
+      aliasTags?.[subTagName] !== 'li' &&
       SubTagClass !== __Ignore__
     ) {
       console.error(
@@ -38,7 +35,7 @@ class Ul extends Tag {
     }
   }
 
-  parseOnlyString(subTagStr, subTagName, options) {
+  parseOnlyString() {
     return ''
   }
 

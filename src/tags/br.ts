@@ -1,11 +1,12 @@
 import SelfCloseTag from '../SelfCloseTag'
+import { TagOptions } from '../type'
 
 class Br extends SelfCloseTag {
-  constructor(str, tagName = 'b', options) {
+  constructor(str: string, tagName = 'b', options: TagOptions) {
     super(str, tagName, options)
   }
 
-  exec(prevGap, endGap = '\n') {
+  exec(prevGap: string, endGap = '\n') {
     return '  ' + endGap
   }
 }

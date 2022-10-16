@@ -1,11 +1,12 @@
 import Tag from '../Tag'
+import { TagOptions } from '../type'
 
 class Em extends Tag {
-  constructor(str, tagName = 'em', options) {
+  constructor(str: string, tagName = 'em', options: TagOptions) {
     super(str, tagName, options)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return '*' + content + '*'
   }
 

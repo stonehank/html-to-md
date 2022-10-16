@@ -1,15 +1,16 @@
 import isIndependentTag from '../utils/isIndependentTag'
 import Tag from '../Tag'
 import { getTagConstructor } from '../utils'
+import { ParseOptions, TagOptions } from '../type'
 
 class Blockquote extends Tag {
-  constructor(str, tagName = 'blockquote', options) {
+  constructor(str: string, tagName = 'blockquote', options: TagOptions) {
     super(str, tagName, options)
     this.match = this.match || '>'
     this.fillPerLine = this.fillPerLine.bind(this)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     if (content.trim() === '') return ''
     const matchStr = this.match + ' ' + content
     if (this.calcLeading) {
@@ -18,7 +19,7 @@ class Blockquote extends Tag {
     return matchStr
   }
 
-  afterMergeSpace(content) {
+  afterMergeSpace(content: string) {
     let split = content.split('\n')
     // 去除连续
     for (let i = split.length - 1; i >= 0; i--) {
@@ -38,12 +39,12 @@ class Blockquote extends Tag {
     return split.join('\n')
   }
 
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     // 去除空行
     return content.replace('\n\n', '\n')
   }
 
-  fillPerLine(lineStr) {
+  fillPerLine(lineStr: string) {
     let startWith = '>'
     if (this.calcLeading) {
       startWith = this.leadingSpace + '>'
@@ -58,7 +59,11 @@ class Blockquote extends Tag {
     return lineStr
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     let subTag
     if (subTagName === 'blockquote') {
       const SubTagClass = getTagConstructor(subTagName)

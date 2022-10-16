@@ -1,7 +1,8 @@
 import SelfCloseTag from '../SelfCloseTag'
+import { SelfCloseTagOptions } from '../type'
 
 class Hr extends SelfCloseTag {
-  constructor(str, tagName = 'hr', options) {
+  constructor(str: string, tagName = 'hr', options: SelfCloseTagOptions) {
     super(str, tagName, options)
   }
 
@@ -10,7 +11,7 @@ class Hr extends SelfCloseTag {
     return leadingSpace + '---'
   }
 
-  beforeReturn(content) {
+  beforeReturn(content: string) {
     content.replace(/^(\n\s*)+/, '\n\n').replace(/(\n\s*)+$/, '\n\n')
     return content
   }

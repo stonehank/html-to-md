@@ -1,11 +1,12 @@
+import { TagOptions } from '../type'
 import Em from './em'
 
 class I extends Em {
-  constructor(str, tagName = 'i', options) {
+  constructor(str: string, tagName = 'i', options: TagOptions) {
     super(str, tagName, options)
   }
 
-  exec(prevGap, endGap) {
+  exec(prevGap: string, endGap: string) {
     return super.exec(prevGap, endGap)
   }
 }

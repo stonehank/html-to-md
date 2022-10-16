@@ -1,11 +1,21 @@
-import Th from './th'
+import Tag from '../Tag'
+import { ParseOptions, TagOptions } from '../type'
 
-class Td extends Th {
-  constructor(str, tagName = 'td', options) {
+class Th extends Tag {
+  constructor(str: string, tagName = 'th', options: TagOptions) {
     super(str, tagName, options)
+    this.tagName = tagName
   }
 
-  parseValidSubTag(subTagStr, subTagName, options) {
+  beforeMergeSpace(content: string) {
+    return content + '|'
+  }
+
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ) {
     if (
       subTagName === 'ul' ||
       subTagName === 'ol' ||
@@ -21,4 +31,4 @@ class Td extends Th {
     return super.exec(prevGap, endGap)
   }
 }
-export default Td
+export default Th

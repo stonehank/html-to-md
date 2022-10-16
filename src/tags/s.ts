@@ -1,11 +1,11 @@
 import Del from './del'
 
 class S extends Del {
-  constructor(str, tagName = 's', options) {
-    super(str, tagName, options)
+  constructor(str: string, tagName = 's') {
+    super(str, tagName)
   }
 
-  exec(prevGap, endGap) {
+  exec(prevGap: string, endGap: string) {
     return super.exec(prevGap, endGap)
   }
 }
