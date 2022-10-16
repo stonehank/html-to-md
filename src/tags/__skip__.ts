@@ -1,6 +1,7 @@
 import Tag from '../Tag'
 import SelfCloseTag from '../SelfCloseTag'
 import { isIndependentTag, getRealTagName } from '../utils'
+import { TagOptions, SelfCloseTagOptions } from '../type'
 /*
  *
  * <div><b>abc</b></div>
@@ -9,16 +10,16 @@ import { isIndependentTag, getRealTagName } from '../utils'
  * */
 
 class __Skip__ extends Tag {
-  constructor(str, tagName = '__skip__', options) {
+  noNeedWrap: string[]
+  constructor(str: string, tagName = '__skip__', options: TagOptions) {
     super(str, tagName, options)
     this.noNeedWrap = ['td', 'th']
-    this.tagName = tagName
   }
 
   exec() {
     const need =
       isIndependentTag(getRealTagName(this.tagName)) &&
-      !this.noNeedWrap.includes(this.parentTag)
+      (!this.parentTag || !this.noNeedWrap.includes(this.parentTag))
     const pre = need ? '\n' : ''
     const aft = need ? '\n' : ''
     return super.exec(pre, aft)
@@ -26,7 +27,12 @@ class __Skip__ extends Tag {
 }
 
 class __SkipSelfClose__ extends SelfCloseTag {
-  constructor(str, tagName = '__skipselfclose__', options) {
+  str: any
+  constructor(
+    str: string,
+    tagName = '__skipselfclose__',
+    options: SelfCloseTagOptions
+  ) {
     super(str, tagName, options)
     this.str = str
   }

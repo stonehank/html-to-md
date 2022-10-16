@@ -6,14 +6,13 @@ import {
 import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
 import isIndependentTag from './utils/isIndependentTag'
-import { ParseOptions, TagOptions } from './type'
-
+import { ParseOptions, TagName, TagOptions } from './type'
 class Tag {
-  tagName: string | null
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
   rawStr: string
-  parentTag: string | null
-  prevTagName: string | null
-  nextTagName: string | null
   prevTagStr: string
   nextTagStr: string
   isFirstTag: boolean
@@ -30,10 +29,9 @@ class Tag {
   keepFormat: boolean
   attrs: Record<string, string>
   content: string
-
   constructor(
     str: string,
-    tagName: string | null,
+    tagName: TagName,
     {
       keepFormat = false,
       prevTagName = '',
@@ -91,7 +89,7 @@ class Tag {
    * @param tagName
    * @returns {boolean}
    */
-  __detectStr__(str: string, tagName: string | null) {
+  __detectStr__(str: string, tagName: TagName) {
     if (str[0] !== '<') {
       console.error(
         `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`
@@ -195,7 +193,7 @@ class Tag {
   // 不存在tagName时，解析步骤
   parseOnlyString(
     subTagStr: string,
-    subTagName: string | null,
+    subTagName: TagName,
     options: ParseOptions
   ) {
     const rawString = new RawString(subTagStr, subTagName, options)

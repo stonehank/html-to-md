@@ -1,3 +1,4 @@
+import { TagName } from '../type'
 import getRealTagName from './getRealTagName'
 
 const independentLineTags: Record<string, boolean> = {
@@ -26,7 +27,7 @@ const independentLineTags: Record<string, boolean> = {
   br: true,
 }
 
-function isIndependentTag(tagName: string | null): boolean {
+function isIndependentTag(tagName: TagName): boolean {
   if (!tagName) return false
   const realName = getRealTagName(tagName)
   if (!realName) return false

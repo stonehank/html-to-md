@@ -8,12 +8,11 @@ import SelfCloseTag from '../SelfCloseTag'
  * */
 
 class __NoMatch__ extends Tag {
-  constructor(str, tagName = '__nomatch__') {
+  constructor(str: string, tagName = '__nomatch__') {
     super(str, tagName)
-    this.tagName = tagName
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return `<${this.tagName}>${content}</${this.tagName}>`
   }
 
@@ -23,10 +22,8 @@ class __NoMatch__ extends Tag {
 }
 
 class __NoMatchSelfClose__ extends SelfCloseTag {
-  constructor(str, tagName = '__nomatchselfclose__') {
+  constructor(str: string, tagName = '__nomatchselfclose__') {
     super(str, tagName)
-    this.tagName = tagName
-    this.str = str
   }
 
   exec() {

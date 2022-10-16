@@ -1,6 +1,6 @@
 import Tag from '../Tag'
 import SelfCloseTag from '../SelfCloseTag'
-import { ParseOptions, TagOptions } from '../type'
+import { ParseOptions, TagName, TagOptions } from '../type'
 /*
  *
  * <div><b>abc</b></div>
@@ -10,7 +10,7 @@ import { ParseOptions, TagOptions } from '../type'
 class __Empty__ extends Tag {
   constructor(
     str: string,
-    tagName: string | null = '__empty__',
+    tagName: TagName = '__empty__',
     options: TagOptions
   ) {
     super(str, tagName, options)
@@ -22,7 +22,7 @@ class __Empty__ extends Tag {
 
   parseValidSubTag(
     subTagStr: string,
-    subTagName: string | null,
+    subTagName: TagName,
     options: ParseOptions
   ) {
     return new __Empty__(subTagStr, subTagName, {

@@ -1,11 +1,11 @@
-import { SelfCloseTagOptions } from './type'
+import { SelfCloseTagOptions, TagName } from './type'
 import { getTagAttributes } from './utils'
 
 class SelfCloseTag {
-  tagName: string | null
-  parentTag: string | null
-  prevTagName: string | null
-  nextTagName: string | null
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
   rawStr: string
   isFirstTag: boolean
   leadingSpace: string
@@ -13,7 +13,7 @@ class SelfCloseTag {
   attrs: Record<string, string>
   constructor(
     str: string,
-    tagName: string | null,
+    tagName: TagName,
     {
       parentTag = '',
       leadingSpace = '',
@@ -45,7 +45,7 @@ class SelfCloseTag {
    * @param tagName
    * @returns {boolean}
    */
-  __detectStr__(str: string, tagName: string | null) {
+  __detectStr__(str: string, tagName: TagName) {
     if (str[0] !== '<') {
       console.error(
         `Not a valid tag, current tag name: ${this.tagName}, tag content: ${str}`

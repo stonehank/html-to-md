@@ -1,15 +1,15 @@
 import Tag from '../Tag'
 
 class __Heading__ extends Tag {
-  constructor(str, tagName = 'h1') {
+  constructor(str: string, tagName = 'h1') {
     super(str, tagName)
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return '# ' + content
   }
 
-  exec(prevGap, endGap) {
+  exec(prevGap: string, endGap: string) {
     if (!prevGap) prevGap = '\n'
     if (!endGap) endGap = '\n'
     return super.exec(prevGap, endGap)

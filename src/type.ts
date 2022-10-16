@@ -5,6 +5,8 @@ export type OptionsKey =
   | 'aliasTags'
   | 'renderCustomTags'
 
+export type TagName = string | null
+
 export type Html2MdOptions = {
   skipTags?: string[]
   emptyTags?: string[]
@@ -14,9 +16,9 @@ export type Html2MdOptions = {
 }
 
 export type TagOptions = {
-  parentTag?: string | null
-  prevTagName?: string | null
-  nextTagName?: string | null
+  parentTag?: TagName
+  prevTagName?: TagName
+  nextTagName?: TagName
   keepFormat?: boolean
   prevTagStr?: string
   nextTagStr?: string
@@ -34,18 +36,18 @@ export type TagOptions = {
 }
 
 export type SelfCloseTagOptions = {
-  parentTag?: string | null
-  prevTagName?: string | null
-  nextTagName?: string | null
+  parentTag?: TagName
+  prevTagName?: TagName
+  nextTagName?: TagName
   isFirstTag?: boolean
   leadingSpace?: string
   layer?: number
 }
 
 export type ParseOptions = {
-  parentTag?: string | null
-  prevTagName?: string | null
-  nextTagName?: string | null
+  parentTag?: TagName
+  prevTagName?: TagName
+  nextTagName?: TagName
   nextTagStr?: string
   prevTagStr?: string
   leadingSpace?: string

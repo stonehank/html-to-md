@@ -1,12 +1,12 @@
-import { ParseOptions } from '../type'
+import { ParseOptions, TagName } from '../type'
 import { extraEscape } from '../utils'
 import isIndependentTag from '../utils/isIndependentTag'
 
 class __RawString__ {
-  tagName: string | null
-  nextTagName: string | null
-  prevTagName: string | null
-  parentTag: string | null
+  tagName: TagName
+  nextTagName: TagName
+  prevTagName: TagName
+  parentTag: TagName
   keepFormat: boolean
   calcLeading: boolean
   leadingSpace: string
@@ -14,7 +14,7 @@ class __RawString__ {
   rawStr: string
   constructor(
     str: string,
-    tagName: string | null = '__nomatch__',
+    tagName: TagName = '__nomatch__',
     {
       keepFormat = false,
       prevTagName = '',
@@ -40,14 +40,11 @@ class __RawString__ {
     if (this.keepFormat) return str
 
     let _str = str.replace(/\s+/g, ' ')
-    // TODO ?
-    // if(isIndependentTag(this.prevTagName) || isIndependentTag(this.nextTagName)){
-    //   _str=str.trim()
-    // }
-    if (this.prevTagName && isIndependentTag(this.prevTagName)) {
+
+    if (isIndependentTag(this.prevTagName)) {
       _str = _str.trimLeft()
     }
-    if (this.nextTagName && isIndependentTag(this.nextTagName)) {
+    if (isIndependentTag(this.nextTagName)) {
       _str = _str.trimRight()
     }
     return _str

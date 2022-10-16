@@ -1,17 +1,17 @@
 import Tag from '../Tag'
+import { TagOptions } from '../type'
 
 class Strong extends Tag {
-  constructor(str, tagName = 'strong', options) {
+  constructor(str: string, tagName = 'strong', options: TagOptions) {
     super(str, tagName, options)
     this.layer = 1
   }
 
-  beforeMergeSpace(content) {
+  beforeMergeSpace(content: string) {
     return '**' + content + '**'
   }
 
   exec(prevGap = '', endGap = '') {
-    // console.log('strong',this.options)
     if (this.prevTagStr && this.prevTagStr.endsWith('*')) prevGap = ' '
     return super.exec(prevGap, endGap)
   }
