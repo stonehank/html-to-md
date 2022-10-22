@@ -12,7 +12,7 @@ class Hr extends SelfCloseTag {
   }
 
   beforeReturn(content: string) {
-    content.replace(/^(?:\n\s*)+/, '\n\n').replace(/(?:\n\s*)+$/, '\n\n')
+    content.replace(/^(?:\n\s*)/, '\n\n').replace(/(?:\n\s*)$/, '\n\n')
     return content
   }
 
