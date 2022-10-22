@@ -41,7 +41,7 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 // ***strong and italic***
 ```
 
-### Config(Not required)：
+### Config(Optional)：
 
 - options:
 
