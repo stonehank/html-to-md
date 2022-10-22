@@ -15,7 +15,6 @@ function getTagAttributes(attrStr: string): Record<string, string> {
         }
         key = ''
         value = ''
-        if (i === attrStr.length) break
       }
     } else if (attrStr[i] === '"' || attrStr[i] === "'") {
       inside = !inside
@@ -24,6 +23,7 @@ function getTagAttributes(attrStr: string): Record<string, string> {
     } else if (attrStr[i] === '=' && !inside) {
       continue
     }
+    if (i === attrStr.length) break
     if (!inside) key += attrStr[i]
     else value += attrStr[i]
   }
