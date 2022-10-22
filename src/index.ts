@@ -43,7 +43,7 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
     } else {
       // 下一个tag是一个无效的或者是纯文本
       res += nextTagStr
-      res = res.replace(/(\n\s*)+$/, '\n')
+      res = res.replace(/(?:\n\s*)$/, '\n')
     }
     prevTagName = nextTagName
     const nxt = getNxtValidTag()

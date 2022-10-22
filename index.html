@@ -644,7 +644,7 @@ html2md(str, {
         output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags,renderCustomTags},true)
         console.timeEnd('html->md')
 
-        if (ele1) ele2.innerHTML = htmlTxt
+        if (ele1) ele2.setHTML(htmlTxt)
         ele3.value = output
         console.log('render done')
 
