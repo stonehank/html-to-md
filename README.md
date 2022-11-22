@@ -45,7 +45,7 @@
 ```js
 const html2md = require('html-to-md')
 // or if you're using ES6
-import html2md from 'html2md'
+import html2md from 'html-to-md'
 
 console.log(
   html2md('<strong><em>strong and italic</em></strong>', options, force)
