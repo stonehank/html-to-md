@@ -38,11 +38,11 @@ describe('error test', () => {
     let tag3=new Tag(str3, 'img')
     let tag4=new Tag(str4, 'div')
     let tag5=new Tag(str5, 'div')
-    expect(tag.content).toBe('')
-    expect(tag2.content).toBe('')
-    expect(tag3.content).toBe('')
-    expect(tag4.content).toBe('')
-    expect(tag5.content).toBe('')
+    expect(tag.innerHTML).toBe('')
+    expect(tag2.innerHTML).toBe('')
+    expect(tag3.innerHTML).toBe('')
+    expect(tag4.innerHTML).toBe('')
+    expect(tag5.innerHTML).toBe('')
   })
 
 

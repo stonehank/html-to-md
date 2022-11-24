@@ -55,3 +55,40 @@ export type ParseOptions = {
   keepFormat?: boolean
   calcLeading?: boolean
 }
+
+export interface TagProps {
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
+  rawStr: string
+  prevTagStr: string
+  nextTagStr: string
+  isFirstTag: boolean
+  calcLeading: boolean
+  leadingSpace: string
+  layer: number
+  noWrap: boolean
+  match: string | null
+  indentSpace: string
+  language: string
+  count: number
+  tableColumnCount: number
+  noExtraLine: boolean
+  keepFormat: boolean
+  attrs: Record<string, string>
+  innerHTML: string
+}
+
+export interface SelfTagProps {
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
+  rawStr: string
+  isFirstTag: boolean
+  leadingSpace: string
+  layer: number
+  attrs: Record<string, string>
+  innerHTML: string
+}

@@ -25,7 +25,7 @@ class Table extends Tag {
     this.exist_thead = false
     this.exist_tbody = false
     this.empty_tbody = true
-    this.tableColumnCount = countTdNum(this.content)
+    this.tableColumnCount = countTdNum(this.innerHTML)
   }
 
   parseValidSubTag(
@@ -63,7 +63,7 @@ class Table extends Tag {
     // 无body 或者 空body
     if (!this.exist_tbody) {
       // 从head中获取方向信息
-      const alignArr = getTableAlign(this.content, this.tableColumnCount)
+      const alignArr = getTableAlign(this.innerHTML, this.tableColumnCount)
       let tableHr = '|'
       for (let i = 0; i < alignArr.length; i++) {
         tableHr += alignArr[i]

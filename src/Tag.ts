@@ -7,29 +7,8 @@ import {
 import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
 import isIndependentTag from './utils/isIndependentTag'
-import { ParseOptions, TagName, TagOptions } from './type'
-class Tag {
-  tagName: TagName
-  parentTag: TagName
-  prevTagName: TagName
-  nextTagName: TagName
-  rawStr: string
-  prevTagStr: string
-  nextTagStr: string
-  isFirstTag: boolean
-  calcLeading: boolean
-  leadingSpace: string
-  layer: number
-  noWrap: boolean
-  match: string | null
-  indentSpace: string
-  language: string
-  count: number
-  tableColumnCount: number
-  noExtraLine: boolean
-  keepFormat: boolean
-  attrs: Record<string, string>
-  content: string
+import { ParseOptions, TagName, TagOptions, TagProps } from './type'
+class Tag implements TagProps {
   constructor(
     str: string,
     tagName: TagName,
@@ -76,13 +55,34 @@ class Tag {
     this.keepFormat = keepFormat
     if (!this.__detectStr__(str, this.tagName)) {
       this.attrs = {}
-      this.content = ''
+      this.innerHTML = ''
       return
     }
-    const { attr, content } = this.__fetchTagAttrAndContent__(str)
+    const { attr, innerHTML } = this.__fetchTagAttrAndContent__(str)
     this.attrs = attr
-    this.content = content
+    this.innerHTML = innerHTML
   }
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
+  rawStr: string
+  prevTagStr: string
+  nextTagStr: string
+  isFirstTag: boolean
+  calcLeading: boolean
+  leadingSpace: string
+  layer: number
+  noWrap: boolean
+  match: string | null
+  indentSpace: string
+  language: string
+  count: number
+  tableColumnCount: number
+  noExtraLine: boolean
+  keepFormat: boolean
+  attrs: Record<string, string>
+  innerHTML: string
 
   /**
    * Detect is a valid tag string
@@ -159,9 +159,11 @@ class Tag {
         this.tagName
       )
     }
+    const attr = getTagAttributes(openTagAttrs)
+    if (this.tagName) delete attr[this.tagName]
     return {
-      attr: getTagAttributes(openTagAttrs),
-      content: restStr.slice(0, endId),
+      attr,
+      innerHTML: restStr.slice(0, endId),
     }
   }
 
@@ -246,7 +248,7 @@ class Tag {
 
   exec(prevGap = '', endGap = '') {
     let content = this.beforeParse()
-    const getNxtValidTag = generateGetNextValidTag(this.content)
+    const getNxtValidTag = generateGetNextValidTag(this.innerHTML)
     let [nextTagName, nextTagStr] = getNxtValidTag()
     let prevTagName = null
     while (nextTagStr !== '') {

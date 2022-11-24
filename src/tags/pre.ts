@@ -13,7 +13,7 @@ class Pre extends Tag {
   constructor(str: string, tagName = 'pre', options: TagOptions) {
     super(str, tagName, options)
     this.indentSpace = DOUBLE + DOUBLE
-    this.isIndent = this.content.includes('```')
+    this.isIndent = this.innerHTML.includes('```')
     this.match = this.isIndent ? '' : '```'
     this.language = this.language || getLanguage(str)
     this.keepFormat = true

@@ -1,16 +1,7 @@
-import { SelfCloseTagOptions, TagName } from './type'
+import { SelfCloseTagOptions, SelfTagProps, TagName } from './type'
 import { getTagAttributes } from './utils'
 
-class SelfCloseTag {
-  tagName: TagName
-  parentTag: TagName
-  prevTagName: TagName
-  nextTagName: TagName
-  rawStr: string
-  isFirstTag: boolean
-  leadingSpace: string
-  layer: number
-  attrs: Record<string, string>
+class SelfCloseTag implements SelfTagProps {
   constructor(
     str: string,
     tagName: TagName,
@@ -31,6 +22,7 @@ class SelfCloseTag {
     this.nextTagName = nextTagName
     this.leadingSpace = leadingSpace
     this.layer = layer
+    this.innerHTML = ''
     if (!this.__detectStr__(str, this.tagName)) {
       this.attrs = {}
       return
@@ -38,6 +30,16 @@ class SelfCloseTag {
     const { attr } = this.__fetchTagAttr__(str)
     this.attrs = attr
   }
+  tagName: TagName
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
+  rawStr: string
+  isFirstTag: boolean
+  leadingSpace: string
+  layer: number
+  attrs: Record<string, string>
+  innerHTML: string
 
   /**
    * Detect is a valid tag string
