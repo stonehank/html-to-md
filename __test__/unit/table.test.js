@@ -449,4 +449,33 @@ describe("test <table></table> tag",()=>{
     let table=new Table("<table><thead></thead></table>")
     expect(table.exec()).toBe('')
   })
+
+  it('Empty td need to be kept',()=>{
+    let table=new Table(
+  `<table>
+    <thead>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Foo</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>Bar</td>
+      </tr>
+    </tbody>
+  </table>`)
+    expect(table.exec()).toBe(
+`
+||||Foo|
+|---|---|---|---|
+||||Bar|
+`
+      )
+  })
 })

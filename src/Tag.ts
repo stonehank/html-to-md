@@ -175,7 +175,10 @@ class Tag {
 
   __isEmpty__(str: string) {
     if (this.keepFormat) return false
-    return str === '' || (this.calcLeading && this.__onlyLeadingSpace__(str))
+    return (
+      (str === '' && this.tagName !== 'td') ||
+      (this.calcLeading && this.__onlyLeadingSpace__(str))
+    )
   }
 
   // 在步骤开始前，一般只需返回空字符串
