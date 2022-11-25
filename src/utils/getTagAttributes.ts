@@ -3,6 +3,7 @@ function getTagAttributes(attrStr: string): Record<string, string> {
   let inside = false
   let key = ''
   let value = ''
+  let quote = null
   for (let i = 0; i <= attrStr.length; i++) {
     if (i === attrStr.length || /\s/.test(attrStr[i])) {
       if (i === attrStr.length || !inside) {
@@ -16,8 +17,10 @@ function getTagAttributes(attrStr: string): Record<string, string> {
         key = ''
         value = ''
       }
-    } else if (attrStr[i] === '"' || attrStr[i] === "'") {
+    } else if (/['"]/.test(attrStr[i]) && (!quote || attrStr[i] === quote)) {
+      // todo add test case
       inside = !inside
+      if (inside) quote = attrStr[i]
       continue
       // only pass not inside attr value (https://github.com/stonehank/html-to-md/issues/43)
     } else if (attrStr[i] === '=' && !inside) {

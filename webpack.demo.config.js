@@ -15,7 +15,7 @@ module.exports = (env) => {
     entry: path.join(src, 'index.ts'),
     output: {
       path: path.join(__dirname, 'demo'),
-      filename: './html-to-md.js',
+      filename: './index.[contenthash].js',
       library: 'html2md',
       libraryExport: 'default',
       globalObject: 'this',

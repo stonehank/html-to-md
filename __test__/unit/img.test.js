@@ -21,4 +21,9 @@ describe('test <img /> tag',()=>{
     let img=new Img(`<img src="https://www.zhihu.com/equation?tex=A%5Cmathbf%7Bu%7D+%3D+%5Clambda%5Cmathbf%7Bu%7D%5C%5C" />`)
     expect(img.exec()).toBe('![](https://www.zhihu.com/equation?tex=A%5Cmathbf%7Bu%7D+%3D+%5Clambda%5Cmathbf%7Bu%7D%5C%5C)')
   })
+
+  it(' " or \' in src value',()=>{
+    let img=new Img(`<img src="http://abc'cde.png" />`)
+    expect(img.exec()).toBe('![](http://abc\'cde.png)')
+  })
 })
