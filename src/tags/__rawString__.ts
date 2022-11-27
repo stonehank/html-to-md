@@ -7,7 +7,7 @@ class __RawString__ {
   nextTagName: TagName
   prevTagName: TagName
   parentTag: TagName
-  keepFormat: boolean
+  keepSpace: boolean
   calcLeading: boolean
   leadingSpace: string
   layer: number
@@ -16,7 +16,7 @@ class __RawString__ {
     str: string,
     tagName: TagName = '__nomatch__',
     {
-      keepFormat = false,
+      keepSpace = false,
       prevTagName = '',
       nextTagName = '',
       parentTag = '',
@@ -29,7 +29,7 @@ class __RawString__ {
     this.nextTagName = nextTagName
     this.prevTagName = prevTagName
     this.parentTag = parentTag
-    this.keepFormat = keepFormat
+    this.keepSpace = keepSpace
     this.calcLeading = calcLeading
     this.leadingSpace = leadingSpace
     this.layer = layer
@@ -37,7 +37,7 @@ class __RawString__ {
   }
 
   slim(str: string) {
-    if (this.keepFormat) return str
+    if (this.keepSpace) return str
 
     let _str = str.replace(/\s+/g, ' ')
 
@@ -51,7 +51,7 @@ class __RawString__ {
   }
 
   beforeReturn(content: string) {
-    if (this.keepFormat) return content
+    if (this.keepSpace) return content
     if (this.calcLeading) {
       return this.leadingSpace + extraEscape(content)
     }

@@ -2,7 +2,7 @@ import Tag from '../Tag'
 import __Ignore__ from './__ignore__'
 import { getTagConstructor } from '../utils'
 import config from '../config'
-import { TagOptions } from '../type'
+import { ParseOptions, TagName, TagOptions } from '../type'
 const { aliasTags } = config.get()
 
 class Ul extends Tag {
@@ -10,13 +10,37 @@ class Ul extends Tag {
     super(str, tagName, options)
   }
 
-  parseValidSubTag(subTagStr: string, subTagName: string) {
+  __isValidSubTag__(subTagName: TagName): boolean {
+    if (!subTagName) return false
     const SubTagClass = getTagConstructor(subTagName)
-    if (
-      subTagName !== 'li' &&
-      aliasTags?.[subTagName] !== 'li' &&
-      SubTagClass !== __Ignore__
-    ) {
+    return (
+      subTagName === 'li' ||
+      aliasTags?.[subTagName] == 'li' ||
+      SubTagClass === __Ignore__
+    )
+  }
+
+  getValidSubTagName(subTagName: TagName) {
+    if (!subTagName) return null
+    return this.__isValidSubTag__(subTagName) ? subTagName : null
+  }
+
+  parseValidSubTag(
+    subTagStr: string,
+    subTagName: string,
+    options: ParseOptions
+  ): string {
+    const SubTagClass = getTagConstructor(subTagName)
+    if (this.__isValidSubTag__(subTagName)) {
+      const subTag = new SubTagClass(subTagStr, subTagName, {
+        ...options,
+        calcLeading: true,
+        leadingSpace: this.leadingSpace,
+        layer: this.layer,
+        match: '*',
+      })
+      return subTag.exec('', '\n')
+    } else {
       console.error(
         'Should not have tags except <li> inside ul, current tag is ' +
           subTagName +
@@ -24,14 +48,6 @@ class Ul extends Tag {
           subTagStr
       )
       return ''
-    } else {
-      const subTag = new SubTagClass(subTagStr, subTagName, {
-        calcLeading: true,
-        leadingSpace: this.leadingSpace,
-        layer: this.layer,
-        match: '* ',
-      })
-      return subTag.exec('', '\n')
     }
   }
 

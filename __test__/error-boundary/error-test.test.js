@@ -96,6 +96,16 @@ describe('error test', () => {
         '2. three')
   })
 
+  it('Not valid p in Ol2',()=>{
+    let str='<ol>\n' +
+        '<li>one</li>\n' +
+        '<b>two</b>\n' +
+        '<li>three</li>\n' +
+        '</ol>'
+    expect(html2Md(str)).toBe('1. one\n' +
+        '2. three')
+  })
+
   it('Not valid tag in Ul',()=>{
     let str='<ul>\n' +
         '<li>one</li>\n' +

@@ -7,6 +7,7 @@ import {
 } from './utils'
 import config from './config'
 import { Html2MdOptions } from './type'
+import RawString from './tags/__rawString__'
 
 function html2md(str: string, options?: Html2MdOptions, force = false): string {
   config.reset()
@@ -29,7 +30,7 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
         prevTagStr: res,
         // leadingSpace:this.leadingSpace,
         // layer:this.layer,
-        // keepFormat:this.keepFormat,
+        // keepSpace:this.keepSpace,
       }
       const subTag = new SubTagClass(nextTagStr, nextTagName, options)
       const subContent = subTag.exec()
@@ -42,7 +43,9 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
       }
     } else {
       // 下一个tag是一个无效的或者是纯文本
-      res += nextTagStr
+      // res += nextTagStr
+      console.log(nextTagStr, nextTagName)
+      res += new RawString(nextTagStr, nextTagName).exec()
       res = res.replace(/(?:\n\s*)$/, '\n')
     }
     prevTagName = nextTagName
@@ -54,7 +57,8 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
 }
 
 function beforeReturn(str: string) {
-  str = str.replace(/^\n+/, '')
+  console.log('beforeReturn', str)
+  str = str.replace(/^\s+/, '')
   str = str.replace(/\s+$/, '')
   str = str.replace(/☈/g, ' ')
   return str

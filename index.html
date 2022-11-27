@@ -641,7 +641,22 @@ html2md(str, {
             htmlTxt = ele2.value
         }
         console.time('html->md')
-        output = html2md(htmlTxt,{skipTags,ignoreTags,emptyTags,aliasTags,renderCustomTags},true)
+        output = html2md(htmlTxt,{
+            skipTags,
+            ignoreTags,
+            emptyTags,
+            aliasTags,
+            renderCustomTags,
+            tagListener: (tagName, props)=>{
+                console.log(props)
+                return {
+                        ...props,
+                        // language: props.language === 'js'?'javascript': 'ts',
+                        // match: tagName === 'li' && props.parentTag === 'ul' ? '-' : props.match,
+                        // keepSpace: tagName === 'b'  ? true : props.keepSpace
+                    }
+            }
+        },true)
         console.timeEnd('html->md')
 
         if (ele1) ele2.setHTML(htmlTxt)

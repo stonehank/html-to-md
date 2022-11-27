@@ -16,7 +16,7 @@ class Pre extends Tag {
     this.isIndent = this.innerHTML.includes('```')
     this.match = this.isIndent ? '' : '```'
     this.language = this.language || getLanguage(str)
-    this.keepFormat = true
+    this.keepSpace = true
   }
 
   beforeMergeSpace(content: string) {
@@ -63,7 +63,7 @@ class Pre extends Tag {
         ...options,
         match: '',
         language: this.language,
-        keepFormat: true,
+        keepSpace: true,
       })
       return subTag.exec('', '')
     } else {
@@ -73,7 +73,7 @@ class Pre extends Tag {
       } else {
         emptyTag = new __Empty__(subTagStr, subTagName, {
           ...options,
-          keepFormat: true,
+          keepSpace: true,
         })
       }
       return emptyTag.exec()

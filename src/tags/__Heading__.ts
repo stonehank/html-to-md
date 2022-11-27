@@ -3,10 +3,11 @@ import Tag from '../Tag'
 class __Heading__ extends Tag {
   constructor(str: string, tagName = 'h1') {
     super(str, tagName)
+    this.match = '#'
   }
 
   beforeMergeSpace(content: string) {
-    return '# ' + content
+    return this.match + ' ' + content
   }
 
   exec(prevGap: string, endGap: string) {

@@ -1,7 +1,9 @@
-import { SelfCloseTagOptions, SelfTagProps, TagName } from './type'
+import { SelfCloseTagOptions, SelfCloseTagProps, TagName } from './type'
 import { getTagAttributes } from './utils'
+import config from './config'
+const { tagListener } = config.get()
 
-class SelfCloseTag implements SelfTagProps {
+class SelfCloseTag implements SelfCloseTagProps {
   constructor(
     str: string,
     tagName: TagName,
@@ -9,7 +11,8 @@ class SelfCloseTag implements SelfTagProps {
       parentTag = '',
       leadingSpace = '',
       layer = 1,
-      isFirstTag = false,
+      isFirstSubTag = false,
+      match = null,
       prevTagName = '',
       nextTagName = '',
     }: SelfCloseTagOptions = {}
@@ -17,12 +20,13 @@ class SelfCloseTag implements SelfTagProps {
     this.tagName = tagName
     this.rawStr = str
     this.parentTag = parentTag
-    this.isFirstTag = isFirstTag
+    this.isFirstSubTag = isFirstSubTag
     this.prevTagName = prevTagName
     this.nextTagName = nextTagName
     this.leadingSpace = leadingSpace
     this.layer = layer
     this.innerHTML = ''
+    this.match = match
     if (!this.__detectStr__(str, this.tagName)) {
       this.attrs = {}
       return
@@ -35,7 +39,8 @@ class SelfCloseTag implements SelfTagProps {
   prevTagName: TagName
   nextTagName: TagName
   rawStr: string
-  isFirstTag: boolean
+  match: string | null
+  isFirstSubTag: boolean
   leadingSpace: string
   layer: number
   attrs: Record<string, string>
@@ -96,6 +101,20 @@ class SelfCloseTag implements SelfTagProps {
 
   // 在步骤开始前，一般只需返回空字符串
   beforeParse() {
+    if (tagListener) {
+      const { attrs, match } = tagListener(this.tagName, {
+        parentTag: this.parentTag,
+        prevTagName: this.prevTagName,
+        nextTagName: this.nextTagName,
+        isFirstSubTag: this.isFirstSubTag,
+        attrs: this.attrs,
+        innerHTML: this.innerHTML,
+        isSelfClosing: true,
+        match: this.match,
+      })
+      this.attrs = attrs
+      this.match = match
+    }
     return ''
   }
 

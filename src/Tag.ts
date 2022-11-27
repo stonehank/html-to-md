@@ -8,18 +8,20 @@ import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
 import isIndependentTag from './utils/isIndependentTag'
 import { ParseOptions, TagName, TagOptions, TagProps } from './type'
+import config from './config'
+const { tagListener } = config.get()
 class Tag implements TagProps {
   constructor(
     str: string,
     tagName: TagName,
     {
-      keepFormat = false,
+      keepSpace = false,
       prevTagName = '',
       nextTagName = '',
       prevTagStr = '',
       nextTagStr = '',
       parentTag = '',
-      isFirstTag = true,
+      isFirstSubTag = true,
       calcLeading = false,
       leadingSpace = '',
       layer = 1,
@@ -39,7 +41,7 @@ class Tag implements TagProps {
     this.nextTagName = nextTagName
     this.prevTagStr = prevTagStr
     this.nextTagStr = nextTagStr
-    this.isFirstTag = isFirstTag
+    this.isFirstSubTag = isFirstSubTag
     this.calcLeading = calcLeading
     this.leadingSpace = leadingSpace
     this.layer = layer
@@ -52,13 +54,13 @@ class Tag implements TagProps {
     // 在blockquote内部，如果前面img 后面p 不会再有额外的一行，因为在内部已经处理了
     this.noExtraLine = noExtraLine
 
-    this.keepFormat = keepFormat
+    this.keepSpace = keepSpace
     if (!this.__detectStr__(str, this.tagName)) {
       this.attrs = {}
       this.innerHTML = ''
       return
     }
-    const { attr, innerHTML } = this.__fetchTagAttrAndContent__(str)
+    const { attr, innerHTML } = this.__fetchTagAttrAndInnerHTML__(str)
     this.attrs = attr
     this.innerHTML = innerHTML
   }
@@ -69,7 +71,7 @@ class Tag implements TagProps {
   rawStr: string
   prevTagStr: string
   nextTagStr: string
-  isFirstTag: boolean
+  isFirstSubTag: boolean
   calcLeading: boolean
   leadingSpace: string
   layer: number
@@ -80,7 +82,7 @@ class Tag implements TagProps {
   count: number
   tableColumnCount: number
   noExtraLine: boolean
-  keepFormat: boolean
+  keepSpace: boolean
   attrs: Record<string, string>
   innerHTML: string
 
@@ -109,14 +111,6 @@ class Tag implements TagProps {
       }
     }
 
-    // // SelfClose tag
-    // if (name.endsWith('/')) {
-    //   console.warn(
-    //     'There detect a self close tag, which name is:',
-    //     name.slice(0, -1)
-    //   )
-    //   return false
-    // }
     if (name !== tagName) {
       console.warn(
         'Tag is not match tagName, tagName in str is ' +
@@ -132,9 +126,9 @@ class Tag implements TagProps {
   /**
    *
    * @param str
-   * @returns {{attr: {}, content: *}}
+   * @returns {{attr: {}, innerHTML: *}}
    */
-  __fetchTagAttrAndContent__(str: string) {
+  __fetchTagAttrAndInnerHTML__(str: string) {
     let openTagAttrs = ''
     let i = 1
     for (; i < str.length; i++) {
@@ -176,15 +170,37 @@ class Tag implements TagProps {
   }
 
   __isEmpty__(str: string) {
-    if (this.keepFormat) return false
+    if (this.keepSpace) return false
     return (
       (str === '' && this.tagName !== 'td') ||
       (this.calcLeading && this.__onlyLeadingSpace__(str))
     )
   }
 
+  getValidSubTagName(subTag: TagName): TagName {
+    return subTag
+  }
+
   // 在步骤开始前，一般只需返回空字符串
   beforeParse() {
+    if (tagListener) {
+      const { attrs, language, match } = tagListener(this.tagName, {
+        parentTag: this.parentTag,
+        prevTagName: this.prevTagName,
+        nextTagName: this.nextTagName,
+        isFirstSubTag: this.isFirstSubTag,
+        attrs: this.attrs,
+        innerHTML: this.innerHTML,
+        language: this.language,
+        match: this.match,
+        keepSpace: this.keepSpace,
+        isSelfClosing: false,
+      })
+      this.attrs = attrs
+      if (typeof language === 'string') this.language = language
+      if (typeof match !== 'undefined') this.match = match
+    }
+
     return ''
   }
 
@@ -193,7 +209,8 @@ class Tag implements TagProps {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): string {
+    console.log(subTagStr)
     const SubTagClass = getTagConstructor(subTagName)
     const subTag = new SubTagClass(subTagStr, subTagName, options)
     return subTag.exec()
@@ -204,7 +221,7 @@ class Tag implements TagProps {
     subTagStr: string,
     subTagName: TagName,
     options: ParseOptions
-  ) {
+  ): string {
     const rawString = new RawString(subTagStr, subTagName, options)
     return rawString.exec()
   }
@@ -217,7 +234,7 @@ class Tag implements TagProps {
   // 去除不必要的空行
   slim(content: string) {
     // 在代码块内部
-    if (this.keepFormat) {
+    if (this.keepSpace) {
       return content
     }
     return content.trim()
@@ -229,7 +246,7 @@ class Tag implements TagProps {
   }
 
   mergeSpace(content: string, prevGap: string, endGap: string) {
-    if (this.keepFormat && this.tagName !== 'pre') {
+    if (this.keepSpace && this.tagName !== 'pre') {
       // 在代码块内部减少换行
       return content.endsWith('\n')
         ? content
@@ -264,7 +281,7 @@ class Tag implements TagProps {
         prevTagStr: content,
         leadingSpace: this.leadingSpace,
         layer: this.layer,
-        keepFormat: this.keepFormat,
+        keepSpace: this.keepSpace,
       }
       let nextStr
       if (nextTagName != null) {
@@ -272,19 +289,20 @@ class Tag implements TagProps {
       } else {
         nextStr = this.parseOnlyString(nextTagStr, nextTagName, options)
       }
-      const _currentTagName = nextTagName
+      // console.log(nextTagName, this.tagName)
+      const _currentTagName = this.getValidSubTagName(nextTagName)
       nextTagName = afterNextTagName
       nextTagStr = afterNextTagStr
       if (_currentTagName == null && this.__isEmpty__(nextStr)) {
         continue
       }
       prevTagName = _currentTagName
-      this.isFirstTag = false
+      this.isFirstSubTag = false
       content += nextStr
     }
     content = this.afterParsed(content)
     content = this.slim(content)
-    if (!this.keepFormat && this.__isEmpty__(content)) return ''
+    if (this.__isEmpty__(content)) return ''
     content = this.beforeMergeSpace(content)
     // 当类似<img>后面跟随<p>情况，需要<p>多空一行
     if (
@@ -299,7 +317,7 @@ class Tag implements TagProps {
     }
     content = this.mergeSpace(content, prevGap, endGap)
 
-    if (this.noWrap && !this.keepFormat) content = content.replace(/\s+/g, ' ')
+    if (this.noWrap && !this.keepSpace) content = content.replace(/\s+/g, ' ')
     content = this.afterMergeSpace(content)
     content = this.beforeReturn(content)
     return content

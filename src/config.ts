@@ -1,4 +1,4 @@
-import { Html2MdOptions } from './type'
+import { Html2MdOptions, TagListenerProps, TagName } from './type'
 
 interface Config {
   options: Html2MdOptions
@@ -11,6 +11,7 @@ class Config {
     ignoreTags = [],
     aliasTags = {},
     renderCustomTags = true,
+    tagListener = (tag: TagName, props: TagListenerProps) => props,
   } = {}) {
     this.options = {
       skipTags,
@@ -18,6 +19,7 @@ class Config {
       ignoreTags,
       aliasTags,
       renderCustomTags,
+      tagListener,
     }
   }
 
@@ -46,6 +48,7 @@ class Config {
 
   reset() {
     this.options = JSON.parse(JSON.stringify(defaultOptions))
+    this.options.tagListener = (tag: TagName, props: TagListenerProps) => props
   }
 }
 

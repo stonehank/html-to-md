@@ -15,20 +15,21 @@ class Li extends Tag {
   constructor(str: string, tagName = 'li', options: TagOptions) {
     super(str, tagName, options)
     // 在没有UL的情况下
-    this.match = this.match || '* '
+    this.match = this.match || '*'
     this.extraGap = ''
   }
 
   beforeMergeSpace(content: string) {
-    return this.extraGap + this.leadingSpace + this.match + content
+    return this.extraGap + this.leadingSpace + this.match + ' ' + content
   }
 
   __calcNextLeading__() {
-    return this.match?.length === 2
+    console.log('__calcNextLeading__', this.match)
+    return this.match?.length === 1
       ? DOUBLE
-      : this.match?.length === 3
+      : this.match?.length === 2
       ? TRIPLE
-      : this.match?.length === 4
+      : this.match?.length === 3
       ? DOUBLE
       : TRIPLE + DOUBLE
   }
@@ -50,7 +51,7 @@ class Li extends Tag {
     if (subTagName === 'p') {
       this.extraGap = '\n'
     }
-    if (this.isFirstTag) {
+    if (this.isFirstSubTag) {
       return str.trimLeft().replace(this.leadingSpace + nextLeading, '')
     } else {
       return str
@@ -73,7 +74,7 @@ class Li extends Tag {
       leadingSpace: this.leadingSpace + nextLeading,
       layer: this.layer + 1,
     })
-    if (this.isFirstTag) {
+    if (this.isFirstSubTag) {
       return str.replace(this.leadingSpace + nextLeading, '')
     } else {
       return str

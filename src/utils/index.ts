@@ -1,4 +1,4 @@
-import { escape, extraEscape, unescapeStr } from './escape'
+import { extraEscape, unescapeStr } from './escape'
 import generateGetNextValidTag from './generateGetNextValidTag'
 import getTagConstructor from './getTagConstructor'
 import isSelfClosing from './isSelfClosing'
@@ -11,7 +11,7 @@ import getTableAlign from './getTableAlign'
 import shouldRenderRawInside from './shouldRenderRawInside'
 
 export {
-  escape,
+  // escape,
   extraEscape,
   unescapeStr,
   getRealTagName,

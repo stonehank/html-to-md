@@ -41,7 +41,7 @@ class Code extends Tag {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
         ...options,
-        keepFormat: this.keepFormat,
+        keepSpace: this.keepSpace,
         noWrap: this.noWrap,
       })
       return subTag.exec('', '')
@@ -64,7 +64,7 @@ class Code extends Tag {
   }
 
   slim(content: string) {
-    if (this.keepFormat) return content
+    if (this.keepSpace) return content
     return content.trim()
   }
 

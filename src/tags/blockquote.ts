@@ -90,7 +90,7 @@ class Blockquote extends Tag {
     const nextNeedNewLine =
       isIndependentTag(options.nextTagName) && options.nextTagName !== 'br'
     const needNewLine = isIndependentTag(subTagName) && subTagName !== 'br'
-    if (this.isFirstTag) {
+    if (this.isFirstSubTag) {
       return str.trimLeft().replace(leadingSpace, '')
     } else {
       if (needNewLine) {

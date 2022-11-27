@@ -13,16 +13,20 @@ export type Html2MdOptions = {
   ignoreTags?: string[]
   aliasTags?: Record<string, string>
   renderCustomTags?: boolean | 'SKIP' | 'EMPTY' | 'IGNORE'
+  tagListener?: (
+    tag: TagName,
+    props: TagListenerProps
+  ) => TagListenerReturnProps
 }
 
 export type TagOptions = {
   parentTag?: TagName
   prevTagName?: TagName
   nextTagName?: TagName
-  keepFormat?: boolean
+  keepSpace?: boolean
   prevTagStr?: string
   nextTagStr?: string
-  isFirstTag?: boolean
+  isFirstSubTag?: boolean
   calcLeading?: boolean
   leadingSpace?: string
   layer?: number
@@ -39,7 +43,8 @@ export type SelfCloseTagOptions = {
   parentTag?: TagName
   prevTagName?: TagName
   nextTagName?: TagName
-  isFirstTag?: boolean
+  match?: string | null
+  isFirstSubTag?: boolean
   leadingSpace?: string
   layer?: number
 }
@@ -52,7 +57,7 @@ export type ParseOptions = {
   prevTagStr?: string
   leadingSpace?: string
   layer?: number
-  keepFormat?: boolean
+  keepSpace?: boolean
   calcLeading?: boolean
 }
 
@@ -64,7 +69,7 @@ export interface TagProps {
   rawStr: string
   prevTagStr: string
   nextTagStr: string
-  isFirstTag: boolean
+  isFirstSubTag: boolean
   calcLeading: boolean
   leadingSpace: string
   layer: number
@@ -75,20 +80,40 @@ export interface TagProps {
   count: number
   tableColumnCount: number
   noExtraLine: boolean
-  keepFormat: boolean
+  keepSpace: boolean
   attrs: Record<string, string>
   innerHTML: string
 }
 
-export interface SelfTagProps {
+export interface SelfCloseTagProps {
   tagName: TagName
   parentTag: TagName
   prevTagName: TagName
   nextTagName: TagName
   rawStr: string
-  isFirstTag: boolean
+  isFirstSubTag: boolean
+  match: string | null
   leadingSpace: string
   layer: number
   attrs: Record<string, string>
   innerHTML: string
+}
+
+export type TagListenerProps = {
+  parentTag: TagName
+  prevTagName: TagName
+  nextTagName: TagName
+  isFirstSubTag: boolean
+  attrs: Record<string, string>
+  innerHTML: string
+  match: string | null
+  isSelfClosing: boolean
+  language?: string
+  keepSpace?: boolean
+}
+
+export type TagListenerReturnProps = {
+  attrs: Record<string, string>
+  match: string | null
+  language?: string
 }
