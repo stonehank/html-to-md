@@ -647,15 +647,6 @@ html2md(str, {
             emptyTags,
             aliasTags,
             renderCustomTags,
-            tagListener: (tagName, props)=>{
-                console.log(props)
-                return {
-                        ...props,
-                        // language: props.language === 'js'?'javascript': 'ts',
-                        // match: tagName === 'li' && props.parentTag === 'ul' ? '-' : props.match,
-                        // keepSpace: tagName === 'b'  ? true : props.keepSpace
-                    }
-            }
         },true)
         console.timeEnd('html->md')
 

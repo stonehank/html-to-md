@@ -24,7 +24,6 @@ class Li extends Tag {
   }
 
   __calcNextLeading__() {
-    console.log('__calcNextLeading__', this.match)
     return this.match?.length === 1
       ? DOUBLE
       : this.match?.length === 2

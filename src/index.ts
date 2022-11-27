@@ -44,7 +44,6 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
     } else {
       // 下一个tag是一个无效的或者是纯文本
       // res += nextTagStr
-      console.log(nextTagStr, nextTagName)
       res += new RawString(nextTagStr, nextTagName).exec()
       res = res.replace(/(?:\n\s*)$/, '\n')
     }
@@ -57,7 +56,7 @@ function html2md(str: string, options?: Html2MdOptions, force = false): string {
 }
 
 function beforeReturn(str: string) {
-  console.log('beforeReturn', str)
+  // console.log('beforeReturn', str)
   str = str.replace(/^\s+/, '')
   str = str.replace(/\s+$/, '')
   str = str.replace(/☈/g, ' ')

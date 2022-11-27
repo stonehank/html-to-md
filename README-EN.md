@@ -18,7 +18,7 @@
 
 - 200+`unit test` and `module test`, code coverage `97%`
 
-> Only valid HTML will be output correctly, eg. `<p>abc<` ，`<i>abc</>` are **Not Valid** text.
+> Only valid HTML will be output correctly, eg. `<p>abc<`, `<i>abc</>` are **Not Valid** text.
 
 ### Live Demo
 
@@ -43,7 +43,7 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 
 ### Config(Optional)：
 
-- options:
+#### options:
 
 <table>
 <thead>
@@ -125,6 +125,14 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 </ul>
 </td>
 </tr>
+<tr>
+<td align="center">tagListener</td>
+<td align="left">Function</td>
+<td align="center">
+(tagName, props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
+</td>
+<td align="left">Custom the tag props</td>
+</tr>
 </tbody>
 </table>
 
@@ -152,7 +160,7 @@ html2md("<test><b><i>abc</i></b></test>", { renderCustomTags: "SKIP" });
 // ***abc***
 ```
 
-- force(Boolean)(Default value is false)
+#### force(Boolean)(Default value is false)
 
 | value |                            description                            |
 | :---: | :---------------------------------------------------------------: |
@@ -172,6 +180,30 @@ html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, false);
 html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, true);
 // skipTags value become ['b']
 ```
+#### TagListenerProps
+
+|key|说明|
+|---|---|
+|parentTag|parent tag nam, `null` if not exist|
+|prevTagName|previous tag name, `null` if not exist|
+|nextTagName|next tag name, `null` if not exist|
+|isFirstSubTag|if the current tag is the first tag of its parent tag|
+|attrs|tag's attributes, format as object, e.g. `{ src, href ... }`|
+|innerHTML|inner html string|
+|match|the match symbol of markdown for current tag|
+|language?|language for `pre` tag|
+|isSelfClosing|is the tag a self-closing tag|
+
+
+
+#### TagListenerReturnProps
+
+|key|说明|
+|---|---|
+|attrs|tag's attributes, format as object, e.g. `{ src, href ... }`|
+|match|the match symbol of markdown for current tag|
+|language?|language for `pre` tag|
+
 
 ### Support Tags
 
