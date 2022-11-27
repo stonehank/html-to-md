@@ -9,6 +9,7 @@ class __RawString__ {
   parentTag: TagName
   keepSpace: boolean
   calcLeading: boolean
+  inTable: boolean
   leadingSpace: string
   layer: number
   rawStr: string
@@ -23,6 +24,7 @@ class __RawString__ {
       calcLeading = false,
       layer = 1,
       leadingSpace = '',
+      inTable = false,
     }: ParseOptions = {}
   ) {
     this.tagName = tagName
@@ -34,6 +36,7 @@ class __RawString__ {
     this.leadingSpace = leadingSpace
     this.layer = layer
     this.rawStr = str
+    this.inTable = inTable
   }
 
   slim(str: string) {
@@ -55,7 +58,11 @@ class __RawString__ {
     if (this.calcLeading) {
       return this.leadingSpace + extraEscape(content)
     }
-    return extraEscape(content)
+    let validStr = extraEscape(content)
+    if (this.inTable) {
+      validStr = validStr.replace(/\|/g, '\\|')
+    }
+    return validStr
   }
 
   exec() {

@@ -32,6 +32,7 @@ class Tag implements TagProps {
       count = 1,
       tableColumnCount = 0,
       noExtraLine = false,
+      inTable = false,
     }: TagOptions = {}
   ) {
     this.tagName = tagName
@@ -50,6 +51,7 @@ class Tag implements TagProps {
     this.indentSpace = indentSpace
     this.language = language
     this.count = count
+    this.inTable = inTable
     this.tableColumnCount = tableColumnCount
     // 在blockquote内部，如果前面img 后面p 不会再有额外的一行，因为在内部已经处理了
     this.noExtraLine = noExtraLine
@@ -83,6 +85,7 @@ class Tag implements TagProps {
   tableColumnCount: number
   noExtraLine: boolean
   keepSpace: boolean
+  inTable: boolean
   attrs: Record<string, string>
   innerHTML: string
 
@@ -181,7 +184,7 @@ class Tag implements TagProps {
     return subTag
   }
 
-  // 在步骤开始前，一般只需返回空字符串
+  // 在步骤开始前，处理 tagListener
   beforeParse() {
     if (tagListener) {
       const { attrs, language, match } = tagListener(this.tagName, {
@@ -193,7 +196,6 @@ class Tag implements TagProps {
         innerHTML: this.innerHTML,
         language: this.language,
         match: this.match,
-        keepSpace: this.keepSpace,
         isSelfClosing: false,
       })
       this.attrs = attrs
@@ -210,7 +212,7 @@ class Tag implements TagProps {
     subTagName: string,
     options: ParseOptions
   ): string {
-    console.log(subTagStr)
+    // console.log(subTagStr)
     const SubTagClass = getTagConstructor(subTagName)
     const subTag = new SubTagClass(subTagStr, subTagName, options)
     return subTag.exec()
@@ -282,6 +284,7 @@ class Tag implements TagProps {
         leadingSpace: this.leadingSpace,
         layer: this.layer,
         keepSpace: this.keepSpace,
+        inTable: this.inTable,
       }
       let nextStr
       if (nextTagName != null) {

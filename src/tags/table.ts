@@ -47,6 +47,7 @@ class Table extends Tag {
     const subTag = new SubTagClass(subTagStr, subTagName, {
       ...options,
       tableColumnCount: this.tableColumnCount,
+      inTable: true,
     })
     return subTag.exec('', '\n')
   }

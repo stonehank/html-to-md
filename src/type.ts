@@ -37,6 +37,7 @@ export type TagOptions = {
   count?: number
   tableColumnCount?: number
   noExtraLine?: boolean
+  inTable?: boolean
 }
 
 export type SelfCloseTagOptions = {
@@ -47,6 +48,7 @@ export type SelfCloseTagOptions = {
   isFirstSubTag?: boolean
   leadingSpace?: string
   layer?: number
+  inTable?: boolean
 }
 
 export type ParseOptions = {
@@ -59,6 +61,7 @@ export type ParseOptions = {
   layer?: number
   keepSpace?: boolean
   calcLeading?: boolean
+  inTable?: boolean
 }
 
 export interface TagProps {
@@ -83,6 +86,7 @@ export interface TagProps {
   keepSpace: boolean
   attrs: Record<string, string>
   innerHTML: string
+  inTable: boolean
 }
 
 export interface SelfCloseTagProps {
@@ -97,6 +101,7 @@ export interface SelfCloseTagProps {
   layer: number
   attrs: Record<string, string>
   innerHTML: string
+  inTable: boolean
 }
 
 export type TagListenerProps = {
@@ -109,7 +114,6 @@ export type TagListenerProps = {
   match: string | null
   isSelfClosing: boolean
   language?: string
-  keepSpace?: boolean
 }
 
 export type TagListenerReturnProps = {

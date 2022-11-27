@@ -12,6 +12,7 @@ class SelfCloseTag implements SelfCloseTagProps {
       leadingSpace = '',
       layer = 1,
       isFirstSubTag = false,
+      inTable = false,
       match = null,
       prevTagName = '',
       nextTagName = '',
@@ -27,6 +28,7 @@ class SelfCloseTag implements SelfCloseTagProps {
     this.layer = layer
     this.innerHTML = ''
     this.match = match
+    this.inTable = inTable
     if (!this.__detectStr__(str, this.tagName)) {
       this.attrs = {}
       return
@@ -45,6 +47,7 @@ class SelfCloseTag implements SelfCloseTagProps {
   layer: number
   attrs: Record<string, string>
   innerHTML: string
+  inTable: boolean
 
   /**
    * Detect is a valid tag string
@@ -99,7 +102,7 @@ class SelfCloseTag implements SelfCloseTagProps {
     }
   }
 
-  // 在步骤开始前，一般只需返回空字符串
+  // 在步骤开始前，处理 tagListener
   beforeParse() {
     if (tagListener) {
       const { attrs, match } = tagListener(this.tagName, {
@@ -109,8 +112,8 @@ class SelfCloseTag implements SelfCloseTagProps {
         isFirstSubTag: this.isFirstSubTag,
         attrs: this.attrs,
         innerHTML: this.innerHTML,
-        isSelfClosing: true,
         match: this.match,
+        isSelfClosing: true,
       })
       this.attrs = attrs
       this.match = match

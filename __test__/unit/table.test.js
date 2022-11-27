@@ -478,4 +478,14 @@ describe("test <table></table> tag",()=>{
 `
       )
   })
+
+  it('| in table should be escape',()=>{
+    let table=new Table("<table><tbody><tr><td>|||123</td></tr></tbody></table>")
+    expect(table.exec()).toBe(
+`
+||
+|---|
+|\\|\\|\\|123|
+`)
+  })
 })

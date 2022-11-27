@@ -7,6 +7,7 @@ class Br extends SelfCloseTag {
   }
 
   exec(prevGap: string, endGap = '\n') {
+    if (this.inTable) return ''
     return '  ' + endGap
   }
 }
