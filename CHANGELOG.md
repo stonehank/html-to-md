@@ -1,4 +1,4 @@
-## 0.8.1
+## 0.8.2
 
 - Change `Tag` and `SelfCloseTag` class property name `content` to `innerHTML`
 - fix [#60](https://github.com/stonehank/html-to-md/issues/60)

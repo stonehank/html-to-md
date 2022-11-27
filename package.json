@@ -1,6 +1,6 @@
 {
   "name": "html-to-md",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "A JS library for convert HTML<String> to markdown<String>, gzip 10kb",
   "main": "dist/index.js",
   "keywords": [
