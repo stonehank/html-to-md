@@ -1,10 +1,20 @@
+## 0.8.1
+
+- Change `Tag` and `SelfCloseTag` class property name `content` to `innerHTML`
+- fix [#60](https://github.com/stonehank/html-to-md/issues/60)
+- fix quote in tag attribute can not be detected correctly
+- fix `|` escapes in table
+- ADD: `tagListener` to custom some props of tag
+
+    (tagName, props: [TagListenerProps](https://github.com/stonehank/html-to-md/blob/master/README.md#TagListenerProps)): [TagListenerReturnProps](https://github.com/stonehank/html-to-md/blob/master/README.md#TagListenerReturnProps) => TagListenerReturnProps`
+
 ## 0.8.0
 
 - add eslint and premitter
 - sourcecode use es module
 - convert to typescript
 
-## 0.7.0
+### 0.7.0
 
 - add `renderCustomTags` in options
 
