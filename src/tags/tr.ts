@@ -3,7 +3,6 @@ import __Ignore__ from './__ignore__'
 import { getTagConstructor } from '../utils'
 import config from '../config'
 import { ParseOptions, TagOptions } from '../type'
-const { aliasTags } = config.get()
 
 class Tr extends Tag {
   constructor(str: string, tagName = 'tr', options: TagOptions) {
@@ -19,6 +18,7 @@ class Tr extends Tag {
     subTagName: string,
     options: ParseOptions
   ) {
+    const { aliasTags } = config.get()
     const SubTagClass = getTagConstructor(subTagName)
     if (
       subTagName !== 'td' &&

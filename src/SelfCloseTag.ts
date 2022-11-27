@@ -1,7 +1,6 @@
 import { SelfCloseTagOptions, SelfCloseTagProps, TagName } from './type'
 import { getTagAttributes } from './utils'
 import config from './config'
-const { tagListener } = config.get()
 
 class SelfCloseTag implements SelfCloseTagProps {
   constructor(
@@ -104,6 +103,7 @@ class SelfCloseTag implements SelfCloseTagProps {
 
   // 在步骤开始前，处理 tagListener
   beforeParse() {
+    const { tagListener } = config.get()
     if (tagListener) {
       const { attrs, match } = tagListener(this.tagName, {
         parentTag: this.parentTag,

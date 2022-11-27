@@ -9,7 +9,7 @@ import { SINGLE } from './utils/CONSTANT'
 import isIndependentTag from './utils/isIndependentTag'
 import { ParseOptions, TagName, TagOptions, TagProps } from './type'
 import config from './config'
-const { tagListener } = config.get()
+
 class Tag implements TagProps {
   constructor(
     str: string,
@@ -186,7 +186,9 @@ class Tag implements TagProps {
 
   // 在步骤开始前，处理 tagListener
   beforeParse() {
+    const { tagListener } = config.get()
     if (tagListener) {
+      console.log(this.tagName, this.match)
       const { attrs, language, match } = tagListener(this.tagName, {
         parentTag: this.parentTag,
         prevTagName: this.prevTagName,
@@ -202,7 +204,7 @@ class Tag implements TagProps {
       if (typeof language === 'string') this.language = language
       if (typeof match !== 'undefined') this.match = match
     }
-
+    console.log(this.tagName, this.match)
     return ''
   }
 
