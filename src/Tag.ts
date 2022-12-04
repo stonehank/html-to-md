@@ -188,7 +188,7 @@ class Tag implements TagProps {
   beforeParse() {
     const { tagListener } = config.get()
     if (tagListener) {
-      console.log(this.tagName, this.match)
+      // console.log(this.tagName, this.match)
       const { attrs, language, match } = tagListener(this.tagName, {
         parentTag: this.parentTag,
         prevTagName: this.prevTagName,
@@ -204,7 +204,7 @@ class Tag implements TagProps {
       if (typeof language === 'string') this.language = language
       if (typeof match !== 'undefined') this.match = match
     }
-    console.log(this.tagName, this.match)
+    // console.log(this.tagName, this.match)
     return ''
   }
 
