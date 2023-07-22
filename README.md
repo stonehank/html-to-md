@@ -125,17 +125,9 @@ console.log(
 </tr>
 <tr>
 <td align="center">renderCustomTags</td>
-<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>| <code>'SKIP'</code> <br>| <code>'EMPTY'</code> <br>| <code>'IGNORE'</code></td>
+<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>|<code>'SKIP'</code> <br>|<code>'EMPTY'</code> <br>|<code>'IGNORE'</code></td>
 <td align="center">
 <code>true</code></td>
-<td align="left">自定义当前标签部分属性配置</td>
-</tr>
-<tr>
-<td align="center">tagListener</td>
-<td align="left">Function</td>
-<td align="center">
-(props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
-</td>
 <td align="left">定义是否渲染自定义标签（非HTML标签），
 <ul>
 <li><code>true</code>：渲染</li>
@@ -144,6 +136,14 @@ console.log(
 <li><code>IGNORE</code>：添加至<code>ignoreTags</code></li>
 </ul>
 </td>
+</tr>
+<tr>
+<td align="center">tagListener</td>
+<td align="left">Function</td>
+<td align="center">
+(props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
+</td>
+<td align="left">自定义当前标签部分属性配置</td>
 </tr>
 </tbody>
 </table>
@@ -195,29 +195,25 @@ html2md('<div><b><i>abc</i></b></div>', { skipTags: ['b'] }, true)
 
 #### TagListenerProps
 
-|key|说明|
-|---|---|
-|parentTag|父标签名，没有则为null|
-|prevTagName|上一个标签名，没有则为null|
-|nextTagName|下一个标签名，没有则为null|
-|isFirstSubTag|是否当前父标签内部的第一个子标签|
-|attrs|当前标签的attributes，以object集合方式，例如 { src, href ... }|
-|innerHTML|内部HTML字符串|
-|match|当前的HTML对应Markdown的匹配符号|
-|language?|当前标签语言，只在 pre 标签中出现 |
-|isSelfClosing|是否自闭和标签|
-
-
+| key           | 说明                                                              |
+| ------------- | ----------------------------------------------------------------- |
+| parentTag     | 父标签名，没有则为 null                                           |
+| prevTagName   | 上一个标签名，没有则为 null                                       |
+| nextTagName   | 下一个标签名，没有则为 null                                       |
+| isFirstSubTag | 是否当前父标签内部的第一个子标签                                  |
+| attrs         | 当前标签的 attributes，以 object 集合方式，例如 { src, href ... } |
+| innerHTML     | 内部 HTML 字符串                                                  |
+| match         | 当前的 HTML 对应 Markdown 的匹配符号                              |
+| language?     | 当前标签语言，只在 pre 标签中出现                                 |
+| isSelfClosing | 是否自闭和标签                                                    |
 
 #### TagListenerReturnProps
 
-|key|说明|
-|---|---|
-|attrs|当前标签的attributes，以object集合方式，例如 { src, href ... }|
-|match|返回一个新的自定义匹配符号|
-|language?|返回自定义pre标签的language |
-
-
+| key       | 说明                                                              |
+| --------- | ----------------------------------------------------------------- |
+| attrs     | 当前标签的 attributes，以 object 集合方式，例如 { src, href ... } |
+| match     | 返回一个新的自定义匹配符号                                        |
+| language? | 返回自定义 pre 标签的 language                                    |
 
 ### 支持标签
 

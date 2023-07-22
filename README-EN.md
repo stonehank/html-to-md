@@ -33,11 +33,11 @@
 ##### example
 
 ```js
-const html2md = require("html-to-md");
+const html2md = require('html-to-md')
 // or if you're using ES6
-import html2md from "html-to-md";
+import html2md from 'html-to-md'
 
-console.log(html2md("<strong><em>strong and italic</em></strong>", options));
+console.log(html2md('<strong><em>strong and italic</em></strong>', options))
 // ***strong and italic***
 ```
 
@@ -113,7 +113,7 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 </tr>
 <tr>
 <td align="center">renderCustomTags</td>
-<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>| <code>'SKIP'</code> <br>| <code>'EMPTY'</code> <br>| <code>'IGNORE'</code></td>
+<td align="left">&nbsp;&nbsp;<code>Boolean</code> <br>|<code>'SKIP'</code> <br>|<code>'EMPTY'</code> <br>|<code>'IGNORE'</code></td>
 <td align="center">
 <code>true</code></td>
 <td align="left">Define how to render not valida HTML tags
@@ -141,22 +141,22 @@ console.log(html2md("<strong><em>strong and italic</em></strong>", options));
 Example:
 
 ```javascript
-html2md("<><b><i>abc</i></b></>", { ignoreTags: [""] });
+html2md('<><b><i>abc</i></b></>', { ignoreTags: [''] })
 // ''
 
-html2md("<><b><i>abc</i></b></>", { skipTags: [""] });
+html2md('<><b><i>abc</i></b></>', { skipTags: [''] })
 // ***abc***
 
-html2md("<><b><i>abc</i></b></>", { emptyTags: [""] });
+html2md('<><b><i>abc</i></b></>', { emptyTags: [''] })
 // abc
 
-html2md("<><b><i>abc</i></b></>", {
-  skipTags: [""],
-  aliasTags: { b: "ul", i: "li" },
-});
+html2md('<><b><i>abc</i></b></>', {
+  skipTags: [''],
+  aliasTags: { b: 'ul', i: 'li' },
+})
 // *  abc
 
-html2md("<test><b><i>abc</i></b></test>", { renderCustomTags: "SKIP" });
+html2md('<test><b><i>abc</i></b></test>', { renderCustomTags: 'SKIP' })
 // ***abc***
 ```
 
@@ -173,37 +173,35 @@ Example：
 // The default skipTags value is ['div','html','body']
 
 // ex1：
-html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, false);
+html2md('<div><b><i>abc</i></b></div>', { skipTags: ['b'] }, false)
 // skipTags value become ['div','html','body','b']
 
 // ex2：
-html2md("<div><b><i>abc</i></b></div>", { skipTags: ["b"] }, true);
+html2md('<div><b><i>abc</i></b></div>', { skipTags: ['b'] }, true)
 // skipTags value become ['b']
 ```
+
 #### TagListenerProps
 
-|key|说明|
-|---|---|
-|parentTag|parent tag nam, `null` if not exist|
-|prevTagName|previous tag name, `null` if not exist|
-|nextTagName|next tag name, `null` if not exist|
-|isFirstSubTag|if the current tag is the first tag of its parent tag|
-|attrs|tag's attributes, format as object, e.g. `{ src, href ... }`|
-|innerHTML|inner html string|
-|match|the match symbol of markdown for current tag|
-|language?|language for `pre` tag|
-|isSelfClosing|is the tag a self-closing tag|
-
-
+| key           | 说明                                                         |
+| ------------- | ------------------------------------------------------------ |
+| parentTag     | parent tag nam, `null` if not exist                          |
+| prevTagName   | previous tag name, `null` if not exist                       |
+| nextTagName   | next tag name, `null` if not exist                           |
+| isFirstSubTag | if the current tag is the first tag of its parent tag        |
+| attrs         | tag's attributes, format as object, e.g. `{ src, href ... }` |
+| innerHTML     | inner html string                                            |
+| match         | the match symbol of markdown for current tag                 |
+| language?     | language for `pre` tag                                       |
+| isSelfClosing | is the tag a self-closing tag                                |
 
 #### TagListenerReturnProps
 
-|key|说明|
-|---|---|
-|attrs|tag's attributes, format as object, e.g. `{ src, href ... }`|
-|match|the match symbol of markdown for current tag|
-|language?|language for `pre` tag|
-
+| key       | 说明                                                         |
+| --------- | ------------------------------------------------------------ |
+| attrs     | tag's attributes, format as object, e.g. `{ src, href ... }` |
+| match     | the match symbol of markdown for current tag                 |
+| language? | language for `pre` tag                                       |
 
 ### Support Tags
 

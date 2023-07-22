@@ -38,6 +38,8 @@ module.exports = {
             warnings: false,
             comparisons: false,
             inline: 2,
+            drop_console: false,
+            pure_funcs:['console.log']
           },
           mangle: {
             safari10: true,
