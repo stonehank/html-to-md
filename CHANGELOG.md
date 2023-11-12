@@ -1,3 +1,6 @@
+## 0.8.4
+- Clean console output
+
 ## 0.8.3
 
 - Change `Tag` and `SelfCloseTag` class property name `content` to `innerHTML`
