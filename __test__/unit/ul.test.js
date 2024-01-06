@@ -255,6 +255,39 @@ describe("test <ul></ul> tag", () => {
     })
 
 
+    it("nest ul-2", () => {
+        let ul = html2Md(`<ul>
+<li>Create a list by starting a line with <code>+</code>, <code>-</code>, or <code>*</code></li>
+<li>Sub-lists are made by indenting 2 spaces:
+<ul>
+<li>Marker character change forces new list start:
+<ul>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+<ul>
+<li>Facilisis in pretium nisl aliquet</li>
+</ul>
+<ul>
+<li>Nulla volutpat aliquam velit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Very easy!</li>
+</ul>`)
+        expect(ul).toBe("* Create a list by starting a line with `+`, `-`, or `*`\n" +
+            "* Sub-lists are made by indenting 2 spaces:\n" +
+            "  * Marker character change forces new list start:\n" +
+            "    * Ac tristique libero volutpat at\n" +
+            "\n" +
+            "    * Facilisis in pretium nisl aliquet\n" +
+            "\n" +
+            "    * Nulla volutpat aliquam velit\n" +
+            "* Very easy!")
+    })
+    
+
+
     it("nest space with table", () => {
         let ul = html2Md(`<ul>
     <li>
@@ -281,7 +314,5 @@ describe("test <ul></ul> tag", () => {
   |---|---|
   |baz|qux|`)
     })
-
-
 })
 
