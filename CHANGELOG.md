@@ -1,3 +1,7 @@
+## 0.8.5
+- fix [#67](https://github.com/stonehank/html-to-md/issues/67)
+- fix [#68](https://github.com/stonehank/html-to-md/issues/68)
+
 ## 0.8.4
 - Clean console output
 
