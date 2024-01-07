@@ -19,4 +19,15 @@ describe("test <b></b> tag",()=>{
       "</b>")
     expect(b).toBe("***b and italic***")
   })
+
+  it('Space can be pass to next tag',()=>{
+    let b1=html2Md("This is a<b> good </b>thing")
+    let b2=html2Md("This is a <b> good </b> thing")
+    let b3=html2Md("This is a <b>good</b> thing")
+    let b4=html2Md("This is a<b>good</b>thing")
+    expect(b1).toBe("This is a **good** thing")
+    expect(b2).toBe("This is a **good** thing")
+    expect(b3).toBe("This is a **good** thing")
+    expect(b4).toBe("This is a**good**thing")
+  })
 })

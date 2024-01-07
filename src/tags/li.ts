@@ -37,7 +37,7 @@ class Li extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     const SubTagClass = getTagConstructor(subTagName)
     const nextLeading = this.__calcNextLeading__()
     const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -51,9 +51,12 @@ class Li extends Tag {
       this.extraGap = '\n'
     }
     if (this.isFirstSubTag) {
-      return str.trimLeft().replace(this.leadingSpace + nextLeading, '')
+      return [
+        str.trimLeft().replace(this.leadingSpace + nextLeading, ''),
+        subTag,
+      ]
     } else {
-      return str
+      return [str, subTag]
     }
   }
 
@@ -61,22 +64,22 @@ class Li extends Tag {
     subTagStr: string,
     subTagName: TagName,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     let calcLeading = false
     if (isIndependentTag(options.prevTagName)) {
       calcLeading = true
     }
     const nextLeading = this.__calcNextLeading__()
-    const str = super.parseOnlyString(subTagStr, subTagName, {
+    const [str, instance] = super.parseOnlyString(subTagStr, subTagName, {
       ...options,
       calcLeading,
       leadingSpace: this.leadingSpace + nextLeading,
       layer: this.layer + 1,
     })
     if (this.isFirstSubTag) {
-      return str.replace(this.leadingSpace + nextLeading, '')
+      return [str.replace(this.leadingSpace + nextLeading, ''), instance]
     } else {
-      return str
+      return [str, instance]
     }
   }
 

@@ -2,7 +2,7 @@ import isSelfClosing from './isSelfClosing'
 
 function getTagName(str: string, idx: number) {
   let name = ''
-  while (idx < str.length && /[a-zA-Z0-9!-]/.test(str[idx])) {
+  while (idx < str.length && /[a-zA-Z0-9!\-_]/.test(str[idx])) {
     name += str[idx++]
   }
 

@@ -28,7 +28,7 @@ class Code extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     if (subTagName === 'pre') {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -36,7 +36,7 @@ class Code extends Tag {
         language: '',
         match: '',
       })
-      return subTag.exec('', '\n')
+      return [subTag.exec('', '\n'), subTag]
     } else {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -44,11 +44,11 @@ class Code extends Tag {
         keepSpace: this.keepSpace,
         noWrap: this.noWrap,
       })
-      return subTag.exec('', '')
+      return [subTag.exec('', ''), subTag]
     }
   }
 
-  parseOnlyString(subTagStr: string) {
+  parseOnlyString(subTagStr: string): [string, any] {
     if (this.match !== '' && !!subTagStr) {
       let count = 1
       if (subTagStr.startsWith('`') || subTagStr.endsWith('`')) {
@@ -60,7 +60,7 @@ class Code extends Tag {
       this.match = '`'.repeat(count)
     }
     // 将&lt;转换为<，等等
-    return unescapeStr(subTagStr)
+    return [unescapeStr(subTagStr), null]
   }
 
   slim(content: string) {

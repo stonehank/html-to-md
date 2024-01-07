@@ -56,7 +56,7 @@ class Pre extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     if (subTagName === 'code') {
       const SubTagClass = getTagConstructor(subTagName)
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -65,7 +65,7 @@ class Pre extends Tag {
         language: this.language,
         keepSpace: true,
       })
-      return subTag.exec('', '')
+      return [subTag.exec('', ''), subTag]
     } else {
       let emptyTag
       if (isSelfClosing(subTagName)) {
@@ -76,12 +76,12 @@ class Pre extends Tag {
           keepSpace: true,
         })
       }
-      return emptyTag.exec()
+      return [emptyTag.exec(), emptyTag]
     }
   }
 
-  parseOnlyString(subTagStr: string) {
-    return subTagStr
+  parseOnlyString(subTagStr: string): [string, any] {
+    return [subTagStr, null]
   }
 
   slim(content: string) {
