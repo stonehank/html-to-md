@@ -45,4 +45,4 @@ jobs:
         cd ./demo
         git add .
         git commit -m "Update"
-        git push --force origin master:gh-pages
+        git push --force https://github.com/stonehank/html-to-md.git master:gh-pages
