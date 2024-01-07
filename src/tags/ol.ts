@@ -31,7 +31,7 @@ class Ol extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     const SubTagClass = getTagConstructor(subTagName)
     if (this.__isValidSubTag__(subTagName)) {
       const match = this.count + '.'
@@ -43,7 +43,7 @@ class Ol extends Tag {
         match,
       })
       this.count++
-      return subTag.exec('', '\n')
+      return [subTag.exec('', '\n'), subTag]
     } else {
       console.error(
         'Should not have tags except <li> inside ol, current tag is ' +
@@ -51,12 +51,12 @@ class Ol extends Tag {
           ', current tagStr is' +
           subTagStr
       )
-      return ''
+      return ['', null]
     }
   }
 
-  parseOnlyString() {
-    return ''
+  parseOnlyString(): [string, any] {
+    return ['', null]
   }
 
   exec(prevGap = '\n', endGap = '\n') {

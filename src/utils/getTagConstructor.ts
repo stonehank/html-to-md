@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import config from '../config'
+import { DOUBLE } from './CONSTANT'
 import isSelfClosing from './isSelfClosing'
 import isValidHTMLTags from './isValidHTMLTags'
 
@@ -8,7 +9,7 @@ function getTagConstructor(tagName: string): any {
   const { skipTags, emptyTags, ignoreTags, aliasTags, renderCustomTags } =
     config.get()
   const selfClose = isSelfClosing(tagName)
-  if (skipTags?.includes(tagName)) {
+  if (skipTags?.includes(tagName) || tagName === `${DOUBLE}skip${DOUBLE}`) {
     const skip = require('../tags/__skip__')
     return selfClose ? skip.__SkipSelfClose__ : skip.__Skip__
   }

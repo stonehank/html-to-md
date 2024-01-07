@@ -22,16 +22,27 @@ class __Empty__ extends Tag {
 
   parseValidSubTag(
     subTagStr: string,
-    subTagName: TagName,
+    subTagName: string,
     options: ParseOptions
-  ) {
-    return new __Empty__(subTagStr, subTagName, {
+  ): [string, any] {
+    if (this.tagName === '__skip__') {
+      return super.parseValidSubTag(subTagStr, subTagName, options)
+    }
+    const emptyInstance = new __Empty__(subTagStr, subTagName, {
       ...options,
-    }).exec()
+    })
+    return [emptyInstance.exec(), emptyInstance]
   }
 
-  parseOnlyString(subTagStr: string, subTagName: null, options: ParseOptions) {
-    return subTagStr
+  parseOnlyString(
+    subTagStr: string,
+    subTagName: TagName,
+    options: ParseOptions
+  ): [string, any] {
+    if (this.tagName === '__skip__') {
+      return super.parseOnlyString(subTagStr, subTagName, options)
+    }
+    return [subTagStr, null]
   }
 
   exec() {

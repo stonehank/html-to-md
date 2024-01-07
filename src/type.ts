@@ -31,6 +31,10 @@ export type TagOptions = {
   leadingSpace?: string
   layer?: number
   noWrap?: boolean
+  // hasEndSpace?: boolean
+  // hasStartSpace?: boolean
+  prevHasEndSpace?: boolean
+  prevHasStartSpace?: boolean
   match?: string | null
   indentSpace?: string
   language?: string
@@ -57,6 +61,10 @@ export type ParseOptions = {
   nextTagName?: TagName
   nextTagStr?: string
   prevTagStr?: string
+  // hasEndSpace?: boolean
+  // hasStartSpace?: boolean
+  prevHasStartSpace?: boolean
+  prevHasEndSpace?: boolean
   leadingSpace?: string
   layer?: number
   keepSpace?: boolean
@@ -77,6 +85,10 @@ export interface TagProps {
   leadingSpace: string
   layer: number
   noWrap: boolean
+  hasEndSpace: boolean
+  hasStartSpace: boolean
+  prevHasEndSpace?: boolean
+  prevHasStartSpace?: boolean
   match: string | null
   indentSpace: string
   language: string

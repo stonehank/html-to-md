@@ -32,7 +32,7 @@ class Table extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ) : [string, any] {
     if (subTagName === 'thead') {
       this.exist_thead = true
     }
@@ -49,11 +49,11 @@ class Table extends Tag {
       tableColumnCount: this.tableColumnCount,
       inTable: true,
     })
-    return subTag.exec('', '\n')
+    return [subTag.exec('', '\n'), subTag]
   }
 
-  parseOnlyString() {
-    return ''
+  parseOnlyString(): [string, any] {
+    return ['', null]
   }
 
   beforeReturn(str: string) {

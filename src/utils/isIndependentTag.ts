@@ -25,6 +25,7 @@ const independentLineTags: Record<string, boolean> = {
   dd: true,
   dt: true,
   br: true,
+  table: true,
 }
 
 function isIndependentTag(tagName?: TagName): boolean {

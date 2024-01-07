@@ -16,8 +16,8 @@ class Tbody extends Tag {
     return tableHr + '\n' + content
   }
 
-  parseOnlyString() {
-    return ''
+  parseOnlyString(): [string, any] {
+    return ['', null]
   }
 
   exec(prevGap = '', endGap = '') {

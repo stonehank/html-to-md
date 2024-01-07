@@ -63,7 +63,7 @@ class Blockquote extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     let subTag
     if (subTagName === 'blockquote') {
       const SubTagClass = getTagConstructor(subTagName)
@@ -91,7 +91,7 @@ class Blockquote extends Tag {
       isIndependentTag(options.nextTagName) && options.nextTagName !== 'br'
     const needNewLine = isIndependentTag(subTagName) && subTagName !== 'br'
     if (this.isFirstSubTag) {
-      return str.trimLeft().replace(leadingSpace, '')
+      return [str.trimLeft().replace(leadingSpace, ''), subTag]
     } else {
       if (needNewLine) {
         str = leadingSpace + this.match + str
@@ -107,12 +107,12 @@ class Blockquote extends Tag {
         }
       } else {
         if (prevNeedNewLine) {
-          return leadingSpace + this.match + '\n' + str
+          return [leadingSpace + this.match + '\n' + str, subTag]
         }
-        return str
+        return [str, subTag]
       }
     }
-    return str
+    return [str, subTag]
   }
 
   exec(prevGap = '\n', endGap = '\n') {

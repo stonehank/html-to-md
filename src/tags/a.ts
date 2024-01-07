@@ -19,9 +19,9 @@ class A extends Tag {
     subTagStr: string,
     subTagName: TagName,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     if (this.parentTag === 'tbody' || this.parentTag === 'thead') {
-      return subTagStr
+      return [subTagStr, null]
     }
     return super.parseOnlyString(subTagStr, subTagName, options)
   }

@@ -1,11 +1,16 @@
 import { ParseOptions, TagName } from '../type'
-import { extraEscape } from '../utils'
+import { extraEscape, isSpacePassingTag } from '../utils'
 import isIndependentTag from '../utils/isIndependentTag'
 
 class __RawString__ {
   tagName: TagName
   nextTagName: TagName
   prevTagName: TagName
+  prevTagStr: string
+  hasEndSpace: boolean
+  hasStartSpace: boolean
+  prevHasStartSpace: boolean
+  prevHasEndSpace: boolean
   parentTag: TagName
   keepSpace: boolean
   calcLeading: boolean
@@ -20,6 +25,11 @@ class __RawString__ {
       keepSpace = false,
       prevTagName = '',
       nextTagName = '',
+      prevTagStr = '',
+      prevHasEndSpace = false,
+      prevHasStartSpace = false,
+      // hasEndSpace = false,
+      // hasStartSpace = false,
       parentTag = '',
       calcLeading = false,
       layer = 1,
@@ -31,12 +41,23 @@ class __RawString__ {
     this.nextTagName = nextTagName
     this.prevTagName = prevTagName
     this.parentTag = parentTag
+    this.prevTagStr = prevTagStr
     this.keepSpace = keepSpace
     this.calcLeading = calcLeading
     this.leadingSpace = leadingSpace
     this.layer = layer
     this.rawStr = str
     this.inTable = inTable
+    this.prevHasEndSpace = prevHasEndSpace
+    this.prevHasStartSpace = prevHasStartSpace
+    this.hasEndSpace = false
+    this.hasStartSpace = false
+    if (str.startsWith(' ')) {
+      this.hasStartSpace = true
+    }
+    if (str.endsWith(' ')) {
+      this.hasEndSpace = true
+    }
   }
 
   slim(str: string) {
@@ -61,6 +82,20 @@ class __RawString__ {
     let validStr = extraEscape(content)
     if (this.inTable) {
       validStr = validStr.replace(/\|/g, '\\|')
+    }
+    console.log(
+      this.prevTagName,
+      this.prevHasEndSpace,
+      content,
+      this.prevTagStr
+    )
+    if (
+      isSpacePassingTag(this.prevTagName) &&
+      this.prevHasEndSpace &&
+      !/^\s+/.test(content) &&
+      !/\s+$/.test(this.prevTagStr)
+    ) {
+      return ' ' + content
     }
     return validStr
   }

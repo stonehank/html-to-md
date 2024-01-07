@@ -7,6 +7,7 @@ import getLanguage from './getLanguage'
 import clearComment from './clearComment'
 import getRealTagName from './getRealTagName'
 import isIndependentTag from './isIndependentTag'
+import isSpacePassingTag from './isSpacePassingTag'
 import getTableAlign from './getTableAlign'
 import shouldRenderRawInside from './shouldRenderRawInside'
 
@@ -23,5 +24,6 @@ export {
   getLanguage,
   clearComment,
   isIndependentTag,
+  isSpacePassingTag,
   shouldRenderRawInside,
 }

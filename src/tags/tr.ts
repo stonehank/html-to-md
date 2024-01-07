@@ -17,7 +17,7 @@ class Tr extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     const { aliasTags } = config.get()
     const SubTagClass = getTagConstructor(subTagName)
     if (
@@ -30,15 +30,15 @@ class Tr extends Tag {
       console.error(
         `Should not have tags except <td> or <th> inside <tr>, current tag is ${subTagName} have been ignore.`
       )
-      return ''
+      return ['', null]
     } else {
       const subTag = new SubTagClass(subTagStr, subTagName, options)
-      return subTag.exec('', '')
+      return [subTag.exec('', ''), subTag]
     }
   }
 
-  parseOnlyString() {
-    return ''
+  parseOnlyString(): [string, any] {
+    return ['', null]
   }
 
   exec(prevGap = '', endGap = '\n') {

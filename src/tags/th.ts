@@ -15,14 +15,14 @@ class Th extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ) {
+  ): [string, any] {
     if (
       subTagName === 'ul' ||
       subTagName === 'ol' ||
       subTagName === 'table' ||
       subTagName === 'pre'
     ) {
-      return subTagStr.replace(/([\n\r])/g, '')
+      return [subTagStr.replace(/([\n\r])/g, ''), null]
     }
     return super.parseValidSubTag(subTagStr, subTagName, options)
   }

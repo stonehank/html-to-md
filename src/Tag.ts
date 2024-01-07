@@ -3,6 +3,7 @@ import {
   getTagAttributes,
   generateGetNextValidTag,
   isSelfClosing,
+  isSpacePassingTag,
 } from './utils'
 import RawString from './tags/__rawString__'
 import { SINGLE } from './utils/CONSTANT'
@@ -26,6 +27,8 @@ class Tag implements TagProps {
       leadingSpace = '',
       layer = 1,
       noWrap = false,
+      prevHasEndSpace = false,
+      prevHasStartSpace = false,
       match = null,
       indentSpace = '',
       language = '',
@@ -55,6 +58,10 @@ class Tag implements TagProps {
     this.tableColumnCount = tableColumnCount
     // 在blockquote内部，如果前面img 后面p 不会再有额外的一行，因为在内部已经处理了
     this.noExtraLine = noExtraLine
+    this.prevHasEndSpace = prevHasEndSpace
+    this.prevHasStartSpace = prevHasStartSpace
+    this.hasStartSpace = false
+    this.hasEndSpace = false
 
     this.keepSpace = keepSpace
     if (!this.__detectStr__(str, this.tagName)) {
@@ -63,6 +70,12 @@ class Tag implements TagProps {
       return
     }
     const { attr, innerHTML } = this.__fetchTagAttrAndInnerHTML__(str)
+    if (innerHTML.startsWith(' ') && isSpacePassingTag(tagName)) {
+      this.hasStartSpace = true
+    }
+    if (innerHTML.endsWith(' ') && isSpacePassingTag(tagName)) {
+      this.hasEndSpace = true
+    }
     this.attrs = attr
     this.innerHTML = innerHTML
   }
@@ -78,6 +91,10 @@ class Tag implements TagProps {
   leadingSpace: string
   layer: number
   noWrap: boolean
+  hasEndSpace: boolean
+  hasStartSpace: boolean
+  prevHasEndSpace: boolean
+  prevHasStartSpace: boolean
   match: string | null
   indentSpace: string
   language: string
@@ -188,7 +205,6 @@ class Tag implements TagProps {
   beforeParse() {
     const { tagListener } = config.get()
     if (tagListener) {
-      console.log(this.tagName, this.match)
       const { attrs, language, match } = tagListener(this.tagName, {
         parentTag: this.parentTag,
         prevTagName: this.prevTagName,
@@ -204,7 +220,6 @@ class Tag implements TagProps {
       if (typeof language === 'string') this.language = language
       if (typeof match !== 'undefined') this.match = match
     }
-    console.log(this.tagName, this.match)
     return ''
   }
 
@@ -213,11 +228,10 @@ class Tag implements TagProps {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ): string {
-    // console.log(subTagStr)
+  ): [string, any] {
     const SubTagClass = getTagConstructor(subTagName)
     const subTag = new SubTagClass(subTagStr, subTagName, options)
-    return subTag.exec()
+    return [subTag.exec(), subTag]
   }
 
   // 不存在tagName时，解析步骤
@@ -225,9 +239,9 @@ class Tag implements TagProps {
     subTagStr: string,
     subTagName: TagName,
     options: ParseOptions
-  ): string {
+  ): [string, any] {
     const rawString = new RawString(subTagStr, subTagName, options)
-    return rawString.exec()
+    return [rawString.exec(), rawString]
   }
 
   // 在解析完毕后，此时还并未去除不必要的空行
@@ -267,6 +281,15 @@ class Tag implements TagProps {
 
   // 最终返回前
   beforeReturn(content: string) {
+    if (
+      isSpacePassingTag(this.prevTagName) &&
+      isSpacePassingTag(this.tagName) &&
+      this.hasStartSpace &&
+      !/^\s+/.test(content) &&
+      !/\s+$/.test(this.prevTagStr)
+    ) {
+      return ' ' + content
+    }
     return content
   }
 
@@ -275,6 +298,8 @@ class Tag implements TagProps {
     const getNxtValidTag = generateGetNextValidTag(this.innerHTML)
     let [nextTagName, nextTagStr] = getNxtValidTag()
     let prevTagName = null
+    let prevHasStartSpace = false
+    let prevHasEndSpace = false
     while (nextTagStr !== '') {
       const [afterNextTagName, afterNextTagStr] = getNxtValidTag()
       const options = {
@@ -283,23 +308,45 @@ class Tag implements TagProps {
         nextTagStr: afterNextTagStr,
         prevTagName,
         prevTagStr: content,
+        prevHasEndSpace: prevHasEndSpace,
+        prevHasStartSpace: prevHasStartSpace,
         leadingSpace: this.leadingSpace,
         layer: this.layer,
         keepSpace: this.keepSpace,
         inTable: this.inTable,
       }
       let nextStr
+      let nextInstance
       if (nextTagName != null) {
-        nextStr = this.parseValidSubTag(nextTagStr, nextTagName, options)
+        const resultArr = this.parseValidSubTag(
+          nextTagStr,
+          nextTagName,
+          options
+        )
+        nextStr = resultArr[0]
+        nextInstance = resultArr[1]
       } else {
-        nextStr = this.parseOnlyString(nextTagStr, nextTagName, options)
+        const resultArr = this.parseOnlyString(nextTagStr, nextTagName, options)
+        nextStr = resultArr[0]
+        nextInstance = resultArr[1]
+        // nextStr = nextStr.replace(/(?:\n\s*)$/, '\n')
       }
-      // console.log(nextTagName, this.tagName)
+      prevHasEndSpace = nextInstance?.hasEndSpace || false
+      prevHasStartSpace = nextInstance?.hasStartSpace || false
+
       const _currentTagName = this.getValidSubTagName(nextTagName)
       nextTagName = afterNextTagName
       nextTagStr = afterNextTagStr
       if (_currentTagName == null && this.__isEmpty__(nextStr)) {
         continue
+      }
+      if (
+        !this.keepSpace &&
+        isIndependentTag(prevTagName) &&
+        isIndependentTag(_currentTagName)
+      ) {
+        content = content.replace(/\n+$/, '\n')
+        nextStr = nextStr.replace(/^\n+/, '\n')
       }
       prevTagName = _currentTagName
       this.isFirstSubTag = false

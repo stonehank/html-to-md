@@ -29,7 +29,7 @@ class Ul extends Tag {
     subTagStr: string,
     subTagName: string,
     options: ParseOptions
-  ): string {
+  ): [string, any] {
     const SubTagClass = getTagConstructor(subTagName)
     if (this.__isValidSubTag__(subTagName)) {
       const subTag = new SubTagClass(subTagStr, subTagName, {
@@ -39,7 +39,7 @@ class Ul extends Tag {
         layer: this.layer,
         match: '*',
       })
-      return subTag.exec('', '\n')
+      return [subTag.exec('', '\n'), subTag]
     } else {
       console.error(
         'Should not have tags except <li> inside ul, current tag is ' +
@@ -47,12 +47,12 @@ class Ul extends Tag {
           ', current tagStr is' +
           subTagStr
       )
-      return ''
+      return ['', null]
     }
   }
 
-  parseOnlyString() {
-    return ''
+  parseOnlyString(): [string, any] {
+    return ['', null]
   }
 
   exec(prevGap = '\n', endGap = '\n') {
