@@ -14,35 +14,35 @@ jobs:
         node-version: ['16.15.1']
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        
-    - name: Install Dependencies
-      run: npm install
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Install Dependencies
+        run: npm install
 
-    - name: Install Codecov
-      run: npm install -g codecov
+      - name: Install Codecov
+        run: npm install -g codecov
 
-    - name: Run Tests and Build Demo
-      run: |
-        npm run test
-        npm run build:demo
+      - name: Run Tests and Build Demo
+        run: |
+          npm run test
+          npm run build:demo
 
-    - name: Configure Git
-      run: |
-        cd ./demo
-        git init
-        git config user.name "stonehank"
-        git config user.email "stonehank310@gmail.com"
+      - name: Configure Git
+        run: |
+          cd ./demo
+          git init
+          git config user.name "stonehank"
+          git config user.email "stonehank310@gmail.com"
 
-    - name: Commit and Push Changes
-      run: |
-        cd ./demo
-        git add .
-        git commit -m "Update"
-        git push --force https://github.com/stonehank/html-to-md.git master:gh-pages
+      - name: Commit and Push Changes
+        run: |
+          cd ./demo
+          git add .
+          git commit -m "Update"
+          git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/stonehank/html-to-md.git" master:gh-pages
