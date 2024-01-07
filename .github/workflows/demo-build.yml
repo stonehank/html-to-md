@@ -45,4 +45,4 @@ jobs:
         cd ./demo
         git add .
         git commit -m "Update"
-        git push --force "https://${{ secrets.GH_TOKEN }}@github.com/stonehank/html-to-md.git" master:gh-pages
+        git push --force "https://${{ secrets.GITHUB_TOKEN }}@github.com/stonehank/html-to-md.git" master:gh-pages
