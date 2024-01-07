@@ -10,7 +10,7 @@ class Tr extends Tag {
   }
 
   beforeMergeSpace(content: string) {
-    return '|' + content
+    return this.leadingSpace + '|' + content
   }
 
   parseValidSubTag(

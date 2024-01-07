@@ -285,5 +285,34 @@ describe("test <ul></ul> tag", () => {
             "    * Nulla volutpat aliquam velit\n" +
             "* Very easy!")
     })
+    
+
+
+    it("nest space with table", () => {
+        let ul = html2Md(`<ul>
+    <li>
+        <p>foo</p>
+        <table>
+        <thead>
+            <tr>
+            <th>foo</th>
+            <th>bar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td>baz</td>
+            <td>qux</td>
+            </tr>
+        </tbody>
+        </table>
+    </li>
+</ul>`)
+        expect(ul).toBe(`* foo
+
+  |foo|bar|
+  |---|---|
+  |baz|qux|`)
+    })
 })
 

@@ -9,7 +9,7 @@ class Tbody extends Tag {
 
   beforeMergeSpace(content: string) {
     const alignArr = getTableAlign(this.innerHTML, this.tableColumnCount)
-    let tableHr = '|'
+    let tableHr = this.leadingSpace + '|'
     for (let i = 0; i < alignArr.length; i++) {
       tableHr += alignArr[i]
     }

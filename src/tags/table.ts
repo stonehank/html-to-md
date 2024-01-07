@@ -65,7 +65,7 @@ class Table extends Tag {
     if (!this.exist_tbody) {
       // 从head中获取方向信息
       const alignArr = getTableAlign(this.innerHTML, this.tableColumnCount)
-      let tableHr = '|'
+      let tableHr = this.leadingSpace + '|'
       for (let i = 0; i < alignArr.length; i++) {
         tableHr += alignArr[i]
       }
@@ -79,6 +79,7 @@ class Table extends Tag {
     if (!this.exist_thead)
       str =
         '\n' +
+        this.leadingSpace +
         '|'.repeat(this.tableColumnCount + 1) +
         (str.startsWith('\n') ? '' : '\n') +
         str

@@ -287,6 +287,11 @@ class Tag implements TagProps {
         layer: this.layer,
         keepSpace: this.keepSpace,
         inTable: this.inTable,
+        calcLeading:
+          (this.tagName === 'li' ||
+            this.tagName === 'ol' ||
+            this.tagName === 'ul') &&
+          this.calcLeading,
       }
       let nextStr
       if (nextTagName != null) {
