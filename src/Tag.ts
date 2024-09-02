@@ -282,9 +282,8 @@ class Tag implements TagProps {
   // 最终返回前
   beforeReturn(content: string) {
     if (
-      isSpacePassingTag(this.prevTagName) &&
-      isSpacePassingTag(this.tagName) &&
-      this.hasStartSpace &&
+      ((isSpacePassingTag(this.prevTagName) && this.prevHasEndSpace) ||
+        (isSpacePassingTag(this.tagName) && this.hasStartSpace)) &&
       !/^\s+/.test(content) &&
       !/\s+$/.test(this.prevTagStr)
     ) {
