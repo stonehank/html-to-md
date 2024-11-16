@@ -129,7 +129,7 @@ console.log(html2md('<strong><em>strong and italic</em></strong>', options))
 <td align="center">tagListener</td>
 <td align="left">Function</td>
 <td align="center">
-(tagName, props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
+(tagName: String, props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
 </td>
 <td align="left">Custom the tag props</td>
 </tr>
