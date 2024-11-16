@@ -141,7 +141,7 @@ console.log(
 <td align="center">tagListener</td>
 <td align="left">Function</td>
 <td align="center">
-(props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
+(tagName: String, props: <a href="#TagListenerProps">TagListenerProps</a>): <a href="#TagListenerReturnProps">TagListenerReturnProps</a> => props
 </td>
 <td align="left">自定义当前标签部分属性配置</td>
 </tr>
