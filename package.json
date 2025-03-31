@@ -22,7 +22,7 @@
     "prepublishOnly": "node prepublish.js",
     "release": "npm run build && cross-env RELEASE_MODE=true npm publish",
     "test:part": "jest",
-    "test": "jest --coverage && codecov",
+    "test": "jest --coverage",
     "build": "npm run test && npm run build:demo && npm run build:main",
     "build:main": "cross-env NODE_ENV=production webpack",
     "build:demo": "cross-env NODE_ENV=production webpack --config webpack.demo.config.js",
