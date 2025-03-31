@@ -14,8 +14,8 @@ for (const key in escapeMap) {
   unescapeMap[escapeMap[key]] = key
 }
 
-// const reUnescapedHtml = /[&<>"'`“”]/g
-// const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
+const reUnescapedHtml = /[&<>"'`“”]/g
+const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
 const reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60|ldquo|rdquo);/g
 const reHasEscapedHtml = RegExp(reEscapedHtml.source)
 const _extra_escapes: [RegExp, string][] = [
@@ -33,11 +33,11 @@ const _extra_escapes: [RegExp, string][] = [
   [/_/g, '\\_'],
   [/^(\d+)\. /g, '$1\\. '],
 ]
-// function escape(s: string): string {
-//   return s && reHasUnescapedHtml.test(s)
-//     ? s.replace(reUnescapedHtml, (chr) => escapeMap[chr])
-//     : s
-// }
+function escapeStr(s: string): string {
+  return s && reHasUnescapedHtml.test(s)
+    ? s.replace(reUnescapedHtml, (chr) => escapeMap[chr])
+    : s
+}
 
 function unescapeStr(s: string): string {
   s =
@@ -53,4 +53,4 @@ function extraEscape(s: string): string {
   }, s)
 }
 
-export { extraEscape, unescapeStr }
+export { escapeStr, extraEscape, unescapeStr }

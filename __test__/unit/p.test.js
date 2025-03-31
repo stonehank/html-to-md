@@ -39,4 +39,25 @@ describe('test <p></p> tag',()=>{
     let str=html2md("<p>1234</p>&nbsp;&nbsp;<p>5678</p>")
     expect(str).toBe("1234\n\n5678")
   })
+
+  it('p tag in table should ignore, br in table should escape',()=>{
+    let str=html2md(`<table>
+  <thead>
+    <tr>
+      <th>row1</th>
+      <th>row2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><p>text</p><br/><p>new line text</p></td>
+      <td><p>text</p></td>
+    </tr>
+  </tbody>
+</table>`)
+    expect(str).toBe(
+`|row1|row2|
+|---|---|
+|text<br />new line text|text|`)
+  })
 })

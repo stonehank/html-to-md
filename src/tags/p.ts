@@ -28,6 +28,10 @@ class P extends Tag {
     ) {
       endGap = '\n\n'
     }
+    if (this.inTable) {
+      prevGap = ''
+      endGap = ''
+    }
     return super.exec(prevGap, endGap)
   }
 }
