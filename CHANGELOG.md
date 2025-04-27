@@ -1,3 +1,6 @@
+## 0.8.8
+- fix [#77](https://github.com/stonehank/html-to-md/issues/77)
+
 ## 0.8.7
 - fix [#80](https://github.com/stonehank/html-to-md/issues/80)
 
