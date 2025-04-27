@@ -1,4 +1,14 @@
-const unescapeMap: Record<string, string> = {}
+const unescapeMap: Record<string, string> = {
+  '&amp;': '&',
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&#39;': "'",
+  '&apos;': "'",
+  '&#x60;': '`',
+  '&ldquo;': '“',
+  '&rdquo;': '”',
+}
 const escapeMap: Record<string, string> = {
   '&': '&amp;',
   '<': '&lt;',
@@ -10,13 +20,9 @@ const escapeMap: Record<string, string> = {
   '”': '&rdquo;',
 }
 
-for (const key in escapeMap) {
-  unescapeMap[escapeMap[key]] = key
-}
-
 const reUnescapedHtml = /[&<>"'`“”]/g
 const reHasUnescapedHtml = RegExp(reUnescapedHtml.source)
-const reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#x60|ldquo|rdquo);/g
+const reEscapedHtml = /&(?:amp|lt|gt|quot|#39|apos|#x60|ldquo|rdquo);/g
 const reHasEscapedHtml = RegExp(reEscapedHtml.source)
 const _extra_escapes: [RegExp, string][] = [
   [/\\/g, '\\\\'],
