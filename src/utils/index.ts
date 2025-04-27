@@ -9,7 +9,6 @@ import getRealTagName from './getRealTagName'
 import isIndependentTag from './isIndependentTag'
 import isSpacePassingTag from './isSpacePassingTag'
 import getTableAlign from './getTableAlign'
-import shouldRenderRawInside from './shouldRenderRawInside'
 
 export {
   // escape,
@@ -25,5 +24,4 @@ export {
   clearComment,
   isIndependentTag,
   isSpacePassingTag,
-  shouldRenderRawInside,
 }
